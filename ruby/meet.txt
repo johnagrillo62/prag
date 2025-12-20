@@ -1,0 +1,2 @@
+Select Meet,MName,Start,End,AgeUp,Since,Course,Location,Remarks,MaxIndEnt,MaxRelEnt,MaxEnt FROM MEET
+

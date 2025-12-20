@@ -1,0 +1,35 @@
+namespace meta
+{
+namespace XY
+{
+inline const auto fields = std::make_tuple(
+    meta::Field<::XY, int64_t, &::XY::x_, meta::Prop::Serializable, nullptr, nullptr>(
+        "x_",
+        "int64_t",
+        {
+            {CSV_COLUMN, "x_"},
+            {SQL_COLUMN, "x_"},
+            {SRC_NAME, "x_"},
+        }),
+    meta::Field<::XY, int64_t, &::XY::y_, meta::Prop::Serializable, nullptr, nullptr>(
+        "y_",
+        "int64_t",
+        {
+            {CSV_COLUMN, "y_"},
+            {SQL_COLUMN, "y_"},
+            {SRC_NAME, "y_"},
+        }));
+inline constexpr auto tableName = "XY";
+inline constexpr auto query = "SELECT x_, y_ FROM XY";
+} // namespace XY
+} // namespace meta
+namespace meta
+{
+// Template specialization for type-based reflection lookup
+template <> struct MetaTuple<::XY>
+{
+    static inline const auto& fields = meta::XY::fields;
+    static constexpr auto tableName = meta::XY::tableName;
+    static constexpr auto query = meta::XY::query;
+};
+} // namespace meta

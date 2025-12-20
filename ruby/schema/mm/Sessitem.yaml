@@ -1,0 +1,107 @@
+--- !ruby/object:Cls::Clss
+table_name: Sessitem
+class_name: Sessitem
+members:
+- !ruby/object:Cls::Member
+  column_name: Sess_order
+  member_name: sess order
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_ptr
+  member_name: sess ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_rnd
+  member_name: sess rnd
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Rept_type
+  member_name: rept type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Delay_seconds
+  member_name: delay seconds
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Alt_With
+  member_name: alt with
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Timed_finalheats
+  member_name: timed finalheats
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EventTo_AlternateWith
+  member_name: event to alternate with
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Delay_desc
+  member_name: delay desc
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AltHeats_StartCount
+  member_name: alt heats start count
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_Interval
+  member_name: event interval
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Sessitem]
+  (
+  [Sess_order] Long Integer,
+  [Sess_ptr] Long Integer,
+  [Event_ptr] Long Integer,
+  [Sess_rnd] Text (2),
+  [Rept_type] Text (2),
+  [Delay_seconds] Long Integer,
+  [Alt_With] Boolean NOT NULL,
+  [Timed_finalheats] Integer,
+  [EventTo_AlternateWith] Long Integer,
+  [Delay_desc] Text (100),
+  [AltHeats_StartCount] Integer,
+  [Event_Interval] Long Integer
+  );

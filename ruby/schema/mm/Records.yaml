@@ -1,0 +1,156 @@
+--- !ruby/object:Cls::Clss
+table_name: Records
+class_name: Records
+members:
+- !ruby/object:Cls::Member
+  column_name: tag_ptr
+  member_name: tag ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_gender
+  member_name: tag gender
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_indrel
+  member_name: tag indrel
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_dist
+  member_name: tag dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_stroke
+  member_name: tag stroke
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: low_age
+  member_name: low age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: high_Age
+  member_name: high age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_month
+  member_name: record month
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_day
+  member_name: record day
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_year
+  member_name: record year
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_Holder
+  member_name: record holder
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_Holderteam
+  member_name: record holderteam
+  type: !ruby/object:Types::String
+    len: 32
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Relay_Names
+  member_name: relay names
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_Time
+  member_name: record time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_course
+  member_name: record course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_teamabbr
+  member_name: record teamabbr
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record_teamlsc
+  member_name: record teamlsc
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: div_abbr
+  member_name: div abbr
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Records]
+  (
+  [tag_ptr] Long Integer,
+  [tag_gender] Text (2),
+  [tag_indrel] Text (2),
+  [tag_dist] Long Integer,
+  [tag_stroke] Text (2),
+  [low_age] Integer,
+  [high_Age] Integer,
+  [Record_month] Integer,
+  [Record_day] Integer,
+  [Record_year] Integer,
+  [Record_Holder] Text (60),
+  [Record_Holderteam] Text (32),
+  [Relay_Names] Text (100),
+  [Record_Time] Single,
+  [Record_course] Text (2),
+  [Record_teamabbr] Text (10),
+  [Record_teamlsc] Text (4),
+  [div_abbr] Text (20)
+  );

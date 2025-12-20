@@ -1,0 +1,82 @@
+--- !ruby/object:Cls::Clss
+table_name: EventGetTimes
+class_name: EventGetTimes
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Heat_no
+  member_name: heat no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Vendor_abbr
+  member_name: vendor abbr
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Race_number
+  member_name: race number
+  type: !ruby/object:Types::String
+    len: 12
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Get_Date
+  member_name: get date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Get_Time
+  member_name: get time
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Now_Date
+  member_name: now date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Now_Time
+  member_name: now time
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Rnd_ltr
+  member_name: rnd ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [EventGetTimes]
+  (
+  [Event_ptr] Long Integer,
+  [Heat_no] Integer,
+  [Vendor_abbr] Text (10),
+  [Race_number] Text (12),
+  [Get_Date] DateTime,
+  [Get_Time] Long Integer,
+  [Now_Date] DateTime,
+  [Now_Time] Long Integer,
+  [Rnd_ltr] Text (2)
+  );

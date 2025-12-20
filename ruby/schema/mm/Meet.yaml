@@ -1,0 +1,1634 @@
+--- !ruby/object:Cls::Clss
+table_name: Meet
+class_name: Meet
+members:
+- !ruby/object:Cls::Member
+  column_name: Meet_name1
+  member_name: meet name 1
+  type: !ruby/object:Types::String
+    len: 90
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_location
+  member_name: meet location
+  type: !ruby/object:Types::String
+    len: 90
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_start
+  member_name: meet start
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_end
+  member_name: meet end
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_idformat
+  member_name: meet idformat
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_class
+  member_name: meet class
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_meettype
+  member_name: meet meettype
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_course
+  member_name: meet course
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Enter_ages
+  member_name: enter ages
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Enter_birthdate
+  member_name: enter birthdate
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Calc_date
+  member_name: calc date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Enter_schoolyr
+  member_name: enter schoolyr
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: A_Relaysonly
+  member_name: a relaysonly
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Use_hometown
+  member_name: use hometown
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Show_countrycode
+  member_name: show countrycode
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Scores_afterevt
+  member_name: scores afterevt
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Lastname_first
+  member_name: lastname first
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Punct_names
+  member_name: punct names
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Punct_teams
+  member_name: punct teams
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: win_mm
+  member_name: win mm
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: meet_numlanes
+  member_name: meet numlanes
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: prelimheats_circle
+  member_name: prelimheats circle
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: timedfinal_circleseed
+  member_name: timedfinal circleseed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: foreign_infinal
+  member_name: foreign infinal
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: exh_infinal
+  member_name: exh infinal
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: nonconform_last
+  member_name: nonconform last
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: course_order
+  member_name: course order
+  type: !ruby/object:Types::String
+    len: 510
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: seed_exhlast
+  member_name: seed exhlast
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dual_evenodd
+  member_name: dual evenodd
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: strict_evenodd
+  member_name: strict evenodd
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: team_evenlanes
+  member_name: team evenlanes
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: team_oddlanes
+  member_name: team oddlanes
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: masters_bytimeonly
+  member_name: masters bytimeonly
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: masters_agegrpsskip
+  member_name: masters agegrpsskip
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: timer_port
+  member_name: timer port
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_port
+  member_name: scbd port
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: timer_vendor
+  member_name: timer vendor
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_vendor
+  member_name: scbd vendor
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: show_initial
+  member_name: show initial
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ucase_names
+  member_name: ucase names
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ucase_teams
+  member_name: ucase teams
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: open_senior_none
+  member_name: open senior none
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entryqual_faster
+  member_name: entryqual faster
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: indentryfee_surcharge
+  member_name: indentryfee surcharge
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: anyone_onrelay
+  member_name: anyone onrelay
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: language_choice
+  member_name: language choice
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: military_time
+  member_name: military time
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: check_times
+  member_name: check times
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: enterkey_astab
+  member_name: enterkey astab
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: double_endedsplits
+  member_name: double endedsplits
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: use_compnumbers
+  member_name: use compnumbers
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: flighted_minentries
+  member_name: flighted minentries
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: diffpts_malefemale
+  member_name: diffpts malefemale
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: diffpts_eachdivision
+  member_name: diffpts eachdivision
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scoreonly_ifexceedqualtime
+  member_name: scoreonly ifexceedqualtime
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: score_fastestheatonly
+  member_name: score fastestheatonly
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entrylimits_warn
+  member_name: entrylimits warn
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pointsbasedon_seedtime
+  member_name: pointsbasedon seedtime
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pointsfor_overachievers
+  member_name: pointsfor overachievers
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pointsfor_underachievers
+  member_name: pointsfor underachievers
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: indmaxscorers_perteam
+  member_name: indmaxscorers perteam
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: relmaxscorers_perteam
+  member_name: relmaxscorers perteam
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: indtopmany_awards
+  member_name: indtopmany awards
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: reltopmany_awards
+  member_name: reltopmany awards
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entrymax_total
+  member_name: entrymax total
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: indmax_perath
+  member_name: indmax perath
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: relmax_perath
+  member_name: relmax perath
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: foreign_getteampoints
+  member_name: foreign getteampoints
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: include_swimupsinteamscore
+  member_name: include swimupsinteamscore
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: enter_citizenof
+  member_name: enter citizenof
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: meet_meetstyle
+  member_name: meet meetstyle
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: flag_overachievers
+  member_name: flag overachievers
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: flag_underachievers
+  member_name: flag underachievers
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_punctuation
+  member_name: scbd punctuation
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_names
+  member_name: scbd names
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_relaynames
+  member_name: scbd relaynames
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_cycle
+  member_name: scbd cycle
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_cycleseconds
+  member_name: scbd cycleseconds
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: copies_toprinter
+  member_name: copies toprinter
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: report_headersonly
+  member_name: report headersonly
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: autoinc_compno
+  member_name: autoinc compno
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pentscoring_usedqtime
+  member_name: pentscoring usedqtime
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: swimmer_surcharge
+  member_name: swimmer surcharge
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: directly_toprinter
+  member_name: directly toprinter
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lastname_asinitial
+  member_name: lastname asinitial
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: under_eventname
+  member_name: under eventname
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: suppress_Arelay
+  member_name: suppress arelay
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Punct_recholders
+  member_name: punct recholders
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ucase_recholders
+  member_name: ucase recholders
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: suppress_lsc
+  member_name: suppress lsc
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: showathlete_status
+  member_name: showathlete status
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: open_lowage
+  member_name: open lowage
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: useeventsex_teamscore
+  member_name: useeventsex teamscore
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: suppress_smallx
+  member_name: suppress smallx
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: score_Arelayonly
+  member_name: score arelayonly
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: thirteenandover_assenior
+  member_name: thirteenandover assenior
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: suppress_jd
+  member_name: suppress jd
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: abcfinal_order
+  member_name: abcfinal order
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: maxagefor_cfinal
+  member_name: maxagefor cfinal
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: include_sanction
+  member_name: include sanction
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: special_points
+  member_name: special points
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: countrelay_alt
+  member_name: countrelay alt
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UseNonConforming_PoolFactor
+  member_name: use non conforming pool factor
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NonConforming_PoolFactor
+  member_name: non conforming pool factor
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: apnews_team
+  member_name: apnews team
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PointsAwarded_ForDQ
+  member_name: points awarded for d q
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PointsAwarded_ForScratch
+  member_name: points awarded for scratch
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PointsAwarded_ForNT
+  member_name: points awarded for n t
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Enter_AthStat
+  member_name: enter ath stat
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Show_secondclub
+  member_name: show secondclub
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: firstinitial_fulllastname
+  member_name: firstinitial fulllastname
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: turnon_autobackup
+  member_name: turnon autobackup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: autobackup_interval
+  member_name: autobackup interval
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PointsAwarded_ForExh
+  member_name: points awarded for exh
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Use_AltTeamAbbr
+  member_name: use alt team abbr
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: IsCanadian_Masters
+  member_name: is canadian masters
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entry_msg
+  member_name: entry msg
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: timedfinalnonconform_last
+  member_name: timedfinalnonconform last
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: referee_name
+  member_name: referee name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: referee_homphone
+  member_name: referee homphone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: referee_offphone
+  member_name: referee offphone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_altitude
+  member_name: meet altitude
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Read_Only
+  member_name: read only
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: masters_indlowage
+  member_name: masters indlowage
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: masters_rellowage
+  member_name: masters rellowage
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Import_Dir
+  member_name: import dir
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Export_Dir
+  member_name: export dir
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Backup_Dir
+  member_name: backup dir
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RestoreFrom_Dir
+  member_name: restore from dir
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RestoreTo_Dir
+  member_name: restore to dir
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FlatHtml_Dir
+  member_name: flat html dir
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: APNews_Dir
+  member_name: a p news dir
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AllowSameEvent_DupRelayNames
+  member_name: allow same event dup relay names
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane1
+  member_name: dualteam lane1
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane2
+  member_name: dualteam lane2
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane3
+  member_name: dualteam lane3
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane4
+  member_name: dualteam lane4
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane5
+  member_name: dualteam lane5
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane6
+  member_name: dualteam lane6
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane7
+  member_name: dualteam lane7
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane8
+  member_name: dualteam lane8
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane9
+  member_name: dualteam lane9
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane10
+  member_name: dualteam lane10
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: strict_evenoddfastestheatonly
+  member_name: strict evenoddfastestheatonly
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualseeding_altunusedlane
+  member_name: dualseeding altunusedlane
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: team_surcharge
+  member_name: team surcharge
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: display_actualentrytime
+  member_name: display actualentrytime
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: indmaxadvance_perteam
+  member_name: indmaxadvance perteam
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: relmaxadvance_perteam
+  member_name: relmaxadvance perteam
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RelayNames_LinkByLSC
+  member_name: relay names link by l s c
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Flighted_BasedOnResultsTime
+  member_name: flighted based on results time
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowYear_InPlaceOfAge
+  member_name: show year in place of age
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PenaltyPts_ForNS
+  member_name: penalty pts for n s
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EntryEligibility_date
+  member_name: entry eligibility date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Facility_Surcharge
+  member_name: facility surcharge
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Suppress_TimeStdAbbr
+  member_name: suppress time std abbr
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Custom_QualTimes
+  member_name: custom qual times
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Suppress_SplitsForDQs
+  member_name: suppress splits for d qs
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Suppress_SplitsForDQsRelay
+  member_name: suppress splits for d qs relay
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DQCodes_Type
+  member_name: d q codes type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SuppressTimes_NotMeetQualTime
+  member_name: suppress times not meet qual time
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Show_AgeandBirthYear
+  member_name: show ageand birth year
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_state
+  member_name: meet state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_country
+  member_name: meet country
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_lsc
+  member_name: meet lsc
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: BCSSA_DivbyTimeStd
+  member_name: b c s s a divby time std
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Show_HyTekDecimals
+  member_name: show hy tek decimals
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Suppress_ResultsAdvQ
+  member_name: suppress results adv q
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RelaysAs_4x100Style
+  member_name: relays as 4x 1 0 0 style
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: flighted_flightcount
+  member_name: flighted flightcount
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: flighted_inclDQ
+  member_name: flighted incl d q
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RelaysAlternate_TwoFastestFirst
+  member_name: relays alternate two fastest first
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane11
+  member_name: dualteam lane11
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dualteam_lane12
+  member_name: dualteam lane12
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entry_deadline
+  member_name: entry deadline
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_addr1
+  member_name: meet addr 1
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_addr2
+  member_name: meet addr 2
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_city
+  member_name: meet city
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_zip
+  member_name: meet zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_hostlsc
+  member_name: meet hostlsc
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_USMastersMeetID
+  member_name: meet u s masters meet i d
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowFirstName_OverPreferred
+  member_name: show first name over preferred
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExcludeNTEntries_WhenImporting
+  member_name: exclude n t entries when importing
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Enter_birthcentury
+  member_name: enter birthcentury
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Using_twopools
+  member_name: using twopools
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pool1_name
+  member_name: pool 1 name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pool2_name
+  member_name: pool 2 name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: indtopmany_awardsSr
+  member_name: indtopmany awards sr
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: reltopmany_awardsSr
+  member_name: reltopmany awards sr
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: maxforeign_infinal
+  member_name: maxforeign infinal
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Flag_FastestRecordOnly
+  member_name: flag fastest record only
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: athlete_earlysurcharge
+  member_name: athlete earlysurcharge
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: athlete_latesurcharge
+  member_name: athlete latesurcharge
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: athlete_earlysurchargedate
+  member_name: athlete earlysurchargedate
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: athlete_latesurchargedate
+  member_name: athlete latesurchargedate
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entry_OMEopendate
+  member_name: entry o m eopendate
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DisplayNTfor_TimesUnder5Sec
+  member_name: display n tfor times under 5 sec
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SortTeamCombos_ByTeamName
+  member_name: sort team combos by team name
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FastestHeat_SomeLanesDoNotScore
+  member_name: fastest heat some lanes do not score
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RankDisabled_ByPoints
+  member_name: rank disabled by points
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: special_parapoints
+  member_name: special parapoints
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DisabledDoNot_AdvanceToFinals
+  member_name: disabled do not advance to finals
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: prelimheats_circledist
+  member_name: prelimheats circledist
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DisabledIgnoreQualTime_ForScoring
+  member_name: disabled ignore qual time for scoring
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CountTimeTrial_Events
+  member_name: count time trial events
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_header1
+  member_name: meet header 1
+  type: !ruby/object:Types::String
+    len: 150
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_header2
+  member_name: meet header 2
+  type: !ruby/object:Types::String
+    len: 150
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: QualNonConformCourse_UseMinStd
+  member_name: qual non conform course use min std
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entry_OpenDate
+  member_name: entry open date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TimeAdj_Method
+  member_name: time adj method
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Lock_Reseed
+  member_name: lock reseed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sanction_number
+  member_name: sanction number
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Last_updated
+  member_name: last updated
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MixedRelays_DividedPoints
+  member_name: mixed relays divided points
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RelayOnly_Surcharge
+  member_name: relay only surcharge
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DisabledSeedWithAgeGroup_IfTimedFinalSuperSeed
+  member_name: disabled seed with age group if timed final super seed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Competition_Code
+  member_name: competition code
+  type: !ruby/object:Types::String
+    len: 12
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PenaltyTimeSec_ForCombEvtDQ
+  member_name: penalty time sec for comb evt d q
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Meet]
+  (
+  [Meet_name1] Text (90),
+  [Meet_location] Text (90),
+  [Meet_start] DateTime,
+  [Meet_end] DateTime,
+  [Meet_idformat] Integer,
+  [Meet_class] Integer,
+  [Meet_meettype] Integer,
+  [Meet_course] Integer,
+  [Enter_ages] Boolean NOT NULL,
+  [Enter_birthdate] Boolean NOT NULL,
+  [Calc_date] DateTime,
+  [Enter_schoolyr] Boolean NOT NULL,
+  [A_Relaysonly] Boolean NOT NULL,
+  [Use_hometown] Boolean NOT NULL,
+  [Show_countrycode] Boolean NOT NULL,
+  [Scores_afterevt] Boolean NOT NULL,
+  [Lastname_first] Boolean NOT NULL,
+  [Punct_names] Boolean NOT NULL,
+  [Punct_teams] Boolean NOT NULL,
+  [win_mm] Boolean NOT NULL,
+  [meet_numlanes] Integer,
+  [prelimheats_circle] Integer,
+  [timedfinal_circleseed] Boolean NOT NULL,
+  [foreign_infinal] Boolean NOT NULL,
+  [exh_infinal] Boolean NOT NULL,
+  [nonconform_last] Boolean NOT NULL,
+  [course_order] Text (510),
+  [seed_exhlast] Boolean NOT NULL,
+  [dual_evenodd] Boolean NOT NULL,
+  [strict_evenodd] Boolean NOT NULL,
+  [team_evenlanes] Long Integer,
+  [team_oddlanes] Long Integer,
+  [masters_bytimeonly] Boolean NOT NULL,
+  [masters_agegrpsskip] Integer,
+  [timer_port] Integer,
+  [scbd_port] Integer,
+  [timer_vendor] Text (8),
+  [scbd_vendor] Text (8),
+  [show_initial] Boolean NOT NULL,
+  [ucase_names] Boolean NOT NULL,
+  [ucase_teams] Boolean NOT NULL,
+  [open_senior_none] Text (2),
+  [entryqual_faster] Boolean NOT NULL,
+  [indentryfee_surcharge] Currency,
+  [anyone_onrelay] Boolean NOT NULL,
+  [language_choice] Text (40),
+  [military_time] Boolean NOT NULL,
+  [check_times] Boolean NOT NULL,
+  [enterkey_astab] Boolean NOT NULL,
+  [double_endedsplits] Boolean NOT NULL,
+  [use_compnumbers] Boolean NOT NULL,
+  [flighted_minentries] Integer,
+  [diffpts_malefemale] Boolean NOT NULL,
+  [diffpts_eachdivision] Boolean NOT NULL,
+  [scoreonly_ifexceedqualtime] Boolean NOT NULL,
+  [score_fastestheatonly] Boolean NOT NULL,
+  [entrylimits_warn] Boolean NOT NULL,
+  [pointsbasedon_seedtime] Boolean NOT NULL,
+  [pointsfor_overachievers] Boolean NOT NULL,
+  [pointsfor_underachievers] Boolean NOT NULL,
+  [indmaxscorers_perteam] Integer,
+  [relmaxscorers_perteam] Integer,
+  [indtopmany_awards] Integer,
+  [reltopmany_awards] Integer,
+  [entrymax_total] Integer,
+  [indmax_perath] Integer,
+  [relmax_perath] Integer,
+  [foreign_getteampoints] Boolean NOT NULL,
+  [include_swimupsinteamscore] Boolean NOT NULL,
+  [enter_citizenof] Boolean NOT NULL,
+  [meet_meetstyle] Integer,
+  [flag_overachievers] Boolean NOT NULL,
+  [flag_underachievers] Boolean NOT NULL,
+  [scbd_punctuation] Integer,
+  [scbd_names] Integer,
+  [scbd_relaynames] Integer,
+  [scbd_cycle] Boolean NOT NULL,
+  [scbd_cycleseconds] Integer,
+  [copies_toprinter] Integer,
+  [report_headersonly] Boolean NOT NULL,
+  [autoinc_compno] Boolean NOT NULL,
+  [pentscoring_usedqtime] Boolean NOT NULL,
+  [swimmer_surcharge] Currency,
+  [directly_toprinter] Boolean NOT NULL,
+  [lastname_asinitial] Boolean NOT NULL,
+  [under_eventname] Boolean NOT NULL,
+  [suppress_Arelay] Boolean NOT NULL,
+  [Punct_recholders] Boolean NOT NULL,
+  [ucase_recholders] Boolean NOT NULL,
+  [suppress_lsc] Boolean NOT NULL,
+  [showathlete_status] Boolean NOT NULL,
+  [open_lowage] Integer,
+  [useeventsex_teamscore] Boolean NOT NULL,
+  [suppress_smallx] Boolean NOT NULL,
+  [score_Arelayonly] Boolean NOT NULL,
+  [thirteenandover_assenior] Boolean NOT NULL,
+  [suppress_jd] Boolean NOT NULL,
+  [abcfinal_order] Text (6),
+  [maxagefor_cfinal] Integer,
+  [include_sanction] Boolean NOT NULL,
+  [special_points] Integer,
+  [countrelay_alt] Boolean NOT NULL,
+  [UseNonConforming_PoolFactor] Boolean NOT NULL,
+  [NonConforming_PoolFactor] Single,
+  [apnews_team] Text (2),
+  [PointsAwarded_ForDQ] Single,
+  [PointsAwarded_ForScratch] Single,
+  [PointsAwarded_ForNT] Single,
+  [Enter_AthStat] Boolean NOT NULL,
+  [Show_secondclub] Boolean NOT NULL,
+  [firstinitial_fulllastname] Boolean NOT NULL,
+  [turnon_autobackup] Boolean NOT NULL,
+  [autobackup_interval] Integer,
+  [PointsAwarded_ForExh] Boolean NOT NULL,
+  [Use_AltTeamAbbr] Boolean NOT NULL,
+  [IsCanadian_Masters] Boolean NOT NULL,
+  [entry_msg] Text (160),
+  [timedfinalnonconform_last] Boolean NOT NULL,
+  [referee_name] Text (60),
+  [referee_homphone] Text (40),
+  [referee_offphone] Text (40),
+  [Meet_altitude] Long Integer,
+  [Read_Only] Boolean NOT NULL,
+  [masters_indlowage] Integer,
+  [masters_rellowage] Integer,
+  [Import_Dir] Text (160),
+  [Export_Dir] Text (160),
+  [Backup_Dir] Text (160),
+  [RestoreFrom_Dir] Text (160),
+  [RestoreTo_Dir] Text (160),
+  [FlatHtml_Dir] Text (160),
+  [APNews_Dir] Text (160),
+  [AllowSameEvent_DupRelayNames] Boolean NOT NULL,
+  [dualteam_lane1] Long Integer,
+  [dualteam_lane2] Long Integer,
+  [dualteam_lane3] Long Integer,
+  [dualteam_lane4] Long Integer,
+  [dualteam_lane5] Long Integer,
+  [dualteam_lane6] Long Integer,
+  [dualteam_lane7] Long Integer,
+  [dualteam_lane8] Long Integer,
+  [dualteam_lane9] Long Integer,
+  [dualteam_lane10] Long Integer,
+  [strict_evenoddfastestheatonly] Boolean NOT NULL,
+  [dualseeding_altunusedlane] Boolean NOT NULL,
+  [team_surcharge] Currency,
+  [display_actualentrytime] Boolean NOT NULL,
+  [indmaxadvance_perteam] Integer,
+  [relmaxadvance_perteam] Integer,
+  [RelayNames_LinkByLSC] Boolean NOT NULL,
+  [Flighted_BasedOnResultsTime] Boolean NOT NULL,
+  [ShowYear_InPlaceOfAge] Boolean NOT NULL,
+  [PenaltyPts_ForNS] Single,
+  [EntryEligibility_date] DateTime,
+  [Facility_Surcharge] Currency,
+  [Suppress_TimeStdAbbr] Boolean NOT NULL,
+  [Custom_QualTimes] Boolean NOT NULL,
+  [Suppress_SplitsForDQs] Boolean NOT NULL,
+  [Suppress_SplitsForDQsRelay] Boolean NOT NULL,
+  [DQCodes_Type] Text (2),
+  [SuppressTimes_NotMeetQualTime] Boolean NOT NULL,
+  [Show_AgeandBirthYear] Boolean NOT NULL,
+  [Meet_state] Text (6),
+  [Meet_country] Text (6),
+  [Meet_lsc] Text (6),
+  [BCSSA_DivbyTimeStd] Boolean NOT NULL,
+  [Show_HyTekDecimals] Boolean NOT NULL,
+  [Suppress_ResultsAdvQ] Boolean NOT NULL,
+  [RelaysAs_4x100Style] Boolean NOT NULL,
+  [flighted_flightcount] Integer,
+  [flighted_inclDQ] Boolean NOT NULL,
+  [RelaysAlternate_TwoFastestFirst] Boolean NOT NULL,
+  [dualteam_lane11] Long Integer,
+  [dualteam_lane12] Long Integer,
+  [entry_deadline] DateTime,
+  [Meet_addr1] Text (60),
+  [Meet_addr2] Text (60),
+  [Meet_city] Text (60),
+  [Meet_zip] Text (20),
+  [Meet_hostlsc] Text (6),
+  [Meet_USMastersMeetID] Text (40),
+  [ShowFirstName_OverPreferred] Boolean NOT NULL,
+  [ExcludeNTEntries_WhenImporting] Boolean NOT NULL,
+  [Enter_birthcentury] Boolean NOT NULL,
+  [Using_twopools] Boolean NOT NULL,
+  [Pool1_name] Text (60),
+  [Pool2_name] Text (60),
+  [indtopmany_awardsSr] Integer,
+  [reltopmany_awardsSr] Integer,
+  [maxforeign_infinal] Integer,
+  [Flag_FastestRecordOnly] Boolean NOT NULL,
+  [athlete_earlysurcharge] Currency,
+  [athlete_latesurcharge] Currency,
+  [athlete_earlysurchargedate] DateTime,
+  [athlete_latesurchargedate] DateTime,
+  [entry_OMEopendate] DateTime,
+  [DisplayNTfor_TimesUnder5Sec] Boolean NOT NULL,
+  [SortTeamCombos_ByTeamName] Boolean NOT NULL,
+  [FastestHeat_SomeLanesDoNotScore] Boolean NOT NULL,
+  [RankDisabled_ByPoints] Boolean NOT NULL,
+  [special_parapoints] Integer,
+  [DisabledDoNot_AdvanceToFinals] Boolean NOT NULL,
+  [prelimheats_circledist] Integer,
+  [DisabledIgnoreQualTime_ForScoring] Boolean NOT NULL,
+  [CountTimeTrial_Events] Boolean NOT NULL,
+  [Meet_header1] Text (150),
+  [Meet_header2] Text (150),
+  [QualNonConformCourse_UseMinStd] Boolean NOT NULL,
+  [entry_OpenDate] DateTime,
+  [TimeAdj_Method] Text (2),
+  [Lock_Reseed] Boolean NOT NULL,
+  [sanction_number] Text (60),
+  [Last_updated] Text (80),
+  [MixedRelays_DividedPoints] Boolean NOT NULL,
+  [RelayOnly_Surcharge] Currency,
+  [DisabledSeedWithAgeGroup_IfTimedFinalSuperSeed] Boolean NOT NULL,
+  [Competition_Code] Text (12),
+  [PenaltyTimeSec_ForCombEvtDQ] Single
+  );

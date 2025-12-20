@@ -1,0 +1,98 @@
+--- !ruby/object:Cls::Clss
+table_name: TestT30
+class_name: TestT30
+members:
+- !ruby/object:Cls::Member
+  column_name: athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: test_date
+  member_name: test date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: test_stroke
+  member_name: test stroke
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: test_dist
+  member_name: test dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: test_time
+  member_name: test time
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: test_sly
+  member_name: test sly
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: test_rmk
+  member_name: test rmk
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: heart_1
+  member_name: heart 1
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: heart_2
+  member_name: heart 2
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: heart_3
+  member_name: heart 3
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: use_it
+  member_name: use it
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [TestT30]
+  (
+  [athlete] Long Integer,
+  [test_date] DateTime,
+  [test_stroke] Integer,
+  [test_dist] Long Integer,
+  [test_time] Long Integer,
+  [test_sly] Text (2),
+  [test_rmk] Text (80),
+  [heart_1] Integer,
+  [heart_2] Integer,
+  [heart_3] Integer,
+  [use_it] Boolean NOT NULL
+  );

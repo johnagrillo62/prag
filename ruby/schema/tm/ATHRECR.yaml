@@ -1,0 +1,299 @@
+--- !ruby/object:Cls::Clss
+table_name: ATHRECR
+class_name: ATHRECR
+members:
+- !ruby/object:Cls::Member
+  column_name: Athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Grad
+  member_name: grad
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PicFile
+  member_name: pic file
+  type: !ruby/object:Types::String
+    len: 22
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_Name
+  member_name: h s name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_Phone
+  member_name: h s phone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_Addr
+  member_name: h s addr
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_City
+  member_name: h s city
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_State
+  member_name: h s state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_ZIP
+  member_name: hs zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_Coach
+  member_name: h s coach
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Oth_Team
+  member_name: oth team
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Oth_Coach
+  member_name: oth coach
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_Study
+  member_name: h s study
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_Rank
+  member_name: h s rank
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_Num
+  member_name: h s num
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS_GPA
+  member_name: hs gpa
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Activities
+  member_name: activities
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Awards
+  member_name: awards
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Add_Info
+  member_name: add info
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Camps
+  member_name: camps
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T1Score
+  member_name: t 1 score
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Remarks
+  member_name: remarks
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T3Score1
+  member_name: t 3 score 1
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T2Score
+  member_name: t 2 score
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Height
+  member_name: height
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Weight
+  member_name: weight
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Oth_Phone
+  member_name: oth phone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Picture
+  member_name: picture
+  type: !ruby/object:Types::String
+    len: 120
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Video
+  member_name: video
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comments
+  member_name: comments
+  type: !ruby/object:Types::String
+    len: 510
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T1Name
+  member_name: t 1 name
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T2Name
+  member_name: t 2 name
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T3Name
+  member_name: t 3 name
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T3SName1
+  member_name: t 3 s name 1
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T3SName2
+  member_name: t 3 s name 2
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: T3Score2
+  member_name: t 3 score 2
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [ATHRECR]
+  (
+  [Athlete] Long Integer,
+  [Grad] Integer,
+  [PicFile] Text (22),
+  [HS_Name] Text (60),
+  [HS_Phone] Text (40),
+  [HS_Addr] Text (60),
+  [HS_City] Text (40),
+  [HS_State] Text (6),
+  [HS_ZIP] Text (20),
+  [HS_Coach] Text (60),
+  [Oth_Team] Text (60),
+  [Oth_Coach] Text (60),
+  [HS_Study] Text (40),
+  [HS_Rank] Integer,
+  [HS_Num] Integer,
+  [HS_GPA] Single,
+  [Activities] Text (100),
+  [Awards] Text (40),
+  [Add_Info] Text (100),
+  [Camps] Text (100),
+  [T1Score] Integer,
+  [Remarks] Text (100),
+  [T3Score1] Integer,
+  [T2Score] Integer,
+  [Height] Integer,
+  [Weight] Integer,
+  [Oth_Phone] Text (40),
+  [Picture] Text (120),
+  [Video] Boolean NOT NULL,
+  [Comments] Text (510),
+  [T1Name] Text (16),
+  [T2Name] Text (16),
+  [T3Name] Text (16),
+  [T3SName1] Text (16),
+  [T3SName2] Text (16),
+  [T3Score2] Integer
+  );

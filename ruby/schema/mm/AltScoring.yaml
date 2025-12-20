@@ -1,0 +1,52 @@
+--- !ruby/object:Cls::Clss
+table_name: AltScoring
+class_name: AltScoring
+members:
+- !ruby/object:Cls::Member
+  column_name: score_divno
+  member_name: score divno
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: score_sex
+  member_name: score sex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: score_place
+  member_name: score place
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ind_score
+  member_name: ind score
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: rel_score
+  member_name: rel score
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [AltScoring]
+  (
+  [score_divno] Integer,
+  [score_sex] Text (2),
+  [score_place] Integer,
+  [ind_score] Single,
+  [rel_score] Single
+  );

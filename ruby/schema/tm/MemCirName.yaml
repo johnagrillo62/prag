@@ -1,0 +1,52 @@
+--- !ruby/object:Cls::Clss
+table_name: MemCirName
+class_name: MemCirName
+members:
+- !ruby/object:Cls::Member
+  column_name: cir_no
+  member_name: cir no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: cir_name
+  member_name: cir name
+  type: !ruby/object:Types::String
+    len: 180
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tot_lines
+  member_name: tot lines
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tot_dist
+  member_name: tot dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tot_seconds
+  member_name: tot seconds
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [MemCirName]
+  (
+  [cir_no] Long Integer,
+  [cir_name] Text (180),
+  [tot_lines] Integer,
+  [tot_dist] Long Integer,
+  [tot_seconds] Long Integer
+  );

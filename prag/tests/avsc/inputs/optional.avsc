@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "Person",
+  "fields": [
+    {"name": "id", "type": "long"},
+    {"name": "name", "type": "string"},
+    {"name": "nickname", "type": ["null", "string"], "default": null},
+    {"name": "age", "type": ["null", "int"], "default": null}
+  ]
+}

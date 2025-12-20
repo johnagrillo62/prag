@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package test;
+
+// A simple message representing a person
+message Person {
+  string name = 1;
+  int32 id = 2;
+  
+  // Contact info: either email or phone
+  oneof contact {
+    string email = 3;
+    string phone = 4;
+  }
+}
+
+// A message representing a company
+message Company {
+  string name = 1;
+  
+  // Employees can be either full-time or contractor
+  message Employee {
+    string name = 1;
+    oneof employment_type {
+      bool full_time = 2;
+      string contractor = 3;
+    }
+  }
+
+  repeated Employee employees = 2;
+}
+
+// A message that references either a person or a company
+message Entity {
+  oneof entity_type {
+    Person person = 1;
+    Company company = 2;
+  }
+}
+
+

@@ -1,0 +1,50 @@
+--- !ruby/object:Cls::Clss
+table_name: Divisions
+class_name: Divisions
+members:
+- !ruby/object:Cls::Member
+  column_name: Div_no
+  member_name: div no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Div_name
+  member_name: div name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: old_date
+  member_name: old date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: young_date
+  member_name: young date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: div_abbr
+  member_name: div abbr
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Divisions]
+  (
+  [Div_no] Long Integer,
+  [Div_name] Text (40),
+  [old_date] DateTime,
+  [young_date] DateTime,
+  [div_abbr] Text (20)
+  );

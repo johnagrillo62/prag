@@ -1,0 +1,36 @@
+--- !ruby/object:Cls::Clss
+table_name: Dualteams
+class_name: Dualteams
+members:
+- !ruby/object:Cls::Member
+  column_name: team_gender
+  member_name: team gender
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ateam_no
+  member_name: ateam no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: bteam_no
+  member_name: bteam no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Dualteams]
+  (
+  [team_gender] Text (2),
+  [ateam_no] Long Integer,
+  [bteam_no] Long Integer
+  );

@@ -1,0 +1,23 @@
+// example.fbs - FlatBuffers Schema Example
+namespace example;
+
+table User {
+    id: int;
+    name: string;
+    email: string;
+    tags: [string];
+    scores: [int];
+}
+
+enum Status: byte {
+    Active = 0,
+    Inactive = 1,
+    Pending = 2
+}
+
+table Post {
+    id: int;
+    title: string;
+    author: User;
+    status: Status;
+}

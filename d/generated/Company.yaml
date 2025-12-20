@@ -1,0 +1,16 @@
+# YAML Schema for company
+# Generated from D struct: Company
+---
+
+company:
+  name: ""  # type: string
+  headquarters: null  # type: mixed
+  taxid: ""  # type: string
+  offices: {}  # type: object
+
+# Example usage:
+# company:
+#   name: example_value
+#   headquarters: example_value
+#   taxid: example_value
+#   offices: example_value

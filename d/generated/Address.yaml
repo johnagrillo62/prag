@@ -1,0 +1,16 @@
+# YAML Schema for address
+# Generated from D struct: Address
+---
+
+address:
+  street: ""  # type: string
+  city: ""  # type: string
+  zipcode: ""  # type: string
+  country: ""  # type: string
+
+# Example usage:
+# address:
+#   street: example_value
+#   city: example_value
+#   zipcode: example_value
+#   country: example_value

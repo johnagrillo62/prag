@@ -1,0 +1,59 @@
+namespace meta
+{
+namespace Priv
+{
+inline const auto fields = std::make_tuple(
+    meta::Field<::Priv, int64_t, &::Priv::x_, meta::Prop::Serializable, nullptr, nullptr>(
+        "x_",
+        "int64_t",
+        {
+            {CSV_COLUMN, "x_"},
+            {SQL_COLUMN, "x_"},
+            {SRC_NAME, "x_"},
+        }),
+    meta::Field<::Priv, int64_t, &::Priv::y_, meta::Prop::Serializable, nullptr, nullptr>(
+        "y_",
+        "int64_t",
+        {
+            {CSV_COLUMN, "y_"},
+            {SQL_COLUMN, "y_"},
+            {SRC_NAME, "y_"},
+        }),
+    meta::Field<::Priv,
+                std::vector<std::string>,
+                &::Priv::repairs_,
+                meta::Prop::Serializable,
+                nullptr,
+                nullptr>("repairs_",
+                         "std::vector<std::string>",
+                         {
+                             {CSV_COLUMN, "repairs_"},
+                             {SQL_COLUMN, "repairs_"},
+                             {SRC_NAME, "repairs_"},
+                         }),
+    meta::Field<::Priv,
+                std::map<std::string, std::string>,
+                &::Priv::service_,
+                meta::Prop::Serializable,
+                nullptr,
+                nullptr>("service_",
+                         "std::map<std::string,std::string>",
+                         {
+                             {CSV_COLUMN, "service_"},
+                             {SQL_COLUMN, "service_"},
+                             {SRC_NAME, "service_"},
+                         }));
+inline constexpr auto tableName = "Priv";
+inline constexpr auto query = "SELECT x_, y_, repairs_, service_ FROM Priv";
+} // namespace Priv
+} // namespace meta
+namespace meta
+{
+// Template specialization for type-based reflection lookup
+template <> struct MetaTuple<::Priv>
+{
+    static inline const auto& fields = meta::Priv::fields;
+    static constexpr auto tableName = meta::Priv::tableName;
+    static constexpr auto query = meta::Priv::query;
+};
+} // namespace meta

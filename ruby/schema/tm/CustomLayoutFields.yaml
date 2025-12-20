@@ -1,0 +1,44 @@
+--- !ruby/object:Cls::Clss
+table_name: CustomLayoutFields
+class_name: CustomLayoutFields
+members:
+- !ruby/object:Cls::Member
+  column_name: FieldName
+  member_name: field name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Description
+  member_name: description
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Size
+  member_name: size
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Abbr
+  member_name: abbr
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [CustomLayoutFields]
+  (
+  [FieldName] Text (40),
+  [Description] Text (60),
+  [Size] Integer,
+  [Abbr] Text (30)
+  );

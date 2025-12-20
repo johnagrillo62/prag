@@ -1,0 +1,1253 @@
+---
+awk:
+  directory: awk
+  option: awk
+  interpreter: awk
+  source_file_ext: awk
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "#-*-awk-*-"
+  formal_name: Awk
+  rosetta_url: awk
+  home_url: https://www.gnu.org/software/gawk/manual/gawk.html
+  wikipedia_url: AWK
+  conventions:
+    case:
+      case: under.downcase
+    file:
+      case: under.downcase
+    class:
+      case: under
+    variable:
+      case: under
+    member:
+      case: under
+    reader:
+      case: under
+      prefix: get
+    writer:
+      case: under
+      prefix: set
+    parameter:
+      case: under
+bash4:
+  directory: bash4
+  option: bash4
+  interpreter: bash
+  source_file_ext: sh
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "#!/bin/bash"
+  formal_name: Bash4
+  rosetta_url: Bourne_Again_SHell
+  home_url: http://www.gnu.org/software/bash/
+  wikipedia_url: Bash_(Unix_shell)
+  conventions:
+    case:
+      case: under.downcase
+    file:
+      case: under.downcase
+    class:
+      case: under
+    variable:
+      case: under
+    member:
+      case: under
+    reader:
+      case: under
+      prefix: get
+    writer:
+      case: under
+      prefix: set
+    parameter:
+      case: under
+ckr:
+  directory: ckr
+  option: ckr
+  header_file_ext: h
+  source_file_ext: c
+  object_file_ext: o
+  scanner: c
+  exec_file_ext: exe
+  indent: 2
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c-*-"
+  formal_name: C(K&R)
+  rosetta_url: c
+  conventions:
+    case:
+      case: dash
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+c89:
+  directory: c89
+  option: c89
+  header_file_ext: h
+  source_file_ext: c
+  object_file_ext: o
+  scanner: c
+  exec_file_ext: exe
+  indent: 2
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c-*-"
+  formal_name: C89(AnsiC)
+  rosetta_url: c
+  conventions:
+    case:
+      case: camel
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+c90:
+  directory: c90
+  option: c90
+  header_file_ext: h
+  source_file_ext: c
+  object_file_ext: o
+  scanner: c
+  exec_file_ext: exe
+  indent: 2
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c-*-"
+  formal_name: C90(ISO C)
+  rosetta_url: c
+  conventions:
+    case: camel
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+      
+c99:
+  directory: c99
+  option: c99
+  header_file_ext: h
+  source_file_ext: c
+  object_file_ext: o
+  scanner: c
+  exec_file_ext: exe
+  indent: 2
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c-*-"
+  formal_name: C99
+  rosetta_url: c
+  conventions:
+    case:
+      case: dash
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: camel
+    member:
+      case: snake
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+c11:
+  directory: c11
+  option: c11
+  header_file_ext: h
+  source_file_ext: c
+  object_file_ext: o
+  scanner: c
+  exec_file_ext: exe
+  indent: 2
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c-*-"
+  formal_name: C11
+  rosetta_url: c
+  conventions:
+    case:
+      case: dash
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+      
+cpp-boost:
+  directory: cpp-boost
+  option: cpp-boost
+  header_file_ext: h
+  source_file_ext: cpp
+  object_file_ext: o
+  exec_file_ext: exe
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c++-*-"
+  formal_name: C++(boost)
+  rosetta_url: C++
+  wikipedia_url: C++
+  conventions:
+    case:
+      case: dash
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: dash
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+      
+cpp-boost:
+  directory: cpp-boost
+  option: cpp-boost
+  header_file_ext: h
+  source_file_ext: cpp
+  object_file_ext: o
+  exec_file_ext: exe
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c++-*-"
+  formal_name: C++(boost)
+  rosetta_url: C++
+  wikipedia_url: C++
+  conventions:
+    case:
+      case: dash
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+cpp:
+  directory: cpp
+  option: cpp
+  header_file_ext: h
+  source_file_ext: cpp
+  object_file_ext: o
+  exec_file_ext: exe
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c++-*-"
+  formal_name: C++
+  rosetta_url: C++
+  wikipedia_url: C++
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: snake
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: snake
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+cpp26:
+  directory: cpp26
+  option: cpp26
+  header_file_ext: h
+  source_file_ext: cpp
+  object_file_ext: o
+  exec_file_ext: exe
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-c++-*-"
+  formal_name: C++
+  rosetta_url: C++
+  wikipedia_url: C++
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: snake
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: snake
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+csharp:
+  directory: csharp
+  option: csharp
+  interpreter: mono
+  source_file_ext: cs
+  object_file_ext: net
+  exec_file_ext: net
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-csharp-*-"
+  formal_name: C#
+  rosetta_url: C_sharp
+  home_url: https://dotnet.microsoft.com/en-us/languages/csharp
+  wikipedia_url: C_sharp
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: |-
+        if camel == "event"
+        "event_"
+        else
+        camel
+    member:
+      case: camel_capitalize
+      prefix: 
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+      suffix: _
+clm:
+  directory: clm
+  option: clm
+  header_file_ext: dcl
+  source_file_ext: icl
+  object_file_ext: o
+  exec_file_ext: exe
+  indent: 4
+  assign: "="
+  mode_line: "//-*-clean-*-"
+  formal_name: Clean
+  rosetta_url: Clean
+  home_url: http://clean.cs.ru.nl/
+  wikipedia_url: Clean_(programming_language)
+  conventions:
+    case:
+      case: camel.under
+    file:
+      case: camel.under
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+clojure:
+  directory: clojure
+  option: clojure
+  source_file_ext: clj
+  indent: 4
+  mode_line: ";;-*-clojure-*-"
+  formal_name: Clojure
+  rosetta_url: Clojure
+  home_url: http://clojure.org/
+  wikipedia_url: Clojure
+  conventions:
+    case:
+      case: dash
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: dash
+    member:
+      case: dash
+    reader:
+      case: dash
+      prefix: dash
+    writer:
+      case: dash
+      prefix: dash
+    parameter:
+      case: dash
+coffee:
+  directory: coffee
+  option: coffee
+  interpreter: coffee
+  source_file_ext: coffee
+  mode_line: "#-*-coffee-*-"
+  formal_name: CoffeeScript
+  rosetta_url: CoffeeScript
+  home_url: https://coffeescript.org
+  wikipedia_url: CoffeeScript
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      prefix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+d:
+  directory: d
+  option: d
+  source_file_ext: d
+  object_file_ext: o
+  exec_file_ext: exe
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-d-*-"
+  formal_name: DMD
+  rosetta_url: D
+  home_url: https://dlang.org
+  wikipedia_url: D_(programming_language)
+  conventions:
+    case:
+      case: dash
+    file:
+      case: dash
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+e:
+  directory: e
+  option: emaker
+  source_file_ext: emaker
+  script_file_ext: e
+  indent: 4
+  assign: ":="
+  mode_line: "#-*-e-*-"
+  formal_name: E
+  rosetta_url: E
+  home_url: http://www.erights.org/
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+eiffel:
+  directory: eiffel
+  option: eiffel
+  source_file_ext: e
+  object_file_ext: obj
+  exec_file_ext: exe
+  indent: 4
+  formal_name: Eiffel(SmartEiffel)
+  rosetta_url: Eiffel
+  home_url: https://git.savannah.gnu.org/cgit/liberty-eiffel.git/
+  wikipedia_url: SmartEiffel
+  conventions:
+    case:
+      case: under.downcase
+    file:
+      case: under.downcase
+    class:
+      case: under.upcase
+    variable:
+      case: under
+    member:
+      case: under
+    reader:
+      case: under
+      prefix: get
+    writer:
+      case: under
+      prefix: set
+    parameter:
+      case: under
+erlang:
+  directory: erlang
+  option: erlang
+  interpreter: escript
+  header_file_ext: hrl
+  source_file_ext: erl
+  object_file_ext: beam
+  indent: 4
+  terminator: ","
+  assign: "="
+  mode_line: "%-*-erlang-*-"
+  formal_name: Erlang
+  rosetta_url: Erlang
+  home_url: http://www.erlang.org
+  wikipedia_url: Erlang
+  conventions:
+    case:
+      case: under.downcase
+    file:
+      case: under.downcase
+    class:
+      case: under
+    variable:
+      case: camel_capitalize
+    member:
+      case: under
+    reader:
+      case: under
+      prefix: get
+    writer:
+      case: under
+      prefix: set
+    parameter:
+      case: camel_capitalize
+falcon:
+  directory: falcon
+  option: falcon
+  interpreter: falcon
+  source_file_ext: fal
+  object_file_ext: fam
+  indent: 3
+  assign: "="
+  mode_line: "//-*-falcon-*-"
+  formal_name: Falcon
+  rosetta_url: Falcon
+  home_url: http://www.falconpl.org/
+  wikipedia_url: Falcon_(programming_language)
+  conventions:
+    case:
+      case: under
+    file:
+      case: under
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+fantom:
+  directory: fantom
+  subdir: src
+  option: fantom
+  interpreter: fan
+  source_file_ext: fan
+  indent: 4
+  assign: ":="
+  mode_line: "//-*-fan-*-"
+  formal_name: Fantom
+  rosetta_url: Fantom
+  home_url: http://www.fantom.org/
+  wikipedia_url: Fantom_(programming_language)
+  conventions:
+    case:
+      case: under
+    file:
+      case: under
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+fpc:
+  directory: fpc
+  option: fpc
+  source_file_ext: pp
+  object_file_ext: o
+  tmp_ext: ppu
+  exec_file_ext: exe
+  indent: 4
+  assign: "="
+  mode_line: "(*-*-delphi-*-*)"
+  render_members_first: true
+  formal_name: Free Pascal
+  rosetta_url: Free_Pascal
+  home_url: http://www.freepascal.org/
+  wikipedia_url: Free_Pascal
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+gcl:
+  directory: gcl
+  option: gcl
+  interpreter: gcl
+  source_file_ext: lisp
+  indent: 4
+  mode_line: ";;-*-lisp-*-"
+  formal_name: Lisp(Gnu Common Lisp)
+  rosetta_url: GCL
+  home_url: http://savannah.gnu.org/projects/gcl
+  wikipedia_url: GNU_Common_Lisp
+  conventions:
+    case:
+      case: dash
+    file:
+      case: dash
+    class:
+      case: dash
+    variable:
+      case: dash
+    member:
+      case: dash
+    reader:
+      case: dash
+      prefix: get
+    writer:
+      case: dash
+      prefix: set
+    parameter:
+      case: dash
+go:
+  directory: go
+  option: go
+  interpreter: go run
+  source_file_ext: go
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-go-*-"
+  formal_name: Go
+  rosetta_url: Go
+  home_url: http://golang.org/
+  wikipedia_url: Go_(programming_language)
+  conventions:
+    case:
+      case: dash
+    file:
+      case: down
+    class:
+      case: camel_capitalize
+    variable:
+      case: camel
+    member:
+      case: camel_capitalize
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+fsharp:
+  directory: fsharp
+  option: fs
+  interpreter: go run
+  source_file_ext: fs
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-fsharp-*-"
+  formal_name: FSharp
+  rosetta_url: FSharp
+  home_url: http://golang.org/
+  wikipedia_url: Go_(programming_language)
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: camel
+    member:
+      case: camel_capitalize
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+groovy:
+  directory: groovy
+  option: groovy
+  interpreter: groovy
+  source_file_ext: groovy
+  indent: 4
+  assign: "="
+  formal_name: Groovy
+  rosetta_url: Groovy
+  home_url: https://www.groovy-lang.org/
+  wikipedia_url: Groovy_(programming_language)
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+gst:
+  directory: gst
+  option: gst
+  interpreter: gst
+  source_file_ext: st
+  indent: 4
+  mode_line: '"-*-smalltalk-*-"'
+  formal_name: "(GNU)Smalltalk"
+  rosetta_url: ''
+  home_url: https://www.gnu.org/software/smalltalk/
+  wikipedia_url: ''
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+haskell:
+  directory: haskell
+  option: haskell
+  source_file_ext: hs
+  object_file_ext: o
+  tmp_ext: hi
+  exec_file_ext: exe
+  indent: 4
+  assign: "="
+  mode_line: "--*-haskell-*---"
+  formal_name: Haskell
+  home_url: https://www.haskell.org/
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+io:
+  directory: io
+  option: io
+  interpreter: io
+  source_file_ext: io
+  indent: 2
+  assign: " := "
+  formal_name: io
+  home_url: https://iolanguage.org/
+  conventions:
+    case:
+      case: under.split.join.downcase
+    file:
+      case: under.split.join.downcase
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      prefix: self.
+    reader:
+      case: camel
+      prefix: get
+    writer:
+      case: camel
+    parameter:
+      case: camel
+java:
+  directory: java
+  option: java
+  source_file_ext: java
+  object_file_ext: class
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//---*-java-*-"
+  formal_name: Java
+  home_url: https://www.java.com/en/
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+
+python:
+  interpreter: python
+  directory: python
+  source_file_ext: py
+  formal_name: Python
+  object_file_ext: pyc    #not really compiled
+  option: python
+  assign: "="
+  indent: "    "
+  home_url:  "https://www.python.org/"
+  conventions:
+    case:
+      case: down
+    file:
+      case: down
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: snake
+    reader:
+      case: snake
+    writer:
+      case: snake
+      suffix: =
+    parameter:
+      case: snake
+
+
+
+ruby:
+  directory: ruby
+  formal_name: Ruby
+  option: riby
+    
+  source_file_ext: rb
+  option: ribu
+  indent: 4          
+  assign: =
+  home_url: https://www.ruby-lang.org/en/
+  conventions:
+    case: 
+      case: snake
+    file: 
+      case: snake
+    class:
+      case: camel_capitalize
+    variable:
+      case: snake
+    member:
+      case: snake
+    reader:
+      case: snake
+      prefix: get
+    writer:
+      case: snake
+      prefix: set
+    parameter:
+      case: snake
+
+
+rust:
+  directory: rust
+  option: rust
+  source_file_ext: rs
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//---*-rust-*-"
+  formal_name: Rust
+  home_url: https://www.rust-lang.org/
+  conventions:
+    case: 
+      case: snake
+    file: 
+      case: snake
+    class:
+      case: camel_capitalize
+    variable:
+      case: snake
+    member:
+      case: snake
+    reader:
+      case: snake
+      prefix: get
+    writer:
+      case: snake
+      prefix: set
+    parameter:
+      case: snake
+      
+sather:
+  directory: sather
+  option: sather
+  source_file_ext: sa
+  object_file_ext: o
+  exec_file_ext: exe
+  indent: 4
+  mode_line: "--*-sather-*-"
+  formal_name: Sather
+  home_url: https://www.gnu.org/software/sather/
+  conventions:
+    case:
+      case: under.downcase
+    file:
+      case: under.downcase
+    class:
+      case: under.upcase
+    variable:
+      case: under
+    member:
+      case: under
+      suffix: _
+    reader:
+      case: under
+      prefix: get_
+    writer:
+      case: under
+      prefix: set
+    parameter:
+      case: under
+scala:
+  directory: scala
+  option: scala
+  interpreter: scala
+  source_file_ext: scala
+  indent: 4
+  assign: "="
+  formal_name: Scala
+  home_url: https://www.scala-lang.org/
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+      suffix: _
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      suffix: set
+    parameter:
+      case: camel
+self:
+  directory: self
+  option: self
+  source_file_ext: self
+  indent: 4
+  assign: "="
+  formal_name: Self
+  home_url: https://selflanguage.org/
+  conventions:
+    case:
+      case: camel_capitalize
+    file:
+      case: camel_capitalize
+    class:
+      case: camel_capitalize
+    variable:
+      case: to_camel
+    member:
+      case: camel
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+swift:
+  directory: swift
+  option: swift
+  source_file_ext: swift
+  indent: 4
+  terminator: ";"
+  assign: "="
+  mode_line: "//-*-rust-*-"
+  formal_name: Swift
+  rosetta_url: Swift
+  home_url: http://swift.org/
+  wikipedia_url: Swift
+  conventions:
+    case:
+      case: dash.downcase
+    file:
+      case: dash.downcase
+    class:
+      case: camel
+    variable:
+      case: snake
+    member:
+      case: dash.downcase
+    reader:
+      case: camel_capitalize
+      prefix: get
+    writer:
+      case: camel_capitalize
+      prefix: set
+    parameter:
+      case: camel
+      prefix:
+tcl_8_6:
+  directory: tcl_8_6
+  option: tcl_8_6
+  interpreter: tclsh8.6
+  source_file_ext: tcl
+  indent: 2
+  terminator: ";"
+  mode_line: "#-*-tcl-*-"
+  formal_name: TCL(8.6)
+  home_url: https://www.tcl-lang.org/
+  conventions:
+    case:
+      case: under.downcase
+    file:
+      case: under.downcase
+    class:
+      case: under
+    variable:
+      case: under
+    member:
+      case: under
+    reader:
+      case: under
+      prefix: get
+    writer:
+      case: under
+      prefix: set
+    parameter:
+      case: under
+unicon:
+  directory: unicon
+  option: unicon
+  source_file_ext: icn
+  object_file_ext: u
+  exec_file_ext: exe
+  indent: 4
+  assign: ":="
+  mode_line: "#-*-unicon-*-"
+  formal_name: Unicon
+  home_url: http://www.unicon.org/
+  conventions:
+    case:
+      case: under.downcase
+    file:
+      case: under.downcase
+    class:
+      case: |-
+        if respond_to? :name and   name == "event"
+        "Event_"
+        else
+        camel_capitalize
+    variable:
+      case: under
+    member:
+      case: under
+    reader:
+      case: under
+      prefix: get
+    writer:
+      case: under
+      prefix: set
+    parameter:
+      case: under

@@ -1,0 +1,59 @@
+--- !ruby/object:Cls::Clss
+table_name: Attendance
+class_name: Attendance
+members:
+- !ruby/object:Cls::Member
+  column_name: athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: attend_date
+  member_name: attend date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: morn_aft
+  member_name: morn aft
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: attn_stat
+  member_name: attn stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: actual_dist
+  member_name: actual dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: yd_mtr
+  member_name: yd mtr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [Attendance]
+  (
+  [athlete] Long Integer,
+  [attend_date] DateTime,
+  [morn_aft] Text (2),
+  [attn_stat] Text (2),
+  [actual_dist] Long Integer,
+  [yd_mtr] Text (2)
+  );

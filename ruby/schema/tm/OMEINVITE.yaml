@@ -1,0 +1,72 @@
+--- !ruby/object:Cls::Clss
+table_name: OMEINVITE
+class_name: OMEINVITE
+members:
+- !ruby/object:Cls::Member
+  column_name: IMEET
+  member_name: imeet
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: IATHLETE
+  member_name: iathlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: INVITEDATE
+  member_name: invitedate
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NEWADD
+  member_name: newadd
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DELETED
+  member_name: deleted
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ITEAM
+  member_name: iteam
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ITEAMCODE
+  member_name: iteamcode
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: INVITEEMAILSENT
+  member_name: inviteemailsent
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [OMEINVITE]
+  (
+  [IMEET] Long Integer,
+  [IATHLETE] Long Integer,
+  [INVITEDATE] DateTime,
+  [NEWADD] Boolean NOT NULL,
+  [DELETED] Boolean NOT NULL,
+  [ITEAM] Long Integer,
+  [ITEAMCODE] Text (10),
+  [INVITEEMAILSENT] DateTime
+  );

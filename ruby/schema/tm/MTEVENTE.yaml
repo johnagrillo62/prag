@@ -1,0 +1,189 @@
+--- !ruby/object:Cls::Clss
+package: [hytek,tm]
+table_name: MTEVENTE
+class_name: mt evente
+members:
+- !ruby/object:Cls::Member
+  column_name: Meet
+  member_name: meet
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtEv
+  member_name: mt ev
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtEvX
+  member_name: mt ev x
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Lo_Hi
+  member_name: lo hi
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FastCut
+  member_name: fast cut
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SlowCut
+  member_name: slow cut
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Course
+  member_name: course
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtEvent
+  member_name: mt event
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fast_L
+  member_name: fast l
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Slow_L
+  member_name: slow l
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fast_Y
+  member_name: fast y
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Slow_Y
+  member_name: slow y
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TstdFile
+  member_name: tstd file
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TstDesig
+  member_name: tst desig
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 8
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Distance
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Stroke
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sex
+  member_name: sex
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: I_R
+  member_name: i r
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Session
+  member_name: session
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 8
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Division
+  member_name: division
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 6
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fee
+  member_name: fee
+  type: !ruby/object:Types::Float
+    nullable: true
+    type: :single
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExportEvent
+  member_name: export event
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 8
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [MTEVENTE]
+  (
+  [Meet] Long Integer,
+  [MtEv] Integer,
+  [MtEvX] Text (2),
+  [Lo_Hi] Integer,
+  [FastCut] Long Integer,
+  [SlowCut] Long Integer,
+  [Course] Text (2),
+  [MtEvent] Long Integer,
+  [Fast_L] Long Integer,
+  [Slow_L] Long Integer,
+  [Fast_Y] Long Integer,
+  [Slow_Y] Long Integer,
+  [TstdFile] Text (16),
+  [TstDesig] Text (8),
+  [Distance] Integer,
+  [Stroke] Integer,
+  [Sex] Text (2),
+  [I_R] Text (2),
+  [Session] Byte,
+  [Division] Text (6),
+  [Fee] Single,
+  [ExportEvent] Text (8),
+  );

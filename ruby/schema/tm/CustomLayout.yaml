@@ -1,0 +1,43 @@
+--- !ruby/object:Cls::Clss
+table_name: CustomLayout
+class_name: CustomLayout
+members:
+- !ruby/object:Cls::Member
+  column_name: ID
+  member_name: id
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Name
+  member_name: name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Portrait
+  member_name: portrait
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Title
+  member_name: title
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [CustomLayout]
+  (
+  [ID] Long Integer,
+  [Name] Text (40),
+  [Portrait] Boolean NOT NULL,
+  [Title] Text (100)
+  );

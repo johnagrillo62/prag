@@ -1,0 +1,600 @@
+--- !ruby/object:Cls::Clss
+table_name: Event
+class_name: Event
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_no
+  member_name: event no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ltr
+  member_name: event ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ind_rel
+  member_name: ind rel
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_sex
+  member_name: event sex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_gender
+  member_name: event gender
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_dist
+  member_name: event dist
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_stroke
+  member_name: event stroke
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Low_age
+  member_name: low age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: High_Age
+  member_name: high age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Multi_age
+  member_name: multi age
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_stat
+  member_name: event stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_rounds
+  member_name: event rounds
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_prelanes
+  member_name: num prelanes
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_finlanes
+  member_name: num finlanes
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Heats_infinal
+  member_name: heats infinal
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Heats_insemi
+  member_name: heats insemi
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Std_lanes
+  member_name: std lanes
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Auto_seed
+  member_name: auto seed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Twoperlane_req
+  member_name: twoperlane req
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Preheat_order
+  member_name: preheat order
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Finheat_order
+  member_name: finheat order
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Score_event
+  member_name: score event
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Div_no
+  member_name: div no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Relay_size
+  member_name: relay size
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_1
+  member_name: comm 1
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_2
+  member_name: comm 2
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_3
+  member_name: comm 3
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_4
+  member_name: comm 4
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Entry_fee
+  member_name: entry fee
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Is_locked
+  member_name: is locked
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Locked_by
+  member_name: locked by
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_Type
+  member_name: event type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Locked_list
+  member_name: locked list
+  type: !ruby/object:Types::String
+    len: 24
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_note
+  member_name: event note
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Suppress_stroke
+  member_name: suppress stroke
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Custom_ABCFinal
+  member_name: custom a b c final
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_dives
+  member_name: num dives
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_HeatsInFinal
+  member_name: num heats in final
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Multiage_SuperFinal
+  member_name: multiage super final
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Finals_LanesVary
+  member_name: finals lanes vary
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Finals_LanesVaryOrder
+  member_name: finals lanes vary order
+  type: !ruby/object:Types::String
+    len: 36
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ABCfinal_order
+  member_name: a b cfinal order
+  type: !ruby/object:Types::String
+    len: 12
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ABC_Style
+  member_name: a b c style
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PrelimsAs_ExtendedFinal
+  member_name: prelims as extended final
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_LanesInBestHeatsTimedFinal
+  member_name: num lanes in best heats timed final
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_BestHeatsTimedFinal
+  member_name: num best heats timed final
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TimedFinal_LanesVary
+  member_name: timed final lanes vary
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ScoreTimedFinal_asABC
+  member_name: score timed final as a b c
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_HeatsInTimedFinalToScore
+  member_name: num heats in timed final to score
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pads_BothEnds
+  member_name: pads both ends
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Multiage_SuperSeed
+  member_name: multiage super seed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Suppress_distance
+  member_name: suppress distance
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_AwardsPrinted
+  member_name: fin awards printed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_AwardsPrinted
+  member_name: pre awards printed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_AwardsPrinted
+  member_name: sem awards printed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FastTimeStd_Abbr
+  member_name: fast time std abbr
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SlowTimeStd_Abbr
+  member_name: slow time std abbr
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SuperFinal_ElimOldAgeGrp
+  member_name: super final elim old age grp
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SeedMultiAge_OldToYoung
+  member_name: seed multi age old to young
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Multi_ageScnd
+  member_name: multi age scnd
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_RelayLegs
+  member_name: num relay legs
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pads_BothEndsFinals
+  member_name: pads both ends finals
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Checkin_starttime
+  member_name: checkin starttime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Checkin_endtime
+  member_name: checkin endtime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Checkin_startdate
+  member_name: checkin startdate
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Checkin_enddate
+  member_name: checkin enddate
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_semlanes
+  member_name: num semlanes
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EvtMaxAgeFor_CFinal
+  member_name: evt max age for c final
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EvtMaxAgeNumHeats_CFinal
+  member_name: evt max age num heats c final
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: fin_actualstarttime
+  member_name: fin actualstarttime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sem_actualstarttime
+  member_name: sem actualstarttime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pre_actualstarttime
+  member_name: pre actualstarttime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_SourcePtr
+  member_name: swimoff source ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_SourceRndLtr
+  member_name: swimoff source rnd ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_Created
+  member_name: swimoff created
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Multiage_BestRestFinal
+  member_name: multiage best rest final
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Event]
+  (
+  [Event_no] Integer,
+  [Event_ltr] Text (2),
+  [Event_ptr] Long Integer,
+  [Ind_rel] Text (2),
+  [Event_sex] Text (2),
+  [Event_gender] Text (2),
+  [Event_dist] Single,
+  [Event_stroke] Text (2),
+  [Low_age] Integer,
+  [High_Age] Integer,
+  [Multi_age] Boolean NOT NULL,
+  [Event_stat] Text (2),
+  [Event_rounds] Integer,
+  [Num_prelanes] Integer,
+  [Num_finlanes] Integer,
+  [Heats_infinal] Text (2),
+  [Heats_insemi] Integer,
+  [Std_lanes] Text (2),
+  [Auto_seed] Boolean NOT NULL,
+  [Twoperlane_req] Boolean NOT NULL,
+  [Preheat_order] Text (2),
+  [Finheat_order] Text (2),
+  [Score_event] Boolean NOT NULL,
+  [Div_no] Integer,
+  [Relay_size] Integer,
+  [Comm_1] Text (72),
+  [Comm_2] Text (72),
+  [Comm_3] Text (72),
+  [Comm_4] Text (72),
+  [Entry_fee] Currency,
+  [Is_locked] Boolean NOT NULL,
+  [Locked_by] Text (40),
+  [Event_Type] Text (2),
+  [Locked_list] Text (24),
+  [Event_note] Text (40),
+  [Suppress_stroke] Boolean NOT NULL,
+  [Custom_ABCFinal] Boolean NOT NULL,
+  [Num_dives] Integer,
+  [Num_HeatsInFinal] Integer,
+  [Multiage_SuperFinal] Boolean NOT NULL,
+  [Finals_LanesVary] Boolean NOT NULL,
+  [Finals_LanesVaryOrder] Text (36),
+  [ABCfinal_order] Text (12),
+  [ABC_Style] Boolean NOT NULL,
+  [PrelimsAs_ExtendedFinal] Boolean NOT NULL,
+  [Num_LanesInBestHeatsTimedFinal] Integer,
+  [Num_BestHeatsTimedFinal] Integer,
+  [TimedFinal_LanesVary] Boolean NOT NULL,
+  [ScoreTimedFinal_asABC] Boolean NOT NULL,
+  [Num_HeatsInTimedFinalToScore] Integer,
+  [Pads_BothEnds] Boolean NOT NULL,
+  [Multiage_SuperSeed] Boolean NOT NULL,
+  [Suppress_distance] Boolean NOT NULL,
+  [Fin_AwardsPrinted] Boolean NOT NULL,
+  [Pre_AwardsPrinted] Boolean NOT NULL,
+  [Sem_AwardsPrinted] Boolean NOT NULL,
+  [FastTimeStd_Abbr] Text (8),
+  [SlowTimeStd_Abbr] Text (8),
+  [SuperFinal_ElimOldAgeGrp] Boolean NOT NULL,
+  [SeedMultiAge_OldToYoung] Boolean NOT NULL,
+  [Multi_ageScnd] Boolean NOT NULL,
+  [Num_RelayLegs] Integer,
+  [Pads_BothEndsFinals] Boolean NOT NULL,
+  [Checkin_starttime] Long Integer,
+  [Checkin_endtime] Long Integer,
+  [Checkin_startdate] DateTime,
+  [Checkin_enddate] DateTime,
+  [Num_semlanes] Integer,
+  [EvtMaxAgeFor_CFinal] Integer,
+  [EvtMaxAgeNumHeats_CFinal] Integer,
+  [fin_actualstarttime] Long Integer,
+  [sem_actualstarttime] Long Integer,
+  [pre_actualstarttime] Long Integer,
+  [Swimoff_SourcePtr] Long Integer,
+  [Swimoff_SourceRndLtr] Text (2),
+  [Swimoff_Created] DateTime,
+  [Multiage_BestRestFinal] Boolean NOT NULL
+  );

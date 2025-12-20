@@ -1,0 +1,36 @@
+-- ----------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2011 Brian Bruns and others.
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-- ----------------------------------------------------------
+
+-- That file uses encoding UTF-8
+
+CREATE TABLE [RecordsApp]
+ (
+	[timer_type]			Integer, 
+	[app_title]			Text (180), 
+	[app_date]			Text (22), 
+	[sendto_name]			Text (80), 
+	[sendto_address1]			Text (80), 
+	[sendto_address2]			Text (80), 
+	[sendto_city]			Text (40), 
+	[sendto_state]			Text (6), 
+	[sendto_zip]			Text (20), 
+	[sendto_email]			Text (100), 
+	[record_name]			Text (24), 
+	[app_topnote1]			Text (220), 
+	[app_bottomnote1]			Text (220), 
+	[app_topnote2]			Text (220), 
+	[app_bottomnote2]			Text (220), 
+	[app_topnote3]			Text (220), 
+	[app_bottomnote3]			Text (220), 
+	[app_topnote4]			Text (220), 
+	[app_bottomnote4]			Text (220), 
+	[referree_name]			Text (80), 
+	[adminref_name]			Text (80)
+);
+
+

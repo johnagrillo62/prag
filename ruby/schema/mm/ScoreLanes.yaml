@@ -1,0 +1,103 @@
+--- !ruby/object:Cls::Clss
+table_name: ScoreLanes
+class_name: ScoreLanes
+members:
+- !ruby/object:Cls::Member
+  column_name: lane_00
+  member_name: lane 00
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_01
+  member_name: lane 01
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_02
+  member_name: lane 02
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_03
+  member_name: lane 03
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_04
+  member_name: lane 04
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_05
+  member_name: lane 05
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_06
+  member_name: lane 06
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_07
+  member_name: lane 07
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_08
+  member_name: lane 08
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_09
+  member_name: lane 09
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_10
+  member_name: lane 10
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_11
+  member_name: lane 11
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: lane_12
+  member_name: lane 12
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [ScoreLanes]
+  (
+  [lane_00] Boolean NOT NULL,
+  [lane_01] Boolean NOT NULL,
+  [lane_02] Boolean NOT NULL,
+  [lane_03] Boolean NOT NULL,
+  [lane_04] Boolean NOT NULL,
+  [lane_05] Boolean NOT NULL,
+  [lane_06] Boolean NOT NULL,
+  [lane_07] Boolean NOT NULL,
+  [lane_08] Boolean NOT NULL,
+  [lane_09] Boolean NOT NULL,
+  [lane_10] Boolean NOT NULL,
+  [lane_11] Boolean NOT NULL,
+  [lane_12] Boolean NOT NULL
+  );

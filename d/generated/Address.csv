@@ -1,0 +1,14 @@
+# address CSV Format
+# Generated CSV schema for address class
+# Source D struct: Address
+# ==========================================
+
+# CSV Format Specification:
+# - Delimiter: comma (,)
+# - Text qualifier: double quote (")
+# - Encoding: UTF-8
+# - Line ending: CRLF (\r\n) or LF (\n)
+# - Header row: Required
+
+# Field Mapping and Data Types:
+# ==============================

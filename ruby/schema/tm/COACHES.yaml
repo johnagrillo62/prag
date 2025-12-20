@@ -1,0 +1,218 @@
+--- !ruby/object:Cls::Clss
+table_name: COACHES
+class_name: COACHES
+members:
+- !ruby/object:Cls::Member
+  column_name: Coaches
+  member_name: coaches
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: false
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: Team
+  member_name: team
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CPhone
+  member_name: c phone
+  type: !ruby/object:Types::String
+    len: 28
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CEMail
+  member_name: c e mail
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CName
+  member_name: c name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CTitle
+  member_name: c title
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert1
+  member_name: cert 1
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert2
+  member_name: cert 2
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert3
+  member_name: cert 3
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Head
+  member_name: head
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CoachCell
+  member_name: coach cell
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Export
+  member_name: cexport
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert4
+  member_name: cert 4
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert5
+  member_name: cert 5
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert1Expire
+  member_name: cert 1 expire
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert2Expire
+  member_name: cert 2 expire
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert3Expire
+  member_name: cert 3 expire
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert4Expire
+  member_name: cert 4 expire
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cert5Expire
+  member_name: cert 5 expire
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PrimaryMale
+  member_name: primary male
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PrimaryFemale
+  member_name: primary female
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MaleOnly
+  member_name: male only
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FemaleOnly
+  member_name: female only
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: cLastName
+  member_name: c last name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: cFirstName
+  member_name: c first name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CFirst
+  member_name: c first
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CLast
+  member_name: c last
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+uniques:
+- "[COACHES]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [COACHES]
+  (
+  [Coaches] Long Integer,
+  [Team] Long Integer,
+  [CPhone] Text (28),
+  [CEMail] Text (72),
+  [CName] Text (60),
+  [CTitle] Text (30),
+  [Cert1] Text (30),
+  [Cert2] Text (30),
+  [Cert3] Text (30),
+  [Head] Boolean NOT NULL,
+  [CoachCell] Text (40),
+  [Export] Boolean NOT NULL,
+  [Cert4] Text (30),
+  [Cert5] Text (30),
+  [Cert1Expire] DateTime,
+  [Cert2Expire] DateTime,
+  [Cert3Expire] DateTime,
+  [Cert4Expire] DateTime,
+  [Cert5Expire] DateTime,
+  [PrimaryMale] Boolean NOT NULL,
+  [PrimaryFemale] Boolean NOT NULL,
+  [MaleOnly] Boolean NOT NULL,
+  [FemaleOnly] Boolean NOT NULL,
+  [cLastName] Text (40),
+  [cFirstName] Text (40),
+  [CFirst] Text (30),
+  [CLast] Text (30)
+  );

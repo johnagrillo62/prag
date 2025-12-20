@@ -1,0 +1,8 @@
+{
+  "type": "record",
+  "name": "Message",
+  "fields": [
+    {"name": "id", "type": {"type": "fixed", "name": "UUID", "size": 16}},
+    {"name": "payload", "type": "bytes"}
+  ]
+}

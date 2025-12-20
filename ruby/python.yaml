@@ -1,0 +1,32 @@
+---
+python_types:
+  Integer:
+    default: 0
+    type: int
+
+  Float:
+    default_value: 0.0
+    type: float
+
+  Boolean:
+    default_value:   False
+    type: bool
+    convert:  string_to_bool
+    
+  DateTime:
+    default_value: ""
+    type: datetime
+    
+  Date:
+    default_value: "" 
+    type: datetime.datetime
+    convert: DateTime.parse
+
+  Currency:
+    default_value: "0.00"
+    type: float
+
+  String:
+    default_value: ""
+    type: str
+

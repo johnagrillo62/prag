@@ -1,0 +1,28 @@
+--- !ruby/object:Cls::Clss
+table_name: WorkCategory
+class_name: WorkCategory
+members:
+- !ruby/object:Cls::Member
+  column_name: stroke_abbr
+  member_name: stroke abbr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: stroke_name
+  member_name: stroke name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [WorkCategory]
+  (
+  [stroke_abbr] Text (2),
+  [stroke_name] Text (40)
+  );

@@ -1,0 +1,16 @@
+# YAML Schema for contactinfo
+# Generated from D struct: ContactInfo
+---
+
+contactinfo:
+  email: ""  # type: string
+  phone: ""  # type: string
+  address: null  # type: mixed
+  previousaddresses: []  # type: array
+
+# Example usage:
+# contactinfo:
+#   email: example_value
+#   phone: example_value
+#   address: example_value
+#   previousaddresses: example_value

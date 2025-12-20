@@ -1,0 +1,395 @@
+# C++
+#  classes
+#
+#  members
+#    public private protected
+#    getter setter
+#
+# type
+#   optional
+#
+# namespaces
+
+module Cpp26
+  @types = Bhw::load_yaml("cpp26")
+
+  def self.to_type(type)
+    clss = type.class.name.split("::").last
+    type_def = @types["cpp_types"][clss]["types"]
+
+    # Return the class type based on the class and type
+    if type_def
+      case type
+      when Types::Integer
+        return type_def[type.bits]['unsigned']['required']['type']
+      when Types::Float
+        puts type.type
+        return type_def[type.type.to_s]['required']['type']
+      else
+        return type_def['required']['type']
+
+      end
+    end
+    puts "Unknown type: #{type}"
+    nil
+  end
+
+  def self.to_convert(type, val)
+    clss = type.class.name.split("::").last
+    type_def = @types["cpp_types"][clss]["types"]
+
+    convert =
+      # Return the class type based on the class and type
+      if type_def
+        case type
+        when Types::Integer
+          type_def[type.bits]['signed']['required']['convert']
+        when Types::Float
+          type_def[type.type.to_s]['required']['convert']
+        else
+          type_def['required']['convert']
+        end
+      end
+    if convert == nil
+      val
+    else
+      "#{convert}(#{val})"
+    end
+
+  end
+
+  def self.to_read(type)
+    case type
+    when Types::String
+      "bhw::GetText"
+    when Types::Boolean
+      "bhw::GetBool"
+    when Types::DateTime
+      "bhw::GetTimePoint"
+    when Types::Integer
+      if (type.bits == 8)
+        "bhw::GetChar"
+      elsif (type.bits == 16)
+        "bhw::GetShort"
+      elsif (type.bits == 32)
+        "bhw::GetInt"
+      else
+        "bhw::GetLong"
+      end
+    else
+      ""
+    end
+  end
+
+  def self.meta(class_name, hdr_file, clss, wrap=false)
+    out = []
+
+    out << "#pragma once"
+    out << "#include \"bhw/meta_field.h\""
+    out << "#include \"#{hdr_file}\""
+
+    out << "namespace hytek::tm::meta"
+    out << "{"
+    
+    
+    out << ""
+    out << "static constexpr char table[] = \"#{class_name}\"; "
+    out << "// clang-format off"
+    out << ""
+    out << "static constexpr char query[] = R\"lit(select " + clss.getSelectFields + " from " + clss.table_name + ")lit\"; "
+    out << ""
+    
+    out << "static constexpr auto #{class_name}Meta = std::make_tuple("
+    out << clss.members.map {|m|
+      
+      attrs = "FieldProp::Serializable | FieldProp::Hashable"
+      if m.unique == true
+        attrs = "FieldProp::PrimaryKey | " + attrs
+      end
+
+      mtype = if wrap == true
+               "Field<#{self.to_type(m.type)}, FieldMutability::Immutable>"
+             else
+               self.to_type(m.type)
+             end
+
+      ["    FieldMeta< ",
+       class_name,
+       ", ",
+       mtype,
+       " , ",   
+       attrs,
+       " > {",
+       "&",
+       class_name,
+       "::",
+       m.member_name.camel_case,
+       ", \"",
+       m.member_name.camel_case,
+       "\", \"",
+       m.column_name.camel_case,
+       "\", \"",
+       m.column_name.camel_case,
+       "\"",
+       "}"
+      ] * ""
+
+
+    } * ",\n"
+    
+    out << "    );"
+
+    out << "    template <>"
+    out << "    struct MetaFor<hytek::tm::#{class_name}>"
+    out << "{"
+    out << "       static constexpr auto& value = #{class_name}Meta;"
+    out << "};"
+    
+    out << "} //namespace "
+    
+    out * "\n"
+    out * "\n"
+
+
+  end
+  def self.write_read(members, dbase, clss, writer, package)
+    out = []
+    out << ""
+    out << "// ReSharper disable CppInconsistentNaming"
+    out << "namespace";
+    out << "{"
+    members.each_with_index.map do |m, i|
+      field = m.member_name.camel_case +  "FieldNum"
+      out << "constexpr uint16_t #{field} = #{i + 1};"
+
+      if m.type.class == Types::String
+        field = m.member_name.camel_case + "FieldLength"
+        out << "constexpr int #{field} = #{m.type.len.to_s};";
+      end
+
+    end
+    out << "} // namespace"
+    out << ""
+    out << "template<>"
+    out << "auto bhw::ReadObj(const SQLHANDLE& stmt) -> #{package}::#{clss}"
+    out << "{"
+    members.each_with_index.map do |m, i|
+
+      field = m.member_name.camel_case + "FieldNum"
+
+      assign = "  auto #{m.member_name.camel_case} = " + to_read(m.type) + "(stmt, " + field
+      if m.type.class == Types::String
+        field = m.member_name.camel_case + "FieldLength"
+        assign += ", " + field
+      end
+      out << assign + ");"
+    end
+    out << "  return #{package}::#{clss}::from({" + members.each_with_index.map do |m, i|
+      "." + writer.parameter_str(m.member_name) + " = #{m.member_name.camel_case}"
+    end * ", " + "});"
+    out << "}"
+
+    out << "template<>"
+    out << "auto bhw::ReadUniquePtr(const SQLHANDLE& stmt) -> std::unique_ptr<#{package}::#{clss}>"
+    out << "{"
+    out << "  return std::make_unique<#{package}::#{clss}>(ReadObj<#{package}::#{clss}>(stmt));"
+    out << "}"
+    out * "\n"
+  end
+
+  def self.write(class_def)
+    writer = Writer.new(Writers["cpp26"])
+
+    members = class_def.members
+    ext_hdr = writer.header_file_ext
+    ext_src = writer.source_file_ext
+
+    dir = class_def.package * "/"
+    base_file_path = writer.to_file_name(class_def.class_name)
+    hdr_non_const_file_path = File.join(dir, base_file_path + "_non_const." + ext_hdr)
+    
+    class_name_non_const = writer.to_class_name(class_def) + "NonConst"
+    meta_file_non_const_path = File.join(dir, base_file_path + "_non_const_meta.h")    
+
+    hdr_const_file_path = File.join(dir, base_file_path + "_const." + ext_hdr)    
+    class_name_const = writer.to_class_name(class_def) + "Const"
+    meta_file_const_path = File.join(dir, base_file_path + "_const_meta.h")        
+    immutable_class_path = File.join(dir, base_file_path + "_immutable_class.h")
+
+    class_name_fields = writer.to_class_name(class_def) + "Fields"
+    hdr_fields_path = File.join(dir, base_file_path + "_fields." + ext_hdr)
+    meta_fields_file_path = File.join(dir, base_file_path + "_fields_meta.h")    
+
+    package = class_def.package.map { |c| c.strip } * "::"
+    indexed = if class_def.uniques.size == 0
+                false
+              else
+                true
+              end
+    class_name = writer.to_class_name(class_def)
+    key = class_def.members.select { |m| m.unique }
+    if key.size > 0
+      key = writer.to_reader_name(key[0].member_name)
+    end
+
+    meta_src = [
+      self.meta(class_name_non_const, hdr_non_const_file_path, class_def),
+    ] * "\n"
+
+    hdr_non_const = [
+      "#pragma once",
+      "#include <chrono>",
+      "#include <string>",
+      "",
+      "namespace #{package}",
+      "{",
+      "struct #{class_name_non_const} ",
+      "{",
+      members.each_with_index.map do |m, i|
+        m_type = to_type(m.type)
+        mname = m.member_name.camel_case
+        [
+          "    #{m_type} #{mname};",
+        ] * "\n"
+      end * "\n",
+      "",
+      "    // clang-format off",
+      "    // -----------------------------",
+      "    // Compiler-Generated Functions",
+      "    // -----------------------------",
+      "    // [OK] #{class_name}() -> Default constructor",
+      "    // [OK] ~#{class_name}() -> Destructor",
+      "    // [OK] #{class_name} (const #{class_name}&) -> Copy constructor ",
+      "    // [OK] #{class_name}& operator=(const #{class_name}&) noexcept -> Copy assignment",
+      "    // [OK] #{class_name} (#{class_name}&&) -> Move constructor",
+      "    // [OK] #{class_name}& operator=(#{class_name}&&) noexcept -> Move assignment",
+      "    // -----------------------------",
+      "    // clang-format on",
+      "};\n",
+      "} //namespace",
+    ]
+
+
+    hdr_const = [
+      "#pragma once",
+      "#include <chrono>",
+      "#include <string>",
+      "",
+      "namespace #{package}",
+      "{",
+      "struct #{class_name_const} ",
+      "{",
+      members.each_with_index.map do |m, i|
+        m_type = to_type(m.type)
+        mname = m.member_name.camel_case
+        [
+          "    const #{m_type} #{mname};",
+        ] * "\n"
+        
+      end * "\n",
+      "",
+      "    // clang-format off",
+      "    // -----------------------------",
+      "    // Compiler-Generated Functions",
+      "    // -----------------------------",
+      "    // [NO] #{class_name}() -> Default constructor Not generated (const members must be initialized)",
+      "    // [OK] ~#{class_name}() -> Destructor",
+      "    // [OK] #{class_name} (const #{class_name}&) -> Copy constructor ",
+      "    // [NO] #{class_name}& operator=(const #{class_name}&) noexcept -> Copy assignment Deleted (cannot assign const members)",
+      "    // [NO] #{class_name} (#{class_name}&&) -> Move constructor (const members copied)",
+      "    // [NO] #{class_name}& operator=(#{class_name}&&) noexcept -> Move assignment Deleted",
+      "    // -----------------------------",
+      "    // clang-format on",
+
+
+      "};\n",
+      "} //namespace",
+    ]
+
+    
+    hdr_fields = [
+      "#pragma once",
+      "#include <chrono>",
+      "#include <string>",
+      "",
+      "namespace #{package}",
+      "{",
+      "struct #{class_name_fields} ",
+      "{",
+      members.each_with_index.map do |m, i|
+        m_type = to_type(m.type)
+        mname = m.member_name.camel_case
+        [
+          "    Field<#{m_type}, FieldMutability::Immutable> #{mname};",
+        ] * "\n"
+        
+      end * "\n",
+      "",
+      "    // clang-format off",
+      "    // -----------------------------",
+      "    // Compiler-Generated Functions",
+      "    // -----------------------------",
+      "    // [NO] #{class_name}() -> Default constructor Not generated (const members must be initialized)",
+      "    // [OK] ~#{class_name}() -> Destructor",
+      "    // [OK] #{class_name} (const #{class_name}&) -> Copy constructor ",
+      "    // [NO] #{class_name}& operator=(const #{class_name}&) noexcept -> Copy assignment Deleted (cannot assign const members)",
+      "    // [NO] #{class_name} (#{class_name}&&) -> Move constructor (const members copied)",
+      "    // Move constructor NOT generated by compiler,",
+      "    // because members with FieldMutability::Immutable delete assignment,",
+      "    // so default move constructor is deleted.",
+      "    // [NO] #{class_name}& operator=(#{class_name}&&) noexcept -> Move assignment Deleted",
+      "    // -----------------------------",
+      "    // clang-format on",
+      
+
+      "};\n",
+      "} //namespace",
+    ]
+
+    puts meta_fields_file_path
+
+    ["cpp26",
+     [
+       [hdr_non_const_file_path, hdr_non_const],
+       [meta_file_non_const_path, self.meta(class_name_non_const,meta_file_non_const_path,   class_def)],
+
+       [hdr_const_file_path, hdr_const],
+       [meta_file_const_path, self.meta(class_name_const,meta_file_const_path,class_def)],
+
+       [immutable_class_path, [
+          "#pragma once",
+          "namespace hytek::tm",
+          "{",
+          "    using AthleteImmutableClass   = ImmutableClass<AthleteConst>;",
+          "}"
+        ],
+       ],
+       [hdr_fields_path, hdr_fields],
+       [meta_fields_file_path, self.meta(class_name_fields, hdr_fields_path, class_def, true)],
+       
+     ]
+    ]
+    
+  end
+
+  def self.csv(class_name, members, writer)
+
+    var = class_name.camel_case
+
+    [
+
+      "  // Static method to map CSV columns to struct fields",
+      "  static #{class_name} CSVType(io::CSVReader<#{members.size}>& reader) {",
+
+      members.map { |m| "    std::string #{m.member_name.camel_case};" }.join("\n") + "\n",
+
+      "    reader.read_row(" + members.map { |m| m.member_name.camel_case }.join(",") + ");\n",
+
+      "    #{class_name} obj (",
+      "    " + members.map { |m| "    " + to_convert(m.type, m.member_name.camel_case) }.join(",\n    ") + ");\n",
+      "    return obj ;",
+      "  }",
+    ] * "\n"
+  end
+end
+

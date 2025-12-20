@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Complex type definition for contactinfo -->
+<xs:element name="contactinfo">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="phone" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+            <xs:element name="previousaddresses" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<!-- Example contactinfo instance -->
+<contactinfo>
+    <email>example_value</email>
+    <phone>example_value</phone>
+    <address>example_value</address>
+    <previousaddresses>example_value</previousaddresses>
+</contactinfo>
+
+</xs:schema>

@@ -1,0 +1,179 @@
+--- !ruby/object:Cls::Clss
+table_name: CCrank
+class_name: CCrank
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_no
+  member_name: ath no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_sex
+  member_name: ath sex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_stat
+  member_name: ath stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_no
+  member_name: team no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Chute_rank
+  member_name: chute rank
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Chute_no
+  member_name: chute no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Div_no
+  member_name: div no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ev_score
+  member_name: ev score
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: JDEv_score
+  member_name: j d ev score
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: score_stat
+  member_name: score stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: multi_age
+  member_name: multi age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_hand
+  member_name: fin hand
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_stat
+  member_name: fin stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_Time
+  member_name: fin time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_course
+  member_name: fin course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_place
+  member_name: fin place
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_jdplace
+  member_name: fin jdplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_award
+  member_name: fin award
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_exh
+  member_name: fin exh
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_ltr
+  member_name: team ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [CCrank]
+  (
+  [Event_ptr] Long Integer,
+  [Ath_no] Long Integer,
+  [Ath_sex] Text (2),
+  [Ath_stat] Text (2),
+  [Team_no] Long Integer,
+  [Chute_rank] Long Integer,
+  [Chute_no] Integer,
+  [Div_no] Long Integer,
+  [Ev_score] Long Integer,
+  [JDEv_score] Long Integer,
+  [score_stat] Text (2),
+  [multi_age] Integer,
+  [Fin_hand] Boolean NOT NULL,
+  [Fin_stat] Text (2),
+  [Fin_Time] Single,
+  [Fin_course] Text (2),
+  [Fin_place] Integer,
+  [Fin_jdplace] Integer,
+  [Fin_award] Integer,
+  [Fin_exh] Text (2),
+  [Team_ltr] Text (2)
+  );

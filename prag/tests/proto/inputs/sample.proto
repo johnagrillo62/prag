@@ -1,0 +1,283 @@
+
+
+// complete_example.proto - Demonstrates all protobuf features
+syntax = "proto3";
+
+package payment.api;
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+// Top-level enum
+enum Status {
+    UNKNOWN = 0;
+    PENDING = 1;
+    ACTIVE = 2;
+    SUSPENDED = 3;
+    CANCELLED = 4;
+}
+
+enum Currency {
+    USD = 0;
+    EUR = 1;
+    GBP = 2;
+    JPY = 3;
+}
+
+// ============================================================================
+// MESSAGES WITH ONEOFS
+// ============================================================================
+
+message Payment {
+    int64 payment_id = 1;
+    double amount = 2;
+    Currency currency = 3;
+    Status status = 4;
+    
+    // Nested enum
+    enum PaymentType {
+        CARD = 0;
+        BANK = 1;
+        DIGITAL = 2;
+    }
+    
+    PaymentType type = 5;
+    
+    // ONEOF - Only ONE payment method can be set at a time
+    oneof payment_method {
+        CreditCardInfo credit_card = 10;
+        BankAccountInfo bank_account = 11;
+        PayPalInfo paypal = 12;
+        CryptoInfo crypto = 13;
+    }
+    
+    // Nested messages
+    message CreditCardInfo {
+        string card_number = 1;
+        string expiry_date = 2;
+        string cvv = 3;
+        string cardholder_name = 4;
+    }
+    
+    message BankAccountInfo {
+        string account_number = 1;
+        string routing_number = 2;
+        string account_holder = 3;
+    }
+    
+    message PayPalInfo {
+        string email = 1;
+        string paypal_id = 2;
+    }
+    
+    message CryptoInfo {
+        string wallet_address = 1;
+        string currency_type = 2;
+        string network = 3;
+    }
+}
+
+// Search result with oneof for different result types
+message SearchResult {
+    string query = 1;
+    int32 total_results = 2;
+    
+    // ONEOF - Result can be User, Payment, or Error
+    oneof result {
+        User user_result = 10;
+        Payment payment_result = 11;
+        Transaction transaction_result = 12;
+        ErrorInfo error = 13;
+    }
+}
+
+message User {
+    int64 user_id = 1;
+    string username = 2;
+    string email = 3;
+    Status account_status = 4;
+    repeated string roles = 5;
+}
+
+message Transaction {
+    int64 transaction_id = 1;
+    int64 from_user = 2;
+    int64 to_user = 3;
+    double amount = 4;
+    Currency currency = 5;
+    int64 timestamp = 6;
+}
+
+message ErrorInfo {
+    int32 error_code = 1;
+    string message = 2;
+    string details = 3;
+}
+
+// ============================================================================
+// MESSAGES FOR RPC REQUESTS/RESPONSES
+// ============================================================================
+
+message GetPaymentRequest {
+    int64 payment_id = 1;
+}
+
+message GetPaymentResponse {
+    Payment payment = 1;
+}
+
+message ListPaymentsRequest {
+    int64 user_id = 1;
+    int32 page = 2;
+    int32 page_size = 3;
+    Status filter_status = 4;
+}
+
+message ListPaymentsResponse {
+    repeated Payment payments = 1;
+    int32 total_count = 2;
+    bool has_more = 3;
+}
+
+message CreatePaymentRequest {
+    int64 user_id = 1;
+    double amount = 2;
+    Currency currency = 3;
+    
+    // Use oneof for payment method
+    oneof method {
+        Payment.CreditCardInfo card = 10;
+        Payment.BankAccountInfo bank = 11;
+    }
+}
+
+message CreatePaymentResponse {
+    Payment payment = 1;
+    bool success = 2;
+    string message = 3;
+}
+
+message ProcessPaymentRequest {
+    int64 payment_id = 1;
+}
+
+message ProcessPaymentResponse {
+    bool success = 1;
+    string transaction_id = 2;
+}
+
+message PaymentUpdate {
+    int64 payment_id = 1;
+    Status new_status = 2;
+    int64 timestamp = 3;
+}
+
+message Empty {}
+
+// ============================================================================
+// SERVICES WITH ALL 4 RPC TYPES
+// ============================================================================
+
+service PaymentService {
+    // UNARY RPC - Single request, single response
+    rpc GetPayment(GetPaymentRequest) returns (GetPaymentResponse);
+    
+    // UNARY RPC - Create a payment
+    rpc CreatePayment(CreatePaymentRequest) returns (CreatePaymentResponse);
+    
+    // UNARY RPC - Process a payment
+    rpc ProcessPayment(ProcessPaymentRequest) returns (ProcessPaymentResponse);
+    
+    // SERVER STREAMING - Client sends one request, server sends stream of responses
+    rpc ListPayments(ListPaymentsRequest) returns (stream Payment);
+    
+    // SERVER STREAMING - Watch for payment updates
+    rpc WatchPayments(GetPaymentRequest) returns (stream PaymentUpdate);
+    
+    // CLIENT STREAMING - Client sends stream of requests, server sends one response
+    rpc BatchCreatePayments(stream CreatePaymentRequest) returns (CreatePaymentResponse);
+    
+    // CLIENT STREAMING - Process multiple payments
+    rpc BatchProcess(stream ProcessPaymentRequest) returns (ProcessPaymentResponse);
+    
+    // BIDIRECTIONAL STREAMING - Both client and server send streams
+    rpc PaymentChat(stream PaymentUpdate) returns (stream PaymentUpdate);
+    
+    // BIDIRECTIONAL STREAMING - Real-time payment processing
+    rpc StreamProcessPayments(stream CreatePaymentRequest) returns (stream CreatePaymentResponse);
+}
+
+service UserService {
+    // UNARY
+    rpc GetUser(GetUserRequest) returns (User);
+    rpc CreateUser(CreateUserRequest) returns (User);
+    
+    // SERVER STREAMING
+    rpc ListUsers(ListUsersRequest) returns (stream User);
+    
+    // CLIENT STREAMING
+    rpc BulkCreateUsers(stream CreateUserRequest) returns (BulkCreateUsersResponse);
+    
+    // BIDIRECTIONAL
+    rpc UserSync(stream User) returns (stream User);
+}
+
+message GetUserRequest {
+    int64 user_id = 1;
+}
+
+message CreateUserRequest {
+    string username = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message ListUsersRequest {
+    int32 page = 1;
+    int32 page_size = 2;
+}
+
+message BulkCreateUsersResponse {
+    repeated User users = 1;
+    int32 success_count = 2;
+    int32 failure_count = 3;
+}
+
+service SearchService {
+    // Search with oneof results
+    rpc Search(SearchQuery) returns (SearchResult);
+    
+    // Stream search results
+    rpc StreamSearch(SearchQuery) returns (stream SearchResult);
+}
+
+message SearchQuery {
+    string query = 1;
+    int32 limit = 2;
+    
+    // ONEOF for search type
+    oneof search_type {
+        UserSearch user_search = 10;
+        PaymentSearch payment_search = 11;
+        TransactionSearch transaction_search = 12;
+    }
+}
+
+message UserSearch {
+    string username_pattern = 1;
+    string email_pattern = 2;
+}
+
+message PaymentSearch {
+    double min_amount = 1;
+    double max_amount = 2;
+    Currency currency = 3;
+}
+
+message TransactionSearch {
+    int64 from_user = 1;
+    int64 to_user = 2;
+    int64 start_date = 3;
+    int64 end_date = 4;
+}

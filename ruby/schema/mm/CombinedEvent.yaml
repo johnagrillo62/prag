@@ -1,0 +1,218 @@
+--- !ruby/object:Cls::Clss
+table_name: CombinedEvent
+class_name: CombinedEvent
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_no
+  member_name: event no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ltr
+  member_name: event ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CombEvent_ptr
+  member_name: comb event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_sex
+  member_name: event sex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_gender
+  member_name: event gender
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Low_age
+  member_name: low age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: High_Age
+  member_name: high age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Num_events
+  member_name: num events
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Score_event
+  member_name: score event
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Div_no
+  member_name: div no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_1
+  member_name: comm 1
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_2
+  member_name: comm 2
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_3
+  member_name: comm 3
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comm_4
+  member_name: comm 4
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Entry_fee
+  member_name: entry fee
+  type: !ruby/object:Types::Currency
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_note
+  member_name: event note
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr1
+  member_name: event ptr 1
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr2
+  member_name: event ptr 2
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr3
+  member_name: event ptr 3
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr4
+  member_name: event ptr 4
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr5
+  member_name: event ptr 5
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr6
+  member_name: event ptr 6
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr7
+  member_name: event ptr 7
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr8
+  member_name: event ptr 8
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr9
+  member_name: event ptr 9
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_ptr10
+  member_name: event ptr 1 0
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [CombinedEvent]
+  (
+  [Event_no] Integer,
+  [Event_ltr] Text (2),
+  [CombEvent_ptr] Long Integer,
+  [Event_sex] Text (2),
+  [Event_gender] Text (2),
+  [Low_age] Integer,
+  [High_Age] Integer,
+  [Num_events] Integer,
+  [Score_event] Boolean NOT NULL,
+  [Div_no] Integer,
+  [Comm_1] Text (72),
+  [Comm_2] Text (72),
+  [Comm_3] Text (72),
+  [Comm_4] Text (72),
+  [Entry_fee] Currency,
+  [Event_note] Text (40),
+  [Event_ptr1] Long Integer,
+  [Event_ptr2] Long Integer,
+  [Event_ptr3] Long Integer,
+  [Event_ptr4] Long Integer,
+  [Event_ptr5] Long Integer,
+  [Event_ptr6] Long Integer,
+  [Event_ptr7] Long Integer,
+  [Event_ptr8] Long Integer,
+  [Event_ptr9] Long Integer,
+  [Event_ptr10] Long Integer
+  );

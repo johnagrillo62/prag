@@ -1,0 +1,371 @@
+namespace meta {
+namespace SimpleType {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::SimpleType, std::string, &::bhw::SimpleType::srcTypeString, meta::Prop::Serializable,nullptr, nullptr>("srcTypeString", "std::string", {{CSV_COLUMN , "srcTypeString"},{SQL_COLUMN , "srcTypeString"},{SRC_NAME , "srcTypeString"},}),
+    meta::Field<::bhw::SimpleType, ReifiedTypeId reifiedType {, &::bhw::SimpleType::reifiedType, meta::Prop::Serializable,nullptr, nullptr>("reifiedType", "ReifiedTypeId reifiedType {", {{CSV_COLUMN , "reifiedType"},{SQL_COLUMN , "reifiedType"},{SRC_NAME , "reifiedType"},})
+);
+inline constexpr auto tableName = "SimpleType";
+inline constexpr auto query = "SELECT srcTypeString, reifiedType FROM SimpleType";
+}  // namespace SimpleType
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::SimpleType> {
+    static inline const auto& fields = meta::SimpleType::fields;
+    static constexpr auto tableName = meta::SimpleType::tableName;
+    static constexpr auto query = meta::SimpleType::query;
+};
+}  // namespace meta
+namespace meta {
+namespace StructRefType {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::StructRefType, std::string, &::bhw::StructRefType::srcTypeString, meta::Prop::Serializable,nullptr, nullptr>("srcTypeString", "std::string", {{CSV_COLUMN , "srcTypeString"},{SQL_COLUMN , "srcTypeString"},{SRC_NAME , "srcTypeString"},}),
+    meta::Field<::bhw::StructRefType, ReifiedTypeId reifiedType {, &::bhw::StructRefType::reifiedType, meta::Prop::Serializable,nullptr, nullptr>("reifiedType", "ReifiedTypeId reifiedType {", {{CSV_COLUMN , "reifiedType"},{SQL_COLUMN , "reifiedType"},{SRC_NAME , "reifiedType"},})
+);
+inline constexpr auto tableName = "StructRefType";
+inline constexpr auto query = "SELECT srcTypeString, reifiedType FROM StructRefType";
+}  // namespace StructRefType
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::StructRefType> {
+    static inline const auto& fields = meta::StructRefType::fields;
+    static constexpr auto tableName = meta::StructRefType::tableName;
+    static constexpr auto query = meta::StructRefType::query;
+};
+}  // namespace meta
+namespace meta {
+namespace PointerType {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::PointerType, std::unique_ptr<Type>, &::bhw::PointerType::pointee, meta::Prop::Serializable,nullptr, nullptr>("pointee", "std::unique_ptr<Type>", {{CSV_COLUMN , "pointee"},{SQL_COLUMN , "pointee"},{SRC_NAME , "pointee"},}),
+    meta::Field<::bhw::PointerType, ReifiedTypeId reifiedType {, &::bhw::PointerType::reifiedType, meta::Prop::Serializable,nullptr, nullptr>("reifiedType", "ReifiedTypeId reifiedType {", {{CSV_COLUMN , "reifiedType"},{SQL_COLUMN , "reifiedType"},{SRC_NAME , "reifiedType"},})
+);
+inline constexpr auto tableName = "PointerType";
+inline constexpr auto query = "SELECT pointee, reifiedType FROM PointerType";
+}  // namespace PointerType
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::PointerType> {
+    static inline const auto& fields = meta::PointerType::fields;
+    static constexpr auto tableName = meta::PointerType::tableName;
+    static constexpr auto query = meta::PointerType::query;
+};
+}  // namespace meta
+namespace meta {
+namespace GenericType {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::GenericType, ReifiedTypeId reifiedType {, &::bhw::GenericType::reifiedType, meta::Prop::Serializable,nullptr, nullptr>("reifiedType", "ReifiedTypeId reifiedType {", {{CSV_COLUMN , "reifiedType"},{SQL_COLUMN , "reifiedType"},{SRC_NAME , "reifiedType"},})
+);
+inline constexpr auto tableName = "GenericType";
+inline constexpr auto query = "SELECT reifiedType FROM GenericType";
+}  // namespace GenericType
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::GenericType> {
+    static inline const auto& fields = meta::GenericType::fields;
+    static constexpr auto tableName = meta::GenericType::tableName;
+    static constexpr auto query = meta::GenericType::query;
+};
+}  // namespace meta
+namespace meta {
+namespace StructType {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::StructType, std::unique_ptr<Struct>, &::bhw::StructType::value, meta::Prop::Serializable,nullptr, nullptr>("value", "std::unique_ptr<Struct>", {{CSV_COLUMN , "value"},{SQL_COLUMN , "value"},{SRC_NAME , "value"},}),
+    meta::Field<::bhw::StructType, ReifiedTypeId reifiedType {, &::bhw::StructType::reifiedType, meta::Prop::Serializable,nullptr, nullptr>("reifiedType", "ReifiedTypeId reifiedType {", {{CSV_COLUMN , "reifiedType"},{SQL_COLUMN , "reifiedType"},{SRC_NAME , "reifiedType"},})
+);
+inline constexpr auto tableName = "StructType";
+inline constexpr auto query = "SELECT value, reifiedType FROM StructType";
+}  // namespace StructType
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::StructType> {
+    static inline const auto& fields = meta::StructType::fields;
+    static constexpr auto tableName = meta::StructType::tableName;
+    static constexpr auto query = meta::StructType::query;
+};
+}  // namespace meta
+namespace meta {
+namespace Attribute {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Attribute, std::string, &::bhw::Attribute::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::Attribute, std::string, &::bhw::Attribute::value, meta::Prop::Serializable,nullptr, nullptr>("value", "std::string", {{CSV_COLUMN , "value"},{SQL_COLUMN , "value"},{SRC_NAME , "value"},})
+);
+inline constexpr auto tableName = "Attribute";
+inline constexpr auto query = "SELECT name, value FROM Attribute";
+}  // namespace Attribute
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Attribute> {
+    static inline const auto& fields = meta::Attribute::fields;
+    static constexpr auto tableName = meta::Attribute::tableName;
+    static constexpr auto query = meta::Attribute::query;
+};
+}  // namespace meta
+
+// Functions found in bhw::Type:
+// bool isSimple() - Access: public
+// bool isStructRef() - Access: public
+// bool isPointer() - Access: public
+// bool isGeneric() - Access: public
+// bool isStruct() - Access: public
+namespace meta {
+namespace Type {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Type, std::variant<SimpleType,StructRefType,PointerType,GenericType,StructType>, &::bhw::Type::value, meta::Prop::Serializable,nullptr, nullptr>("value", "std::variant<SimpleType,StructRefType,PointerType,GenericType,StructType>", {{CSV_COLUMN , "value"},{SQL_COLUMN , "value"},{SRC_NAME , "value"},}),
+    meta::Field<::bhw::Type, ReifiedTypeId reifiedTypeId {, &::bhw::Type::reifiedTypeId, meta::Prop::Serializable,nullptr, nullptr>("reifiedTypeId", "ReifiedTypeId reifiedTypeId {", {{CSV_COLUMN , "reifiedTypeId"},{SQL_COLUMN , "reifiedTypeId"},{SRC_NAME , "reifiedTypeId"},}),
+    meta::Field<::bhw::Type, std::string, &::bhw::Type::srcType, meta::Prop::Serializable,nullptr, nullptr>("srcType", "std::string", {{CSV_COLUMN , "srcType"},{SQL_COLUMN , "srcType"},{SRC_NAME , "srcType"},})
+);
+inline constexpr auto tableName = "Type";
+inline constexpr auto query = "SELECT value, reifiedTypeId, srcType FROM Type";
+}  // namespace Type
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Type> {
+    static inline const auto& fields = meta::Type::fields;
+    static constexpr auto tableName = meta::Type::tableName;
+    static constexpr auto query = meta::Type::query;
+};
+}  // namespace meta
+namespace meta {
+namespace EnumValue {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::EnumValue, std::string, &::bhw::EnumValue::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::EnumValue, int number {, &::bhw::EnumValue::number, meta::Prop::Serializable,nullptr, nullptr>("number", "int number {", {{CSV_COLUMN , "number"},{SQL_COLUMN , "number"},{SRC_NAME , "number"},}),
+    meta::Field<::bhw::EnumValue, std::vector<Attribute>, &::bhw::EnumValue::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},}),
+    meta::Field<::bhw::EnumValue, std::unique_ptr<Type>, &::bhw::EnumValue::type, meta::Prop::Serializable,nullptr, nullptr>("type", "std::unique_ptr<Type>", {{CSV_COLUMN , "type"},{SQL_COLUMN , "type"},{SRC_NAME , "type"},})
+);
+inline constexpr auto tableName = "EnumValue";
+inline constexpr auto query = "SELECT name, number, attributes, type FROM EnumValue";
+}  // namespace EnumValue
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::EnumValue> {
+    static inline const auto& fields = meta::EnumValue::fields;
+    static constexpr auto tableName = meta::EnumValue::tableName;
+    static constexpr auto query = meta::EnumValue::query;
+};
+}  // namespace meta
+
+// Functions found in bhw::Enum:
+// int getFullyQualifiedName() - Access: public
+namespace meta {
+namespace Enum {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Enum, std::string, &::bhw::Enum::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::Enum, std::vector<std::string>, &::bhw::Enum::namespaces, meta::Prop::Serializable,nullptr, nullptr>("namespaces", "std::vector<std::string>", {{CSV_COLUMN , "namespaces"},{SQL_COLUMN , "namespaces"},{SRC_NAME , "namespaces"},}),
+    meta::Field<::bhw::Enum, std::vector<EnumValue>, &::bhw::Enum::values, meta::Prop::Serializable,nullptr, nullptr>("values", "std::vector<EnumValue>", {{CSV_COLUMN , "values"},{SQL_COLUMN , "values"},{SRC_NAME , "values"},}),
+    meta::Field<::bhw::Enum, std::vector<Attribute>, &::bhw::Enum::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},}),
+    meta::Field<::bhw::Enum, bool scoped { false, &::bhw::Enum::scoped, meta::Prop::Serializable,nullptr, nullptr>("scoped", "bool scoped { false", {{CSV_COLUMN , "scoped"},{SQL_COLUMN , "scoped"},{SRC_NAME , "scoped"},}),
+    meta::Field<::bhw::Enum, std::string, &::bhw::Enum::underlying_type, meta::Prop::Serializable,nullptr, nullptr>("underlying_type", "std::string", {{CSV_COLUMN , "underlying_type"},{SQL_COLUMN , "underlying_type"},{SRC_NAME , "underlying_type"},})
+);
+inline constexpr auto tableName = "Enum";
+inline constexpr auto query = "SELECT name, namespaces, values, attributes, scoped, underlying_type FROM Enum";
+}  // namespace Enum
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Enum> {
+    static inline const auto& fields = meta::Enum::fields;
+    static constexpr auto tableName = meta::Enum::tableName;
+    static constexpr auto query = meta::Enum::query;
+};
+}  // namespace meta
+namespace meta {
+namespace OneofField {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::OneofField, std::string, &::bhw::OneofField::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::OneofField, std::unique_ptr<Type>, &::bhw::OneofField::type, meta::Prop::Serializable,nullptr, nullptr>("type", "std::unique_ptr<Type>", {{CSV_COLUMN , "type"},{SQL_COLUMN , "type"},{SRC_NAME , "type"},}),
+    meta::Field<::bhw::OneofField, std::vector<Attribute>, &::bhw::OneofField::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},})
+);
+inline constexpr auto tableName = "OneofField";
+inline constexpr auto query = "SELECT name, type, attributes FROM OneofField";
+}  // namespace OneofField
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::OneofField> {
+    static inline const auto& fields = meta::OneofField::fields;
+    static constexpr auto tableName = meta::OneofField::tableName;
+    static constexpr auto query = meta::OneofField::query;
+};
+}  // namespace meta
+namespace meta {
+namespace Oneof {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Oneof, std::string, &::bhw::Oneof::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::Oneof, std::vector<OneofField>, &::bhw::Oneof::fields, meta::Prop::Serializable,nullptr, nullptr>("fields", "std::vector<OneofField>", {{CSV_COLUMN , "fields"},{SQL_COLUMN , "fields"},{SRC_NAME , "fields"},}),
+    meta::Field<::bhw::Oneof, std::vector<Attribute>, &::bhw::Oneof::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},})
+);
+inline constexpr auto tableName = "Oneof";
+inline constexpr auto query = "SELECT name, fields, attributes FROM Oneof";
+}  // namespace Oneof
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Oneof> {
+    static inline const auto& fields = meta::Oneof::fields;
+    static constexpr auto tableName = meta::Oneof::tableName;
+    static constexpr auto query = meta::Oneof::query;
+};
+}  // namespace meta
+namespace meta {
+namespace RpcMethod {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::RpcMethod, std::string, &::bhw::RpcMethod::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::RpcMethod, std::string, &::bhw::RpcMethod::request_type, meta::Prop::Serializable,nullptr, nullptr>("request_type", "std::string", {{CSV_COLUMN , "request_type"},{SQL_COLUMN , "request_type"},{SRC_NAME , "request_type"},}),
+    meta::Field<::bhw::RpcMethod, std::string, &::bhw::RpcMethod::response_type, meta::Prop::Serializable,nullptr, nullptr>("response_type", "std::string", {{CSV_COLUMN , "response_type"},{SQL_COLUMN , "response_type"},{SRC_NAME , "response_type"},}),
+    meta::Field<::bhw::RpcMethod, bool client_streaming =, &::bhw::RpcMethod::client_streaming, meta::Prop::Serializable,nullptr, nullptr>("client_streaming", "bool client_streaming =", {{CSV_COLUMN , "client_streaming"},{SQL_COLUMN , "client_streaming"},{SRC_NAME , "client_streaming"},}),
+    meta::Field<::bhw::RpcMethod, bool server_streaming =, &::bhw::RpcMethod::server_streaming, meta::Prop::Serializable,nullptr, nullptr>("server_streaming", "bool server_streaming =", {{CSV_COLUMN , "server_streaming"},{SQL_COLUMN , "server_streaming"},{SRC_NAME , "server_streaming"},}),
+    meta::Field<::bhw::RpcMethod, std::vector<Attribute>, &::bhw::RpcMethod::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},})
+);
+inline constexpr auto tableName = "RpcMethod";
+inline constexpr auto query = "SELECT name, request_type, response_type, client_streaming, server_streaming, attributes FROM RpcMethod";
+}  // namespace RpcMethod
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::RpcMethod> {
+    static inline const auto& fields = meta::RpcMethod::fields;
+    static constexpr auto tableName = meta::RpcMethod::tableName;
+    static constexpr auto query = meta::RpcMethod::query;
+};
+}  // namespace meta
+
+// Functions found in bhw::Service:
+// int getFullyQualifiedName() - Access: public
+namespace meta {
+namespace Service {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Service, std::string, &::bhw::Service::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::Service, std::vector<std::string>, &::bhw::Service::namespaces, meta::Prop::Serializable,nullptr, nullptr>("namespaces", "std::vector<std::string>", {{CSV_COLUMN , "namespaces"},{SQL_COLUMN , "namespaces"},{SRC_NAME , "namespaces"},}),
+    meta::Field<::bhw::Service, std::vector<RpcMethod>, &::bhw::Service::methods, meta::Prop::Serializable,nullptr, nullptr>("methods", "std::vector<RpcMethod>", {{CSV_COLUMN , "methods"},{SQL_COLUMN , "methods"},{SRC_NAME , "methods"},}),
+    meta::Field<::bhw::Service, std::vector<Attribute>, &::bhw::Service::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},})
+);
+inline constexpr auto tableName = "Service";
+inline constexpr auto query = "SELECT name, namespaces, methods, attributes FROM Service";
+}  // namespace Service
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Service> {
+    static inline const auto& fields = meta::Service::fields;
+    static constexpr auto tableName = meta::Service::tableName;
+    static constexpr auto query = meta::Service::query;
+};
+}  // namespace meta
+namespace meta {
+namespace Field {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Field, std::string, &::bhw::Field::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::Field, std::unique_ptr<Type>, &::bhw::Field::type, meta::Prop::Serializable,nullptr, nullptr>("type", "std::unique_ptr<Type>", {{CSV_COLUMN , "type"},{SQL_COLUMN , "type"},{SRC_NAME , "type"},}),
+    meta::Field<::bhw::Field, AttributeVec, &::bhw::Field::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "AttributeVec", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},})
+);
+inline constexpr auto tableName = "Field";
+inline constexpr auto query = "SELECT name, type, attributes FROM Field";
+}  // namespace Field
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Field> {
+    static inline const auto& fields = meta::Field::fields;
+    static constexpr auto tableName = meta::Field::tableName;
+    static constexpr auto query = meta::Field::query;
+};
+}  // namespace meta
+
+// Functions found in bhw::Struct:
+// int getFullyQualifiedName() - Access: public
+namespace meta {
+namespace Struct {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Struct, std::string, &::bhw::Struct::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::Struct, std::vector<std::string>, &::bhw::Struct::namespaces, meta::Prop::Serializable,nullptr, nullptr>("namespaces", "std::vector<std::string>", {{CSV_COLUMN , "namespaces"},{SQL_COLUMN , "namespaces"},{SRC_NAME , "namespaces"},}),
+    meta::Field<::bhw::Struct, std::vector<StructMember>, &::bhw::Struct::members, meta::Prop::Serializable,nullptr, nullptr>("members", "std::vector<StructMember>", {{CSV_COLUMN , "members"},{SQL_COLUMN , "members"},{SRC_NAME , "members"},}),
+    meta::Field<::bhw::Struct, std::vector<Attribute>, &::bhw::Struct::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},}),
+    meta::Field<::bhw::Struct, std::string, &::bhw::Struct::variableName, meta::Prop::Serializable,nullptr, nullptr>("variableName", "std::string", {{CSV_COLUMN , "variableName"},{SQL_COLUMN , "variableName"},{SRC_NAME , "variableName"},}),
+    meta::Field<::bhw::Struct, bool isAnonymous =, &::bhw::Struct::isAnonymous, meta::Prop::Serializable,nullptr, nullptr>("isAnonymous", "bool isAnonymous =", {{CSV_COLUMN , "isAnonymous"},{SQL_COLUMN , "isAnonymous"},{SRC_NAME , "isAnonymous"},}),
+    meta::Field<::bhw::Struct, bool isRecord =, &::bhw::Struct::isRecord, meta::Prop::Serializable,nullptr, nullptr>("isRecord", "bool isRecord =", {{CSV_COLUMN , "isRecord"},{SQL_COLUMN , "isRecord"},{SRC_NAME , "isRecord"},}),
+    meta::Field<::bhw::Struct, bool isAbstract =, &::bhw::Struct::isAbstract, meta::Prop::Serializable,nullptr, nullptr>("isAbstract", "bool isAbstract =", {{CSV_COLUMN , "isAbstract"},{SQL_COLUMN , "isAbstract"},{SRC_NAME , "isAbstract"},}),
+    meta::Field<::bhw::Struct, std::string, &::bhw::Struct::baseType, meta::Prop::Serializable,nullptr, nullptr>("baseType", "std::string", {{CSV_COLUMN , "baseType"},{SQL_COLUMN , "baseType"},{SRC_NAME , "baseType"},})
+);
+inline constexpr auto tableName = "Struct";
+inline constexpr auto query = "SELECT name, namespaces, members, attributes, variableName, isAnonymous, isRecord, isAbstract, baseType FROM Struct";
+}  // namespace Struct
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Struct> {
+    static inline const auto& fields = meta::Struct::fields;
+    static constexpr auto tableName = meta::Struct::tableName;
+    static constexpr auto query = meta::Struct::query;
+};
+}  // namespace meta
+
+// Functions found in bhw::Namespace:
+// int getFullyQualifiedName() - Access: public
+namespace meta {
+namespace Namespace {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Namespace, std::string, &::bhw::Namespace::name, meta::Prop::Serializable,nullptr, nullptr>("name", "std::string", {{CSV_COLUMN , "name"},{SQL_COLUMN , "name"},{SRC_NAME , "name"},}),
+    meta::Field<::bhw::Namespace, std::vector<AstRootNode>, &::bhw::Namespace::nodes, meta::Prop::Serializable,nullptr, nullptr>("nodes", "std::vector<AstRootNode>", {{CSV_COLUMN , "nodes"},{SQL_COLUMN , "nodes"},{SRC_NAME , "nodes"},}),
+    meta::Field<::bhw::Namespace, std::vector<Attribute>, &::bhw::Namespace::attributes, meta::Prop::Serializable,nullptr, nullptr>("attributes", "std::vector<Attribute>", {{CSV_COLUMN , "attributes"},{SQL_COLUMN , "attributes"},{SRC_NAME , "attributes"},})
+);
+inline constexpr auto tableName = "Namespace";
+inline constexpr auto query = "SELECT name, nodes, attributes FROM Namespace";
+}  // namespace Namespace
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Namespace> {
+    static inline const auto& fields = meta::Namespace::fields;
+    static constexpr auto tableName = meta::Namespace::tableName;
+    static constexpr auto query = meta::Namespace::query;
+};
+}  // namespace meta
+
+// Functions found in bhw::Ast:
+// int showAst(int indent) - Access: public
+// void flattenNestedTypes() - Access: public
+// void flattenStructMembers(Struct & s, int & flattenedStructs, int & flattenedEnums) - Access: public
+namespace meta {
+namespace Ast {
+inline const auto fields = std::make_tuple(
+    meta::Field<::bhw::Ast, std::string, &::bhw::Ast::srcName, meta::Prop::Serializable,nullptr, nullptr>("srcName", "std::string", {{CSV_COLUMN , "srcName"},{SQL_COLUMN , "srcName"},{SRC_NAME , "srcName"},}),
+    meta::Field<::bhw::Ast, std::vector<std::string>, &::bhw::Ast::namespaces, meta::Prop::Serializable,nullptr, nullptr>("namespaces", "std::vector<std::string>", {{CSV_COLUMN , "namespaces"},{SQL_COLUMN , "namespaces"},{SRC_NAME , "namespaces"},}),
+    meta::Field<::bhw::Ast, std::vector<AstRootNode>, &::bhw::Ast::nodes, meta::Prop::Serializable,nullptr, nullptr>("nodes", "std::vector<AstRootNode>", {{CSV_COLUMN , "nodes"},{SQL_COLUMN , "nodes"},{SRC_NAME , "nodes"},})
+);
+inline constexpr auto tableName = "Ast";
+inline constexpr auto query = "SELECT srcName, namespaces, nodes FROM Ast";
+}  // namespace Ast
+}  // namespace meta
+namespace meta {
+// Template specialization for type-based reflection lookup
+template<>
+struct MetaTuple<::bhw::Ast> {
+    static inline const auto& fields = meta::Ast::fields;
+    static constexpr auto tableName = meta::Ast::tableName;
+    static constexpr auto query = meta::Ast::query;
+};
+}  // namespace meta

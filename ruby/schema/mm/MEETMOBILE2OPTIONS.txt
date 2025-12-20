@@ -1,0 +1,62 @@
+-- ----------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2011 Brian Bruns and others.
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-- ----------------------------------------------------------
+
+-- That file uses encoding UTF-8
+
+CREATE TABLE [MEETMOBILE2OPTIONS]
+ (
+	[MeetMobile2MeetID]			Long Integer, 
+	[AgencyID]			Text (80), 
+	[EV5_uploaded]			Boolean NOT NULL, 
+	[Heatpsych_uploaded]			Boolean NOT NULL, 
+	[Heatsheet_amount]			Single, 
+	[Teamscoring_choice]			Integer, 
+	[Contract_agreed]			Boolean NOT NULL, 
+	[DoNotShow_timeline]			Boolean NOT NULL, 
+	[HeatPsych_choice]			Integer, 
+	[Contract_PersonName]			Text (80), 
+	[Contract_PersonBirth]			DateTime, 
+	[LastName]			Text (100), 
+	[FirstName]			Text (100), 
+	[Phone]			Text (40), 
+	[EMail]			Text (100), 
+	[TeamName]			Text (100), 
+	[Addr]			Text (100), 
+	[SecAddr]			Text (60), 
+	[City]			Text (60), 
+	[State]			Text (6), 
+	[Zip]			Text (20), 
+	[Cntry]			Text (6), 
+	[TimeZone]			Text (100), 
+	[PayTo]			Text (100), 
+	[Classification]			Text (100), 
+	[WebSite]			Text (100), 
+	[Token]			Text (160), 
+	[OMEWebSite]			Text (200), 
+	[License]			Text (240), 
+	[NoShowActiveComSetup]			Boolean NOT NULL, 
+	[AnnounceEV5_uploaded]			Boolean NOT NULL, 
+	[SharingEV5_uploaded]			Boolean NOT NULL, 
+	[FileSharingMeetID]			Long Integer, 
+	[FileSharingEvtsOk]			Boolean NOT NULL, 
+	[FileSharingPricingOk]			Boolean NOT NULL, 
+	[FileSharingEntryLimitsOk]			Boolean NOT NULL, 
+	[FileSharingQualTimesOk]			Boolean NOT NULL, 
+	[FileSharingMeetSetupOk]			Boolean NOT NULL, 
+	[NotInterestedIn_FileSharing]			Boolean NOT NULL, 
+	[DoNotShow_MeetSharingImportMsg]			Boolean NOT NULL, 
+	[ResultsFile_uploaded]			Boolean NOT NULL, 
+	[MeetResultsID]			Long Integer, 
+	[NotInterestedIn_MeetMobile]			Boolean NOT NULL, 
+	[Contract_agreedMeetSharing]			Boolean NOT NULL, 
+	[Contract_PersonNameMeetSharing]			Text (80), 
+	[Contract_PersonBirthMeetSharing]			DateTime, 
+	[HeatSheetsAre_Free]			Boolean NOT NULL
+);
+
+

@@ -1,0 +1,52 @@
+--- !ruby/object:Cls::Clss
+table_name: ScoringImprovement
+class_name: ScoringImprovement
+members:
+- !ruby/object:Cls::Member
+  column_name: list_no
+  member_name: list no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: diff_lowtime
+  member_name: diff lowtime
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: diff_hightime
+  member_name: diff hightime
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pt_score
+  member_name: pt score
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: swim_score
+  member_name: swim score
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [ScoringImprovement]
+  (
+  [list_no] Integer,
+  [diff_lowtime] Single,
+  [diff_hightime] Single,
+  [pt_score] Single,
+  [swim_score] Single
+  );

@@ -1,0 +1,37 @@
+// ============================================================================
+// AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
+// ============================================================================
+// This file was generated   from ../src/ast/language.h by the enum code generator.
+//
+// This provides automatic enum reflection for LanguageId:
+//   - LanguageIdEnum::toString(value) -> string
+//   - LanguageIdEnum::fromString(str) -> optional<LanguageId>
+//   - LanguageIdEnum::forEach(fn) -> iterate all values
+//   - operator<< for streaming enums
+// ============================================================================
+
+inline constexpr std::array<std::pair<Language,const char*>, 20> LanguageMapping {{
+    {Language::Avro, "Avro"},
+    {Language::CSharp, "CSharp"},
+    {Language::Capnp, "Capnp"},
+    {Language::Cpp26, "Cpp26"},
+    {Language::FSharp, "FSharp"},
+    {Language::FlatBuf, "FlatBuf"},
+    {Language::Go, "Go"},
+    {Language::GraphQl, "GraphQl"},
+    {Language::Haskell, "Haskell"},
+    {Language::JSONSchema, "JSONSchema"},
+    {Language::Java, "Java"},
+    {Language::MDB, "MDB"},
+    {Language::OCaml, "OCaml"},
+    {Language::OpenApi, "OpenApi"},
+    {Language::ProtoBuf, "ProtoBuf"},
+    {Language::Python, "Python"},
+    {Language::Rust, "Rust"},
+    {Language::Thrift, "Thrift"},
+    {Language::Typescript, "Typescript"},
+    {Language::Zig, "Zig"},
+}};
+using LanguageEnum = EnumTraitsAuto<Language, LanguageMapping>;
+template <> struct EnumMapping<Language> { using Type = LanguageEnum; };
+

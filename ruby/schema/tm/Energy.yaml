@@ -1,0 +1,44 @@
+--- !ruby/object:Cls::Clss
+table_name: Energy
+class_name: Energy
+members:
+- !ruby/object:Cls::Member
+  column_name: energy_no
+  member_name: energy no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: energy_abbr
+  member_name: energy abbr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: energy_name
+  member_name: energy name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: stress_index
+  member_name: stress index
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [Energy]
+  (
+  [energy_no] Integer,
+  [energy_abbr] Text (6),
+  [energy_name] Text (40),
+  [stress_index] Integer
+  );

@@ -1,0 +1,453 @@
+--- !ruby/object:Cls::Clss
+table_name: Team
+class_name: Team
+members:
+- !ruby/object:Cls::Member
+  column_name: Team_no
+  member_name: team no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_name
+  member_name: team name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_short
+  member_name: team short
+  type: !ruby/object:Types::String
+    len: 32
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_abbr
+  member_name: team abbr
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_stat
+  member_name: team stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_div
+  member_name: team div
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_region
+  member_name: team region
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_head
+  member_name: team head
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_asst
+  member_name: team asst
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_addr1
+  member_name: team addr 1
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_addr2
+  member_name: team addr 2
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_city
+  member_name: team city
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_prov
+  member_name: team prov
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_statenew
+  member_name: team statenew
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_zip
+  member_name: team zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_cntry
+  member_name: team cntry
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_daytele
+  member_name: team daytele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_evetele
+  member_name: team evetele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_faxtele
+  member_name: team faxtele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_email
+  member_name: team email
+  type: !ruby/object:Types::String
+    len: 72
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c3
+  member_name: team c 3
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c4
+  member_name: team c 4
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c5
+  member_name: team c 5
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c6
+  member_name: team c 6
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c7
+  member_name: team c 7
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c8
+  member_name: team c 8
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c9
+  member_name: team c 9
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_c10
+  member_name: team c 1 0
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_altabbr
+  member_name: team altabbr
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_NoPoints
+  member_name: team no points
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_Selected
+  member_name: team selected
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_altname
+  member_name: team altname
+  type: !ruby/object:Types::String
+    len: 32
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedTeam_AgencyID
+  member_name: invited team agency i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedTeam_Email
+  member_name: invited team email
+  type: !ruby/object:Types::String
+    len: 110
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Invited_InviteCode
+  member_name: invited invite code
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedEntry_status
+  member_name: invited entry status
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedPayment_status
+  member_name: invited payment status
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Invited_notes
+  member_name: invited notes
+  type: !ruby/object:Types::String
+    len: 510
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Invited_GovBody
+  member_name: invited gov body
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Invited_TeamID
+  member_name: invited team i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedHas_notes
+  member_name: invited has notes
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedLeague_name
+  member_name: invited league name
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedFile_status
+  member_name: invited file status
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedFile_importdatetime
+  member_name: invited file importdatetime
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedFile_TMuploaddatetime
+  member_name: invited file t muploaddatetime
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: InvitedFile_source
+  member_name: invited file source
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Invited_TeamEntryID
+  member_name: invited team entry i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Invited_Athletecount
+  member_name: invited athletecount
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: team_lsc
+  member_name: team lsc
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoTeam_surcharge
+  member_name: no team surcharge
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoFacility_surcharge
+  member_name: no facility surcharge
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoAthlete_surcharge
+  member_name: no athlete surcharge
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_cell
+  member_name: team cell
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoRelayOnly_surcharge
+  member_name: no relay only surcharge
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_Code
+  member_name: team code
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_Gender
+  member_name: team gender
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Team]
+  (
+  [Team_no] Long Integer,
+  [Team_name] Text (60),
+  [Team_short] Text (32),
+  [Team_abbr] Text (10),
+  [Team_stat] Text (2),
+  [Team_div] Integer,
+  [Team_region] Integer,
+  [Team_head] Text (60),
+  [Team_asst] Text (60),
+  [Team_addr1] Text (60),
+  [Team_addr2] Text (60),
+  [Team_city] Text (60),
+  [Team_prov] Text (60),
+  [Team_statenew] Text (6),
+  [Team_zip] Text (20),
+  [Team_cntry] Text (6),
+  [Team_daytele] Text (40),
+  [Team_evetele] Text (40),
+  [Team_faxtele] Text (40),
+  [Team_email] Text (72),
+  [Team_c3] Text (60),
+  [Team_c4] Text (60),
+  [Team_c5] Text (60),
+  [Team_c6] Text (60),
+  [Team_c7] Text (60),
+  [Team_c8] Text (60),
+  [Team_c9] Text (60),
+  [Team_c10] Text (60),
+  [Team_altabbr] Text (10),
+  [Team_NoPoints] Boolean NOT NULL,
+  [Team_Selected] Boolean NOT NULL,
+  [Team_altname] Text (32),
+  [InvitedTeam_AgencyID] Long Integer,
+  [InvitedTeam_Email] Text (110),
+  [Invited_InviteCode] Text (30),
+  [InvitedEntry_status] Text (50),
+  [InvitedPayment_status] Text (50),
+  [Invited_notes] Text (510),
+  [Invited_GovBody] Text (100),
+  [Invited_TeamID] Long Integer,
+  [InvitedHas_notes] Boolean NOT NULL,
+  [InvitedLeague_name] Text (50),
+  [InvitedFile_status] Text (50),
+  [InvitedFile_importdatetime] Text (50),
+  [InvitedFile_TMuploaddatetime] Text (50),
+  [InvitedFile_source] Text (50),
+  [Invited_TeamEntryID] Long Integer,
+  [Invited_Athletecount] Text (30),
+  [team_lsc] Text (6),
+  [NoTeam_surcharge] Boolean NOT NULL,
+  [NoFacility_surcharge] Boolean NOT NULL,
+  [NoAthlete_surcharge] Boolean NOT NULL,
+  [Team_cell] Text (40),
+  [NoRelayOnly_surcharge] Boolean NOT NULL,
+  [Team_Code] Text (60),
+  [Team_Gender] Text (2)
+  );

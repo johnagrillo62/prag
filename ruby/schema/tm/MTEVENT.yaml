@@ -1,0 +1,94 @@
+--- !ruby/object:Cls::Clss
+package: [hytek,tm]
+table_name: MTEVENT
+class_name: mt event
+members:
+- !ruby/object:Cls::Member
+  column_name: Meet
+  member_name: meet
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtEv
+  member_name: mt ev
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Lo_Hi
+  member_name: lo hi
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Course
+  member_name: course
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtEvent
+  member_name: mt event
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: Distance
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Stroke
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sex
+  member_name: sex
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: I_R
+  member_name: ind or rel
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Division
+  member_name: division
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 6
+  unique: false
+uniques:
+- "[mt event]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [MTEVENT]
+  (
+  [Meet] Long Integer,
+  [MtEv] Integer,
+  [Lo_Hi] Integer,
+  [Course] Text (2),
+  [MtEvent] Long Integer,
+  [Distance] Integer,
+  [Stroke] Integer,
+  [Sex] Text (2),
+  [I_R] Text (2),
+  [Division] Text (6),
+  );

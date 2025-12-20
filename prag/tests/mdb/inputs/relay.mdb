@@ -1,0 +1,25 @@
+CREATE TABLE [RELAY]
+ (
+	[RELAY]			Long Integer, 
+	[MEET]			Long Integer, 
+	[LO_HI]			Integer, 
+	[TEAM]			Long Integer, 
+	[LETTER]			Text (1), 
+	[AGE_RANGE]			Integer, 
+	[SEX]			Text (1), 
+	[ATH(1)]			Long Integer, 
+	[ATH(2)]			Long Integer, 
+	[ATH(3)]			Long Integer, 
+	[ATH(4)]			Long Integer, 
+	[ATH(5)]			Long Integer, 
+	[ATH(6)]			Long Integer, 
+	[ATH(7)]			Long Integer, 
+	[ATH(8)]			Long Integer, 
+	[DISTANCE]			Integer, 
+	[STROKE]			Integer, 
+	[RELAYAGE]			Text (3), 
+	[REACTION1]			Text (5), 
+	[REACTION2]			Text (5), 
+	[REACTION3]			Text (5), 
+	[REACTION4]			Text (5)
+);

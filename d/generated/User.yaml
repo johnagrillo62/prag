@@ -1,0 +1,28 @@
+# YAML Schema for user
+# Generated from D struct: User
+---
+
+user:
+  name: ""  # type: string
+  age: 0  # type: integer
+  id: ""  # type: string
+  data: ""  # type: string
+  contact: null  # type: mixed
+  employer: null  # type: mixed
+  projects: []  # type: array
+  metadata: {}  # type: object
+  investments: {}  # type: object
+  nested: {}  # type: object
+
+# Example usage:
+# user:
+#   name: example_value
+#   age: example_value
+#   id: example_value
+#   data: example_value
+#   contact: example_value
+#   employer: example_value
+#   projects: example_value
+#   metadata: example_value
+#   investments: example_value
+#   nested: example_value

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package test;
+
+// Simple message with oneof
+message ContactInfo {
+  oneof contact {
+    string email = 1;
+    int64 age = 2;
+    int64 num = 2;
+  }
+}
+

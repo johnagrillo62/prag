@@ -1,0 +1,74 @@
+--- !ruby/object:Cls::Clss
+table_name: RecordTags
+class_name: RecordTags
+members:
+- !ruby/object:Cls::Member
+  column_name: tag_ptr
+  member_name: tag ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_order
+  member_name: tag order
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_name
+  member_name: tag name
+  type: !ruby/object:Types::String
+    len: 24
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_flag
+  member_name: tag flag
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: team_no
+  member_name: team no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: allow_exh
+  member_name: allow exh
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: allow_foreigner
+  member_name: allow foreigner
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_lsc
+  member_name: tag lsc
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [RecordTags]
+  (
+  [tag_ptr] Long Integer,
+  [tag_order] Integer,
+  [tag_name] Text (24),
+  [tag_flag] Text (2),
+  [team_no] Long Integer,
+  [allow_exh] Boolean NOT NULL,
+  [allow_foreigner] Boolean NOT NULL,
+  [tag_lsc] Text (6)
+  );

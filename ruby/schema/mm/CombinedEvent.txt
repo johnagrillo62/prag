@@ -1,0 +1,41 @@
+-- ----------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2011 Brian Bruns and others.
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-- ----------------------------------------------------------
+
+-- That file uses encoding UTF-8
+
+CREATE TABLE [CombinedEvent]
+ (
+	[Event_no]			Integer, 
+	[Event_ltr]			Text (2), 
+	[CombEvent_ptr]			Long Integer, 
+	[Event_sex]			Text (2), 
+	[Event_gender]			Text (2), 
+	[Low_age]			Integer, 
+	[High_Age]			Integer, 
+	[Num_events]			Integer, 
+	[Score_event]			Boolean NOT NULL, 
+	[Div_no]			Integer, 
+	[Comm_1]			Text (72), 
+	[Comm_2]			Text (72), 
+	[Comm_3]			Text (72), 
+	[Comm_4]			Text (72), 
+	[Entry_fee]			Currency, 
+	[Event_note]			Text (40), 
+	[Event_ptr1]			Long Integer, 
+	[Event_ptr2]			Long Integer, 
+	[Event_ptr3]			Long Integer, 
+	[Event_ptr4]			Long Integer, 
+	[Event_ptr5]			Long Integer, 
+	[Event_ptr6]			Long Integer, 
+	[Event_ptr7]			Long Integer, 
+	[Event_ptr8]			Long Integer, 
+	[Event_ptr9]			Long Integer, 
+	[Event_ptr10]			Long Integer
+);
+
+

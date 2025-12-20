@@ -1,0 +1,148 @@
+---
+java_types:
+  Integer:
+    default_value: 0
+    attributes:
+      bits: [8, 16, 32, 64]
+      signedness: true
+      classes: true
+      primitive: true
+    types:
+      8:
+        primitive:
+          signed:
+            type: byte
+            convert: Byte.parseByte
+            to_object: Byte.valueOf
+          unsigned:
+            type: int
+            convert: Short.toUnsignedInt(Short.parseByte(s))
+            to_object: Integer.valueOf
+        wrapper:
+          signed:
+            type: Byte
+            convert: Byte.valueOf
+            to_primitive: byteValue
+          unsigned:
+            type: Integer
+            convert: Short.toUnsignedInt(Short.parseByte(s))
+            to_primitive: intValue
+      16:
+        primitive:
+          signed:
+            type: short
+            convert: Short.parseShort
+            to_object: Short.valueOf
+          unsigned:
+            type: int
+            convert: Short.toUnsignedInt(Short.parseShort(s))
+            to_object: Integer.valueOf
+        wrapper:
+          signed:
+            type: Short
+            convert: Short.valueOf
+            to_primitive: shortValue
+          unsigned:
+            type: Integer
+            convert: Short.toUnsignedInt(Short.parseShort(s))
+            to_primitive: intValue
+      32:
+        primitive:
+          signed:
+            type: int
+            convert: Integer.parseInt
+            to_object: Integer.valueOf
+          unsigned:
+            type: long
+            convert: Integer.parseUnsignedInt
+            to_object: Long.valueOf
+        wrapper:
+          signed:
+            type: Integer
+            convert: Integer.valueOf
+            to_primitive: intValue
+          unsigned:
+            type: Long
+            convert: Integer.parseUnsignedInt
+            to_primitive: longValue
+      64:
+        primitive:
+          signed:
+            type: long
+            convert: Long.parseLong
+            to_object: Long.valueOf
+          unsigned:
+            type: java.math.BigInteger
+            convert: BigIntegerConverter.convert
+            to_object: java.math.BigInteger::new
+        wrapper:
+          signed:
+            type: Long
+            convert: Long.valueOf
+            to_primitive: longValue
+          unsigned:
+            type: java.math.BigInteger
+            convert: BigIntegerConverter.convert
+
+
+            
+  Float:
+    default_value: 0.0
+    attributes:
+      wrapper: true
+      primitive: true
+    types:
+      single:
+        wrapper:
+          type: java.lang.Float
+          convert: Float.valueOf
+          to_primitive: floatValue
+        primitive:
+          type: float
+          convert: Float.parseFloat
+          to_object: Float.valueOf
+      double:
+        wrapper:
+          type: java.lang.Double
+          convert: Double.valueOf
+          to_primitive: doubleValue
+        primitive:
+          type: double
+          convert: Double.parseDouble
+          to_object: Double.valueOf
+            
+  Boolean:
+    default_value: false
+    attributes:
+      wrapperes: true
+      primitive: true
+    types:
+      wrapper:
+        type: Boolean
+        convert: Boolean.valueOf
+        to_primitive: booleanValue
+      primitive:
+        type: boolean
+        convert: Boolean.parseBoolean
+        to_object: Boolean.valueOf
+
+  DateTime:
+    default_value: "1970-01-01T00:00:00Z"
+    type: java.time.LocalDateTime
+    convert: java.time.LocalDateTime.parse
+
+  Currency:
+    primitive:
+      default_value: "0.00"
+      type: java.util.Currency
+      convert: java.util.Currency.getInstance
+    nullable:
+      default_value: "0.00"
+      type: Opitional<java.util.Currency>
+      convert: java.util.Currency.getInstance
+      
+      
+  String:
+    default_value: ""
+    type: String
+    convert: String.valueOf

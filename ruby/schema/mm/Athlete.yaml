@@ -1,0 +1,329 @@
+--- !ruby/object:Cls::Clss
+table_name: Athlete
+class_name: Athlete
+members:
+- !ruby/object:Cls::Member
+  column_name: Ath_no
+  member_name: ath no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Last_name
+  member_name: last name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: First_name
+  member_name: first name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Initial
+  member_name: initial
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_Sex
+  member_name: ath sex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Birth_date
+  member_name: birth date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_no
+  member_name: team no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Schl_yr
+  member_name: schl yr
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_age
+  member_name: ath age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Reg_no
+  member_name: reg no
+  type: !ruby/object:Types::String
+    len: 28
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_stat
+  member_name: ath stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Div_no
+  member_name: div no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comp_no
+  member_name: comp no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pref_name
+  member_name: pref name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_addr1
+  member_name: home addr 1
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_addr2
+  member_name: home addr 2
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_city
+  member_name: home city
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_prov
+  member_name: home prov
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_statenew
+  member_name: home statenew
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_zip
+  member_name: home zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_cntry
+  member_name: home cntry
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_daytele
+  member_name: home daytele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_evetele
+  member_name: home evetele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_faxtele
+  member_name: home faxtele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Citizen_of
+  member_name: citizen of
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Picture_bmp
+  member_name: picture bmp
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: second_club
+  member_name: second club
+  type: !ruby/object:Types::String
+    len: 32
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: home_email
+  member_name: home email
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_celltele
+  member_name: home celltele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: bcssa_type
+  member_name: bcssa type
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_emergcontact
+  member_name: home emergcontact
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_emergtele
+  member_name: home emergtele
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Disab_Scode
+  member_name: disab scode
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Disab_SBcode
+  member_name: disab s bcode
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Disab_SMcode
+  member_name: disab s mcode
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Disab_SDMSID
+  member_name: disab s d m s i d
+  type: !ruby/object:Types::String
+    len: 14
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Disab_Exeptioncodes
+  member_name: disab exeptioncodes
+  type: !ruby/object:Types::String
+    len: 28
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Masters_RegVerified
+  member_name: masters reg verified
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PC_Hide
+  member_name: p c hide
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_Sex_BS
+  member_name: ath sex b s
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Athlete]
+  (
+  [Ath_no] Long Integer,
+  [Last_name] Text (40),
+  [First_name] Text (40),
+  [Initial] Text (2),
+  [Ath_Sex] Text (2),
+  [Birth_date] DateTime,
+  [Team_no] Long Integer,
+  [Schl_yr] Text (4),
+  [Ath_age] Integer,
+  [Reg_no] Text (28),
+  [Ath_stat] Text (2),
+  [Div_no] Long Integer,
+  [Comp_no] Long Integer,
+  [Pref_name] Text (40),
+  [Home_addr1] Text (60),
+  [Home_addr2] Text (60),
+  [Home_city] Text (60),
+  [Home_prov] Text (60),
+  [Home_statenew] Text (6),
+  [Home_zip] Text (20),
+  [Home_cntry] Text (6),
+  [Home_daytele] Text (40),
+  [Home_evetele] Text (40),
+  [Home_faxtele] Text (40),
+  [Citizen_of] Text (6),
+  [Picture_bmp] Text (60),
+  [second_club] Text (32),
+  [home_email] Text (100),
+  [Home_celltele] Text (40),
+  [bcssa_type] Text (4),
+  [Home_emergcontact] Text (60),
+  [Home_emergtele] Text (40),
+  [Disab_Scode] Integer,
+  [Disab_SBcode] Integer,
+  [Disab_SMcode] Integer,
+  [Disab_SDMSID] Text (14),
+  [Disab_Exeptioncodes] Text (28),
+  [Masters_RegVerified] Boolean NOT NULL,
+  [PC_Hide] Boolean NOT NULL,
+  [Ath_Sex_BS] Text (2)
+  );

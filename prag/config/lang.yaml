@@ -1,0 +1,444 @@
+# languages.spec.yaml
+# Master specification for all language mappings - Canonical Type System
+
+# Canonical types are language-agnostic semantic types
+# Each language maps these canonical types to their native equivalents
+
+canonical_types:
+  primitives:
+    - Bool
+    - Int8
+    - UInt8
+    - Int16
+    - UInt16
+    - Int32
+    - UInt32
+    - Int64
+    - UInt64
+    - Float32
+    - Float64
+    - String
+    - Bytes
+    - Char
+  
+  standard:
+    - DateTime
+    - Date
+    - Time
+    - Duration
+    - UUID
+    - Decimal
+    - URL
+    - Email
+  
+  containers:
+    - List
+    - Map
+    - Set
+    - Tuple
+    - Optional
+    - Variant
+    - Pair
+    - Array
+    - UnorderedMap
+    - UnorderedSet
+  
+  ownership:
+    - UniquePtr
+    - SharedPtr
+
+languages:
+  cpp26:
+    metadata:
+      name: "C++26"
+      version: "26"
+      family: "cpp"
+    
+    config:
+      file_extension: "hpp"
+      comment_style: "//"
+      indent: "    "
+      include_guard: "pragma_once"
+    
+    # Canonical → C++ type mappings
+    type_map:
+      # Primitives
+      Bool: ["bool", "false"]
+      Int8: ["int8_t", "0"]
+      UInt8: ["uint8_t", "0"]
+      Int16: ["int16_t", "0"]
+      UInt16: ["uint16_t", "0"]
+      Int32: ["int32_t", "0"]
+      UInt32: ["uint32_t", "0"]
+      Int64: ["int64_t", "0"]
+      UInt64: ["uint64_t", "0"]
+      Float32: ["float", "0.0f"]
+      Float64: ["double", "0.0"]
+      String: ["std::string", '""']
+      Bytes: ["std::vector<uint8_t>", "{}"]
+      Char: ["char", "'\\0'"]
+      
+      # Standard types
+      DateTime: ["std::chrono::system_clock::time_point", "std::chrono::system_clock::now()"]
+      Date: ["std::chrono::year_month_day", "{}"]
+      Time: ["std::chrono::hh_mm_ss<std::chrono::seconds>", "{}"]
+      Duration: ["std::chrono::duration<int64_t>", "{}"]
+      UUID: ["std::array<uint8_t, 16>", "{}"]
+      Decimal: ["double", "0.0"]
+      URL: ["std::string", '""']
+      Email: ["std::string", '""']
+      
+      # Containers
+      List: ["std::vector<{0}>", "{}"]
+      Map: ["std::map<{0}, {1}>", "{}"]
+      Set: ["std::set<{0}>", "{}"]
+      Optional: ["std::optional<{0}>", "std::nullopt"]
+      Tuple: ["std::tuple<{...}>", "{}"]
+      Variant: ["std::variant<{...}>", "{}"]
+      Pair: ["std::pair<{0}, {1}>", "{}"]
+      Array: ["std::array<{0}, {1}>", "{}"]
+      UnorderedMap: ["std::unordered_map<{0}, {1}>", "{}"]
+      UnorderedSet: ["std::unordered_set<{0}>", "{}"]
+      
+      # Ownership
+      UniquePtr: ["std::unique_ptr<{0}>", "nullptr"]
+      SharedPtr: ["std::shared_ptr<{0}>", "nullptr"]
+    
+    # C++ source type → Canonical type (for parser)
+    source_to_canonical:
+      "bool": "Bool"
+      "int8_t": "Int8"
+      "uint8_t": "UInt8"
+      "int16_t": "Int16"
+      "uint16_t": "UInt16"
+      "int32_t": "Int32"
+      "uint32_t": "UInt32"
+      "int64_t": "Int64"
+      "uint64_t": "UInt64"
+      "float": "Float32"
+      "double": "Float64"
+      "char": "Char"
+      "std::string": "String"
+      "string": "String"
+      "std::vector": "List"
+      "vector": "List"
+      "std::map": "Map"
+      "map": "Map"
+      "std::set": "Set"
+      "set": "Set"
+      "std::optional": "Optional"
+      "optional": "Optional"
+      "std::tuple": "Tuple"
+      "tuple": "Tuple"
+      "std::variant": "Variant"
+      "variant": "Variant"
+      "std::pair": "Pair"
+      "pair": "Pair"
+      "std::array": "Array"
+      "array": "Array"
+      "std::unordered_map": "UnorderedMap"
+      "unordered_map": "UnorderedMap"
+      "std::unordered_set": "UnorderedSet"
+      "unordered_set": "UnorderedSet"
+      "std::unique_ptr": "UniquePtr"
+      "unique_ptr": "UniquePtr"
+      "std::shared_ptr": "SharedPtr"
+      "shared_ptr": "SharedPtr"
+    
+    namespace:
+      separator: "::"
+      keyword: "namespace"
+      open_template: "namespace {name} {{"
+      close_template: "}}  // namespace {name}"
+    
+    naming_conventions:
+      struct_name: "PascalCase"
+      field_name: "snake_case"
+      constant: "UPPER_SNAKE_CASE"
+      namespace: "snake_case"
+      file_name: "snake_case"
+
+  python:
+    metadata:
+      name: "Python"
+      version: "3.12"
+      family: "python"
+    
+    config:
+      file_extension: "py"
+      comment_style: "#"
+      indent: "    "
+    
+    # Canonical → Python type mappings
+    type_map:
+      # Primitives
+      Bool: ["bool", "False"]
+      Int8: ["int", "0"]
+      UInt8: ["int", "0"]
+      Int16: ["int", "0"]
+      UInt16: ["int", "0"]
+      Int32: ["int", "0"]
+      UInt32: ["int", "0"]
+      Int64: ["int", "0"]
+      UInt64: ["int", "0"]
+      Float32: ["float", "0.0"]
+      Float64: ["float", "0.0"]
+      String: ["str", '""']
+      Bytes: ["bytes", "b''"]
+      Char: ["str", '""']
+      
+      # Standard types
+      DateTime: ["datetime", "datetime.now()"]
+      Date: ["date", "date.today()"]
+      Time: ["time", "time()"]
+      Duration: ["timedelta", "timedelta()"]
+      UUID: ["UUID", "UUID()"]
+      Decimal: ["Decimal", "Decimal(0)"]
+      URL: ["str", '""']
+      Email: ["str", '""']
+      
+      # Containers
+      List: ["list[{0}]", "[]"]
+      Map: ["dict[{0}, {1}]", "{}"]
+      Set: ["set[{0}]", "set()"]
+      Optional: ["Optional[{0}]", "None"]
+      Tuple: ["tuple[{...}]", "()"]
+      Variant: ["Union[{...}]", "None"]
+      Pair: ["tuple[{0}, {1}]", "()"]
+    
+    # Python source type → Canonical type (for parser)
+    source_to_canonical:
+      "bool": "Bool"
+      "int": "Int32"
+      "float": "Float64"
+      "str": "String"
+      "bytes": "Bytes"
+      "list": "List"
+      "dict": "Map"
+      "set": "Set"
+      "tuple": "Tuple"
+      "Optional": "Optional"
+      "Union": "Variant"
+    
+    namespace:
+      separator: "."
+      keyword: "# module"
+    
+    naming_conventions:
+      class_name: "PascalCase"
+      field_name: "snake_case"
+      constant: "SCREAMING_SNAKE_CASE"
+      module: "snake_case"
+      file_name: "snake_case"
+
+  rust:
+    metadata:
+      name: "Rust"
+      version: "1.75"
+      family: "rust"
+    
+    config:
+      file_extension: "rs"
+      comment_style: "//"
+      indent: "    "
+    
+    # Canonical → Rust type mappings
+    type_map:
+      # Primitives
+      Bool: ["bool", "false"]
+      Int8: ["i8", "0"]
+      UInt8: ["u8", "0"]
+      Int16: ["i16", "0"]
+      UInt16: ["u16", "0"]
+      Int32: ["i32", "0"]
+      UInt32: ["u32", "0"]
+      Int64: ["i64", "0"]
+      UInt64: ["u64", "0"]
+      Float32: ["f32", "0.0"]
+      Float64: ["f64", "0.0"]
+      String: ["String", "String::new()"]
+      Bytes: ["Vec<u8>", "Vec::new()"]
+      Char: ["char", "'\\0'"]
+      
+      # Standard types
+      DateTime: ["DateTime<Utc>", "Utc::now()"]
+      Duration: ["Duration", "Duration::default()"]
+      UUID: ["Uuid", "Uuid::nil()"]
+      
+      # Containers
+      List: ["Vec<{0}>", "Vec::new()"]
+      Map: ["HashMap<{0}, {1}>", "HashMap::new()"]
+      Set: ["HashSet<{0}>", "HashSet::new()"]
+      Optional: ["Option<{0}>", "None"]
+      Tuple: ["({...},)", "Default::default()"]
+      Variant: ["Result<{0}, {1}>", "Err(Default::default())"]
+      UniquePtr: ["Box<{0}>", "Box::new(Default::default())"]
+      SharedPtr: ["Arc<{0}>", "Arc::new(Default::default())"]
+    
+    # Rust source type → Canonical type (for parser)
+    source_to_canonical:
+      "bool": "Bool"
+      "i8": "Int8"
+      "u8": "UInt8"
+      "i16": "Int16"
+      "u16": "UInt16"
+      "i32": "Int32"
+      "u32": "UInt32"
+      "i64": "Int64"
+      "u64": "UInt64"
+      "f32": "Float32"
+      "f64": "Float64"
+      "char": "Char"
+      "String": "String"
+      "Vec": "List"
+      "HashMap": "Map"
+      "HashSet": "Set"
+      "Option": "Optional"
+      "Result": "Variant"
+      "Box": "UniquePtr"
+      "Arc": "SharedPtr"
+      "Rc": "SharedPtr"
+    
+    namespace:
+      separator: "::"
+      keyword: "mod"
+      open_template: "pub mod {name} {{"
+      close_template: "}}"
+    
+    naming_conventions:
+      struct_name: "PascalCase"
+      field_name: "snake_case"
+      constant: "SCREAMING_SNAKE_CASE"
+      module: "snake_case"
+      file_name: "snake_case"
+
+  typescript:
+    metadata:
+      name: "TypeScript"
+      version: "5.3"
+      family: "javascript"
+    
+    config:
+      file_extension: "ts"
+      comment_style: "//"
+      indent: "  "
+    
+    # Canonical → TypeScript type mappings
+    type_map:
+      # Primitives
+      Bool: ["boolean", "false"]
+      Int8: ["number", "0"]
+      UInt8: ["number", "0"]
+      Int16: ["number", "0"]
+      UInt16: ["number", "0"]
+      Int32: ["number", "0"]
+      UInt32: ["number", "0"]
+      Int64: ["bigint", "0n"]
+      UInt64: ["bigint", "0n"]
+      Float32: ["number", "0"]
+      Float64: ["number", "0"]
+      String: ["string", '""']
+      Bytes: ["Uint8Array", "new Uint8Array()"]
+      Char: ["string", '""']
+      
+      # Standard types
+      DateTime: ["Date", "new Date()"]
+      Duration: ["number", "0"]
+      UUID: ["string", '""']
+      
+      # Containers
+      List: ["Array<{0}>", "[]"]
+      Map: ["Map<{0}, {1}>", "new Map()"]
+      Set: ["Set<{0}>", "new Set()"]
+      Optional: ["{0} | null", "null"]
+      Tuple: ["[{...}]", "[]"]
+      Variant: ["{...}", "null"]
+    
+    source_to_canonical:
+      "boolean": "Bool"
+      "number": "Int32"
+      "bigint": "Int64"
+      "string": "String"
+      "Array": "List"
+      "Map": "Map"
+      "Set": "Set"
+      "Date": "DateTime"
+    
+    namespace:
+      separator: "."
+      keyword: "namespace"
+      open_template: "export namespace {name} {{"
+      close_template: "}}"
+    
+    naming_conventions:
+      interface_name: "PascalCase"
+      field_name: "camelCase"
+      constant: "SCREAMING_SNAKE_CASE"
+      namespace: "PascalCase"
+      file_name: "kebab-case"
+
+  go:
+    metadata:
+      name: "Go"
+      version: "1.21"
+      family: "go"
+    
+    config:
+      file_extension: "go"
+      comment_style: "//"
+      indent: "\t"
+    
+    # Canonical → Go type mappings
+    type_map:
+      # Primitives
+      Bool: ["bool", "false"]
+      Int8: ["int8", "0"]
+      UInt8: ["uint8", "0"]
+      Int16: ["int16", "0"]
+      UInt16: ["uint16", "0"]
+      Int32: ["int32", "0"]
+      UInt32: ["uint32", "0"]
+      Int64: ["int64", "0"]
+      UInt64: ["uint64", "0"]
+      Float32: ["float32", "0.0"]
+      Float64: ["float64", "0.0"]
+      String: ["string", '""']
+      Bytes: ["[]byte", "nil"]
+      
+      # Standard types
+      DateTime: ["time.Time", "time.Now()"]
+      Duration: ["time.Duration", "0"]
+      UUID: ["uuid.UUID", "uuid.Nil"]
+      
+      # Containers
+      List: ["[]{0}", "nil"]
+      Map: ["map[{0}]{1}", "make(map[{0}]{1})"]
+      Set: ["map[{0}]struct{}", "make(map[{0}]struct{})"]
+      Optional: ["*{0}", "nil"]
+    
+    source_to_canonical:
+      "bool": "Bool"
+      "int8": "Int8"
+      "uint8": "UInt8"
+      "int16": "Int16"
+      "uint16": "UInt16"
+      "int32": "Int32"
+      "uint32": "UInt32"
+      "int64": "Int64"
+      "uint64": "UInt64"
+      "float32": "Float32"
+      "float64": "Float64"
+      "string": "String"
+    
+    namespace:
+      separator: "."
+      keyword: "package"
+    
+    naming_conventions:
+      struct_name: "PascalCase"
+      field_name: "PascalCase"
+      private_field: "camelCase"
+      constant: "PascalCase"
+      package: "lowercase"
+      file_name: "snake_case"
+

@@ -1,0 +1,106 @@
+--- !ruby/object:Cls::Clss
+table_name: FAVORITES
+class_name: FAVORITES
+members:
+- !ruby/object:Cls::Member
+  column_name: FavName
+  member_name: fav name
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavTeam
+  member_name: fav team
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavGroup
+  member_name: fav group
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavSubGr
+  member_name: fav sub gr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavClass
+  member_name: fav class
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavMeetType
+  member_name: fav meet type
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavCourse
+  member_name: fav course
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavWMGroup
+  member_name: fav w m group
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavWMSubGr
+  member_name: fav w m sub gr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SinceDate
+  member_name: since date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UntilDate
+  member_name: until date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavTeamDiv
+  member_name: fav team div
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [FAVORITES]
+  (
+  [FavName] Text (16),
+  [FavTeam] Text (10),
+  [FavGroup] Text (6),
+  [FavSubGr] Text (6),
+  [FavClass] Text (6),
+  [FavMeetType] Text (6),
+  [FavCourse] Text (10),
+  [FavWMGroup] Text (6),
+  [FavWMSubGr] Text (6),
+  [SinceDate] DateTime,
+  [UntilDate] DateTime,
+  [FavTeamDiv] Text (6)
+  );

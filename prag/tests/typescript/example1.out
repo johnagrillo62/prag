@@ -1,0 +1,1132 @@
+Parsers - avro capnp cpp fbs go gpl graphql mdb proto python rs schema.json thrift ts 
+Outputs - cpp go java proto python rust zig 
+********* Input : examples/typescript/example1.ts *********
+// Basic enum
+enum UserRole {
+  Admin = 0,
+  Moderator = 1,
+  User = 2,
+  Guest = 3
+}
+
+// String enum
+enum HttpStatus {
+  OK = "200",
+  NotFound = "404",
+  ServerError = "500"
+}
+
+// Simple interface with arrays
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  roles: UserRole[];
+  tags: string[];
+  scores: number[];
+  active: boolean;
+}
+
+// Generics and optionals
+interface ApiResponse {
+  data: Array<User>;
+  metadata: Map<string, string>;
+  errors?: Array<string>;
+  timestamp?: number;
+}
+
+// Union types
+interface Post {
+  id: string | number;
+  title: string;
+  content: string;
+  status: HttpStatus | UserRole;
+  author: User;
+  views: number;
+}
+
+// Nested types and complex generics
+interface Blog {
+  id: string;
+  name: string;
+  owner: User;
+  posts: Array<Post>;
+  subscribers: Array<User>;
+  settings: Map<string, string>;
+  moderators?: Array<User>;
+}
+
+// Optional everything
+interface Comment {
+  id?: number;
+  text?: string;
+  author?: User;
+  post?: Post;
+  likes?: number;
+  replies?: Array<Comment>;
+}
+
+// Mixed arrays and unions
+interface Notification {
+  id: string;
+  type: string | number;
+  recipient: User;
+  content: string;
+  read: boolean;
+  metadata?: Map<string, string>;
+  relatedPosts?: Array<Post>;
+}
+
+// Complex nested structure
+interface Organization {
+  id: string;
+  name: string;
+  admins: Array<User>;
+  members: Array<User>;
+  teams: Map<string, Array<User>>;
+  projects: Array<Blog>;
+  settings: Map<string, string>;
+  createdAt?: number;
+  updatedAt?: number;
+}
+
+// Union with multiple types
+interface SearchResult {
+  query: string;
+  users: Array<User>;
+  posts: Array<Post>;
+  blogs: Array<Blog>;
+  total: number;
+  facets?: Map<string, number>;
+}
+
+// Deep nesting
+interface ActivityFeed {
+  user: User;
+  activities: Array<Post>;
+  notifications: Array<Notification>;
+  recommendations: Array<Blog>;
+  stats: Map<string, number>;
+  preferences?: Map<string, string>;
+}
+
+
+********* AST **********
+enum
+enum
+struct
+Struct: User 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: username
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: email
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: roles
+      type: //GenericType: container=22 List
+ SimpleType: UserRole
+      attrs: 
+    Field name: tags
+      type: //GenericType: container=22 List
+ SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: scores
+      type: //GenericType: container=22 List
+ SimpleType: CanonicalType::5 Int32
+      attrs: 
+    Field name: active
+      type: SimpleType: CanonicalType::0 Bool
+      attrs: 
+
+struct
+Struct: ApiResponse 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: data
+      type: //GenericType: container=22 List
+ SimpleType: User
+      attrs: 
+    Field name: metadata
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+ SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: errors
+      type: //      PointerType:
+      attrs: 
+    Field name: timestamp
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: Post 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: title
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: content
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: status
+      type: SimpleType: HttpStatus
+      attrs: 
+    Field name: author
+      type: SimpleType: User
+      attrs: 
+    Field name: views
+      type: SimpleType: CanonicalType::5 Int32
+      attrs: 
+
+struct
+Struct: Blog 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: name
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: owner
+      type: SimpleType: User
+      attrs: 
+    Field name: posts
+      type: //GenericType: container=22 List
+ SimpleType: Post
+      attrs: 
+    Field name: subscribers
+      type: //GenericType: container=22 List
+ SimpleType: User
+      attrs: 
+    Field name: settings
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+ SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: moderators
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: Comment 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: //      PointerType:
+      attrs: 
+    Field name: text
+      type: //      PointerType:
+      attrs: 
+    Field name: author
+      type: //      PointerType:
+      attrs: 
+    Field name: post
+      type: //      PointerType:
+      attrs: 
+    Field name: likes
+      type: //      PointerType:
+      attrs: 
+    Field name: replies
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: Notification 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: type
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: recipient
+      type: SimpleType: User
+      attrs: 
+    Field name: content
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: read
+      type: SimpleType: CanonicalType::0 Bool
+      attrs: 
+    Field name: metadata
+      type: //      PointerType:
+      attrs: 
+    Field name: relatedPosts
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: Organization 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: name
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: admins
+      type: //GenericType: container=22 List
+ SimpleType: User
+      attrs: 
+    Field name: members
+      type: //GenericType: container=22 List
+ SimpleType: User
+      attrs: 
+    Field name: teams
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+// GenericType: container=22 List
+  SimpleType: User
+      attrs: 
+    Field name: projects
+      type: //GenericType: container=22 List
+ SimpleType: Blog
+      attrs: 
+    Field name: settings
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+ SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: createdAt
+      type: //      PointerType:
+      attrs: 
+    Field name: updatedAt
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: SearchResult 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: query
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: users
+      type: //GenericType: container=22 List
+ SimpleType: User
+      attrs: 
+    Field name: posts
+      type: //GenericType: container=22 List
+ SimpleType: Post
+      attrs: 
+    Field name: blogs
+      type: //GenericType: container=22 List
+ SimpleType: Blog
+      attrs: 
+    Field name: total
+      type: SimpleType: CanonicalType::5 Int32
+      attrs: 
+    Field name: facets
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: ActivityFeed 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: user
+      type: SimpleType: User
+      attrs: 
+    Field name: activities
+      type: //GenericType: container=22 List
+ SimpleType: Post
+      attrs: 
+    Field name: notifications
+      type: //GenericType: container=22 List
+ SimpleType: Notification
+      attrs: 
+    Field name: recommendations
+      type: //GenericType: container=22 List
+ SimpleType: Blog
+      attrs: 
+    Field name: stats
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+ SimpleType: CanonicalType::5 Int32
+      attrs: 
+    Field name: preferences
+      type: //      PointerType:
+      attrs: 
+
+********* Output **********
+********* cpp *********
+// Generated from 
+#pragma once
+#include <cstdint>
+#include <string>
+#include <vector>
+#include <map>
+#include <optional>
+
+enum class UserRole
+{
+  Admin = 0,
+  Moderator = 1,
+  User = 2,
+  Guest = 3
+};
+
+enum class HttpStatus
+{
+  OK = 0,
+  NotFound = 1,
+  ServerError = 2
+};
+
+struct User
+{
+  std::string id;
+  std::string username;
+  std::string email;
+  std::vector<UserRole> roles;
+  std::vector<std::string> tags;
+  std::vector<int32_t> scores;
+  bool active;
+};
+
+struct ApiResponse
+{
+  std::vector<User> data;
+  std::map<std::string, std::string> metadata;
+  std::vector<std::string>* errors;
+  int32_t* timestamp;
+};
+
+struct Post
+{
+  std::string id;
+  std::string title;
+  std::string content;
+  HttpStatus status;
+  User author;
+  int32_t views;
+};
+
+struct Blog
+{
+  std::string id;
+  std::string name;
+  User owner;
+  std::vector<Post> posts;
+  std::vector<User> subscribers;
+  std::map<std::string, std::string> settings;
+  std::vector<User>* moderators;
+};
+
+struct Comment
+{
+  int32_t* id;
+  std::string* text;
+  User* author;
+  Post* post;
+  int32_t* likes;
+  std::vector<Comment>* replies;
+};
+
+struct Notification
+{
+  std::string id;
+  std::string type;
+  User recipient;
+  std::string content;
+  bool read;
+  std::map<std::string, std::string>* metadata;
+  std::vector<Post>* relatedPosts;
+};
+
+struct Organization
+{
+  std::string id;
+  std::string name;
+  std::vector<User> admins;
+  std::vector<User> members;
+  std::map<std::string, std::vector<User>> teams;
+  std::vector<Blog> projects;
+  std::map<std::string, std::string> settings;
+  int32_t* createdAt;
+  int32_t* updatedAt;
+};
+
+struct SearchResult
+{
+  std::string query;
+  std::vector<User> users;
+  std::vector<Post> posts;
+  std::vector<Blog> blogs;
+  int32_t total;
+  std::map<std::string, int32_t>* facets;
+};
+
+struct ActivityFeed
+{
+  User user;
+  std::vector<Post> activities;
+  std::vector<Notification> notifications;
+  std::vector<Blog> recommendations;
+  std::map<std::string, int32_t> stats;
+  std::map<std::string, std::string>* preferences;
+};
+
+
+********* go *********
+// Generated from 
+package main
+
+type UserRole int
+
+const (
+  Admin = iota
+  Moderator = 1
+  User = 2
+  Guest = 3
+)
+
+type HttpStatus int
+
+const (
+  OK = iota
+  NotFound = 1
+  ServerError = 2
+)
+
+type User struct {
+  Id string `json:"id"`
+  Username string `json:"username"`
+  Email string `json:"email"`
+  Roles []UserRole `json:"roles"`
+  Tags []string `json:"tags"`
+  Scores []int32 `json:"scores"`
+  Active bool `json:"active"`
+}
+
+type ApiResponse struct {
+  Data []User `json:"data"`
+  Metadata map[string]string `json:"metadata"`
+  Errors *[]string `json:"errors"`
+  Timestamp *int32 `json:"timestamp"`
+}
+
+type Post struct {
+  Id string `json:"id"`
+  Title string `json:"title"`
+  Content string `json:"content"`
+  Status HttpStatus `json:"status"`
+  Author User `json:"author"`
+  Views int32 `json:"views"`
+}
+
+type Blog struct {
+  Id string `json:"id"`
+  Name string `json:"name"`
+  Owner User `json:"owner"`
+  Posts []Post `json:"posts"`
+  Subscribers []User `json:"subscribers"`
+  Settings map[string]string `json:"settings"`
+  Moderators *[]User `json:"moderators"`
+}
+
+type Comment struct {
+  Id *int32 `json:"id"`
+  Text *string `json:"text"`
+  Author *User `json:"author"`
+  Post *Post `json:"post"`
+  Likes *int32 `json:"likes"`
+  Replies *[]Comment `json:"replies"`
+}
+
+type Notification struct {
+  Id string `json:"id"`
+  Type string `json:"type"`
+  Recipient User `json:"recipient"`
+  Content string `json:"content"`
+  Read bool `json:"read"`
+  Metadata *map[string]string `json:"metadata"`
+  RelatedPosts *[]Post `json:"relatedPosts"`
+}
+
+type Organization struct {
+  Id string `json:"id"`
+  Name string `json:"name"`
+  Admins []User `json:"admins"`
+  Members []User `json:"members"`
+  Teams map[string][]User `json:"teams"`
+  Projects []Blog `json:"projects"`
+  Settings map[string]string `json:"settings"`
+  CreatedAt *int32 `json:"createdAt"`
+  UpdatedAt *int32 `json:"updatedAt"`
+}
+
+type SearchResult struct {
+  Query string `json:"query"`
+  Users []User `json:"users"`
+  Posts []Post `json:"posts"`
+  Blogs []Blog `json:"blogs"`
+  Total int32 `json:"total"`
+  Facets *map[string]int32 `json:"facets"`
+}
+
+type ActivityFeed struct {
+  User User `json:"user"`
+  Activities []Post `json:"activities"`
+  Notifications []Notification `json:"notifications"`
+  Recommendations []Blog `json:"recommendations"`
+  Stats map[string]int32 `json:"stats"`
+  Preferences *map[string]string `json:"preferences"`
+}
+
+
+********* java *********
+// Generated from 
+import java.util.*;
+import java.time.*;
+import java.math.*;
+
+public enum UserRole {
+  Admin(0),
+  Moderator(1),
+  User(2),
+  Guest(3);
+
+  private final int value;
+  Guest(int value) { this.value = value; }
+  public int getValue() { return value; }
+}
+
+public enum HttpStatus {
+  OK(0),
+  NotFound(1),
+  ServerError(2);
+
+  private final int value;
+  ServerError(int value) { this.value = value; }
+  public int getValue() { return value; }
+}
+
+public class User {
+  public String id;
+  public String username;
+  public String email;
+  public List<UserRole> roles;
+  public List<String> tags;
+  public List<Integer> scores;
+  public boolean active;
+}
+
+public class ApiResponse {
+  public List<User> data;
+  public Map<String, String> metadata;
+  public List<String> errors;
+  public int timestamp;
+}
+
+public class Post {
+  public String id;
+  public String title;
+  public String content;
+  public HttpStatus status;
+  public User author;
+  public int views;
+}
+
+public class Blog {
+  public String id;
+  public String name;
+  public User owner;
+  public List<Post> posts;
+  public List<User> subscribers;
+  public Map<String, String> settings;
+  public List<User> moderators;
+}
+
+public class Comment {
+  public int id;
+  public String text;
+  public User author;
+  public Post post;
+  public int likes;
+  public List<Comment> replies;
+}
+
+public class Notification {
+  public String id;
+  public String type;
+  public User recipient;
+  public String content;
+  public boolean read;
+  public Map<String, String> metadata;
+  public List<Post> relatedPosts;
+}
+
+public class Organization {
+  public String id;
+  public String name;
+  public List<User> admins;
+  public List<User> members;
+  public Map<String, List<User>> teams;
+  public List<Blog> projects;
+  public Map<String, String> settings;
+  public int createdAt;
+  public int updatedAt;
+}
+
+public class SearchResult {
+  public String query;
+  public List<User> users;
+  public List<Post> posts;
+  public List<Blog> blogs;
+  public int total;
+  public Map<String, Integer> facets;
+}
+
+public class ActivityFeed {
+  public User user;
+  public List<Post> activities;
+  public List<Notification> notifications;
+  public List<Blog> recommendations;
+  public Map<String, Integer> stats;
+  public Map<String, String> preferences;
+}
+
+
+********* proto *********
+// Generated from 
+syntax = "proto3";
+
+enum UserRole {
+  Admin = 0;
+  Moderator = 1;
+  User = 2;
+  Guest = 3;
+}
+
+enum HttpStatus {
+  OK = 0;
+  NotFound = 1;
+  ServerError = 2;
+}
+
+message User {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  repeated UserRole roles = 4;
+  repeated string tags = 5;
+  repeated int32 scores = 6;
+  bool active = 7;
+}
+
+message ApiResponse {
+  repeated User data = 1;
+  map<string, string> metadata = 2;
+  repeated string errors = 3;
+  int32 timestamp = 4;
+}
+
+message Post {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  HttpStatus status = 4;
+  User author = 5;
+  int32 views = 6;
+}
+
+message Blog {
+  string id = 1;
+  string name = 2;
+  User owner = 3;
+  repeated Post posts = 4;
+  repeated User subscribers = 5;
+  map<string, string> settings = 6;
+  repeated User moderators = 7;
+}
+
+message Comment {
+  int32 id = 1;
+  string text = 2;
+  User author = 3;
+  Post post = 4;
+  int32 likes = 5;
+  repeated Comment replies = 6;
+}
+
+message Notification {
+  string id = 1;
+  string type = 2;
+  User recipient = 3;
+  string content = 4;
+  bool read = 5;
+  map<string, string> metadata = 6;
+  repeated Post relatedPosts = 7;
+}
+
+message Organization {
+  string id = 1;
+  string name = 2;
+  repeated User admins = 3;
+  repeated User members = 4;
+  map<string, repeated User> teams = 5;
+  repeated Blog projects = 6;
+  map<string, string> settings = 7;
+  int32 createdAt = 8;
+  int32 updatedAt = 9;
+}
+
+message SearchResult {
+  string query = 1;
+  repeated User users = 2;
+  repeated Post posts = 3;
+  repeated Blog blogs = 4;
+  int32 total = 5;
+  map<string, int32> facets = 6;
+}
+
+message ActivityFeed {
+  User user = 1;
+  repeated Post activities = 2;
+  repeated Notification notifications = 3;
+  repeated Blog recommendations = 4;
+  map<string, int32> stats = 5;
+  map<string, string> preferences = 6;
+}
+
+
+********* python *********
+# Generated from 
+from dataclasses import dataclass
+from typing import List, Dict, Optional, Union
+
+class UserRole(Enum):
+  Admin = 0
+  Moderator = 1
+  User = 2
+  Guest = 3
+
+class HttpStatus(Enum):
+  OK = 0
+  NotFound = 1
+  ServerError = 2
+
+@dataclass
+class User:
+  id: str
+  username: str
+  email: str
+  roles: list[UserRole]
+  tags: list[str]
+  scores: list[int]
+  active: bool
+
+@dataclass
+class ApiResponse:
+  data: list[User]
+  metadata: dict[str, str]
+  errors: Optional[list[str]]
+  timestamp: Optional[int]
+
+@dataclass
+class Post:
+  id: str
+  title: str
+  content: str
+  status: HttpStatus
+  author: User
+  views: int
+
+@dataclass
+class Blog:
+  id: str
+  name: str
+  owner: User
+  posts: list[Post]
+  subscribers: list[User]
+  settings: dict[str, str]
+  moderators: Optional[list[User]]
+
+@dataclass
+class Comment:
+  id: Optional[int]
+  text: Optional[str]
+  author: Optional[User]
+  post: Optional[Post]
+  likes: Optional[int]
+  replies: Optional[list[Comment]]
+
+@dataclass
+class Notification:
+  id: str
+  type: str
+  recipient: User
+  content: str
+  read: bool
+  metadata: Optional[dict[str, str]]
+  relatedPosts: Optional[list[Post]]
+
+@dataclass
+class Organization:
+  id: str
+  name: str
+  admins: list[User]
+  members: list[User]
+  teams: dict[str, list[User]]
+  projects: list[Blog]
+  settings: dict[str, str]
+  createdAt: Optional[int]
+  updatedAt: Optional[int]
+
+@dataclass
+class SearchResult:
+  query: str
+  users: list[User]
+  posts: list[Post]
+  blogs: list[Blog]
+  total: int
+  facets: Optional[dict[str, int]]
+
+@dataclass
+class ActivityFeed:
+  user: User
+  activities: list[Post]
+  notifications: list[Notification]
+  recommendations: list[Blog]
+  stats: dict[str, int]
+  preferences: Optional[dict[str, str]]
+
+
+********* rust *********
+// Generated from 
+#![allow(dead_code)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum UserRole {
+  Admin = 0,
+  Moderator = 1,
+  User = 2,
+  Guest = 3,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HttpStatus {
+  OK = 0,
+  NotFound = 1,
+  ServerError = 2,
+}
+
+#[derive(Debug, Clone)]
+pub struct User {
+  pub id: String,
+  pub username: String,
+  pub email: String,
+  pub roles: Vec<UserRole>,
+  pub tags: Vec<String>,
+  pub scores: Vec<i32>,
+  pub active: bool,
+}
+
+#[derive(Debug, Clone)]
+pub struct ApiResponse {
+  pub data: Vec<User>,
+  pub metadata: std::collections::HashMap<String, String>,
+  pub errors: Box<Vec<String>>,
+  pub timestamp: Box<i32>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Post {
+  pub id: String,
+  pub title: String,
+  pub content: String,
+  pub status: HttpStatus,
+  pub author: User,
+  pub views: i32,
+}
+
+#[derive(Debug, Clone)]
+pub struct Blog {
+  pub id: String,
+  pub name: String,
+  pub owner: User,
+  pub posts: Vec<Post>,
+  pub subscribers: Vec<User>,
+  pub settings: std::collections::HashMap<String, String>,
+  pub moderators: Box<Vec<User>>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Comment {
+  pub id: Box<i32>,
+  pub text: Box<String>,
+  pub author: Box<User>,
+  pub post: Box<Post>,
+  pub likes: Box<i32>,
+  pub replies: Box<Vec<Comment>>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Notification {
+  pub id: String,
+  pub type: String,
+  pub recipient: User,
+  pub content: String,
+  pub read: bool,
+  pub metadata: Box<std::collections::HashMap<String, String>>,
+  pub relatedPosts: Box<Vec<Post>>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Organization {
+  pub id: String,
+  pub name: String,
+  pub admins: Vec<User>,
+  pub members: Vec<User>,
+  pub teams: std::collections::HashMap<String, Vec<User>>,
+  pub projects: Vec<Blog>,
+  pub settings: std::collections::HashMap<String, String>,
+  pub createdAt: Box<i32>,
+  pub updatedAt: Box<i32>,
+}
+
+#[derive(Debug, Clone)]
+pub struct SearchResult {
+  pub query: String,
+  pub users: Vec<User>,
+  pub posts: Vec<Post>,
+  pub blogs: Vec<Blog>,
+  pub total: i32,
+  pub facets: Box<std::collections::HashMap<String, i32>>,
+}
+
+#[derive(Debug, Clone)]
+pub struct ActivityFeed {
+  pub user: User,
+  pub activities: Vec<Post>,
+  pub notifications: Vec<Notification>,
+  pub recommendations: Vec<Blog>,
+  pub stats: std::collections::HashMap<String, i32>,
+  pub preferences: Box<std::collections::HashMap<String, String>>,
+}
+
+
+********* zig *********
+// Generated from 
+const std = @import("std");
+
+pub const UserRole = enum(i32) {
+  admin = 0,
+  moderator = 1,
+  user = 2,
+  guest = 3,
+};
+
+pub const HttpStatus = enum(i32) {
+  ok = 0,
+  notfound = 1,
+  servererror = 2,
+};
+
+pub const User = struct {
+  id: []const u8,
+  username: []const u8,
+  email: []const u8,
+  roles: std.ArrayList(UserRole),
+  tags: std.ArrayList([]const u8),
+  scores: std.ArrayList(i32),
+  active: bool,
+};
+
+pub const ApiResponse = struct {
+  data: std.ArrayList(User),
+  metadata: std.AutoHashMap([]const u8, []const u8),
+  errors: *std.ArrayList([]const u8),
+  timestamp: *i32,
+};
+
+pub const Post = struct {
+  id: []const u8,
+  title: []const u8,
+  content: []const u8,
+  status: HttpStatus,
+  author: User,
+  views: i32,
+};
+
+pub const Blog = struct {
+  id: []const u8,
+  name: []const u8,
+  owner: User,
+  posts: std.ArrayList(Post),
+  subscribers: std.ArrayList(User),
+  settings: std.AutoHashMap([]const u8, []const u8),
+  moderators: *std.ArrayList(User),
+};
+
+pub const Comment = struct {
+  id: *i32,
+  text: *[]const u8,
+  author: *User,
+  post: *Post,
+  likes: *i32,
+  replies: *std.ArrayList(Comment),
+};
+
+pub const Notification = struct {
+  id: []const u8,
+  type: []const u8,
+  recipient: User,
+  content: []const u8,
+  read: bool,
+  metadata: *std.AutoHashMap([]const u8, []const u8),
+  relatedPosts: *std.ArrayList(Post),
+};
+
+pub const Organization = struct {
+  id: []const u8,
+  name: []const u8,
+  admins: std.ArrayList(User),
+  members: std.ArrayList(User),
+  teams: std.AutoHashMap([]const u8, std.ArrayList(User)),
+  projects: std.ArrayList(Blog),
+  settings: std.AutoHashMap([]const u8, []const u8),
+  createdAt: *i32,
+  updatedAt: *i32,
+};
+
+pub const SearchResult = struct {
+  query: []const u8,
+  users: std.ArrayList(User),
+  posts: std.ArrayList(Post),
+  blogs: std.ArrayList(Blog),
+  total: i32,
+  facets: *std.AutoHashMap([]const u8, i32),
+};
+
+pub const ActivityFeed = struct {
+  user: User,
+  activities: std.ArrayList(Post),
+  notifications: std.ArrayList(Notification),
+  recommendations: std.ArrayList(Blog),
+  stats: std.AutoHashMap([]const u8, i32),
+  preferences: *std.AutoHashMap([]const u8, []const u8),
+};
+
+

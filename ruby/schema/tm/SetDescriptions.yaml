@@ -1,0 +1,20 @@
+--- !ruby/object:Cls::Clss
+table_name: SetDescriptions
+class_name: SetDescriptions
+members:
+- !ruby/object:Cls::Member
+  column_name: set_name
+  member_name: set name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [SetDescriptions]
+  (
+  [set_name] Text (60)
+  );

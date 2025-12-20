@@ -1,0 +1,158 @@
+--- !ruby/object:Cls::Clss
+package: [hytek,tm]
+table_name: RELAY
+class_name: RELAY
+members:
+- !ruby/object:Cls::Member
+  column_name: RELAY
+  member_name: relay
+  type: !ruby/object:Types::Integer
+    nullable: false
+    bits: 64
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: MEET
+  member_name: meet
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LO_HI
+  member_name: lo hi
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TEAM
+  member_name: team
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LETTER
+  member_name: letter
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AGE_RANGE
+  member_name: age range
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SEX
+  member_name: sex
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(1)
+  member_name: ath1
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(2)
+  member_name: ath2
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(3)
+  member_name: ath3
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(4)
+  member_name: ath4
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(5)
+  member_name: ath5
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(6)
+  member_name: ath6
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(7)
+  member_name: ath7
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATH(8)
+  member_name: ath8
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DISTANCE
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: STROKE
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RELAYAGE
+  member_name: relay age
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 6
+  unique: false
+uniques:
+- "[RELAY]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [RELAY]
+  (
+  [RELAY] Long Integer,
+  [MEET] Long Integer,
+  [LO_HI] Integer,
+  [TEAM] Long Integer,
+  [LETTER] Text (2),
+  [AGE_RANGE] Integer,
+  [SEX] Text (2),
+  [ATH(1)] Long Integer,
+  [ATH(2)] Long Integer,
+  [ATH(3)] Long Integer,
+  [ATH(4)] Long Integer,
+  [ATH(5)] Long Integer,
+  [ATH(6)] Long Integer,
+  [ATH(7)] Long Integer,
+  [ATH(8)] Long Integer,
+  [DISTANCE] Integer,
+  [STROKE] Integer,
+  [RELAYAGE] Text (6),
+  );

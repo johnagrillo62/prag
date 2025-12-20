@@ -1,0 +1,45 @@
+--- !ruby/object:Cls::Clss
+table_name: CODE
+class_name: CODE
+members:
+- !ruby/object:Cls::Member
+  column_name: ABBR
+  member_name: abbr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DESC
+  member_name: desc
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CODE
+  member_name: code
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: false
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: TYPE
+  member_name: type
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+uniques:
+- "[CODE]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [CODE]
+  (
+  [ABBR] Text (6),
+  [DESC] Text (60),
+  [CODE] Long Integer,
+  [TYPE] Byte
+  );

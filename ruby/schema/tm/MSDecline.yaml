@@ -1,0 +1,65 @@
+--- !ruby/object:Cls::Clss
+table_name: MSDecline
+class_name: MSDecline
+members:
+- !ruby/object:Cls::Member
+  column_name: MName
+  member_name: m name
+  type: !ruby/object:Types::String
+    len: 90
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Start
+  member_name: start
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MeetSharingMeetID
+  member_name: meet sharing meet i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MeetRegistrationOpens
+  member_name: meet registration opens
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MeetRegistrationCloses
+  member_name: meet registration closes
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MeetSharingStatus
+  member_name: meet sharing status
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MeetSharingPayStatus
+  member_name: meet sharing pay status
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [MSDecline]
+  (
+  [MName] Text (90),
+  [Start] DateTime,
+  [MeetSharingMeetID] Long Integer,
+  [MeetRegistrationOpens] DateTime,
+  [MeetRegistrationCloses] DateTime,
+  [MeetSharingStatus] Text (40),
+  [MeetSharingPayStatus] Text (40)
+  );

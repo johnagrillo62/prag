@@ -1,0 +1,84 @@
+--- !ruby/object:Cls::Clss
+package: [hytek,tm]
+table_name: MEET
+class_name: MEET
+members:
+- !ruby/object:Cls::Member
+  column_name: Meet
+  member_name: meet
+  type: !ruby/object:Types::Integer
+    nullable: false
+    bits: 64
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: MName
+  member_name: m name
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 90
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Start
+  member_name: start
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AgeUp
+  member_name: age up
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Course
+  member_name: course
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 4
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Location
+  member_name: location
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 90
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MaxIndEnt
+  member_name: max ind ent
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MaxRelEnt
+  member_name: max rel ent
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MaxEnt
+  member_name: max ent
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+uniques:
+- "[MEET]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [MEET]
+  (
+  [Meet] Long Integer,
+  [MName] Text (90),
+  [Start] DateTime,
+  [AgeUp] DateTime,
+  [Course] Text (4),
+  [Location] Text (90),
+  [MaxIndEnt] Integer,
+  [MaxRelEnt] Integer,
+  [MaxEnt] Integer,
+  );

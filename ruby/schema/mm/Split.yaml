@@ -1,0 +1,76 @@
+--- !ruby/object:Cls::Clss
+table_name: Split
+class_name: Split
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_no
+  member_name: ath no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_no
+  member_name: team no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_ltr
+  member_name: team ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Rnd_ltr
+  member_name: rnd ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Split_no
+  member_name: split no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Split_Time
+  member_name: split time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Relay_no
+  member_name: relay no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Split]
+  (
+  [Event_ptr] Long Integer,
+  [Ath_no] Long Integer,
+  [Team_no] Long Integer,
+  [Team_ltr] Text (2),
+  [Rnd_ltr] Text (2),
+  [Split_no] Integer,
+  [Split_Time] Single,
+  [Relay_no] Long Integer
+  );

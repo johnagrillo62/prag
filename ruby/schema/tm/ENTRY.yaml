@@ -1,0 +1,118 @@
+--- !ruby/object:Cls::Clss
+package: [hytek,tm]
+table_name: ENTRY
+class_name: ENTRY
+members:
+- !ruby/object:Cls::Member
+  column_name: Meet
+  member_name: meet
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: I_R
+  member_name: ind rel
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team
+  member_name: team
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Course
+  member_name: course
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 4
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Score
+  member_name: score
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ex
+  member_name: exh
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtEvent
+  member_name: mt event
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Misc
+  member_name: misc
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Entry
+  member_name: entry
+  type: !ruby/object:Types::Integer
+    nullable: false
+    bits: 64
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: Division
+  member_name: division
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 6
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HEAT
+  member_name: heat
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 8
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LANE
+  member_name: lane
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 8
+  unique: false
+uniques:
+- "[ENTRY]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [ENTRY]
+  (
+  [Meet] Long Integer,
+  [Athlete] Long Integer,
+  [I_R] Text (2),
+  [Team] Long Integer,
+  [Course] Text (4),
+  [Score] Long Integer,
+  [Ex] Text (2),
+  [MtEvent] Long Integer,
+  [Misc] Text (2),
+  [Entry] Long Integer,
+  [Division] Text (6),
+  [HEAT] Byte,
+  [LANE] Byte,
+  );

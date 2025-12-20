@@ -1,0 +1,44 @@
+--- !ruby/object:Cls::Clss
+table_name: SPLITS
+class_name: SPLITS
+members:
+- !ruby/object:Cls::Member
+  column_name: SplitID
+  member_name: split i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SplitIndex
+  member_name: split index
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Split
+  member_name: split
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: StrokeRate
+  member_name: stroke rate
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [SPLITS]
+  (
+  [SplitID] Long Integer,
+  [SplitIndex] Byte,
+  [Split] Long Integer,
+  [StrokeRate] Single
+  );

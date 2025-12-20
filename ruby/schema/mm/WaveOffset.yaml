@@ -1,0 +1,44 @@
+--- !ruby/object:Cls::Clss
+table_name: WaveOffset
+class_name: WaveOffset
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Heat_no
+  member_name: heat no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Rnd_ltr
+  member_name: rnd ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Wave_offset
+  member_name: wave offset
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [WaveOffset]
+  (
+  [Event_ptr] Long Integer,
+  [Heat_no] Integer,
+  [Rnd_ltr] Text (2),
+  [Wave_offset] Single
+  );

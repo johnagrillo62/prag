@@ -1,0 +1,83 @@
+--- !ruby/object:Cls::Clss
+table_name: SESSIONS
+class_name: SESSIONS
+members:
+- !ruby/object:Cls::Member
+  column_name: MEETID
+  member_name: meetid
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION
+  member_name: session
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MAXIND
+  member_name: maxind
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MAXREL
+  member_name: maxrel
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MAXCOMBINED
+  member_name: maxcombined
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DAY
+  member_name: day
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: STARTTIME
+  member_name: starttime
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AMPM
+  member_name: ampm
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SessX
+  member_name: sess x
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [SESSIONS]
+  (
+  [MEETID] Long Integer,
+  [SESSION] Byte,
+  [MAXIND] Byte,
+  [MAXREL] Byte,
+  [MAXCOMBINED] Byte,
+  [DAY] Byte,
+  [STARTTIME] Text (10),
+  [AMPM] Boolean NOT NULL,
+  [SessX] Text (2)
+  );

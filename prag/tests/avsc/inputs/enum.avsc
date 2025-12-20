@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "Event",
+  "fields": [
+    {"name": "id", "type": "long"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "status", "type": {
+      "type": "enum",
+      "name": "Status",
+      "symbols": ["PENDING", "ACTIVE", "COMPLETED", "FAILED"]
+    }}
+  ]
+}

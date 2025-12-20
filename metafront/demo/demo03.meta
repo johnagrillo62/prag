@@ -1,0 +1,84 @@
+namespace meta
+{
+namespace Car
+{
+inline const auto fields = std::make_tuple(
+    meta::Field<::Car, std::string, &::Car::make, meta::Prop::Serializable, nullptr, nullptr>(
+        "make",
+        "std::string",
+        {
+            {CSV_COLUMN, "make"},
+            {SQL_COLUMN, "make"},
+            {SRC_NAME, "make"},
+        }),
+    meta::Field<::Car, std::string, &::Car::model, meta::Prop::Serializable, nullptr, nullptr>(
+        "model",
+        "std::string",
+        {
+            {CSV_COLUMN, "model"},
+            {SQL_COLUMN, "model"},
+            {SRC_NAME, "model"},
+        }),
+    meta::Field<::Car, int16_t, &::Car::year, meta::Prop::Serializable, nullptr, nullptr>(
+        "year",
+        "int16_t",
+        {
+            {CSV_COLUMN, "year"},
+            {SQL_COLUMN, "year"},
+            {SRC_NAME, "year"},
+        }),
+    meta::Field<::Car, bool, &::Car::electric, meta::Prop::Serializable, nullptr, nullptr>(
+        "electric",
+        "bool",
+        {
+            {CSV_COLUMN, "electric"},
+            {SQL_COLUMN, "electric"},
+            {SRC_NAME, "electric"},
+        }),
+    meta::Field<::Car, int32_t, &::Car::miles, meta::Prop::Serializable, nullptr, nullptr>(
+        "miles",
+        "int32_t",
+        {
+            {CSV_COLUMN, "miles"},
+            {SQL_COLUMN, "miles"},
+            {SRC_NAME, "miles"},
+        }),
+    meta::Field<::Car,
+                std::vector<std::string>,
+                &::Car::repairs,
+                meta::Prop::Serializable,
+                nullptr,
+                nullptr>("repairs",
+                         "std::vector<std::string>",
+                         {
+                             {CSV_COLUMN, "repairs"},
+                             {SQL_COLUMN, "repairs"},
+                             {SRC_NAME, "repairs"},
+                         }),
+    meta::Field<::Car,
+                std::map<std::string, std::string>,
+                &::Car::service,
+                meta::Prop::Serializable,
+                nullptr,
+                nullptr>("service",
+                         "std::map<std::string,std::string>",
+                         {
+                             {CSV_COLUMN, "service"},
+                             {SQL_COLUMN, "service"},
+                             {SRC_NAME, "service"},
+                         }));
+inline constexpr auto tableName = "Car";
+inline constexpr auto query =
+    "SELECT make, model, year, electric, miles, repairs, service FROM Car";
+} // namespace Car
+} // namespace meta
+namespace meta
+{
+// Template specialization for type-based reflection lookup
+template <> struct MetaTuple<::Car>
+{
+    static inline const auto& fields = meta::Car::fields;
+    static constexpr auto tableName = meta::Car::tableName;
+    static constexpr auto query = meta::Car::query;
+};
+} // namespace meta

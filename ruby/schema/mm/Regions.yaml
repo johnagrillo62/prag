@@ -1,0 +1,60 @@
+--- !ruby/object:Cls::Clss
+table_name: Regions
+class_name: Regions
+members:
+- !ruby/object:Cls::Member
+  column_name: Reg_no
+  member_name: reg no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Reg_abbr
+  member_name: reg abbr
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Reg_name
+  member_name: reg name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: fem_size
+  member_name: fem size
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: male_size
+  member_name: male size
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: combined_size
+  member_name: combined size
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Regions]
+  (
+  [Reg_no] Long Integer,
+  [Reg_abbr] Text (4),
+  [Reg_name] Text (40),
+  [fem_size] Integer,
+  [male_size] Integer,
+  [combined_size] Integer
+  );

@@ -1,0 +1,124 @@
+--- !ruby/object:Cls::Clss
+table_name: Session
+class_name: Session
+members:
+- !ruby/object:Cls::Member
+  column_name: Sess_no
+  member_name: sess no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_ltr
+  member_name: sess ltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_ptr
+  member_name: sess ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_day
+  member_name: sess day
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_starttime
+  member_name: sess starttime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_entrymax
+  member_name: sess entrymax
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_name
+  member_name: sess name
+  type: !ruby/object:Types::String
+    len: 120
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_interval
+  member_name: sess interval
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_course
+  member_name: sess course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_entrymaxind
+  member_name: sess entrymaxind
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_entrymaxrel
+  member_name: sess entrymaxrel
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_backinterval
+  member_name: sess backinterval
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_divinginterval
+  member_name: sess divinginterval
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sess_chaseinterval
+  member_name: sess chaseinterval
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Session]
+  (
+  [Sess_no] Integer,
+  [Sess_ltr] Text (2),
+  [Sess_ptr] Long Integer,
+  [Sess_day] Integer,
+  [Sess_starttime] Long Integer,
+  [Sess_entrymax] Integer,
+  [Sess_name] Text (120),
+  [Sess_interval] Integer,
+  [Sess_course] Text (2),
+  [Sess_entrymaxind] Integer,
+  [Sess_entrymaxrel] Integer,
+  [Sess_backinterval] Integer,
+  [Sess_divinginterval] Integer,
+  [Sess_chaseinterval] Integer
+  );

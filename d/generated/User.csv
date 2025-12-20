@@ -1,0 +1,14 @@
+# user CSV Format
+# Generated CSV schema for user class
+# Source D struct: User
+# ==========================================
+
+# CSV Format Specification:
+# - Delimiter: comma (,)
+# - Text qualifier: double quote (")
+# - Encoding: UTF-8
+# - Line ending: CRLF (\r\n) or LF (\n)
+# - Header row: Required
+
+# Field Mapping and Data Types:
+# ==============================

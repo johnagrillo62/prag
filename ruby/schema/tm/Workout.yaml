@@ -1,0 +1,148 @@
+--- !ruby/object:Cls::Clss
+table_name: Workout
+class_name: Workout
+members:
+- !ruby/object:Cls::Member
+  column_name: wk_ptr
+  member_name: wk ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: wk_line
+  member_name: wk line
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: wk_type
+  member_name: wk type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: circuit_line
+  member_name: circuit line
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: circuit_tot
+  member_name: circuit tot
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: circuit_reps
+  member_name: circuit reps
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_reps
+  member_name: set reps
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_dist
+  member_name: set dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_interval
+  member_name: set interval
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_desc
+  member_name: set desc
+  type: !ruby/object:Types::String
+    len: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_note
+  member_name: set note
+  type: !ruby/object:Types::String
+    len: 110
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_energyno
+  member_name: set energyno
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_type
+  member_name: set type
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_categoryabbr
+  member_name: set categoryabbr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tot_yards
+  member_name: tot yards
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_starttime
+  member_name: set starttime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_finishtime
+  member_name: set finishtime
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [Workout]
+  (
+  [wk_ptr] Long Integer,
+  [wk_line] Integer,
+  [wk_type] Text (2),
+  [circuit_line] Integer,
+  [circuit_tot] Integer,
+  [circuit_reps] Integer,
+  [set_reps] Long Integer,
+  [set_dist] Long Integer,
+  [set_interval] Long Integer,
+  [set_desc] Text (64),
+  [set_note] Text (110),
+  [set_energyno] Integer,
+  [set_type] Text (8),
+  [set_categoryabbr] Text (6),
+  [tot_yards] Long Integer,
+  [set_starttime] Long Integer,
+  [set_finishtime] Long Integer
+  );

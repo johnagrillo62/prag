@@ -1,0 +1,139 @@
+--- !ruby/object:Cls::Clss
+table_name: RECORDS
+class_name: RECORDS
+members:
+- !ruby/object:Cls::Member
+  column_name: Record
+  member_name: record
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Lo_Age
+  member_name: lo age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Hi_Age
+  member_name: hi age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RecText
+  member_name: rec text
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RecDate
+  member_name: rec date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RecTime
+  member_name: rec time
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RecLSC
+  member_name: rec l s c
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RecTeam
+  member_name: rec team
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ex
+  member_name: ex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Distance
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Stroke
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sex
+  member_name: sex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: I_R
+  member_name: i r
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Rec
+  member_name: rec
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Course
+  member_name: course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Division
+  member_name: division
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [RECORDS]
+  (
+  [Record] Long Integer,
+  [Lo_Age] Integer,
+  [Hi_Age] Integer,
+  [RecText] Text (160),
+  [RecDate] DateTime,
+  [RecTime] Long Integer,
+  [RecLSC] Text (6),
+  [RecTeam] Text (10),
+  [Ex] Text (2),
+  [Distance] Integer,
+  [Stroke] Integer,
+  [Sex] Text (2),
+  [I_R] Text (2),
+  [Rec] Long Integer,
+  [Course] Text (2),
+  [Division] Text (4)
+  );

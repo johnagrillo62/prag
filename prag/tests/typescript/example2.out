@@ -1,0 +1,419 @@
+Parsers - avro capnp cpp fbs go gpl graphql mdb proto python rs schema.json thrift ts 
+Outputs - cpp go java proto python rust zig 
+********* Input : examples/typescript/example2.ts *********
+// Multiple union types
+interface FlexibleData {
+  id: string | number | boolean;
+  value: string | number | User | Post;
+  tags: Array<string> | Array<number>;
+  metadata?: Map<string, string> | Map<string, number>;
+}
+
+// Nested generics
+interface Container {
+  items: Array<Array<string>>;
+  mappings: Map<string, Array<User>>;
+  optional?: Array<Map<string, number>>;
+}
+
+// Everything at once
+interface MegaType {
+  // Primitives
+  id: string;
+  count: number;
+  active: boolean;
+  
+  // Arrays
+  tags: string[];
+  scores: number[];
+  
+  // Generics
+  users: Array<User>;
+  settings: Map<string, string>;
+  
+  // Unions
+  status: string | number | HttpStatus;
+  
+  // Optionals
+  description?: string;
+  metadata?: Map<string, string>;
+  
+  // Nested
+  author: User;
+  posts: Array<Post>;
+  
+  // Nested optionals
+  notifications?: Array<Notification>;
+  
+  // Complex nesting
+  teams: Map<string, Array<User>>;
+  history?: Array<Map<string, string>>;
+}
+
+********* AST **********
+struct
+Struct: FlexibleData 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: value
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: tags
+      type: //GenericType: container=22 List
+ SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: metadata
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: Container 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: items
+      type: //GenericType: container=22 List
+// GenericType: container=22 List
+  SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: mappings
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+// GenericType: container=22 List
+  SimpleType: User
+      attrs: 
+    Field name: optional
+      type: //      PointerType:
+      attrs: 
+
+struct
+Struct: MegaType 
+  Namespace: 
+  Attributes: 
+  Members:
+    Field name: id
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: count
+      type: SimpleType: CanonicalType::5 Int32
+      attrs: 
+    Field name: active
+      type: SimpleType: CanonicalType::0 Bool
+      attrs: 
+    Field name: tags
+      type: //GenericType: container=22 List
+ SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: scores
+      type: //GenericType: container=22 List
+ SimpleType: CanonicalType::5 Int32
+      attrs: 
+    Field name: users
+      type: //GenericType: container=22 List
+ SimpleType: User
+      attrs: 
+    Field name: settings
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+ SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: status
+      type: SimpleType: CanonicalType::11 String
+      attrs: 
+    Field name: description
+      type: //      PointerType:
+      attrs: 
+    Field name: metadata
+      type: //      PointerType:
+      attrs: 
+    Field name: author
+      type: SimpleType: User
+      attrs: 
+    Field name: posts
+      type: //GenericType: container=22 List
+ SimpleType: Post
+      attrs: 
+    Field name: notifications
+      type: //      PointerType:
+      attrs: 
+    Field name: teams
+      type: //GenericType: container=23 Map
+ SimpleType: CanonicalType::11 String
+// GenericType: container=22 List
+  SimpleType: User
+      attrs: 
+    Field name: history
+      type: //      PointerType:
+      attrs: 
+
+********* Output **********
+********* cpp *********
+// Generated from 
+#pragma once
+#include <cstdint>
+#include <string>
+#include <vector>
+#include <map>
+#include <optional>
+
+struct FlexibleData
+{
+  std::string id;
+  std::string value;
+  std::vector<std::string> tags;
+  std::map<std::string, std::string>* metadata;
+};
+
+struct Container
+{
+  std::vector<std::vector<std::string>> items;
+  std::map<std::string, std::vector<User>> mappings;
+  std::vector<std::map<std::string, int32_t>>* optional;
+};
+
+struct MegaType
+{
+  std::string id;
+  int32_t count;
+  bool active;
+  std::vector<std::string> tags;
+  std::vector<int32_t> scores;
+  std::vector<User> users;
+  std::map<std::string, std::string> settings;
+  std::string status;
+  std::string* description;
+  std::map<std::string, std::string>* metadata;
+  User author;
+  std::vector<Post> posts;
+  std::vector<Notification>* notifications;
+  std::map<std::string, std::vector<User>> teams;
+  std::vector<std::map<std::string, std::string>>* history;
+};
+
+
+********* go *********
+// Generated from 
+package main
+
+type FlexibleData struct {
+  Id string `json:"id"`
+  Value string `json:"value"`
+  Tags []string `json:"tags"`
+  Metadata *map[string]string `json:"metadata"`
+}
+
+type Container struct {
+  Items [][]string `json:"items"`
+  Mappings map[string][]User `json:"mappings"`
+  Optional *[]map[string]int32 `json:"optional"`
+}
+
+type MegaType struct {
+  Id string `json:"id"`
+  Count int32 `json:"count"`
+  Active bool `json:"active"`
+  Tags []string `json:"tags"`
+  Scores []int32 `json:"scores"`
+  Users []User `json:"users"`
+  Settings map[string]string `json:"settings"`
+  Status string `json:"status"`
+  Description *string `json:"description"`
+  Metadata *map[string]string `json:"metadata"`
+  Author User `json:"author"`
+  Posts []Post `json:"posts"`
+  Notifications *[]Notification `json:"notifications"`
+  Teams map[string][]User `json:"teams"`
+  History *[]map[string]string `json:"history"`
+}
+
+
+********* java *********
+// Generated from 
+import java.util.*;
+import java.time.*;
+import java.math.*;
+
+public class FlexibleData {
+  public String id;
+  public String value;
+  public List<String> tags;
+  public Map<String, String> metadata;
+}
+
+public class Container {
+  public List<List<String>> items;
+  public Map<String, List<User>> mappings;
+  public List<Map<String, Integer>> optional;
+}
+
+public class MegaType {
+  public String id;
+  public int count;
+  public boolean active;
+  public List<String> tags;
+  public List<Integer> scores;
+  public List<User> users;
+  public Map<String, String> settings;
+  public String status;
+  public String description;
+  public Map<String, String> metadata;
+  public User author;
+  public List<Post> posts;
+  public List<Notification> notifications;
+  public Map<String, List<User>> teams;
+  public List<Map<String, String>> history;
+}
+
+
+********* proto *********
+// Generated from 
+syntax = "proto3";
+
+message FlexibleData {
+  string id = 1;
+  string value = 2;
+  repeated string tags = 3;
+  map<string, string> metadata = 4;
+}
+
+message Container {
+  repeated repeated string items = 1;
+  map<string, repeated User> mappings = 2;
+  repeated map<string, int32> optional = 3;
+}
+
+message MegaType {
+  string id = 1;
+  int32 count = 2;
+  bool active = 3;
+  repeated string tags = 4;
+  repeated int32 scores = 5;
+  repeated User users = 6;
+  map<string, string> settings = 7;
+  string status = 8;
+  string description = 9;
+  map<string, string> metadata = 10;
+  User author = 11;
+  repeated Post posts = 12;
+  repeated Notification notifications = 13;
+  map<string, repeated User> teams = 14;
+  repeated map<string, string> history = 15;
+}
+
+
+********* python *********
+# Generated from 
+from dataclasses import dataclass
+from typing import List, Dict, Optional, Union
+
+@dataclass
+class FlexibleData:
+  id: str
+  value: str
+  tags: list[str]
+  metadata: Optional[dict[str, str]]
+
+@dataclass
+class Container:
+  items: list[list[str]]
+  mappings: dict[str, list[User]]
+  optional: Optional[list[dict[str, int]]]
+
+@dataclass
+class MegaType:
+  id: str
+  count: int
+  active: bool
+  tags: list[str]
+  scores: list[int]
+  users: list[User]
+  settings: dict[str, str]
+  status: str
+  description: Optional[str]
+  metadata: Optional[dict[str, str]]
+  author: User
+  posts: list[Post]
+  notifications: Optional[list[Notification]]
+  teams: dict[str, list[User]]
+  history: Optional[list[dict[str, str]]]
+
+
+********* rust *********
+// Generated from 
+#![allow(dead_code)]
+
+#[derive(Debug, Clone)]
+pub struct FlexibleData {
+  pub id: String,
+  pub value: String,
+  pub tags: Vec<String>,
+  pub metadata: Box<std::collections::HashMap<String, String>>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Container {
+  pub items: Vec<Vec<String>>,
+  pub mappings: std::collections::HashMap<String, Vec<User>>,
+  pub optional: Box<Vec<std::collections::HashMap<String, i32>>>,
+}
+
+#[derive(Debug, Clone)]
+pub struct MegaType {
+  pub id: String,
+  pub count: i32,
+  pub active: bool,
+  pub tags: Vec<String>,
+  pub scores: Vec<i32>,
+  pub users: Vec<User>,
+  pub settings: std::collections::HashMap<String, String>,
+  pub status: String,
+  pub description: Box<String>,
+  pub metadata: Box<std::collections::HashMap<String, String>>,
+  pub author: User,
+  pub posts: Vec<Post>,
+  pub notifications: Box<Vec<Notification>>,
+  pub teams: std::collections::HashMap<String, Vec<User>>,
+  pub history: Box<Vec<std::collections::HashMap<String, String>>>,
+}
+
+
+********* zig *********
+// Generated from 
+const std = @import("std");
+
+pub const FlexibleData = struct {
+  id: []const u8,
+  value: []const u8,
+  tags: std.ArrayList([]const u8),
+  metadata: *std.AutoHashMap([]const u8, []const u8),
+};
+
+pub const Container = struct {
+  items: std.ArrayList(std.ArrayList([]const u8)),
+  mappings: std.AutoHashMap([]const u8, std.ArrayList(User)),
+  optional: *std.ArrayList(std.AutoHashMap([]const u8, i32)),
+};
+
+pub const MegaType = struct {
+  id: []const u8,
+  count: i32,
+  active: bool,
+  tags: std.ArrayList([]const u8),
+  scores: std.ArrayList(i32),
+  users: std.ArrayList(User),
+  settings: std.AutoHashMap([]const u8, []const u8),
+  status: []const u8,
+  description: *[]const u8,
+  metadata: *std.AutoHashMap([]const u8, []const u8),
+  author: User,
+  posts: std.ArrayList(Post),
+  notifications: *std.ArrayList(Notification),
+  teams: std.AutoHashMap([]const u8, std.ArrayList(User)),
+  history: *std.ArrayList(std.AutoHashMap([]const u8, []const u8)),
+};
+
+

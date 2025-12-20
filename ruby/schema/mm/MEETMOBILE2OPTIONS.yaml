@@ -1,0 +1,368 @@
+--- !ruby/object:Cls::Clss
+table_name: MEETMOBILE2OPTIONS
+class_name: MEETMOBILE2OPTIONS
+members:
+- !ruby/object:Cls::Member
+  column_name: MeetMobile2MeetID
+  member_name: meet mobile 2 meet i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AgencyID
+  member_name: agency i d
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EV5_uploaded
+  member_name: e v 5 uploaded
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Heatpsych_uploaded
+  member_name: heatpsych uploaded
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Heatsheet_amount
+  member_name: heatsheet amount
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Teamscoring_choice
+  member_name: teamscoring choice
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Contract_agreed
+  member_name: contract agreed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DoNotShow_timeline
+  member_name: do not show timeline
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HeatPsych_choice
+  member_name: heat psych choice
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Contract_PersonName
+  member_name: contract person name
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Contract_PersonBirth
+  member_name: contract person birth
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LastName
+  member_name: last name
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FirstName
+  member_name: first name
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Phone
+  member_name: phone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMail
+  member_name: e mail
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TeamName
+  member_name: team name
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Addr
+  member_name: addr
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SecAddr
+  member_name: sec addr
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: City
+  member_name: city
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: State
+  member_name: state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Zip
+  member_name: zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cntry
+  member_name: cntry
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TimeZone
+  member_name: time zone
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PayTo
+  member_name: pay to
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Classification
+  member_name: classification
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: WebSite
+  member_name: web site
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Token
+  member_name: token
+  type: !ruby/object:Types::String
+    len: 160
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OMEWebSite
+  member_name: o m e web site
+  type: !ruby/object:Types::String
+    len: 200
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: License
+  member_name: license
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoShowActiveComSetup
+  member_name: no show active com setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AnnounceEV5_uploaded
+  member_name: announce e v 5 uploaded
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SharingEV5_uploaded
+  member_name: sharing e v 5 uploaded
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FileSharingMeetID
+  member_name: file sharing meet i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FileSharingEvtsOk
+  member_name: file sharing evts ok
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FileSharingPricingOk
+  member_name: file sharing pricing ok
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FileSharingEntryLimitsOk
+  member_name: file sharing entry limits ok
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FileSharingQualTimesOk
+  member_name: file sharing qual times ok
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FileSharingMeetSetupOk
+  member_name: file sharing meet setup ok
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NotInterestedIn_FileSharing
+  member_name: not interested in file sharing
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DoNotShow_MeetSharingImportMsg
+  member_name: do not show meet sharing import msg
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ResultsFile_uploaded
+  member_name: results file uploaded
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MeetResultsID
+  member_name: meet results i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NotInterestedIn_MeetMobile
+  member_name: not interested in meet mobile
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Contract_agreedMeetSharing
+  member_name: contract agreed meet sharing
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Contract_PersonNameMeetSharing
+  member_name: contract person name meet sharing
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Contract_PersonBirthMeetSharing
+  member_name: contract person birth meet sharing
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HeatSheetsAre_Free
+  member_name: heat sheets are free
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [MEETMOBILE2OPTIONS]
+  (
+  [MeetMobile2MeetID] Long Integer,
+  [AgencyID] Text (80),
+  [EV5_uploaded] Boolean NOT NULL,
+  [Heatpsych_uploaded] Boolean NOT NULL,
+  [Heatsheet_amount] Single,
+  [Teamscoring_choice] Integer,
+  [Contract_agreed] Boolean NOT NULL,
+  [DoNotShow_timeline] Boolean NOT NULL,
+  [HeatPsych_choice] Integer,
+  [Contract_PersonName] Text (80),
+  [Contract_PersonBirth] DateTime,
+  [LastName] Text (100),
+  [FirstName] Text (100),
+  [Phone] Text (40),
+  [EMail] Text (100),
+  [TeamName] Text (100),
+  [Addr] Text (100),
+  [SecAddr] Text (60),
+  [City] Text (60),
+  [State] Text (6),
+  [Zip] Text (20),
+  [Cntry] Text (6),
+  [TimeZone] Text (100),
+  [PayTo] Text (100),
+  [Classification] Text (100),
+  [WebSite] Text (100),
+  [Token] Text (160),
+  [OMEWebSite] Text (200),
+  [License] Text (240),
+  [NoShowActiveComSetup] Boolean NOT NULL,
+  [AnnounceEV5_uploaded] Boolean NOT NULL,
+  [SharingEV5_uploaded] Boolean NOT NULL,
+  [FileSharingMeetID] Long Integer,
+  [FileSharingEvtsOk] Boolean NOT NULL,
+  [FileSharingPricingOk] Boolean NOT NULL,
+  [FileSharingEntryLimitsOk] Boolean NOT NULL,
+  [FileSharingQualTimesOk] Boolean NOT NULL,
+  [FileSharingMeetSetupOk] Boolean NOT NULL,
+  [NotInterestedIn_FileSharing] Boolean NOT NULL,
+  [DoNotShow_MeetSharingImportMsg] Boolean NOT NULL,
+  [ResultsFile_uploaded] Boolean NOT NULL,
+  [MeetResultsID] Long Integer,
+  [NotInterestedIn_MeetMobile] Boolean NOT NULL,
+  [Contract_agreedMeetSharing] Boolean NOT NULL,
+  [Contract_PersonNameMeetSharing] Text (80),
+  [Contract_PersonBirthMeetSharing] DateTime,
+  [HeatSheetsAre_Free] Boolean NOT NULL
+  );

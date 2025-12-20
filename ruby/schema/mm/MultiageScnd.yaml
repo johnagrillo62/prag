@@ -1,0 +1,36 @@
+--- !ruby/object:Cls::Clss
+table_name: MultiageScnd
+class_name: MultiageScnd
+members:
+- !ruby/object:Cls::Member
+  column_name: event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: low_age
+  member_name: low age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: high_age
+  member_name: high age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [MultiageScnd]
+  (
+  [event_ptr] Long Integer,
+  [low_age] Integer,
+  [high_age] Integer
+  );

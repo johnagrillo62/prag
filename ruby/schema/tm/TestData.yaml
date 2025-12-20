@@ -1,0 +1,60 @@
+--- !ruby/object:Cls::Clss
+table_name: TestData
+class_name: TestData
+members:
+- !ruby/object:Cls::Member
+  column_name: test_no
+  member_name: test no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: heart_1
+  member_name: heart 1
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: heart_2
+  member_name: heart 2
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: heart_3
+  member_name: heart 3
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ind_rmk
+  member_name: ind rmk
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [TestData]
+  (
+  [test_no] Long Integer,
+  [athlete] Long Integer,
+  [heart_1] Integer,
+  [heart_2] Integer,
+  [heart_3] Integer,
+  [ind_rmk] Text (80)
+  );

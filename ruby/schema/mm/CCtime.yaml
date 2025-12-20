@@ -1,0 +1,67 @@
+--- !ruby/object:Cls::Clss
+table_name: CCtime
+class_name: CCtime
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_no
+  member_name: ath no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Chute_rank
+  member_name: chute rank
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Chute_no
+  member_name: chute no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_hand
+  member_name: fin hand
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_stat
+  member_name: fin stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_Time
+  member_name: fin time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [CCtime]
+  (
+  [Event_ptr] Long Integer,
+  [Ath_no] Long Integer,
+  [Chute_rank] Long Integer,
+  [Chute_no] Integer,
+  [Fin_hand] Boolean NOT NULL,
+  [Fin_stat] Text (2),
+  [Fin_Time] Single
+  );

@@ -1,0 +1,1248 @@
+-- ----------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2011 Brian Bruns and others.
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-- ----------------------------------------------------------
+
+-- That file uses encoding UTF-8
+
+CREATE TABLE [2016FSSL]
+ (
+	[Std]			Long Integer, 
+	[Lo_Age]			Integer, 
+	[Hi_age]			Integer, 
+	[F(0)]			Long Integer, 
+	[F(1)]			Long Integer, 
+	[F(2)]			Long Integer, 
+	[F(3)]			Long Integer, 
+	[F(4)]			Long Integer, 
+	[F(5)]			Long Integer, 
+	[F(6)]			Long Integer, 
+	[F(7)]			Long Integer, 
+	[F(8)]			Long Integer, 
+	[F(9)]			Long Integer, 
+	[F(10)]			Long Integer, 
+	[F(11)]			Long Integer, 
+	[F(12)]			Long Integer, 
+	[F(13)]			Long Integer, 
+	[F(14)]			Long Integer, 
+	[F(15)]			Long Integer, 
+	[F(16)]			Long Integer, 
+	[F(17)]			Long Integer, 
+	[F(18)]			Long Integer, 
+	[F(19)]			Long Integer, 
+	[F(20)]			Long Integer, 
+	[F(21)]			Long Integer, 
+	[F(22)]			Long Integer, 
+	[F(23)]			Long Integer, 
+	[F(24)]			Long Integer, 
+	[F(25)]			Long Integer, 
+	[F(26)]			Long Integer, 
+	[F(27)]			Long Integer, 
+	[F(28)]			Long Integer, 
+	[F(29)]			Long Integer, 
+	[F(30)]			Long Integer, 
+	[F(31)]			Long Integer, 
+	[F(32)]			Long Integer, 
+	[F(33)]			Long Integer, 
+	[F(34)]			Long Integer, 
+	[F(35)]			Long Integer, 
+	[S(0)]			Long Integer, 
+	[S(1)]			Long Integer, 
+	[S(2)]			Long Integer, 
+	[S(3)]			Long Integer, 
+	[S(4)]			Long Integer, 
+	[S(5)]			Long Integer, 
+	[S(6)]			Long Integer, 
+	[S(7)]			Long Integer, 
+	[S(8)]			Long Integer, 
+	[S(9)]			Long Integer, 
+	[S(10)]			Long Integer, 
+	[S(11)]			Long Integer, 
+	[S(12)]			Long Integer, 
+	[S(13)]			Long Integer, 
+	[S(14)]			Long Integer, 
+	[S(15)]			Long Integer, 
+	[S(16)]			Long Integer, 
+	[S(17)]			Long Integer, 
+	[S(18)]			Long Integer, 
+	[S(19)]			Long Integer, 
+	[S(20)]			Long Integer, 
+	[S(21)]			Long Integer, 
+	[S(22)]			Long Integer, 
+	[S(23)]			Long Integer, 
+	[S(24)]			Long Integer, 
+	[S(25)]			Long Integer, 
+	[S(26)]			Long Integer, 
+	[S(27)]			Long Integer, 
+	[S(28)]			Long Integer, 
+	[S(29)]			Long Integer, 
+	[S(30)]			Long Integer, 
+	[S(31)]			Long Integer, 
+	[S(32)]			Long Integer, 
+	[S(33)]			Long Integer, 
+	[S(34)]			Long Integer, 
+	[S(35)]			Long Integer, 
+	[Distance]			Integer, 
+	[Stroke]			Integer, 
+	[Sex]			Text (1), 
+	[I_R]			Text (1), 
+	[Division]			Text (2)
+);
+
+CREATE TABLE [AthInfo]
+ (
+	[Athlete]			Long Integer, 
+	[Addr]			Text (30), 
+	[City]			Text (30), 
+	[ZIP]			Text (10), 
+	[Cntry]			Text (20), 
+	[DayP1]			Text (20), 
+	[EveP1]			Text (20), 
+	[FaxP1]			Text (20), 
+	[DayP2]			Text (20), 
+	[EveP2]			Text (20), 
+	[FaxP2]			Text (20), 
+	[MailTo]			Text (40), 
+	[Seasonal]			Text (1), 
+	[FinaFed]			Boolean NOT NULL, 
+	[RegDate]			DateTime, 
+	[NRCD]			Text (1), 
+	[EMail]			Text (50), 
+	[Member]			Boolean NOT NULL, 
+	[JrHS]			Boolean NOT NULL, 
+	[HS]			Boolean NOT NULL, 
+	[YMCA]			Boolean NOT NULL, 
+	[Coll]			Boolean NOT NULL, 
+	[SL]			Boolean NOT NULL, 
+	[DUAL]			Boolean NOT NULL, 
+	[Mast]			Boolean NOT NULL, 
+	[Dis]			Boolean NOT NULL, 
+	[Polo]			Boolean NOT NULL, 
+	[Ethnic]			Byte, 
+	[MedCondition]			Text (120), 
+	[Medication]			Text (120), 
+	[DoctorName]			Text (30), 
+	[DoctorPhone]			Text (20), 
+	[EmerContact]			Text (30), 
+	[EmerPhone]			Text (20), 
+	[MailTo2]			Text (40), 
+	[Addr2]			Text (30), 
+	[City2]			Text (30), 
+	[State2]			Text (3), 
+	[ZIP2]			Text (10), 
+	[Cntry2]			Text (20), 
+	[EMail2]			Text (50), 
+	[UseMailTo]			Boolean NOT NULL, 
+	[CusPrompt1]			Text (20), 
+	[CusValue1]			Text (20), 
+	[CusPrompt2]			Text (20), 
+	[CusValue2]			Text (20), 
+	[CusPrompt3]			Text (20), 
+	[CusValue3]			Text (20), 
+	[State]			Text (3), 
+	[BLIND]			Boolean NOT NULL, 
+	[DEAF]			Boolean NOT NULL, 
+	[PHYSICAL]			Boolean NOT NULL, 
+	[COGNITIVE]			Boolean NOT NULL, 
+	[SecAddr]			Text (30), 
+	[SecAddr2]			Text (30), 
+	[PrimaryLast]			Text (20), 
+	[PrimaryFirst1]			Text (20), 
+	[PrimaryFirst2]			Text (20), 
+	[SecondaryLast]			Text (20), 
+	[SecondaryFirst1]			Text (20), 
+	[SecondaryFirst2]			Text (20), 
+	[CellP1]			Text (20), 
+	[CellP2]			Text (20), 
+	[UseBoth]			Boolean NOT NULL, 
+	[EveP1P2]			Text (20), 
+	[CellP1P2]			Text (20), 
+	[EMail1P2]			Text (50), 
+	[EveP2P2]			Text (20), 
+	[CellP2P2]			Text (20), 
+	[EMail2P2]			Text (50), 
+	[CellAthlete]			Text (20), 
+	[EMailAthlete]			Text (50), 
+	[Middle]			Text (20), 
+	[USSDonation]			Boolean NOT NULL, 
+	[PrimaryLast2]			Text (20), 
+	[FinaFedCntry]			Text (3), 
+	[ExpAthEmail]			Boolean NOT NULL, 
+	[ExpFatherEmail]			Boolean NOT NULL, 
+	[ExpMotherEmail]			Boolean NOT NULL, 
+	[ExpParent1Email]			Boolean NOT NULL, 
+	[ExpParent2Email]			Boolean NOT NULL, 
+	[RegEMail]			Text (50), 
+	[USSNewsLetter]			Boolean NOT NULL, 
+	[CusPrompt4]			Text (20), 
+	[CusValue4]			Text (20), 
+	[CusPrompt5]			Text (20), 
+	[CusValue5]			Text (20), 
+	[CusPrompt6]			Text (20), 
+	[CusValue6]			Text (20), 
+	[CusPrompt7]			Text (20), 
+	[CusValue7]			Text (20), 
+	[CusPrompt8]			Text (20), 
+	[CusValue8]			Text (20), 
+	[HSGradYear]			Integer, 
+	[FINACompeted]			Boolean NOT NULL, 
+	[CustUSSFee]			Text (10)
+);
+
+CREATE TABLE [Athlete]
+ (
+	[Athlete]			Long Integer, 
+	[Team1]			Long Integer, 
+	[Team2]			Long Integer, 
+	[Team3]			Long Integer, 
+	[Group]			Text (3), 
+	[SubGr]			Text (3), 
+	[Last]			Text (20), 
+	[First]			Text (20), 
+	[Initial]			Text (1), 
+	[Sex]			Text (1), 
+	[Birth]			DateTime, 
+	[Age]			Integer, 
+	[Class]			Text (3), 
+	[ID_NO]			Text (17), 
+	[Citizen]			Text (3), 
+	[Inactive]			Boolean NOT NULL, 
+	[Pref]			Text (20), 
+	[Batch]			Integer, 
+	[WMGroup]			Text (3), 
+	[WMSubGr]			Text (3), 
+	[BCSSASwimmer]			Text (2), 
+	[BCSSADiver]			Text (2), 
+	[BCSSASyncro]			Text (2), 
+	[BCSSAPolo]			Text (2), 
+	[TheSort]			Long Integer, 
+	[DiveCertified]			Boolean NOT NULL, 
+	[DateClubJoined]			DateTime, 
+	[DateGroupJoined]			DateTime, 
+	[AWRegType]			Text (1), 
+	[RegYear]			Integer, 
+	[Foreign]			Boolean NOT NULL, 
+	[ForeignCitizenOf]			Text (3), 
+	[LastUpdated]			DateTime, 
+	[PC_Hide]			Boolean NOT NULL
+);
+
+CREATE TABLE [ATHRECR]
+ (
+	[Athlete]			Long Integer, 
+	[Grad]			Integer, 
+	[PicFile]			Text (11), 
+	[HS_Name]			Text (30), 
+	[HS_Phone]			Text (20), 
+	[HS_Addr]			Text (30), 
+	[HS_City]			Text (20), 
+	[HS_State]			Text (3), 
+	[HS_ZIP]			Text (10), 
+	[HS_Coach]			Text (30), 
+	[Oth_Team]			Text (30), 
+	[Oth_Coach]			Text (30), 
+	[HS_Study]			Text (20), 
+	[HS_Rank]			Integer, 
+	[HS_Num]			Integer, 
+	[HS_GPA]			Single, 
+	[Activities]			Text (50), 
+	[Awards]			Text (20), 
+	[Add_Info]			Text (50), 
+	[Camps]			Text (50), 
+	[T1Score]			Integer, 
+	[Remarks]			Text (50), 
+	[T3Score1]			Integer, 
+	[T2Score]			Integer, 
+	[Height]			Integer, 
+	[Weight]			Integer, 
+	[Oth_Phone]			Text (20), 
+	[Picture]			Text (60), 
+	[Video]			Boolean NOT NULL, 
+	[Comments]			Text (255), 
+	[T1Name]			Text (8), 
+	[T2Name]			Text (8), 
+	[T3Name]			Text (8), 
+	[T3SName1]			Text (8), 
+	[T3SName2]			Text (8), 
+	[T3Score2]			Integer
+);
+
+CREATE TABLE [Attendance]
+ (
+	[athlete]			Long Integer, 
+	[attend_date]			DateTime, 
+	[morn_aft]			Text (1), 
+	[attn_stat]			Text (1), 
+	[actual_dist]			Long Integer, 
+	[yd_mtr]			Text (1)
+);
+
+CREATE TABLE [COACHES]
+ (
+	[Coaches]			Long Integer, 
+	[Team]			Long Integer, 
+	[CPhone]			Text (14), 
+	[CEMail]			Text (36), 
+	[CName]			Text (30), 
+	[CTitle]			Text (15), 
+	[Cert1]			Text (15), 
+	[Cert2]			Text (15), 
+	[Cert3]			Text (15), 
+	[Head]			Boolean NOT NULL, 
+	[CoachCell]			Text (20), 
+	[Export]			Boolean NOT NULL, 
+	[Cert4]			Text (15), 
+	[Cert5]			Text (15), 
+	[Cert1Expire]			DateTime, 
+	[Cert2Expire]			DateTime, 
+	[Cert3Expire]			DateTime, 
+	[Cert4Expire]			DateTime, 
+	[Cert5Expire]			DateTime, 
+	[PrimaryMale]			Boolean NOT NULL, 
+	[PrimaryFemale]			Boolean NOT NULL, 
+	[MaleOnly]			Boolean NOT NULL, 
+	[FemaleOnly]			Boolean NOT NULL, 
+	[cLastName]			Text (20), 
+	[cFirstName]			Text (20), 
+	[CFirst]			Text (15), 
+	[CLast]			Text (15)
+);
+
+CREATE TABLE [CODE]
+ (
+	[ABBR]			Text (3), 
+	[DESC]			Text (30), 
+	[CODE]			Long Integer, 
+	[TYPE]			Byte
+);
+
+CREATE TABLE [CustomLayout]
+ (
+	[ID]			Long Integer, 
+	[Name]			Text (20), 
+	[Portrait]			Boolean NOT NULL, 
+	[Title]			Text (50)
+);
+
+CREATE TABLE [CustomLayoutFields]
+ (
+	[FieldName]			Text (20), 
+	[Description]			Text (30), 
+	[Size]			Integer, 
+	[Abbr]			Text (15)
+);
+
+CREATE TABLE [CustomLayoutValues]
+ (
+	[LayoutID]			Long Integer, 
+	[Line]			Byte, 
+	[Sequence]			Byte, 
+	[FieldName]			Text (20), 
+	[FieldSize]			Byte, 
+	[Abbr]			Text (15), 
+	[RJustified]			Boolean NOT NULL
+);
+
+CREATE TABLE [CUSTOMRPTS]
+ (
+	[Name]			Text (30), 
+	[Type]			Integer, 
+	[Team]			Long Integer, 
+	[Group]			Text (3), 
+	[SubGr]			Text (3), 
+	[Class]			Text (3), 
+	[SortBy]			Integer, 
+	[Sex]			Integer, 
+	[Prelim]			Integer, 
+	[Splits]			Integer, 
+	[Stroke]			Integer, 
+	[Distance]			Integer, 
+	[I_R]			Integer, 
+	[LSC]			Text (3), 
+	[LoAge]			Integer, 
+	[HiAge]			Integer, 
+	[chkIncRelayLO]			Boolean NOT NULL, 
+	[chkStandards]			Boolean NOT NULL, 
+	[chkInactive]			Boolean NOT NULL, 
+	[chkSince]			Boolean NOT NULL, 
+	[SinceDate]			DateTime, 
+	[chkImprove]			Integer, 
+	[chkUntil]			Boolean NOT NULL, 
+	[UntilDate]			DateTime, 
+	[chkRecords]			Boolean NOT NULL, 
+	[RECORD]			Long Integer, 
+	[chkNamesOnly]			Boolean NOT NULL, 
+	[chkBlankLine]			Boolean NOT NULL, 
+	[Grouping]			Integer, 
+	[AgeGroups]			Integer, 
+	[MeetType]			Text (3), 
+	[TopN]			Integer, 
+	[StanAtLeast]			Text (4), 
+	[Course]			Integer, 
+	[chkChronological]			Boolean NOT NULL, 
+	[Orientation]			Integer, 
+	[chkActual]			Boolean NOT NULL, 
+	[chkNoTimes]			Boolean NOT NULL, 
+	[chkOnlyElig]			Boolean NOT NULL, 
+	[chkBest]			Integer, 
+	[RelaySwimmers]			Integer, 
+	[StdName]			Text (8), 
+	[Designator]			Text (4), 
+	[chkStrokeRate]			Boolean NOT NULL, 
+	[LabelIndex]			Integer, 
+	[chkNISCA]			Boolean NOT NULL, 
+	[chkNewStd]			Boolean NOT NULL, 
+	[ColIndex]			Integer, 
+	[chkGoals]			Boolean NOT NULL, 
+	[chkIncRelayLegs]			Boolean NOT NULL, 
+	[chkShowRegistration]			Boolean NOT NULL, 
+	[chkNT]			Boolean NOT NULL
+);
+
+CREATE TABLE [DELETEENTRY]
+ (
+	[Meet]			Long Integer, 
+	[Athlete]			Long Integer, 
+	[MtEvent]			Long Integer
+);
+
+CREATE TABLE [Energy]
+ (
+	[energy_no]			Integer, 
+	[energy_abbr]			Text (3), 
+	[energy_name]			Text (20), 
+	[stress_index]			Integer
+);
+
+CREATE TABLE [ESPLITS]
+ (
+	[SplitID]			Long Integer, 
+	[SplitIndex]			Byte, 
+	[Split]			Long Integer, 
+	[RelayLeg]			Text (1)
+);
+
+CREATE TABLE [FAVORITES]
+ (
+	[FavName]			Text (8), 
+	[FavTeam]			Text (5), 
+	[FavGroup]			Text (3), 
+	[FavSubGr]			Text (3), 
+	[FavClass]			Text (3), 
+	[FavMeetType]			Text (3), 
+	[FavCourse]			Text (5), 
+	[FavWMGroup]			Text (3), 
+	[FavWMSubGr]			Text (3), 
+	[SinceDate]			DateTime, 
+	[UntilDate]			DateTime, 
+	[FavTeamDiv]			Text (3)
+);
+
+CREATE TABLE [HYTEKAGEGROUP]
+ (
+	[AgType]			Integer, 
+	[Lo_Hi]			Integer, 
+	[Course]			Text (1), 
+	[F125]			Boolean NOT NULL, 
+	[F150]			Boolean NOT NULL, 
+	[F1100]			Boolean NOT NULL, 
+	[F1200]			Boolean NOT NULL, 
+	[F1400]			Boolean NOT NULL, 
+	[F1500]			Boolean NOT NULL, 
+	[F1800]			Boolean NOT NULL, 
+	[F11000]			Boolean NOT NULL, 
+	[F11500]			Boolean NOT NULL, 
+	[F11650]			Boolean NOT NULL, 
+	[F225]			Boolean NOT NULL, 
+	[F250]			Boolean NOT NULL, 
+	[F2100]			Boolean NOT NULL, 
+	[F2200]			Boolean NOT NULL, 
+	[F325]			Boolean NOT NULL, 
+	[F350]			Boolean NOT NULL, 
+	[F3100]			Boolean NOT NULL, 
+	[F3200]			Boolean NOT NULL, 
+	[F425]			Boolean NOT NULL, 
+	[F450]			Boolean NOT NULL, 
+	[F4100]			Boolean NOT NULL, 
+	[F4200]			Boolean NOT NULL, 
+	[F5100]			Boolean NOT NULL, 
+	[F5200]			Boolean NOT NULL, 
+	[F5400]			Boolean NOT NULL
+);
+
+CREATE TABLE [JOURNAL]
+ (
+	[JDate]			DateTime, 
+	[Subject]			Text (20), 
+	[Comment]			Text (255)
+);
+
+CREATE TABLE [MemCirName]
+ (
+	[cir_no]			Long Integer, 
+	[cir_name]			Text (90), 
+	[tot_lines]			Integer, 
+	[tot_dist]			Long Integer, 
+	[tot_seconds]			Long Integer
+);
+
+CREATE TABLE [MemCirSets]
+ (
+	[cir_no]			Long Integer, 
+	[circuit_line]			Integer, 
+	[set_reps]			Long Integer, 
+	[set_dist]			Long Integer, 
+	[set_interval]			Long Integer, 
+	[set_desc]			Text (32), 
+	[set_energyno]			Integer, 
+	[set_type]			Text (4), 
+	[set_categoryabbr]			Text (3)
+);
+
+CREATE TABLE [MemSets]
+ (
+	[set_no]			Long Integer, 
+	[set_reps]			Long Integer, 
+	[set_dist]			Long Integer, 
+	[set_interval]			Long Integer, 
+	[set_desc]			Text (32), 
+	[set_energyno]			Integer, 
+	[set_type]			Text (4), 
+	[set_categoryabbr]			Text (3)
+);
+
+CREATE TABLE [model]
+ (
+	[wk_ptr]			Long Integer, 
+	[wk_line]			Integer, 
+	[wk_type]			Text (1), 
+	[circuit_line]			Integer, 
+	[circuit_tot]			Integer, 
+	[circuit_reps]			Integer, 
+	[set_reps]			Long Integer, 
+	[set_dist]			Long Integer, 
+	[set_interval]			Long Integer, 
+	[set_desc]			Text (32), 
+	[set_note]			Text (55), 
+	[set_energyno]			Integer, 
+	[set_type]			Text (4), 
+	[set_categoryabbr]			Text (3), 
+	[tot_yards]			Long Integer, 
+	[set_starttime]			Long Integer, 
+	[set_finishtime]			Long Integer
+);
+
+CREATE TABLE [ModelParam]
+ (
+	[wk_ptr]			Long Integer, 
+	[wk_num]			Long Integer, 
+	[wk_date]			DateTime, 
+	[start_time]			Long Integer, 
+	[rest_period]			Integer, 
+	[group_abbr]			Text (3), 
+	[subgroup_abbr]			Text (3), 
+	[course_yls]			Text (1), 
+	[tot_yards]			Long Integer, 
+	[tot_stress]			Long Integer, 
+	[ck_selected]			Boolean NOT NULL
+);
+
+CREATE TABLE [MSDecline]
+ (
+	[MName]			Text (45), 
+	[Start]			DateTime, 
+	[MeetSharingMeetID]			Long Integer, 
+	[MeetRegistrationOpens]			DateTime, 
+	[MeetRegistrationCloses]			DateTime, 
+	[MeetSharingStatus]			Text (20), 
+	[MeetSharingPayStatus]			Text (20)
+);
+
+CREATE TABLE [MTEVENT]
+ (
+	[Meet]			Long Integer, 
+	[MtEv]			Integer, 
+	[MtEvX]			Text (1), 
+	[Lo_Hi]			Integer, 
+	[Course]			Text (1), 
+	[MtEvent]			Long Integer, 
+	[Distance]			Integer, 
+	[Stroke]			Integer, 
+	[Sex]			Text (1), 
+	[I_R]			Text (1), 
+	[Session]			Byte, 
+	[Division]			Text (3), 
+	[EventType]			Text (1), 
+	[SessX]			Text (1)
+);
+
+CREATE TABLE [MTEVENTE]
+ (
+	[Meet]			Long Integer, 
+	[MtEv]			Integer, 
+	[MtEvX]			Text (1), 
+	[Lo_Hi]			Integer, 
+	[FastCut]			Long Integer, 
+	[SlowCut]			Long Integer, 
+	[Course]			Text (1), 
+	[MtEvent]			Long Integer, 
+	[Fast_L]			Long Integer, 
+	[Slow_L]			Long Integer, 
+	[Fast_Y]			Long Integer, 
+	[Slow_Y]			Long Integer, 
+	[TstdFile]			Text (8), 
+	[TstDesig]			Text (4), 
+	[Distance]			Integer, 
+	[Stroke]			Integer, 
+	[Sex]			Text (1), 
+	[I_R]			Text (1), 
+	[Session]			Byte, 
+	[Division]			Text (3), 
+	[Fee]			Single, 
+	[ExportEvent]			Text (4), 
+	[GenderMix]			Byte, 
+	[SessX]			Text (1)
+);
+
+CREATE TABLE [OMEINVITE]
+ (
+	[IMEET]			Long Integer, 
+	[IATHLETE]			Long Integer, 
+	[INVITEDATE]			DateTime, 
+	[NEWADD]			Boolean NOT NULL, 
+	[DELETED]			Boolean NOT NULL, 
+	[ITEAM]			Long Integer, 
+	[ITEAMCODE]			Text (5), 
+	[INVITEEMAILSENT]			DateTime
+);
+
+CREATE TABLE [OMEOPTIONS]
+ (
+	[OMEEntryStyle]			Byte, 
+	[OMEReviewTime]			Byte, 
+	[EMailFrom]			Text (50), 
+	[EMailSubject]			Text (100), 
+	[EMailText]			Text (254), 
+	[LastName]			Text (50), 
+	[FirstName]			Text (50), 
+	[Phone]			Text (20), 
+	[EMail]			Text (50), 
+	[TeamName]			Text (50), 
+	[Addr]			Text (50), 
+	[SecAddr]			Text (30), 
+	[City]			Text (30), 
+	[State]			Text (3), 
+	[Zip]			Text (10), 
+	[Cntry]			Text (3), 
+	[TimeZone]			Text (50), 
+	[PayTo]			Text (50), 
+	[Classification]			Text (50), 
+	[WebSite]			Text (50), 
+	[NoShowMeetList]			Boolean NOT NULL, 
+	[NoShowMeetSetup]			Boolean NOT NULL, 
+	[NoShowActiveComSetup]			Boolean NOT NULL, 
+	[USASwimming]			Boolean NOT NULL, 
+	[Masters]			Boolean NOT NULL, 
+	[SwimLessons]			Boolean NOT NULL, 
+	[HighSchool]			Boolean NOT NULL, 
+	[SummerLeague]			Boolean NOT NULL, 
+	[OpenWater]			Boolean NOT NULL, 
+	[College]			Boolean NOT NULL, 
+	[Swimathons]			Boolean NOT NULL, 
+	[HostSwimMeets]			Boolean NOT NULL, 
+	[Other]			Boolean NOT NULL, 
+	[OtherText]			Text (50), 
+	[Token]			Text (100), 
+	[OMEWebSite]			Text (100), 
+	[AgencyID]			Text (40), 
+	[License]			Text (120)
+);
+
+CREATE TABLE [OPTIONS]
+ (
+	[State]			Text (3), 
+	[Citizen]			Text (3), 
+	[LSC]			Text (3), 
+	[Standard]			Text (8), 
+	[Record]			Text (8), 
+	[Course]			Text (1), 
+	[TeamType]			Text (3), 
+	[RegType]			Text (4), 
+	[Line1]			Text (40), 
+	[Line2]			Text (40), 
+	[RptUCase]			Boolean NOT NULL, 
+	[SysAgeUp]			DateTime, 
+	[MtAgeUp]			Integer, 
+	[MtDate]			DateTime, 
+	[FavSex]			Byte, 
+	[NoAge]			Byte, 
+	[MinAge]			Byte, 
+	[FavTeam]			Text (5), 
+	[FavLSC]			Text (3), 
+	[CvtFactor]			Double, 
+	[CvtType]			Byte, 
+	[Cvt500]			Double, 
+	[Cvt1650]			Double, 
+	[FreeTurn]			Double, 
+	[BackTurn]			Double, 
+	[BreastTurn]			Double, 
+	[FlyTurn]			Double, 
+	[IMTurn]			Double, 
+	[Straight]			Double, 
+	[Y2L]			Boolean NOT NULL, 
+	[Language]			Text (8), 
+	[LabelOption]			Byte, 
+	[ShowMI]			Boolean NOT NULL, 
+	[ShowAges]			Boolean NOT NULL, 
+	[ShowBirth]			Boolean NOT NULL, 
+	[ShowClass]			Boolean NOT NULL, 
+	[ShowFirstFirst]			Boolean NOT NULL, 
+	[Favorite]			Text (8), 
+	[ToScreen]			Boolean NOT NULL, 
+	[NumCopies]			Byte, 
+	[PaperSize]			Byte, 
+	[UseLeadOff]			Boolean NOT NULL, 
+	[UseStrokeRates]			Boolean NOT NULL, 
+	[CusPrompt1]			Text (20), 
+	[CusPrompt2]			Text (20), 
+	[CusPrompt3]			Text (20), 
+	[RegDate]			DateTime, 
+	[ShowOnlyFast]			Boolean NOT NULL, 
+	[LabelType]			Byte, 
+	[ImportDir]			Text (120), 
+	[ExportDir]			Text (120), 
+	[BackupDir]			Text (120), 
+	[ReportDir]			Text (120), 
+	[LSCFee]			Single, 
+	[RegAddr]			Text (50), 
+	[RegCity]			Text (20), 
+	[RegState]			Text (3), 
+	[RegZIP]			Text (10), 
+	[RegMailTo]			Text (40), 
+	[RegPayTo]			Text (40), 
+	[PalmImportDir]			Text (120), 
+	[LSCSeasonalFee]			Single, 
+	[BackupCheck]			Byte, 
+	[UpdateCheck]			Byte, 
+	[LastBackup]			DateTime, 
+	[LastSplitExtract]			DateTime, 
+	[AgeupToCurrent]			Boolean NOT NULL, 
+	[DbVersion]			Text (5), 
+	[DefaultDir]			Text (120), 
+	[RelayOrder]			Text (7), 
+	[LastDir]			Text (120), 
+	[SplitPref]			Integer, 
+	[rptLastFirst]			Boolean NOT NULL, 
+	[rptShowMI]			Boolean NOT NULL, 
+	[rptFILast]			Boolean NOT NULL, 
+	[rptFirstLI]			Boolean NOT NULL, 
+	[rptShowPref]			Boolean NOT NULL, 
+	[OfficialLine1]			Text (108), 
+	[OfficialLine2]			Text (108), 
+	[OfficialLine3]			Text (108), 
+	[UseProvince]			Boolean NOT NULL, 
+	[DefCity]			Text (30), 
+	[CusPrompt4]			Text (20), 
+	[CusPrompt5]			Text (20), 
+	[CusPrompt6]			Text (20), 
+	[CusPrompt7]			Text (20), 
+	[CusPrompt8]			Text (20), 
+	[OnlineRegistrationType]			Text (1), 
+	[DefZip]			Text (10), 
+	[DontShowMeetSharing]			Boolean NOT NULL
+);
+
+CREATE TABLE [RECNAME]
+ (
+	[RecFile]			Text (8), 
+	[Year]			Text (4), 
+	[Descript]			Text (20), 
+	[Flag]			Text (1), 
+	[Course]			Text (1), 
+	[Record]			Long Integer
+);
+
+CREATE TABLE [RECORDS]
+ (
+	[Record]			Long Integer, 
+	[Lo_Age]			Integer, 
+	[Hi_Age]			Integer, 
+	[RecText]			Text (80), 
+	[RecDate]			DateTime, 
+	[RecTime]			Long Integer, 
+	[RecLSC]			Text (3), 
+	[RecTeam]			Text (5), 
+	[Ex]			Text (1), 
+	[Distance]			Integer, 
+	[Stroke]			Integer, 
+	[Sex]			Text (1), 
+	[I_R]			Text (1), 
+	[Rec]			Long Integer, 
+	[Course]			Text (1), 
+	[Division]			Text (2)
+);
+
+CREATE TABLE [RELAY]
+ (
+	[RELAY]			Long Integer, 
+	[MEET]			Long Integer, 
+	[LO_HI]			Integer, 
+	[TEAM]			Long Integer, 
+	[LETTER]			Text (1), 
+	[AGE_RANGE]			Integer, 
+	[SEX]			Text (1), 
+	[ATH(1)]			Long Integer, 
+	[ATH(2)]			Long Integer, 
+	[ATH(3)]			Long Integer, 
+	[ATH(4)]			Long Integer, 
+	[ATH(5)]			Long Integer, 
+	[ATH(6)]			Long Integer, 
+	[ATH(7)]			Long Integer, 
+	[ATH(8)]			Long Integer, 
+	[DISTANCE]			Integer, 
+	[STROKE]			Integer, 
+	[RELAYAGE]			Text (3), 
+	[REACTION1]			Text (5), 
+	[REACTION2]			Text (5), 
+	[REACTION3]			Text (5), 
+	[REACTION4]			Text (5)
+);
+
+CREATE TABLE [RESULT]
+ (
+	[MEET]			Long Integer, 
+	[ATHLETE]			Long Integer, 
+	[I_R]			Text (1), 
+	[TEAM]			Long Integer, 
+	[SCORE]			Long Integer, 
+	[F_P]			Text (1), 
+	[SPLIT]			Long Integer, 
+	[EX]			Text (1), 
+	[ORIGIN]			Text (4), 
+	[NT]			Byte, 
+	[RESULT]			Long Integer, 
+	[MISC]			Text (1), 
+	[AGE]			Integer, 
+	[DISTANCE]			Integer, 
+	[STROKE]			Integer, 
+	[MTEVENT]			Long Integer, 
+	[POINTS]			Integer, 
+	[PLACE]			Integer, 
+	[RANK]			Integer, 
+	[TRANK]			Integer, 
+	[COURSE]			Text (1), 
+	[REACTION]			Text (5), 
+	[DQCODE]			Text (2), 
+	[DQDESCRIPT]			Text (90), 
+	[DQCODESecondary]			Text (2), 
+	[DQDESCRIPTSecondary]			Text (90)
+);
+
+CREATE TABLE [SESSIONS]
+ (
+	[MEETID]			Long Integer, 
+	[SESSION]			Byte, 
+	[MAXIND]			Byte, 
+	[MAXREL]			Byte, 
+	[MAXCOMBINED]			Byte, 
+	[DAY]			Byte, 
+	[STARTTIME]			Text (5), 
+	[AMPM]			Boolean NOT NULL, 
+	[SessX]			Text (1)
+);
+
+CREATE TABLE [SPLITS]
+ (
+	[SplitID]			Long Integer, 
+	[SplitIndex]			Byte, 
+	[Split]			Long Integer, 
+	[StrokeRate]			Single
+);
+
+CREATE TABLE [STDNAME]
+ (
+	[StdFile]			Text (8), 
+	[Year]			Text (4), 
+	[Descript]			Text (25), 
+	[D1]			Text (4), 
+	[D2]			Text (4), 
+	[D3]			Text (4), 
+	[D4]			Text (4), 
+	[D5]			Text (4), 
+	[D6]			Text (4), 
+	[D7]			Text (4), 
+	[D8]			Text (4), 
+	[D9]			Text (4), 
+	[D10]			Text (4), 
+	[D11]			Text (4), 
+	[D12]			Text (4), 
+	[D1Des]			Text (15), 
+	[D2Des]			Text (15), 
+	[D3Des]			Text (15), 
+	[D4Des]			Text (15), 
+	[D5Des]			Text (15), 
+	[D6Des]			Text (15), 
+	[D7Des]			Text (15), 
+	[D8Des]			Text (15), 
+	[D9Des]			Text (15), 
+	[D10Des]			Text (15), 
+	[D11Des]			Text (15), 
+	[D12Des]			Text (15)
+);
+
+CREATE TABLE [StrokeCategory]
+ (
+	[stroke_abbr]			Text (3), 
+	[stroke_name]			Text (20)
+);
+
+CREATE TABLE [TEAM]
+ (
+	[Team]			Long Integer, 
+	[TCode]			Text (5), 
+	[TName]			Text (30), 
+	[Short]			Text (16), 
+	[LSC]			Text (3), 
+	[MailTo]			Text (40), 
+	[TAddr]			Text (30), 
+	[TCity]			Text (30), 
+	[TState]			Text (3), 
+	[TZip]			Text (10), 
+	[TCntry]			Text (3), 
+	[Day]			Text (20), 
+	[Eve]			Text (20), 
+	[Fax]			Text (20), 
+	[TType]			Text (3), 
+	[Regn]			Text (1), 
+	[Reg]			Text (4), 
+	[MinAge]			Integer, 
+	[NumAth]			Long Integer, 
+	[EMail]			Text (36), 
+	[TM50]			Boolean NOT NULL, 
+	[TDivision]			Text (3)
+);
+
+CREATE TABLE [TestData]
+ (
+	[test_no]			Long Integer, 
+	[athlete]			Long Integer, 
+	[heart_1]			Integer, 
+	[heart_2]			Integer, 
+	[heart_3]			Integer, 
+	[ind_rmk]			Text (40)
+);
+
+CREATE TABLE [TestLine]
+ (
+	[test_no]			Long Integer, 
+	[athlete]			Long Integer, 
+	[rep_no]			Integer, 
+	[rep_time]			Long Integer
+);
+
+CREATE TABLE [TestSet]
+ (
+	[test_no]			Long Integer, 
+	[test_date]			DateTime, 
+	[tot_reps]			Integer, 
+	[test_dist]			Long Integer, 
+	[test_interval]			Long Integer, 
+	[test_sly]			Text (1), 
+	[push_off]			Boolean NOT NULL, 
+	[test_rmk]			Text (40), 
+	[test_stroke]			Integer, 
+	[use_it]			Boolean NOT NULL
+);
+
+CREATE TABLE [TestT30]
+ (
+	[athlete]			Long Integer, 
+	[test_date]			DateTime, 
+	[test_stroke]			Integer, 
+	[test_dist]			Long Integer, 
+	[test_time]			Long Integer, 
+	[test_sly]			Text (1), 
+	[test_rmk]			Text (40), 
+	[heart_1]			Integer, 
+	[heart_2]			Integer, 
+	[heart_3]			Integer, 
+	[use_it]			Boolean NOT NULL
+);
+
+CREATE TABLE [WkParam]
+ (
+	[wk_ptr]			Long Integer, 
+	[wk_num]			Long Integer, 
+	[wk_date]			DateTime, 
+	[start_time]			Long Integer, 
+	[rest_period]			Integer, 
+	[group_abbr]			Text (3), 
+	[subgroup_abbr]			Text (3), 
+	[course_yls]			Text (1), 
+	[tot_yards]			Long Integer, 
+	[tot_stress]			Long Integer, 
+	[ck_selected]			Boolean NOT NULL
+);
+
+CREATE TABLE [WorkCategory]
+ (
+	[stroke_abbr]			Text (1), 
+	[stroke_name]			Text (20)
+);
+
+CREATE TABLE [Workout]
+ (
+	[wk_ptr]			Long Integer, 
+	[wk_line]			Integer, 
+	[wk_type]			Text (1), 
+	[circuit_line]			Integer, 
+	[circuit_tot]			Integer, 
+	[circuit_reps]			Integer, 
+	[set_reps]			Long Integer, 
+	[set_dist]			Long Integer, 
+	[set_interval]			Long Integer, 
+	[set_desc]			Text (32), 
+	[set_note]			Text (55), 
+	[set_energyno]			Integer, 
+	[set_type]			Text (4), 
+	[set_categoryabbr]			Text (3), 
+	[tot_yards]			Long Integer, 
+	[set_starttime]			Long Integer, 
+	[set_finishtime]			Long Integer
+);
+
+CREATE TABLE [2023_ALL]
+ (
+	[Std]			Long Integer, 
+	[Lo_Age]			Integer, 
+	[Hi_age]			Integer, 
+	[F(0)]			Long Integer, 
+	[F(1)]			Long Integer, 
+	[F(2)]			Long Integer, 
+	[F(3)]			Long Integer, 
+	[F(4)]			Long Integer, 
+	[F(5)]			Long Integer, 
+	[F(6)]			Long Integer, 
+	[F(7)]			Long Integer, 
+	[F(8)]			Long Integer, 
+	[F(9)]			Long Integer, 
+	[F(10)]			Long Integer, 
+	[F(11)]			Long Integer, 
+	[F(12)]			Long Integer, 
+	[F(13)]			Long Integer, 
+	[F(14)]			Long Integer, 
+	[F(15)]			Long Integer, 
+	[F(16)]			Long Integer, 
+	[F(17)]			Long Integer, 
+	[F(18)]			Long Integer, 
+	[F(19)]			Long Integer, 
+	[F(20)]			Long Integer, 
+	[F(21)]			Long Integer, 
+	[F(22)]			Long Integer, 
+	[F(23)]			Long Integer, 
+	[F(24)]			Long Integer, 
+	[F(25)]			Long Integer, 
+	[F(26)]			Long Integer, 
+	[F(27)]			Long Integer, 
+	[F(28)]			Long Integer, 
+	[F(29)]			Long Integer, 
+	[F(30)]			Long Integer, 
+	[F(31)]			Long Integer, 
+	[F(32)]			Long Integer, 
+	[F(33)]			Long Integer, 
+	[F(34)]			Long Integer, 
+	[F(35)]			Long Integer, 
+	[S(0)]			Long Integer, 
+	[S(1)]			Long Integer, 
+	[S(2)]			Long Integer, 
+	[S(3)]			Long Integer, 
+	[S(4)]			Long Integer, 
+	[S(5)]			Long Integer, 
+	[S(6)]			Long Integer, 
+	[S(7)]			Long Integer, 
+	[S(8)]			Long Integer, 
+	[S(9)]			Long Integer, 
+	[S(10)]			Long Integer, 
+	[S(11)]			Long Integer, 
+	[S(12)]			Long Integer, 
+	[S(13)]			Long Integer, 
+	[S(14)]			Long Integer, 
+	[S(15)]			Long Integer, 
+	[S(16)]			Long Integer, 
+	[S(17)]			Long Integer, 
+	[S(18)]			Long Integer, 
+	[S(19)]			Long Integer, 
+	[S(20)]			Long Integer, 
+	[S(21)]			Long Integer, 
+	[S(22)]			Long Integer, 
+	[S(23)]			Long Integer, 
+	[S(24)]			Long Integer, 
+	[S(25)]			Long Integer, 
+	[S(26)]			Long Integer, 
+	[S(27)]			Long Integer, 
+	[S(28)]			Long Integer, 
+	[S(29)]			Long Integer, 
+	[S(30)]			Long Integer, 
+	[S(31)]			Long Integer, 
+	[S(32)]			Long Integer, 
+	[S(33)]			Long Integer, 
+	[S(34)]			Long Integer, 
+	[S(35)]			Long Integer, 
+	[Distance]			Integer, 
+	[Stroke]			Integer, 
+	[Sex]			Text (1), 
+	[I_R]			Text (1), 
+	[Division]			Text (2)
+);
+
+CREATE TABLE [CUSTOMAGEGROUP]
+ (
+	[Lo_Hi]			Integer, 
+	[EventNum]			Integer, 
+	[Stroke]			Integer, 
+	[Distance]			Integer
+);
+
+CREATE TABLE [ENTRY]
+ (
+	[Meet]			Long Integer, 
+	[Athlete]			Long Integer, 
+	[I_R]			Text (1), 
+	[Team]			Long Integer, 
+	[Course]			Text (2), 
+	[Score]			Long Integer, 
+	[Ex]			Text (1), 
+	[MtEvent]			Long Integer, 
+	[Misc]			Text (1), 
+	[Entry]			Long Integer, 
+	[Division]			Text (3), 
+	[HEAT]			Byte, 
+	[LANE]			Byte, 
+	[FromOME]			Boolean NOT NULL
+);
+
+CREATE TABLE [MEET]
+ (
+	[Meet]			Long Integer, 
+	[MName]			Text (45), 
+	[Start]			DateTime, 
+	[End]			DateTime, 
+	[AgeUp]			DateTime, 
+	[Since]			DateTime, 
+	[Course]			Text (2), 
+	[Location]			Text (45), 
+	[Remarks]			Text (50), 
+	[IndCharge]			Single, 
+	[RelCharge]			Single, 
+	[SurCharge]			Single, 
+	[Type]			Text (3), 
+	[Sanction]			Text (15), 
+	[MaxIndEnt]			Integer, 
+	[MaxRelEnt]			Integer, 
+	[MaxEnt]			Integer, 
+	[RestrictBest]			Boolean NOT NULL, 
+	[NonConform]			Double, 
+	[EnterAtQTime]			Boolean NOT NULL, 
+	[FacilityFee]			Single, 
+	[TeamFee]			Single, 
+	[Instructions]			Text (250), 
+	[MinAge]			Integer, 
+	[EnforceQualifying]			Boolean NOT NULL, 
+	[Altitude]			Integer, 
+	[EnforceSlowQtime]			Boolean NOT NULL, 
+	[BanNoTimes]			Boolean NOT NULL, 
+	[Lanes]			Integer, 
+	[EvenOrOdd]			Integer, 
+	[FastToSlow]			Boolean NOT NULL, 
+	[Masters]			Boolean NOT NULL, 
+	[ActiveFeeXMLSent]			Boolean NOT NULL, 
+	[MinAge10AndUnder]			Integer, 
+	[SeedLanes]			Text (16), 
+	[DeadLine]			DateTime, 
+	[ActiveMeetID]			Long Integer, 
+	[CustIndCharge]			Single, 
+	[CustRelCharge]			Single, 
+	[CustSurCharge]			Single, 
+	[CustIndAction]			Byte, 
+	[CustRelAction]			Byte, 
+	[CustSurAction]			Byte, 
+	[Addr]			Text (30), 
+	[Addr2]			Text (30), 
+	[City]			Text (30), 
+	[State]			Text (3), 
+	[ZIP]			Text (10), 
+	[Cntry]			Text (20), 
+	[UseCustomFees]			Boolean NOT NULL, 
+	[OMEEntryStyle]			Byte, 
+	[SwimmerEntryDeadLine]			DateTime, 
+	[SwimmerEntryOpen]			DateTime, 
+	[AllowCustomTimes]			Boolean NOT NULL, 
+	[ExportEntriesDate]			DateTime, 
+	[LastSyncDate]			DateTime, 
+	[FinalizeEntriesDate]			DateTime, 
+	[UseSwimmersTeam]			Boolean NOT NULL, 
+	[HonorInviteList]			Boolean NOT NULL, 
+	[EntryTeam]			Long Integer, 
+	[EMailFrom]			Text (50), 
+	[EMailText]			Text (254), 
+	[EMailSubject]			Text (100), 
+	[OnlyPreEntered]			Boolean NOT NULL, 
+	[License]			Text (120), 
+	[CollectFeesOnline]			Boolean NOT NULL, 
+	[OMEBillDate]			DateTime, 
+	[InviteEmailDate]			DateTime, 
+	[EntryEMailText]			Text (254), 
+	[EntryEMailSubject]			Text (100), 
+	[EntryEMailFrom]			Text (50), 
+	[OMEValidated]			Boolean NOT NULL, 
+	[OMECustomTeam]			Boolean NOT NULL, 
+	[OMEFilterTeam]			Long Integer, 
+	[OMENeedsSync]			Boolean NOT NULL, 
+	[OMENeedSync]			Boolean NOT NULL, 
+	[MeetSharingStatus]			Text (20), 
+	[FileExportType]			Integer, 
+	[MeetRegistrationOpens]			DateTime, 
+	[MeetRegistrationCloses]			DateTime, 
+	[MeetSharingMeetID]			Long Integer, 
+	[MeetSharingPayStatus]			Text (20), 
+	[MeetSharingResultDate]			DateTime, 
+	[EV3Version]			Byte
+);
+
+CREATE TABLE [modt30times]
+ (
+	[athlete]			Long Integer, 
+	[event_no]			Integer, 
+	[course_yls]			Text (1), 
+	[event_dist]			Long Integer, 
+	[event_time]			Long Integer, 
+	[shave_type]			Text (1)
+);
+
+CREATE TABLE [PREENTER]
+ (
+	[THEATHLETE]			Long Integer, 
+	[THEMEET]			Long Integer, 
+	[PREENTERED]			Boolean NOT NULL, 
+	[SESSION1]			Text (3), 
+	[SESSION2]			Text (3), 
+	[SESSION3]			Text (3), 
+	[SESSION4]			Text (3), 
+	[SESSION5]			Text (3), 
+	[SESSION6]			Text (3), 
+	[SESSION7]			Text (3), 
+	[SESSION8]			Text (3), 
+	[SESSION9]			Text (3), 
+	[SESSION10]			Text (3), 
+	[NOTATTENDING]			Boolean NOT NULL
+);
+
+CREATE TABLE [SetDescriptions]
+ (
+	[set_name]			Text (30)
+);
+
+

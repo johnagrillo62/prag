@@ -1,0 +1,71 @@
+-- ----------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2011 Brian Bruns and others.
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-- ----------------------------------------------------------
+
+-- That file uses encoding UTF-8
+
+CREATE TABLE [Team]
+ (
+	[Team_no]			Long Integer, 
+	[Team_name]			Text (60), 
+	[Team_short]			Text (32), 
+	[Team_abbr]			Text (10), 
+	[Team_stat]			Text (2), 
+	[Team_div]			Integer, 
+	[Team_region]			Integer, 
+	[Team_head]			Text (60), 
+	[Team_asst]			Text (60), 
+	[Team_addr1]			Text (60), 
+	[Team_addr2]			Text (60), 
+	[Team_city]			Text (60), 
+	[Team_prov]			Text (60), 
+	[Team_statenew]			Text (6), 
+	[Team_zip]			Text (20), 
+	[Team_cntry]			Text (6), 
+	[Team_daytele]			Text (40), 
+	[Team_evetele]			Text (40), 
+	[Team_faxtele]			Text (40), 
+	[Team_email]			Text (72), 
+	[Team_c3]			Text (60), 
+	[Team_c4]			Text (60), 
+	[Team_c5]			Text (60), 
+	[Team_c6]			Text (60), 
+	[Team_c7]			Text (60), 
+	[Team_c8]			Text (60), 
+	[Team_c9]			Text (60), 
+	[Team_c10]			Text (60), 
+	[Team_altabbr]			Text (10), 
+	[Team_NoPoints]			Boolean NOT NULL, 
+	[Team_Selected]			Boolean NOT NULL, 
+	[Team_altname]			Text (32), 
+	[InvitedTeam_AgencyID]			Long Integer, 
+	[InvitedTeam_Email]			Text (110), 
+	[Invited_InviteCode]			Text (30), 
+	[InvitedEntry_status]			Text (50), 
+	[InvitedPayment_status]			Text (50), 
+	[Invited_notes]			Text (510), 
+	[Invited_GovBody]			Text (100), 
+	[Invited_TeamID]			Long Integer, 
+	[InvitedHas_notes]			Boolean NOT NULL, 
+	[InvitedLeague_name]			Text (50), 
+	[InvitedFile_status]			Text (50), 
+	[InvitedFile_importdatetime]			Text (50), 
+	[InvitedFile_TMuploaddatetime]			Text (50), 
+	[InvitedFile_source]			Text (50), 
+	[Invited_TeamEntryID]			Long Integer, 
+	[Invited_Athletecount]			Text (30), 
+	[team_lsc]			Text (6), 
+	[NoTeam_surcharge]			Boolean NOT NULL, 
+	[NoFacility_surcharge]			Boolean NOT NULL, 
+	[NoAthlete_surcharge]			Boolean NOT NULL, 
+	[Team_cell]			Text (40), 
+	[NoRelayOnly_surcharge]			Boolean NOT NULL, 
+	[Team_Code]			Text (60), 
+	[Team_Gender]			Text (2)
+);
+
+

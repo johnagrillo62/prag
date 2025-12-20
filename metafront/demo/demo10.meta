@@ -1,0 +1,35 @@
+namespace meta
+{
+namespace A
+{
+inline const auto fields = std::make_tuple(
+    meta::Field<::A, int64_t, &::A::intA, meta::Prop::Serializable, nullptr, nullptr>(
+        "intA",
+        "int64_t",
+        {
+            {CSV_COLUMN, "intA"},
+            {SQL_COLUMN, "intA"},
+            {SRC_NAME, "intA"},
+        }),
+    meta::Field<::A, int64_t, &::A::x, meta::Prop::Serializable, nullptr, nullptr>(
+        "x",
+        "int64_t",
+        {
+            {CSV_COLUMN, "x"},
+            {SQL_COLUMN, "x"},
+            {SRC_NAME, "x"},
+        }));
+inline constexpr auto tableName = "A";
+inline constexpr auto query = "SELECT intA, x FROM A";
+} // namespace A
+} // namespace meta
+namespace meta
+{
+// Template specialization for type-based reflection lookup
+template <> struct MetaTuple<::A>
+{
+    static inline const auto& fields = meta::A::fields;
+    static constexpr auto tableName = meta::A::tableName;
+    static constexpr auto query = meta::A::query;
+};
+} // namespace meta

@@ -1,0 +1,652 @@
+--- !ruby/object:Cls::Clss
+table_name: 2023_ALL
+class_name: 2023_ALL
+members:
+- !ruby/object:Cls::Member
+  column_name: Std
+  member_name: std
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Lo_Age
+  member_name: lo age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Hi_age
+  member_name: hi age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(0)
+  member_name: f_0_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(1)
+  member_name: f_1_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(2)
+  member_name: f_2_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(3)
+  member_name: f_3_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(4)
+  member_name: f_4_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(5)
+  member_name: f_5_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(6)
+  member_name: f_6_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(7)
+  member_name: f_7_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(8)
+  member_name: f_8_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(9)
+  member_name: f_9_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(10)
+  member_name: f_10_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(11)
+  member_name: f_11_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(12)
+  member_name: f_12_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(13)
+  member_name: f_13_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(14)
+  member_name: f_14_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(15)
+  member_name: f_15_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(16)
+  member_name: f_16_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(17)
+  member_name: f_17_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(18)
+  member_name: f_18_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(19)
+  member_name: f_19_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(20)
+  member_name: f_20_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(21)
+  member_name: f_21_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(22)
+  member_name: f_22_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(23)
+  member_name: f_23_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(24)
+  member_name: f_24_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(25)
+  member_name: f_25_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(26)
+  member_name: f_26_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(27)
+  member_name: f_27_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(28)
+  member_name: f_28_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(29)
+  member_name: f_29_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(30)
+  member_name: f_30_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(31)
+  member_name: f_31_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(32)
+  member_name: f_32_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(33)
+  member_name: f_33_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(34)
+  member_name: f_34_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: F(35)
+  member_name: f_35_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(0)
+  member_name: s_0_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(1)
+  member_name: s_1_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(2)
+  member_name: s_2_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(3)
+  member_name: s_3_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(4)
+  member_name: s_4_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(5)
+  member_name: s_5_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(6)
+  member_name: s_6_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(7)
+  member_name: s_7_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(8)
+  member_name: s_8_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(9)
+  member_name: s_9_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(10)
+  member_name: s_10_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(11)
+  member_name: s_11_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(12)
+  member_name: s_12_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(13)
+  member_name: s_13_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(14)
+  member_name: s_14_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(15)
+  member_name: s_15_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(16)
+  member_name: s_16_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(17)
+  member_name: s_17_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(18)
+  member_name: s_18_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(19)
+  member_name: s_19_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(20)
+  member_name: s_20_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(21)
+  member_name: s_21_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(22)
+  member_name: s_22_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(23)
+  member_name: s_23_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(24)
+  member_name: s_24_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(25)
+  member_name: s_25_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(26)
+  member_name: s_26_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(27)
+  member_name: s_27_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(28)
+  member_name: s_28_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(29)
+  member_name: s_29_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(30)
+  member_name: s_30_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(31)
+  member_name: s_31_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(32)
+  member_name: s_32_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(33)
+  member_name: s_33_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(34)
+  member_name: s_34_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: S(35)
+  member_name: s_35_
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Distance
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Stroke
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sex
+  member_name: sex
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: I_R
+  member_name: i r
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Division
+  member_name: division
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [2023_ALL]
+  (
+  [Std] Long Integer,
+  [Lo_Age] Integer,
+  [Hi_age] Integer,
+  [F(0)] Long Integer,
+  [F(1)] Long Integer,
+  [F(2)] Long Integer,
+  [F(3)] Long Integer,
+  [F(4)] Long Integer,
+  [F(5)] Long Integer,
+  [F(6)] Long Integer,
+  [F(7)] Long Integer,
+  [F(8)] Long Integer,
+  [F(9)] Long Integer,
+  [F(10)] Long Integer,
+  [F(11)] Long Integer,
+  [F(12)] Long Integer,
+  [F(13)] Long Integer,
+  [F(14)] Long Integer,
+  [F(15)] Long Integer,
+  [F(16)] Long Integer,
+  [F(17)] Long Integer,
+  [F(18)] Long Integer,
+  [F(19)] Long Integer,
+  [F(20)] Long Integer,
+  [F(21)] Long Integer,
+  [F(22)] Long Integer,
+  [F(23)] Long Integer,
+  [F(24)] Long Integer,
+  [F(25)] Long Integer,
+  [F(26)] Long Integer,
+  [F(27)] Long Integer,
+  [F(28)] Long Integer,
+  [F(29)] Long Integer,
+  [F(30)] Long Integer,
+  [F(31)] Long Integer,
+  [F(32)] Long Integer,
+  [F(33)] Long Integer,
+  [F(34)] Long Integer,
+  [F(35)] Long Integer,
+  [S(0)] Long Integer,
+  [S(1)] Long Integer,
+  [S(2)] Long Integer,
+  [S(3)] Long Integer,
+  [S(4)] Long Integer,
+  [S(5)] Long Integer,
+  [S(6)] Long Integer,
+  [S(7)] Long Integer,
+  [S(8)] Long Integer,
+  [S(9)] Long Integer,
+  [S(10)] Long Integer,
+  [S(11)] Long Integer,
+  [S(12)] Long Integer,
+  [S(13)] Long Integer,
+  [S(14)] Long Integer,
+  [S(15)] Long Integer,
+  [S(16)] Long Integer,
+  [S(17)] Long Integer,
+  [S(18)] Long Integer,
+  [S(19)] Long Integer,
+  [S(20)] Long Integer,
+  [S(21)] Long Integer,
+  [S(22)] Long Integer,
+  [S(23)] Long Integer,
+  [S(24)] Long Integer,
+  [S(25)] Long Integer,
+  [S(26)] Long Integer,
+  [S(27)] Long Integer,
+  [S(28)] Long Integer,
+  [S(29)] Long Integer,
+  [S(30)] Long Integer,
+  [S(31)] Long Integer,
+  [S(32)] Long Integer,
+  [S(33)] Long Integer,
+  [S(34)] Long Integer,
+  [S(35)] Long Integer,
+  [Distance] Integer,
+  [Stroke] Integer,
+  [Sex] Text (2),
+  [I_R] Text (2),
+  [Division] Text (4)
+  );

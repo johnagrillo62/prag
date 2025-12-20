@@ -1,0 +1,754 @@
+--- !ruby/object:Cls::Clss
+table_name: AthInfo
+class_name: AthInfo
+members:
+- !ruby/object:Cls::Member
+  column_name: Athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Addr
+  member_name: addr
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: City
+  member_name: city
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ZIP
+  member_name: zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cntry
+  member_name: cntry
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DayP1
+  member_name: day p 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EveP1
+  member_name: eve p 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FaxP1
+  member_name: fax p 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DayP2
+  member_name: day p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EveP2
+  member_name: eve p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FaxP2
+  member_name: fax p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MailTo
+  member_name: mail to
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Seasonal
+  member_name: seasonal
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FinaFed
+  member_name: fina fed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegDate
+  member_name: reg date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NRCD
+  member_name: nrcd
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMail
+  member_name: e mail
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Member
+  member_name: member
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: JrHS
+  member_name: jr h s
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HS
+  member_name: hs
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: YMCA
+  member_name: ymca
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Coll
+  member_name: coll
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SL
+  member_name: sl
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DUAL
+  member_name: dual
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Mast
+  member_name: mast
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Dis
+  member_name: dis
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Polo
+  member_name: polo
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ethnic
+  member_name: ethnic
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MedCondition
+  member_name: med condition
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Medication
+  member_name: medication
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DoctorName
+  member_name: doctor name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DoctorPhone
+  member_name: doctor phone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EmerContact
+  member_name: emer contact
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EmerPhone
+  member_name: emer phone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MailTo2
+  member_name: mail to 2
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Addr2
+  member_name: addr 2
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: City2
+  member_name: city 2
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: State2
+  member_name: state 2
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ZIP2
+  member_name: zip2
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cntry2
+  member_name: cntry 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMail2
+  member_name: e mail 2
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UseMailTo
+  member_name: use mail to
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt1
+  member_name: cus prompt 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue1
+  member_name: cus value 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt2
+  member_name: cus prompt 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue2
+  member_name: cus value 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt3
+  member_name: cus prompt 3
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue3
+  member_name: cus value 3
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: State
+  member_name: state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: BLIND
+  member_name: blind
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DEAF
+  member_name: deaf
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PHYSICAL
+  member_name: physical
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: COGNITIVE
+  member_name: cognitive
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SecAddr
+  member_name: sec addr
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SecAddr2
+  member_name: sec addr 2
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PrimaryLast
+  member_name: primary last
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PrimaryFirst1
+  member_name: primary first 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PrimaryFirst2
+  member_name: primary first 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SecondaryLast
+  member_name: secondary last
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SecondaryFirst1
+  member_name: secondary first 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SecondaryFirst2
+  member_name: secondary first 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CellP1
+  member_name: cell p 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CellP2
+  member_name: cell p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UseBoth
+  member_name: use both
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EveP1P2
+  member_name: eve p 1 p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CellP1P2
+  member_name: cell p 1 p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMail1P2
+  member_name: e mail 1 p 2
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EveP2P2
+  member_name: eve p 2 p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CellP2P2
+  member_name: cell p 2 p 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMail2P2
+  member_name: e mail 2 p 2
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CellAthlete
+  member_name: cell athlete
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMailAthlete
+  member_name: e mail athlete
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Middle
+  member_name: middle
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: USSDonation
+  member_name: u s s donation
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PrimaryLast2
+  member_name: primary last 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FinaFedCntry
+  member_name: fina fed cntry
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExpAthEmail
+  member_name: exp ath email
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExpFatherEmail
+  member_name: exp father email
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExpMotherEmail
+  member_name: exp mother email
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExpParent1Email
+  member_name: exp parent 1 email
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExpParent2Email
+  member_name: exp parent 2 email
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegEMail
+  member_name: reg e mail
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: USSNewsLetter
+  member_name: u s s news letter
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt4
+  member_name: cus prompt 4
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue4
+  member_name: cus value 4
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt5
+  member_name: cus prompt 5
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue5
+  member_name: cus value 5
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt6
+  member_name: cus prompt 6
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue6
+  member_name: cus value 6
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt7
+  member_name: cus prompt 7
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue7
+  member_name: cus value 7
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt8
+  member_name: cus prompt 8
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusValue8
+  member_name: cus value 8
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HSGradYear
+  member_name: h s grad year
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FINACompeted
+  member_name: f i n a competed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CustUSSFee
+  member_name: cust u s s fee
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [AthInfo]
+  (
+  [Athlete] Long Integer,
+  [Addr] Text (60),
+  [City] Text (60),
+  [ZIP] Text (20),
+  [Cntry] Text (40),
+  [DayP1] Text (40),
+  [EveP1] Text (40),
+  [FaxP1] Text (40),
+  [DayP2] Text (40),
+  [EveP2] Text (40),
+  [FaxP2] Text (40),
+  [MailTo] Text (80),
+  [Seasonal] Text (2),
+  [FinaFed] Boolean NOT NULL,
+  [RegDate] DateTime,
+  [NRCD] Text (2),
+  [EMail] Text (100),
+  [Member] Boolean NOT NULL,
+  [JrHS] Boolean NOT NULL,
+  [HS] Boolean NOT NULL,
+  [YMCA] Boolean NOT NULL,
+  [Coll] Boolean NOT NULL,
+  [SL] Boolean NOT NULL,
+  [DUAL] Boolean NOT NULL,
+  [Mast] Boolean NOT NULL,
+  [Dis] Boolean NOT NULL,
+  [Polo] Boolean NOT NULL,
+  [Ethnic] Byte,
+  [MedCondition] Text (240),
+  [Medication] Text (240),
+  [DoctorName] Text (60),
+  [DoctorPhone] Text (40),
+  [EmerContact] Text (60),
+  [EmerPhone] Text (40),
+  [MailTo2] Text (80),
+  [Addr2] Text (60),
+  [City2] Text (60),
+  [State2] Text (6),
+  [ZIP2] Text (20),
+  [Cntry2] Text (40),
+  [EMail2] Text (100),
+  [UseMailTo] Boolean NOT NULL,
+  [CusPrompt1] Text (40),
+  [CusValue1] Text (40),
+  [CusPrompt2] Text (40),
+  [CusValue2] Text (40),
+  [CusPrompt3] Text (40),
+  [CusValue3] Text (40),
+  [State] Text (6),
+  [BLIND] Boolean NOT NULL,
+  [DEAF] Boolean NOT NULL,
+  [PHYSICAL] Boolean NOT NULL,
+  [COGNITIVE] Boolean NOT NULL,
+  [SecAddr] Text (60),
+  [SecAddr2] Text (60),
+  [PrimaryLast] Text (40),
+  [PrimaryFirst1] Text (40),
+  [PrimaryFirst2] Text (40),
+  [SecondaryLast] Text (40),
+  [SecondaryFirst1] Text (40),
+  [SecondaryFirst2] Text (40),
+  [CellP1] Text (40),
+  [CellP2] Text (40),
+  [UseBoth] Boolean NOT NULL,
+  [EveP1P2] Text (40),
+  [CellP1P2] Text (40),
+  [EMail1P2] Text (100),
+  [EveP2P2] Text (40),
+  [CellP2P2] Text (40),
+  [EMail2P2] Text (100),
+  [CellAthlete] Text (40),
+  [EMailAthlete] Text (100),
+  [Middle] Text (40),
+  [USSDonation] Boolean NOT NULL,
+  [PrimaryLast2] Text (40),
+  [FinaFedCntry] Text (6),
+  [ExpAthEmail] Boolean NOT NULL,
+  [ExpFatherEmail] Boolean NOT NULL,
+  [ExpMotherEmail] Boolean NOT NULL,
+  [ExpParent1Email] Boolean NOT NULL,
+  [ExpParent2Email] Boolean NOT NULL,
+  [RegEMail] Text (100),
+  [USSNewsLetter] Boolean NOT NULL,
+  [CusPrompt4] Text (40),
+  [CusValue4] Text (40),
+  [CusPrompt5] Text (40),
+  [CusValue5] Text (40),
+  [CusPrompt6] Text (40),
+  [CusValue6] Text (40),
+  [CusPrompt7] Text (40),
+  [CusValue7] Text (40),
+  [CusPrompt8] Text (40),
+  [CusValue8] Text (40),
+  [HSGradYear] Integer,
+  [FINACompeted] Boolean NOT NULL,
+  [CustUSSFee] Text (20)
+  );

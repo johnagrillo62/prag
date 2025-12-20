@@ -1,0 +1,98 @@
+--- !ruby/object:Cls::Clss
+table_name: WkParam
+class_name: WkParam
+members:
+- !ruby/object:Cls::Member
+  column_name: wk_ptr
+  member_name: wk ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: wk_num
+  member_name: wk num
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: wk_date
+  member_name: wk date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: start_time
+  member_name: start time
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: rest_period
+  member_name: rest period
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: group_abbr
+  member_name: group abbr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: subgroup_abbr
+  member_name: subgroup abbr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: course_yls
+  member_name: course yls
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tot_yards
+  member_name: tot yards
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tot_stress
+  member_name: tot stress
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ck_selected
+  member_name: ck selected
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [WkParam]
+  (
+  [wk_ptr] Long Integer,
+  [wk_num] Long Integer,
+  [wk_date] DateTime,
+  [start_time] Long Integer,
+  [rest_period] Integer,
+  [group_abbr] Text (6),
+  [subgroup_abbr] Text (6),
+  [course_yls] Text (2),
+  [tot_yards] Long Integer,
+  [tot_stress] Long Integer,
+  [ck_selected] Boolean NOT NULL
+  );

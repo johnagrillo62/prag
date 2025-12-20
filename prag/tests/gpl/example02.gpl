@@ -1,0 +1,18 @@
+type User {
+  id: ID!
+  name: String
+  email: String
+  tags: [String!]!
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+type Post {
+  id: ID!
+  title: String!
+  author: User!
+}

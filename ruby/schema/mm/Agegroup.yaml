@@ -1,0 +1,28 @@
+--- !ruby/object:Cls::Clss
+table_name: Agegroup
+class_name: Agegroup
+members:
+- !ruby/object:Cls::Member
+  column_name: Low_age
+  member_name: low age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: High_age
+  member_name: high age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Agegroup]
+  (
+  [Low_age] Integer,
+  [High_age] Integer
+  );

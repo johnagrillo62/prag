@@ -1,0 +1,116 @@
+--- !ruby/object:Cls::Clss
+table_name: StdLanes
+class_name: StdLanes
+members:
+- !ruby/object:Cls::Member
+  column_name: tot_lanes
+  member_name: tot lanes
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_01
+  member_name: order 01
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_02
+  member_name: order 02
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_03
+  member_name: order 03
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_04
+  member_name: order 04
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_05
+  member_name: order 05
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_06
+  member_name: order 06
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_07
+  member_name: order 07
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_08
+  member_name: order 08
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_09
+  member_name: order 09
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_10
+  member_name: order 10
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_11
+  member_name: order 11
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: order_12
+  member_name: order 12
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [StdLanes]
+  (
+  [tot_lanes] Integer,
+  [order_01] Integer,
+  [order_02] Integer,
+  [order_03] Integer,
+  [order_04] Integer,
+  [order_05] Integer,
+  [order_06] Integer,
+  [order_07] Integer,
+  [order_08] Integer,
+  [order_09] Integer,
+  [order_10] Integer,
+  [order_11] Integer,
+  [order_12] Integer
+  );

@@ -1,0 +1,26 @@
+
+// Functions found in db::User:
+// void User(int id, int name) - Access: public
+namespace meta
+{
+namespace db
+{
+static constexpr auto User = std::tuple<
+        FieldMeta<::db::User, int, nullptr, nullptr, nullptr, Serializable | Private>,
+        FieldMeta<::db::User, std::string, nullptr, nullptr, nullptr, Serializable | Private>,
+        FieldMeta<::db::User, std::string, nullptr, nullptr, nullptr, Serializable | Private>,
+        FieldMeta<::db::User, std::string, nullptr, nullptr, nullptr, Serializable | Private>
+    >{
+        { "int", "id_", "field_name:friend_id"},
+        { "std::string", "name_"},
+        { "std::string", "name2"},
+        { "std::string", "name3"}
+   };
+}}
+namespace meta {// Specialization for db::User
+template<>
+struct MetaTuple<::db::User> {
+static constexpr auto& fields = meta::db::User;
+static constexpr const char* table_name = "__user__";
+};
+}

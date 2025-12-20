@@ -1,0 +1,57 @@
+--- !ruby/object:Cls::Clss
+table_name: TagNames
+class_name: TagNames
+members:
+- !ruby/object:Cls::Member
+  column_name: tag_ptr
+  member_name: tag ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_name
+  member_name: tag name
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: for_scoring
+  member_name: for scoring
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: for_entryqual
+  member_name: for entryqual
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: for_timestd
+  member_name: for timestd
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_desc
+  member_name: tag desc
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [TagNames]
+  (
+  [tag_ptr] Long Integer,
+  [tag_name] Text (8),
+  [for_scoring] Boolean NOT NULL,
+  [for_entryqual] Boolean NOT NULL,
+  [for_timestd] Boolean NOT NULL,
+  [tag_desc] Text (40)
+  );

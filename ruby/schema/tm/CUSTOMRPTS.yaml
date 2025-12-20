@@ -1,0 +1,407 @@
+--- !ruby/object:Cls::Clss
+table_name: CUSTOMRPTS
+class_name: CUSTOMRPTS
+members:
+- !ruby/object:Cls::Member
+  column_name: Name
+  member_name: name
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Type
+  member_name: type
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team
+  member_name: team
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Group
+  member_name: group
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SubGr
+  member_name: sub gr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Class
+  member_name: cclass
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SortBy
+  member_name: sort by
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sex
+  member_name: sex
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Prelim
+  member_name: prelim
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Splits
+  member_name: splits
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Stroke
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Distance
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: I_R
+  member_name: i r
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LSC
+  member_name: lsc
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LoAge
+  member_name: lo age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HiAge
+  member_name: hi age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkIncRelayLO
+  member_name: chk inc relay l o
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkStandards
+  member_name: chk standards
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkInactive
+  member_name: chk inactive
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkSince
+  member_name: chk since
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SinceDate
+  member_name: since date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkImprove
+  member_name: chk improve
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkUntil
+  member_name: chk until
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UntilDate
+  member_name: until date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkRecords
+  member_name: chk records
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RECORD
+  member_name: record
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkNamesOnly
+  member_name: chk names only
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkBlankLine
+  member_name: chk blank line
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Grouping
+  member_name: grouping
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AgeGroups
+  member_name: age groups
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MeetType
+  member_name: meet type
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TopN
+  member_name: top n
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: StanAtLeast
+  member_name: stan at least
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Course
+  member_name: course
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkChronological
+  member_name: chk chronological
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Orientation
+  member_name: orientation
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkActual
+  member_name: chk actual
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkNoTimes
+  member_name: chk no times
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkOnlyElig
+  member_name: chk only elig
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkBest
+  member_name: chk best
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RelaySwimmers
+  member_name: relay swimmers
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: StdName
+  member_name: std name
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Designator
+  member_name: designator
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkStrokeRate
+  member_name: chk stroke rate
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LabelIndex
+  member_name: label index
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkNISCA
+  member_name: chk n i s c a
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkNewStd
+  member_name: chk new std
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ColIndex
+  member_name: col index
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkGoals
+  member_name: chk goals
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkIncRelayLegs
+  member_name: chk inc relay legs
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkShowRegistration
+  member_name: chk show registration
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: chkNT
+  member_name: chk n t
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [CUSTOMRPTS]
+  (
+  [Name] Text (60),
+  [Type] Integer,
+  [Team] Long Integer,
+  [Group] Text (6),
+  [SubGr] Text (6),
+  [Class] Text (6),
+  [SortBy] Integer,
+  [Sex] Integer,
+  [Prelim] Integer,
+  [Splits] Integer,
+  [Stroke] Integer,
+  [Distance] Integer,
+  [I_R] Integer,
+  [LSC] Text (6),
+  [LoAge] Integer,
+  [HiAge] Integer,
+  [chkIncRelayLO] Boolean NOT NULL,
+  [chkStandards] Boolean NOT NULL,
+  [chkInactive] Boolean NOT NULL,
+  [chkSince] Boolean NOT NULL,
+  [SinceDate] DateTime,
+  [chkImprove] Integer,
+  [chkUntil] Boolean NOT NULL,
+  [UntilDate] DateTime,
+  [chkRecords] Boolean NOT NULL,
+  [RECORD] Long Integer,
+  [chkNamesOnly] Boolean NOT NULL,
+  [chkBlankLine] Boolean NOT NULL,
+  [Grouping] Integer,
+  [AgeGroups] Integer,
+  [MeetType] Text (6),
+  [TopN] Integer,
+  [StanAtLeast] Text (8),
+  [Course] Integer,
+  [chkChronological] Boolean NOT NULL,
+  [Orientation] Integer,
+  [chkActual] Boolean NOT NULL,
+  [chkNoTimes] Boolean NOT NULL,
+  [chkOnlyElig] Boolean NOT NULL,
+  [chkBest] Integer,
+  [RelaySwimmers] Integer,
+  [StdName] Text (16),
+  [Designator] Text (8),
+  [chkStrokeRate] Boolean NOT NULL,
+  [LabelIndex] Integer,
+  [chkNISCA] Boolean NOT NULL,
+  [chkNewStd] Boolean NOT NULL,
+  [ColIndex] Integer,
+  [chkGoals] Boolean NOT NULL,
+  [chkIncRelayLegs] Boolean NOT NULL,
+  [chkShowRegistration] Boolean NOT NULL,
+  [chkNT] Boolean NOT NULL
+  );

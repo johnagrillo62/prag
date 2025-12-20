@@ -1,0 +1,199 @@
+{
+  "slideshow": {
+    "title": "MetaFront Complete Workflow",
+    "author": "Developer", 
+    "date": "2025-09-20",
+    "theme": "modern",
+    "slides": [
+      {
+        "id": 1,
+        "type": "code",
+        "title": "Simple Class",
+        "subtitle": "C++ Class Definition",
+        "content": {
+            "code": "class Person {\npublic:\n    int id;\n    std::string name;\n    std::string email;\n};",
+          "language": "cpp",
+          "highlight": true
+        }
+      },
+      {
+        "id": 2,
+        "type": "code",
+        "title": "Generated Metadata",
+        "subtitle": "Automatic Reflection Data",
+        "content": {
+          "code": "static constexpr auto Person_meta = std::tuple<\n    Field<Person, int>,\n    Field<Person, std::string>,\n    Field<Person, std::string>\n>{\n    {\"int\", \"id\"},\n    {\"std::string\", \"name\"},\n    {\"std::string\", \"email\"}\n};",
+          "language": "cpp",
+          "highlight": true
+        }
+      },
+      {
+        "id": 3,
+        "type": "code", 
+        "title": "Reflection Usage",
+        "subtitle": "Using the Metadata",
+        "content": {
+            "code": """Person p{123"""",
+
+      
+          "language": "cpp",
+          "highlight": true
+        }
+      },
+      {
+        "id": 4,
+        "type": "multi-output",
+        "title": "Serialization Formats",
+        "subtitle": "Multiple Output Formats",
+        "content": {
+          "sections": [
+            {
+              "name": "XML",
+              "output": "<Person>\n  <id>123</id>\n  <name>John Doe</name>\n  <email>john@email.com</email>\n</Person>"
+            },
+            {
+              "name": "CSV", 
+              "output": "id,name,email\n123,\"John Doe\",\"john@email.com\""
+            },
+            {
+              "name": "JSON",
+              "output": "{\n  \"id\": 123,\n  \"name\": \"John Doe\",\n  \"email\": \"john@email.com\"\n}"
+            }
+          ]
+        }
+      },
+      {
+        "id": 5,
+        "type": "multi-output",
+        "title": "Database Operations", 
+        "subtitle": "Complete Database Operations",
+        "content": {
+            "sections": [
+            {
+              "name": "CREATE",
+              "output": "CREATE TABLE Person (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL,\n    email TEXT NOT NULL\n);"
+            },
+            {
+              "name": "INSERT",
+              "output": "INSERT INTO Person (id, name, email)\nVALUES (123, 'John Doe', 'john@email.com');"
+            },
+            {
+              "name": "SELECT",
+              "output": "SELECT id, name, email\nFROM Person\nWHERE id = 123;"
+            },
+            {
+              "name": "UPDATE", 
+              "output": "UPDATE Person SET\n    name = 'John Smith',\n    email = 'johnsmith@email.com'\nWHERE id = 123;"
+            },
+            {
+              "name": "DELETE",
+              "output": "DELETE FROM Person\nWHERE id = 123;"
+            }
+          ]
+        }
+      },
+      {
+        "id": 6,
+        "type": "code", 
+        "title": "Reflection Usage",
+        "subtitle": "Using the Metadata",
+        "content": {
+          "code": "Person p{123, \"John Doe\", \"john@email.com\"};\n\n// Access fields via reflection\nfor_each_field(p, [](auto& field, const char* name) {\n    std::cout << name << \": \" << field << std::endl;\n});",
+          "language": "cpp",
+          "highlight": true
+        }
+      },
+      {
+        "id": 7,
+        "type": "multi-output",
+        "title": "Serialization Formats",
+        "subtitle": "Multiple Output Formats",
+        "content": {
+          "sections": [
+            {
+              "name": "XML",
+              "output": "<Person>\n  <id>123</id>\n  <name>John Doe</name>\n  <email>john@email.com</email>\n</Person>"
+            },
+            {
+              "name": "CSV", 
+              "output": "id,name,email\n123,\"John Doe\",\"john@email.com\""
+            },
+            {
+              "name": "JSON",
+              "output": "{\n  \"id\": 123,\n  \"name\": \"John Doe\",\n  \"email\": \"john@email.com\"\n}"
+            }
+          ]
+        }
+      },
+      {
+        "id": 8,
+        "type": "multi-output",
+        "title": "Database Operations", 
+        "subtitle": "Complete Database Operations",
+        "content": {
+            "sections": [
+            {
+              "name": "CREATE",
+              "output": "CREATE TABLE Person (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL,\n    email TEXT NOT NULL\n);"
+            },
+            {
+              "name": "INSERT",
+              "output": "INSERT INTO Person (id, name, email)\nVALUES (123, 'John Doe', 'john@email.com');"
+            },
+            {
+              "name": "SELECT",
+              "output": "SELECT id, name, email\nFROM Person\nWHERE id = 123;"
+            },
+            {
+              "name": "UPDATE", 
+              "output": "UPDATE Person SET\n    name = 'John Smith',\n    email = 'johnsmith@email.com'\nWHERE id = 123;"
+            },
+            {
+              "name": "DELETE",
+              "output": "DELETE FROM Person\nWHERE id = 123;"
+            }
+          ]
+        }
+      }
+    ],
+    "styling": {
+      "fonts": {
+        "title": "Arial Bold 26pt",
+        "subtitle": "Arial 18pt", 
+        "body": "Arial 13pt",
+        "code": "Courier New 11pt",
+        "terminal": "Consolas 10pt"
+      },
+      "colors": {
+        "primary": "#2c3e50",
+        "secondary": "#3498db",
+        "accent": "#e74c3c",
+        "background": "#fafafa",
+        "code_bg": "#f8f8f2",
+        "code_text": "#000000",
+        "terminal_bg": "#0c0c0c",
+        "terminal_text": "#ffffff",
+        "keyword": "#0033b3",
+        "type": "#0080ff",
+        "string": "#067d17",
+        "comment": "#8c8c8c",
+        "function": "#795548"
+      },
+      "layout": {
+        "page_size": "A4_landscape",
+        "margins": {
+          "top": 40,
+          "bottom": 40,
+          "left": 60, 
+          "right": 60
+        },
+        "spacing": {
+          "title_margin": 25,
+          "section_margin": 15,
+          "line_height": 1.4
+        }
+      }
+    }
+  }
+}
+

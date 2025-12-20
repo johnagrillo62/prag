@@ -1,0 +1,36 @@
+ruby_types:
+  Integer:
+    default: 0
+    type: Integer
+    convert: .to_i
+
+  Float:
+    default_value: 0.0
+    type: Float
+    convert: .to_f
+
+  Boolean:
+    default_value: FalseType
+    type: FalseType
+    convert:  string_to_bool
+    
+  DateTime:
+    default_value: DateTime.now
+    type: DateTime
+    convert: DateTime.parse
+    
+  Date:
+    default_value: DateTime.now
+    type: DateTime
+    convert: DateTime.parse
+
+  Currency:
+    default_value: "0.00"
+    type: BigDecimal
+    convert: BigDecimal.new
+
+  String:
+    default_value: ""
+    type: String
+    convert: ""
+

@@ -1,0 +1,67 @@
+namespace meta
+{
+namespace Row
+{
+inline const auto fields = std::make_tuple(
+    meta::Field<::Row, int64_t, &::Row::field1, meta::Prop::Serializable, nullptr, nullptr>(
+        "field1",
+        "int64_t",
+        {
+            {CSV_COLUMN, "field1"},
+            {SQL_COLUMN, "field1"},
+            {SRC_NAME, "field1"},
+        }),
+    meta::Field<::Row, int64_t, &::Row::field2, meta::Prop::Serializable, nullptr, nullptr>(
+        "field2",
+        "int64_t",
+        {
+            {CSV_COLUMN, "field2"},
+            {SQL_COLUMN, "field2"},
+            {SRC_NAME, "field2"},
+        }),
+    meta::Field<::Row, int64_t, &::Row::field3, meta::Prop::Serializable, nullptr, nullptr>(
+        "field3",
+        "int64_t",
+        {
+            {CSV_COLUMN, "field3"},
+            {SQL_COLUMN, "field3"},
+            {SRC_NAME, "field3"},
+        }),
+    meta::Field<::Row, std::string, &::Row::field4, meta::Prop::Serializable, nullptr, nullptr>(
+        "field4",
+        "std::string",
+        {
+            {CSV_COLUMN, "field4"},
+            {SQL_COLUMN, "field4"},
+            {SRC_NAME, "field4"},
+        }),
+    meta::Field<::Row, std::string, &::Row::field5, meta::Prop::Serializable, nullptr, nullptr>(
+        "field5",
+        "std::string",
+        {
+            {CSV_COLUMN, "field5"},
+            {SQL_COLUMN, "field5"},
+            {SRC_NAME, "field5"},
+        }),
+    meta::Field<::Row, std::string, &::Row::field6, meta::Prop::Serializable, nullptr, nullptr>(
+        "field6",
+        "std::string",
+        {
+            {CSV_COLUMN, "field6"},
+            {SQL_COLUMN, "field6"},
+            {SRC_NAME, "field6"},
+        }));
+inline constexpr auto tableName = "Row";
+inline constexpr auto query = "SELECT field1, field2, field3, field4, field5, field6 FROM Row";
+} // namespace Row
+} // namespace meta
+namespace meta
+{
+// Template specialization for type-based reflection lookup
+template <> struct MetaTuple<::Row>
+{
+    static inline const auto& fields = meta::Row::fields;
+    static constexpr auto tableName = meta::Row::tableName;
+    static constexpr auto query = meta::Row::query;
+};
+} // namespace meta

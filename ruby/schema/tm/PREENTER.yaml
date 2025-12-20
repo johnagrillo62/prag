@@ -1,0 +1,122 @@
+--- !ruby/object:Cls::Clss
+table_name: PREENTER
+class_name: PREENTER
+members:
+- !ruby/object:Cls::Member
+  column_name: THEATHLETE
+  member_name: theathlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: THEMEET
+  member_name: themeet
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PREENTERED
+  member_name: preentered
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION1
+  member_name: session1
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION2
+  member_name: session2
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION3
+  member_name: session3
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION4
+  member_name: session4
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION5
+  member_name: session5
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION6
+  member_name: session6
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION7
+  member_name: session7
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION8
+  member_name: session8
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION9
+  member_name: session9
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SESSION10
+  member_name: session10
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NOTATTENDING
+  member_name: notattending
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [PREENTER]
+  (
+  [THEATHLETE] Long Integer,
+  [THEMEET] Long Integer,
+  [PREENTERED] Boolean NOT NULL,
+  [SESSION1] Text (6),
+  [SESSION2] Text (6),
+  [SESSION3] Text (6),
+  [SESSION4] Text (6),
+  [SESSION5] Text (6),
+  [SESSION6] Text (6),
+  [SESSION7] Text (6),
+  [SESSION8] Text (6),
+  [SESSION9] Text (6),
+  [SESSION10] Text (6),
+  [NOTATTENDING] Boolean NOT NULL
+  );

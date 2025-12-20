@@ -1,0 +1,60 @@
+--- !ruby/object:Cls::Clss
+table_name: modt30times
+class_name: modt30times
+members:
+- !ruby/object:Cls::Member
+  column_name: athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: event_no
+  member_name: event no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: course_yls
+  member_name: course yls
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: event_dist
+  member_name: event dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: event_time
+  member_name: event time
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: shave_type
+  member_name: shave type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [modt30times]
+  (
+  [athlete] Long Integer,
+  [event_no] Integer,
+  [course_yls] Text (2),
+  [event_dist] Long Integer,
+  [event_time] Long Integer,
+  [shave_type] Text (2)
+  );

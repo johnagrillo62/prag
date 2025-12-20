@@ -1,0 +1,356 @@
+#!/usr/bin/env python3
+"""
+JSON Slideshow to PDF Converter
+Converts JSON slideshow data to a professional PDF presentation.
+"""
+
+import json
+import sys
+from reportlab.lib.pagesizes import A4, letter
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from reportlab.lib.colors import HexColor, black, white
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+from reportlab.platypus import Table, TableStyle, KeepTogether
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+class SlideshowPDFGenerator:
+    def __init__(self, json_data):
+        self.data = json_data
+        self.slideshow = json_data['slideshow']
+        self.styling = self.slideshow.get('styling', {})
+        self.story = []
+        self.setup_styles()
+    
+    def setup_styles(self):
+        """Setup PDF styles based on JSON styling configuration"""
+        self.styles = getSampleStyleSheet()
+        
+        # Get colors from JSON or use defaults
+        colors = self.styling.get('colors', {})
+        primary = colors.get('primary', '#2c3e50')
+        secondary = colors.get('secondary', '#3498db')
+        
+        # Title style
+        self.styles.add(ParagraphStyle(
+            name='CustomTitle',
+            parent=self.styles['Title'],
+            fontSize=24,
+            spaceAfter=20,
+            textColor=HexColor(primary),
+            alignment=TA_CENTER,
+            fontName='Helvetica-Bold'
+        ))
+        
+        # Subtitle style
+        self.styles.add(ParagraphStyle(
+            name='CustomSubtitle',
+            parent=self.styles['Normal'],
+            fontSize=16,
+            spaceAfter=15,
+            textColor=HexColor(secondary),
+            alignment=TA_CENTER,
+            fontName='Helvetica-Oblique'
+        ))
+        
+        # Code style
+        self.styles.add(ParagraphStyle(
+            name='Code',
+            parent=self.styles['Normal'],
+            fontSize=10,
+            fontName='Courier',
+            textColor=HexColor('#ecf0f1'),
+            backColor=HexColor('#2c3e50'),
+            leftIndent=10,
+            rightIndent=10,
+            spaceBefore=10,
+            spaceAfter=10,
+            borderPadding=10
+        ))
+        
+        # Output style
+        self.styles.add(ParagraphStyle(
+            name='Output',
+            parent=self.styles['Normal'],
+            fontSize=10,
+            fontName='Courier',
+            textColor=HexColor('#00ff00'),
+            backColor=HexColor('#1a1a1a'),
+            leftIndent=10,
+            rightIndent=10,
+            spaceBefore=10,
+            spaceAfter=10,
+            borderPadding=10
+        ))
+        
+        # Feature list style
+        self.styles.add(ParagraphStyle(
+            name='Feature',
+            parent=self.styles['Normal'],
+            fontSize=11,
+            spaceAfter=5,
+            leftIndent=20,
+            bulletIndent=10
+        ))
+    
+    def create_title_slide(self, slide):
+        """Create title/intro slide"""
+        title = slide.get('title', '')
+        subtitle = slide.get('subtitle', '')
+        content = slide.get('content', {})
+        
+        # Title
+        self.story.append(Paragraph(title, self.styles['CustomTitle']))
+        self.story.append(Spacer(1, 0.3*inch))
+        
+        # Subtitle
+        if subtitle:
+            self.story.append(Paragraph(subtitle, self.styles['CustomSubtitle']))
+            self.story.append(Spacer(1, 0.2*inch))
+        
+        # Description
+        if 'description' in content:
+            desc_style = ParagraphStyle(
+                'Description',
+                parent=self.styles['Normal'],
+                fontSize=12,
+                spaceAfter=15,
+                alignment=TA_CENTER
+            )
+            self.story.append(Paragraph(content['description'], desc_style))
+            self.story.append(Spacer(1, 0.2*inch))
+        
+        # Features list
+        if 'features' in content:
+            for feature in content['features']:
+                self.story.append(Paragraph(f"• {feature}", self.styles['Feature']))
+        
+        # Tagline
+        if 'tagline' in content:
+            tagline_style = ParagraphStyle(
+                'Tagline',
+                parent=self.styles['Normal'],
+                fontSize=14,
+                textColor=HexColor('#e74c3c'),
+                alignment=TA_CENTER,
+                fontName='Helvetica-BoldOblique',
+                spaceBefore=20
+            )
+            self.story.append(Spacer(1, 0.3*inch))
+            self.story.append(Paragraph(f'"{content["tagline"]}"', tagline_style))
+    
+    def create_code_slide(self, slide):
+        """Create code slide"""
+        title = slide.get('title', '')
+        subtitle = slide.get('subtitle', '')
+        content = slide.get('content', {})
+        
+        # Title and subtitle
+        self.story.append(Paragraph(title, self.styles['CustomTitle']))
+        if subtitle:
+            self.story.append(Paragraph(subtitle, self.styles['CustomSubtitle']))
+        
+        self.story.append(Spacer(1, 0.2*inch))
+        
+        # Code block
+        if 'code' in content:
+            code_text = content['code'].replace('\n', '<br/>')
+            self.story.append(Paragraph(code_text, self.styles['Code']))
+        
+        # Note
+        if 'note' in content:
+            note_style = ParagraphStyle(
+                'Note',
+                parent=self.styles['Normal'],
+                fontSize=10,
+                textColor=HexColor('#7f8c8d'),
+                alignment=TA_CENTER,
+                fontName='Helvetica-Oblique',
+                spaceBefore=15
+            )
+            self.story.append(Paragraph(f"Note: {content['note']}", note_style))
+    
+    def create_output_slide(self, slide):
+        """Create output slide"""
+        title = slide.get('title', '')
+        subtitle = slide.get('subtitle', '')
+        content = slide.get('content', {})
+        
+        # Title and subtitle
+        self.story.append(Paragraph(title, self.styles['CustomTitle']))
+        if subtitle:
+            self.story.append(Paragraph(subtitle, self.styles['CustomSubtitle']))
+        
+        self.story.append(Spacer(1, 0.2*inch))
+        
+        # Output block
+        if 'output' in content:
+            output_text = content['output'].replace('\n', '<br/>')
+            self.story.append(Paragraph(output_text, self.styles['Output']))
+        
+        # Description
+        if 'description' in content:
+            self.story.append(Spacer(1, 0.2*inch))
+            self.story.append(Paragraph(content['description'], self.styles['Normal']))
+        
+        # Note
+        if 'note' in content:
+            note_style = ParagraphStyle(
+                'Note',
+                parent=self.styles['Normal'],
+                fontSize=10,
+                textColor=HexColor('#7f8c8d'),
+                alignment=TA_CENTER,
+                fontName='Helvetica-Oblique',
+                spaceBefore=10
+            )
+            self.story.append(Paragraph(f"Note: {content['note']}", note_style))
+    
+    def create_multi_output_slide(self, slide):
+        """Create multi-output slide with sections"""
+        title = slide.get('title', '')
+        subtitle = slide.get('subtitle', '')
+        content = slide.get('content', {})
+        
+        # Title and subtitle
+        self.story.append(Paragraph(title, self.styles['CustomTitle']))
+        if subtitle:
+            self.story.append(Paragraph(subtitle, self.styles['CustomSubtitle']))
+        
+        self.story.append(Spacer(1, 0.2*inch))
+        
+        # Sections
+        if 'sections' in content:
+            for section in content['sections']:
+                # Section name
+                section_style = ParagraphStyle(
+                    'SectionName',
+                    parent=self.styles['Normal'],
+                    fontSize=14,
+                    textColor=HexColor('#2c3e50'),
+                    fontName='Helvetica-Bold',
+                    spaceBefore=15,
+                    spaceAfter=5
+                )
+                self.story.append(Paragraph(section['name'], section_style))
+                
+                # Section output
+                output_text = section['output'].replace('\n', '<br/>')
+                self.story.append(Paragraph(output_text, self.styles['Output']))
+    
+    def create_features_slide(self, slide):
+        """Create features slide with categories"""
+        title = slide.get('title', '')
+        subtitle = slide.get('subtitle', '')
+        content = slide.get('content', {})
+        
+        # Title and subtitle
+        self.story.append(Paragraph(title, self.styles['CustomTitle']))
+        if subtitle:
+            self.story.append(Paragraph(subtitle, self.styles['CustomSubtitle']))
+        
+        self.story.append(Spacer(1, 0.2*inch))
+        
+        # Categories
+        if 'categories' in content:
+            for category in content['categories']:
+                # Category header
+                icon = category.get('icon', '')
+                name = category.get('name', '')
+                header_style = ParagraphStyle(
+                    'CategoryHeader',
+                    parent=self.styles['Normal'],
+                    fontSize=16,
+                    textColor=HexColor('#2c3e50'),
+                    fontName='Helvetica-Bold',
+                    spaceBefore=20,
+                    spaceAfter=10
+                )
+                self.story.append(Paragraph(f"{icon} {name}", header_style))
+                
+                # Features
+                for feature in category.get('features', []):
+                    self.story.append(Paragraph(f"• {feature}", self.styles['Feature']))
+    
+    def generate_pdf(self, output_filename):
+        """Generate the PDF from JSON data"""
+        # Setup document
+        page_size = A4 if self.styling.get('layout', {}).get('page_size') == 'A4' else letter
+        doc = SimpleDocTemplate(
+            output_filename,
+            pagesize=page_size,
+            topMargin=0.8*inch,
+            bottomMargin=0.8*inch,
+            leftMargin=0.8*inch,
+            rightMargin=0.8*inch
+        )
+        
+        # Process each slide
+        slides = self.slideshow.get('slides', [])
+        for i, slide in enumerate(slides):
+            slide_type = slide.get('type', 'code')
+            
+            # Create slide based on type
+            if slide_type == 'intro':
+                self.create_title_slide(slide)
+            elif slide_type == 'features':
+                self.create_features_slide(slide)
+            elif slide_type == 'code':
+                self.create_code_slide(slide)
+            elif slide_type == 'output':
+                self.create_output_slide(slide)
+            elif slide_type == 'multi-output':
+                self.create_multi_output_slide(slide)
+            else:
+                # Default to code slide
+                self.create_code_slide(slide)
+            
+            # Add page break except for last slide
+            if i < len(slides) - 1:
+                self.story.append(PageBreak())
+        
+        # Build PDF
+        doc.build(self.story)
+        print(f"PDF generated successfully: {output_filename}")
+
+def main():
+    if len(sys.argv) != 3:
+        print("Usage: python json_to_pdf.py <input.json> <output.pdf>")
+        sys.exit(1)
+    
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+    
+    try:
+        # Load JSON data
+        with open(input_file, 'r', encoding='utf-8') as f:
+            json_data = json.load(f)
+        
+        # Generate PDF
+        generator = SlideshowPDFGenerator(json_data)
+        generator.generate_pdf(output_file)
+        
+    except FileNotFoundError:
+        print(f"Error: Input file '{input_file}' not found.")
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON in '{input_file}': {e}")
+    except Exception as e:
+        print(f"Error generating PDF: {e}")
+
+if __name__ == "__main__":
+    # Check dependencies
+    try:
+        import reportlab
+    except ImportError:
+        print("Error: reportlab library is required.")
+        print("Install it with: pip install reportlab")
+        sys.exit(1)
+    
+    main()
+
+# Example usage:
+# python json_to_pdf.py slideshow.json presentation.pdf
+

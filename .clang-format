@@ -1,0 +1,29 @@
+﻿BasedOnStyle: Microsoft
+
+BreakBeforeBraces: Allman
+AlignAfterOpenBracket: Align
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+BinPackArguments: false
+ColumnLimit: 100
+PointerAlignment: Left
+
+#AllowShortFunctionsOnASingleLine: InlineOnly
+AllowAllConstructorInitializersOnNextLine: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+#AllowShortIfStatementsOnASingleLine: true
+#AllowShortCaseLabelsOnASingleLine: true
+
+IncludeCategories:
+
+  - Regex: '<windows.h>'       # System headers
+    Priority: 1
+  - Regex: '^<.*>$'       # System headers
+    Priority: 2
+  - Regex: '^<cxx*.hpp>$'       # 3rd party
+    Priority: 3
+  - Regex: '^".*"$'       # Local headers
+    Priority: 4
+
+SortIncludes: true
+IncludeBlocks: Regroup

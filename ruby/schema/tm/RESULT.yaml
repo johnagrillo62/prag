@@ -1,0 +1,134 @@
+--- !ruby/object:Cls::Clss
+package: [hytek,tm]
+table_name: RESULT
+class_name: RESULT
+members:
+- !ruby/object:Cls::Member
+  column_name: MEET
+  member_name: meet
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ATHLETE
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: I_R
+  member_name: ind or rel
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TEAM
+  member_name: team
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SCORE
+  member_name: score
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EX
+  member_name: exhibit
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NT
+  member_name: no time
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 8
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RESULT
+  member_name: result
+  type: !ruby/object:Types::Integer
+    nullable: false
+    bits: 64
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: AGE
+  member_name: age
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DISTANCE
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: STROKE
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MTEVENT
+  member_name: mt event
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: POINTS
+  member_name: points
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PLACE
+  member_name: place
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: COURSE
+  member_name: course
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+uniques:
+- "[RESULT]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [RESULT]
+  (
+  [MEET] Long Integer,
+  [ATHLETE] Long Integer,
+  [I_R] Text (2),
+  [TEAM] Long Integer,
+  [SCORE] Long Integer,
+  [EX] Text (2),
+  [NT] Byte,
+  [RESULT] Long Integer,
+  [AGE] Integer,
+  [DISTANCE] Integer,
+  [STROKE] Integer,
+  [MTEVENT] Long Integer,
+  [POINTS] Integer,
+  [PLACE] Integer,
+  [COURSE] Text (2),
+  );

@@ -1,0 +1,35 @@
+--- !ruby/object:Cls::Clss
+table_name: JOURNAL
+class_name: JOURNAL
+members:
+- !ruby/object:Cls::Member
+  column_name: JDate
+  member_name: j date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Subject
+  member_name: subject
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Comment
+  member_name: comment
+  type: !ruby/object:Types::String
+    len: 510
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [JOURNAL]
+  (
+  [JDate] DateTime,
+  [Subject] Text (40),
+  [Comment] Text (510)
+  );

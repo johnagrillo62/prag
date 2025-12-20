@@ -1,0 +1,628 @@
+require "yaml"
+
+$:.unshift('.')
+
+
+require_relative "bhw"
+
+require 'csv'
+require 'date'
+
+def get_mdb_file(file)
+  return File.join(MDB_PATH,file)
+end
+
+def get_csv_file(file)
+  return File.join(CSV_PATH,file)
+end
+
+
+Years = 2005.upto(2024).reject{|y| y==2020 or y == 2021}
+
+##############################
+#
+# Need to have mdb-tools installed
+# 
+##############################
+
+
+#
+# schemas to yaml
+#
+
+TABLES =  %W(athlete result relay meet mtevent team entry)
+SCHEMAS = [ ["tm", TABLES]]
+
+
+def to_csv(txt, outf)
+  lines = txt.split("\n")
+  CSV.open(outf, 'w') do |csv|
+    lines.each do |line|
+      next if line.size == 0
+      if line =~ /-----------+/
+        next
+      end
+      csv << line.slice(1..-2).split('|').map(&:strip)  # `map(&:strip)` removes any extra spaces
+    end
+  end
+  %x{unix2dos -q #{outf}}
+end
+
+task :export do
+  mkdir_p("../mdb/fssl/csv")
+  # results has to do *
+  Years.each do |y|
+    puts y
+    TABLES.each do |table|
+      puts table
+      config = YAML.unsafe_load(File.read("schema/tm/#{table}.yaml"))
+      from = config.getSelectFields()
+      
+      select = "SELECT " + from + " FROM " + config.table_name
+      cmd =     "echo \"#{select}\"  |  mdb-sql -F -d ',' ../mdb/fssl/#{y}.mdb"
+      print cmd, "\n"
+      txt = %x{#{cmd}}
+      print " "+ table + "\n"
+      to_csv(txt, "../mdb/fssl/csv/#{y}.#{table}.csv")
+    end
+  end
+end
+
+
+task :schema do
+  SCHEMAS.each do |db_tables|
+    print db_tables, "\n"
+    next
+    #tables = %x{mdb-tables ../mdb/#{db}.mdb}.split(" ")
+    
+    #Dir.chdir("schema/#{db}") do
+    #  File.open("tables.yaml", "w") do |fh|
+    #    fh.puts(tables.to_yaml)
+    #  end
+    #end
+    
+    tables.each do |table|
+      schema = %x{mdb-schema ../mdb/#{db}.mdb -T #{table}}
+      c = MDB::readTable(db, schema)
+        
+      Dir.chdir("schema/#{db}") do
+        File.open( "#{table}.txt", "w") do |fh|
+          fh.puts(schema)
+        end
+      end
+    end
+  end
+end
+
+
+task :"schema-to-yaml" do
+
+  SCHEMAS.each do |(db, tables)|
+    Dir.chdir("schema/#{db}") do
+      print tables, "\n"
+      #tables = YAML.load(File.read("tables.yaml"))
+      tables.each do |table|
+        print "#{table}  "
+        schema = File.read( "#{table}.txt")
+        schema_filt = schema.split("\n").reject{|l|
+          l.start_with?("--")
+        }.reject{ |l|
+          l.strip.start_with?("#")
+        }.map{|l|
+          "#{l.squish}"
+        } * "\n"
+
+        
+        c = MDB::readTable(db, schema_filt)
+        print c.getSelectFields(), "\n"
+        out = table.downcase + ".yaml"
+        File.open(out, "w") do |f|
+          f.puts(c.to_yaml)
+        end
+      end
+      puts
+    end
+  end
+end
+
+def create_task(language, writer)
+  task language do
+    classes(->(yaml) { writer.write(yaml) })
+  end
+end
+
+[Go, Rust, FSharp, CSharp, Cpp, Ruby, Java, Python].each do |mod|
+  create_task mod.name.downcase.to_sym, mod
+end
+
+
+def classes(stab)
+  ["tm"].each do |db|
+    TABLES.each do |table|
+      schema = YAML.unsafe_load_file("schema/#{db}/#{table}.yaml")
+      schema_text = File.read("schema/#{db}/#{table}.txt").split("\n").reject do |l|
+        l.start_with?("-- ") or l.strip.start_with?("#")  
+      end* "\n"
+      
+      cname = table
+      lang,files = stab.call(schema)
+
+      print "schema/#{db}/#{table} -> "
+      
+      files.each do |(fileName, contents)|
+        File.open("src/#{lang}/#{fileName}", "w") do |fh|
+          print fh.path, " "
+          fh.puts contents
+        end
+      end
+      puts
+    end
+  end
+end
+
+
+
+
+
+class String
+  def to_date_mine
+    # Try parsing the string with the default format (YYYY-MM-DD)
+    begin
+      Date.parse(self)
+    rescue ArgumentError => e
+      # If parsing fails, raise a custom error message
+      raise "Invalid date format: #{self}"
+    end
+  end
+end
+
+
+def to_boolean(str)
+  truthy_values = ['true', '1', 'yes', 'y']
+  falsy_values = ['false', '0', 'no', 'n']
+  return true if truthy_values.include?(str.strip.downcase)
+  return false if falsy_values.include?(str.strip.downcase)
+  nil  # If it's an unrecognized value
+end
+
+
+
+
+task :"fix-teams" do
+  valid_teams = Set.new()
+  divisions = TomlRB.load_file(get_mdb_file("divisions.toml"))
+  divisions.each do |year, divs|
+    divs.each do |div, teams|
+      teams.each do |team|
+        valid_teams << team
+      end
+    end
+  end
+  print valid_teams.sort.to_a, "\n"
+  lookup = YAML.load(File.read(get_mdb_file("tcode-correct.yaml")))
+  
+  Years.each do |y|
+    
+    teams = Team.parse_csv_to_vec(get_csv_file("#{y}.Team.csv"))
+    print "#{y} #{teams.size()} teams -  ", teams.sort_by{|t| t.t_code}.map{|t| t.t_code} * " " + "\n"
+    teams_to = {}
+
+
+    athletes = {}
+    Athlete.parse_csv_to_vec(get_csv_file("#{y}.Athlete.csv")).each do |a|
+      athletes[a.athlete] = a
+    end
+
+    relays = {}
+    Relay.parse_csv_to_vec(get_csv_file("#{y}.Relay.csv")).each do |r|
+      relays[r.relay] = r
+    end
+
+
+    # Group team IDs by team code
+    code_to_ids = Hash.new { |h, k| h[k] = [] }
+    
+    teams.each do |t|
+      code_to_ids[t.t_code] << t.team
+    end
+    
+    # For each code, find the smallest ID (canonical ID)
+    canonical_ids = code_to_ids.transform_values(&:min)
+    
+    # Create a mapping from every old ID to its canonical (lowest) ID
+    id_replacements = {}
+
+    teams.each do |t|
+      canonical_id = canonical_ids[t.t_code]
+      if t.team != canonical_id
+        id_replacements[t.team] = canonical_id
+      end
+    end
+
+    teams.each do |t|
+      if lookup.include?(t.t_code)
+        teams_to[t.team] = lookup[t.t_code]
+      elsif valid_teams.include?(t.t_code)
+        teams_to[t.team] = t.t_code      
+      else
+        puts "ignore #{t.t_code}"
+      end
+    end
+
+    remove = []
+    teams_to.each do |team,t_code|
+      if id_replacements.include?(team)
+        remove << team
+      end
+    end
+
+    
+    File.open(get_csv_file("#{y}.Team.csv"), "w") do |fh|
+      fh.puts "Team,TCode"
+      teams_to.each do |team,code|
+        fh.puts( "#{team},#{code}")
+      end
+    end
+
+    # remove any results from skipped teams
+
+    results = Result.parse_csv_to_vec(get_csv_file("#{y}.Result.csv"))
+
+    config = YAML.unsafe_load(File.read("schema/tm/Result.yaml"))
+    
+    File.open(get_csv_file("#{y}.Result.csv"), "w") do |fh|
+      fh.puts config.getSelectFields()
+      results.each do |r|
+        remove = false
+        if teams_to.include?(r.team) == false
+          remove = true
+        end
+        if r.i_r == "I" and  athletes.include?(r.athlete) == false
+          remove = true
+        end
+        if r.i_r == "R" and  relays.include?(r.athlete) == false
+          remove = true
+        end
+
+        
+        if remove
+          next
+        end
+        
+        if id_replacements.include?(r.team)
+          r.team = id_replacements[r.team]
+        end
+        fh.puts r.to_csv
+      end
+    end
+  end
+end
+
+
+def team_results(year, meet)
+
+  teams = {}
+  Team.parse_csv_to_vec(get_csv_file("#{year}.Team.csv")).each do |t|
+    teams[t.team] = t
+  end
+
+  
+  results = Hash.new{|h,k|  h[k] = Set.new}
+  Result.parse_csv_to_vec(get_csv_file("#{year}.Result.csv")).each do |r|
+    if r.meet == meet
+      results[r.team] << r
+    end
+  end
+  
+  print results.map{|t,r|
+    teams[t].team.to_s + " " +
+      teams[t].t_code + " " + r.size.to_s}.join(",") 
+  puts
+
+  teams  
+end
+
+task :"fix-2005" do
+
+  #meet 5 5,2005-06-25T00:00:00+00:00,DateTime,2,MT AiRy at GladeTown Gators - RSST results=211
+  #missing glade towwn
+  #add from 3, GG 53
+  config = YAML.unsafe_load(File.read("schema/tm/Result.yaml"))
+  from = config.getSelectFields()
+  
+  results = Result.parse_csv_to_vec(get_csv_file("2005.Result.csv"))
+
+  add=[]
+  results.each do |r|
+    if r.meet == 3 and r.team == 53
+      add << r
+    end
+  end
+  
+  high = 0
+  File.open(get_csv_file("2005.Result.csv"), "w") do |fh|
+    fh.puts(from)
+    results.each do |r|
+      high = [high, r.result].max
+      fh.puts r.to_csv
+    end
+
+    add.each do |r|
+      high = high +1
+      r.meet = 5
+      r.result = high
+      fh.puts r.to_csv
+    end
+  end
+end
+
+task :"fix-2006" do
+
+  #meet 105 is missing GG
+
+  #add from Meet 99 Team 28
+  config = YAML.unsafe_load(File.read("schema/tm/Result.yaml"))
+  from = config.getSelectFields()
+  
+  results = Result.parse_csv_to_vec(get_csv_file("2006.Result.csv"))
+
+  add=[]
+  results.each do |r|
+    if r.meet == 99 and r.team == 28
+      add << r
+    end
+  end
+  
+  high = 0
+  File.open(get_csv_file("2006.Result.csv"), "w") do |fh|
+    fh.puts(from)
+    results.each do |r|
+      high = [high, r.result].max
+      fh.puts r.to_csv
+    end
+
+    add.each do |r|
+      high = high +1
+      r.meet = 105
+      r.result = high
+      fh.puts r.to_csv
+    end
+  end
+end
+
+
+
+
+
+task :"fix-2013" do
+
+  config = YAML.unsafe_load(File.read("schema/tm/Result.yaml"))
+  from = config.getSelectFields()
+  results = Result.parse_csv_to_vec(get_csv_file("2013.Result.csv"))
+  
+
+  teams = {}
+  Team.parse_csv_to_vec(get_csv_file("2013.Team.csv")).each do |t|
+    teams[t.t_code] = t
+  end
+
+  db = print teams["DB"].team
+
+  meets = Set.new()
+  results.each do |r|
+    meets << r.meet
+  end
+
+  print meets.to_a, "\n"
+  File.open(get_csv_file("2013.Result.csv"), "w") do |fh|
+    fh.puts(from)
+
+    results.each do |r|
+      
+      if r.meet == 23 and r.team == 11
+        puts r.team
+      else
+        fh.puts r.to_csv        
+      end
+    end
+    
+  end
+  
+  # find team 6 from meet 10
+
+
+end
+
+task :"fix-2011" do
+  #2011, Meet 10, remove team 6 and 11
+  #2011, Meet 16, add team 6 from meet 10
+
+  #2001, 34,2011-07-19T00:00:00+00:00
+  #      should be 2011-07-09
+
+  config = YAML.unsafe_load(File.read("schema/tm/Meet.yaml"))
+  from = config.getSelectFields()
+  meets = Meet.parse_csv_to_vec(get_csv_file("2011.Meet.csv"))
+
+  File.open(get_csv_file("2011.Meet.csv"),"w") do |fh|
+    fh.puts from
+    meets.each do |m|
+      if m.meet == 34
+        m.start = DateTime.new(2011,7,9)
+      end
+      fh.puts m.to_csv
+    end
+  end
+  
+  
+  
+  
+  config = YAML.unsafe_load(File.read("schema/tm/Result.yaml"))
+  from = config.getSelectFields()
+  results = Result.parse_csv_to_vec(get_csv_file("2011.Result.csv"))
+
+  # find team 6 from meet 10
+
+  team_6_add_to_meet_16 = []
+  results.each do |r|
+    if r.meet == 10 and r.team == 6
+      r.meet = 16
+      team_6_add_to_meet_16 << r
+    end
+  end
+
+  File.open(get_csv_file("2011.Result.csv"),"w") do |fh|
+    fh.puts from
+
+    
+    results.each do |r|
+      if r.meet == 10 and (r.team == 6 or r.team == 11)
+      else
+        fh.puts r.to_csv
+      end
+    end
+    
+    team_6_add_to_meet_16.each do |r|
+      fh.puts r.to_csv
+    end
+  end
+end
+
+task :fix => [:"fix-teams", :"fix-2005",:"fix-2006",:"fix-2011",:"fix-2013"]
+
+task :normalize do
+
+  Years.each do |y|
+
+    mtevents = MtEvent.parse_csv_to_vec(get_csv_file("#{y}.MtEvent.csv")).reduce({}){|h,m|
+      h[m.mt_event] = m
+      h
+    }
+
+    result = Result.parse_csv_to_vec(get_csv_file("#{y}.Result.csv"))
+    config = YAML.unsafe_load(File.read("schema/tm/Result.yaml"))
+    from = config.getSelectFields()
+    
+    puts y
+    File.open(get_csv_file("#{y}.Result.csv"), "w") do |fh|
+      fh.puts from      
+      result.each do |r|
+        r.mt_event = mtevents[r.mt_event].mt_ev
+        fh.puts r.to_csv
+      end
+    end
+  end
+end
+
+
+task :"meets" do
+
+  File.open(get_csv_file("mock.csv"), "w") do |year_fh|  
+    Years.each do |y|
+      print "\n\n----------",y,"-------", "\n"
+      meets = {}
+      Meet.parse_csv_to_vec(get_csv_file("#{y}.Meet.csv")).each do |m|
+        meets[m.meet] = m
+      end
+      
+      teams = {}
+      Team.parse_csv_to_vec(get_csv_file("#{y}.Team.csv")).each do |t|
+        teams[t.team] = t
+      end
+      
+      
+      results = Result.parse_csv_to_vec(get_csv_file("#{y}.Result.csv"))
+      
+      meet_results = Hash.new{|h,k| h[k] = []}
+      results.each do |r|
+        meet_results[r.meet] << r
+      end
+      
+    
+      first = meets.map{|id,m | m.start.cweek }.min
+      
+      teams_meet = Hash.new{|h,k| h[k] = Set.new}
+      teams_weeks = Hash.new{|h,k| h[k] = Set.new}    
+      
+      results.each do |r|
+        teams_meet[r.meet] << r.team
+        
+        teams_weeks[teams[r.team].t_code] << [meets[r.meet].start.cweek - first + 1, r.meet]
+      end
+      
+      team_to_tcode = {}
+      teams.each{|id, t|
+        team_to_tcode[t.team] = t.t_code
+      }
+      
+      print " ", teams.size, " ", team_to_tcode.values.sort, "\n"
+      
+      weeks = Hash.new{|h,k| h[k] = []}
+      meets.each do |id,m|
+        week = m.start.cweek-first+1
+        weeks[week] << [m.meet, m.start, m.m_name]
+      end
+      
+      weeks.sort.each do |(w,meets)|
+        #print w, " -- ", meets.size(), "\n"
+        
+        teams_this_week = Set.new
+        meets.each do |(meet,start,name)|
+          #print [meet, start, start.class, w, name].join(",")
+          
+          #print " - ", teams_meet[meet].map{|t|
+          #  teams_this_week << t
+          #  team_to_tcode[t]
+          #}.join(" ")
+          
+          #print " results="
+          #print meet_results[meet].size
+          
+          
+          # find all the teams in this week
+          #puts
+        end
+        #print teams_this_week.to_a.sort, "\n"
+      end
+      
+      File.open(get_csv_file("#{y}.mock.csv"), "w") do |fh|
+        puts fh.path
+        teams_weeks.keys.sort.each do |t|
+          print t, " ", teams_weeks[t].size, " " ,    teams_weeks[t].sort.map{|a | a }, "\n"
+          fh.print t, ",", teams_weeks[t].sort.map{|a | a[1]}.join(","), "\n"
+          year_fh.print y,",",t, ",", teams_weeks[t].sort.map{|a | a[1]}.join(","), "\n"          
+        end
+      end
+    end
+  end
+end
+
+
+years = Hash.new{|h,k| h[k] = Hash.new{|h,k| h[k] = {}}}
+
+task :"mock-to-go" do  
+  File.readlines(get_csv_file("mock.csv")).each do |l|
+    year,team,f1,f2,f3,f4,f5,f6 = l.split(",").map{|l| l.strip}
+    year,f1,f2,f3,f4,f5,f6 = [year,f1,f2,f3,f4,f5,f6].map{|a| a.to_i}
+    years[year][team] = [f1,f2,f3,f4,f5,f6]
+  end
+  
+  puts "var mock = map[int]map[string][]int{"
+  years.each do |year, teams|
+    print "  #{year}: {\n"
+    teams.each do |t, meets|
+
+      print "  \"#{t}\": { "      
+      print meets.map{|a| a}.join(", ")
+      print "  },\n"
+          
+    end
+    print "  },\n"
+    
+    puts
+  end
+  puts "}"
+end
+
+    
+

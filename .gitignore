@@ -1,0 +1,13 @@
+.vs
+x64
+*~
+\#*
+out
+.#*
+.idea/
+__pycache__/
+*.o
+src/python/tm/__pycache__
+d/demo
+d/liblang.a
+*.a

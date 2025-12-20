@@ -1,0 +1,124 @@
+--- !ruby/object:Cls::Clss
+table_name: CheckList
+class_name: CheckList
+members:
+- !ruby/object:Cls::Member
+  column_name: meet_setup
+  member_name: meet setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: athlete_pref
+  member_name: athlete pref
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: seeding_pref
+  member_name: seeding pref
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: report_pref
+  member_name: report pref
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: printer_setup
+  member_name: printer setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entry_pref
+  member_name: entry pref
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scoring_setup
+  member_name: scoring setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entryfee_surcharges
+  member_name: entryfee surcharges
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: divreg_names
+  member_name: divreg names
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dir_pref
+  member_name: dir pref
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: event_setup
+  member_name: event setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: records_setup
+  member_name: records setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: timestd_setup
+  member_name: timestd setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: timing_setup
+  member_name: timing setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: scbd_setup
+  member_name: scbd setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: session_setup
+  member_name: session setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [CheckList]
+  (
+  [meet_setup] Boolean NOT NULL,
+  [athlete_pref] Boolean NOT NULL,
+  [seeding_pref] Boolean NOT NULL,
+  [report_pref] Boolean NOT NULL,
+  [printer_setup] Boolean NOT NULL,
+  [entry_pref] Boolean NOT NULL,
+  [scoring_setup] Boolean NOT NULL,
+  [entryfee_surcharges] Boolean NOT NULL,
+  [divreg_names] Boolean NOT NULL,
+  [dir_pref] Boolean NOT NULL,
+  [event_setup] Boolean NOT NULL,
+  [records_setup] Boolean NOT NULL,
+  [timestd_setup] Boolean NOT NULL,
+  [timing_setup] Boolean NOT NULL,
+  [scbd_setup] Boolean NOT NULL,
+  [session_setup] Boolean NOT NULL
+  );

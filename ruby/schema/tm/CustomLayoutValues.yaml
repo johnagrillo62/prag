@@ -1,0 +1,67 @@
+--- !ruby/object:Cls::Clss
+table_name: CustomLayoutValues
+class_name: CustomLayoutValues
+members:
+- !ruby/object:Cls::Member
+  column_name: LayoutID
+  member_name: layout i d
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Line
+  member_name: line
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sequence
+  member_name: sequence
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FieldName
+  member_name: field name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FieldSize
+  member_name: field size
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Abbr
+  member_name: abbr
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RJustified
+  member_name: r justified
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [CustomLayoutValues]
+  (
+  [LayoutID] Long Integer,
+  [Line] Byte,
+  [Sequence] Byte,
+  [FieldName] Text (40),
+  [FieldSize] Byte,
+  [Abbr] Text (30),
+  [RJustified] Boolean NOT NULL
+  );

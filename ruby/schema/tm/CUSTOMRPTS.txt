@@ -1,0 +1,67 @@
+-- ----------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2011 Brian Bruns and others.
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-- ----------------------------------------------------------
+
+-- That file uses encoding UTF-8
+
+CREATE TABLE [CUSTOMRPTS]
+ (
+	[Name]			Text (60), 
+	[Type]			Integer, 
+	[Team]			Long Integer, 
+	[Group]			Text (6), 
+	[SubGr]			Text (6), 
+	[Class]			Text (6), 
+	[SortBy]			Integer, 
+	[Sex]			Integer, 
+	[Prelim]			Integer, 
+	[Splits]			Integer, 
+	[Stroke]			Integer, 
+	[Distance]			Integer, 
+	[I_R]			Integer, 
+	[LSC]			Text (6), 
+	[LoAge]			Integer, 
+	[HiAge]			Integer, 
+	[chkIncRelayLO]			Boolean NOT NULL, 
+	[chkStandards]			Boolean NOT NULL, 
+	[chkInactive]			Boolean NOT NULL, 
+	[chkSince]			Boolean NOT NULL, 
+	[SinceDate]			DateTime, 
+	[chkImprove]			Integer, 
+	[chkUntil]			Boolean NOT NULL, 
+	[UntilDate]			DateTime, 
+	[chkRecords]			Boolean NOT NULL, 
+	[RECORD]			Long Integer, 
+	[chkNamesOnly]			Boolean NOT NULL, 
+	[chkBlankLine]			Boolean NOT NULL, 
+	[Grouping]			Integer, 
+	[AgeGroups]			Integer, 
+	[MeetType]			Text (6), 
+	[TopN]			Integer, 
+	[StanAtLeast]			Text (8), 
+	[Course]			Integer, 
+	[chkChronological]			Boolean NOT NULL, 
+	[Orientation]			Integer, 
+	[chkActual]			Boolean NOT NULL, 
+	[chkNoTimes]			Boolean NOT NULL, 
+	[chkOnlyElig]			Boolean NOT NULL, 
+	[chkBest]			Integer, 
+	[RelaySwimmers]			Integer, 
+	[StdName]			Text (16), 
+	[Designator]			Text (8), 
+	[chkStrokeRate]			Boolean NOT NULL, 
+	[LabelIndex]			Integer, 
+	[chkNISCA]			Boolean NOT NULL, 
+	[chkNewStd]			Boolean NOT NULL, 
+	[ColIndex]			Integer, 
+	[chkGoals]			Boolean NOT NULL, 
+	[chkIncRelayLegs]			Boolean NOT NULL, 
+	[chkShowRegistration]			Boolean NOT NULL, 
+	[chkNT]			Boolean NOT NULL
+);
+
+

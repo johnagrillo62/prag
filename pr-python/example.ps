@@ -1,0 +1,35 @@
+"""
+Example Python classes for AST parsing demo.
+"""
+
+from typing import Optional, List, Tuple, Dict, Set
+
+class Athlete:
+    athlete: int
+    team1: Optional[int]
+    scores: List[int]
+    records: Optional[List[Tuple[int, str]]]
+
+class Team:
+    name: str
+    members: List[int]
+    founded: Optional[int]
+    metadata: Dict[str, str]
+
+class Event:
+    event_id: int
+    name: str
+    participants: List[int]
+    results: Optional[Dict[int, float]]
+    tags: Set[str]
+
+class Result:
+    id: int
+    athlete_id: int
+    team_id: Optional[int]
+    score: float
+    timestamp: str
+    notes: Optional[str]
+
+
+    

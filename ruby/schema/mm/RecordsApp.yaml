@@ -1,0 +1,180 @@
+--- !ruby/object:Cls::Clss
+table_name: RecordsApp
+class_name: RecordsApp
+members:
+- !ruby/object:Cls::Member
+  column_name: timer_type
+  member_name: timer type
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_title
+  member_name: app title
+  type: !ruby/object:Types::String
+    len: 180
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_date
+  member_name: app date
+  type: !ruby/object:Types::String
+    len: 22
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_name
+  member_name: sendto name
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_address1
+  member_name: sendto address1
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_address2
+  member_name: sendto address2
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_city
+  member_name: sendto city
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_state
+  member_name: sendto state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_zip
+  member_name: sendto zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_email
+  member_name: sendto email
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: record_name
+  member_name: record name
+  type: !ruby/object:Types::String
+    len: 24
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_topnote1
+  member_name: app topnote1
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_bottomnote1
+  member_name: app bottomnote1
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_topnote2
+  member_name: app topnote2
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_bottomnote2
+  member_name: app bottomnote2
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_topnote3
+  member_name: app topnote3
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_bottomnote3
+  member_name: app bottomnote3
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_topnote4
+  member_name: app topnote4
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: app_bottomnote4
+  member_name: app bottomnote4
+  type: !ruby/object:Types::String
+    len: 220
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: referree_name
+  member_name: referree name
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: adminref_name
+  member_name: adminref name
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [RecordsApp]
+  (
+  [timer_type] Integer,
+  [app_title] Text (180),
+  [app_date] Text (22),
+  [sendto_name] Text (80),
+  [sendto_address1] Text (80),
+  [sendto_address2] Text (80),
+  [sendto_city] Text (40),
+  [sendto_state] Text (6),
+  [sendto_zip] Text (20),
+  [sendto_email] Text (100),
+  [record_name] Text (24),
+  [app_topnote1] Text (220),
+  [app_bottomnote1] Text (220),
+  [app_topnote2] Text (220),
+  [app_bottomnote2] Text (220),
+  [app_topnote3] Text (220),
+  [app_bottomnote3] Text (220),
+  [app_topnote4] Text (220),
+  [app_bottomnote4] Text (220),
+  [referree_name] Text (80),
+  [adminref_name] Text (80)
+  );

@@ -1,0 +1,708 @@
+--- !ruby/object:Cls::Clss
+table_name: OPTIONS
+class_name: OPTIONS
+members:
+- !ruby/object:Cls::Member
+  column_name: State
+  member_name: state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Citizen
+  member_name: citizen
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LSC
+  member_name: lsc
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Standard
+  member_name: standard
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Record
+  member_name: record
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Course
+  member_name: course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TeamType
+  member_name: team type
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegType
+  member_name: reg type
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Line1
+  member_name: line 1
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Line2
+  member_name: line 2
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RptUCase
+  member_name: rpt u case
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SysAgeUp
+  member_name: sys age up
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtAgeUp
+  member_name: mt age up
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtDate
+  member_name: mt date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavSex
+  member_name: fav sex
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoAge
+  member_name: no age
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MinAge
+  member_name: min age
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavTeam
+  member_name: fav team
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FavLSC
+  member_name: fav l s c
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CvtFactor
+  member_name: cvt factor
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CvtType
+  member_name: cvt type
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cvt500
+  member_name: cvt 5 0 0
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cvt1650
+  member_name: cvt 1 6 5 0
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FreeTurn
+  member_name: free turn
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: BackTurn
+  member_name: back turn
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: BreastTurn
+  member_name: breast turn
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FlyTurn
+  member_name: fly turn
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: IMTurn
+  member_name: i m turn
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Straight
+  member_name: straight
+  type: !ruby/object:Types::Float
+    type: :double
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Y2L
+  member_name: y2l
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Language
+  member_name: language
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LabelOption
+  member_name: label option
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowMI
+  member_name: show m i
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowAges
+  member_name: show ages
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowBirth
+  member_name: show birth
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowClass
+  member_name: show class
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowFirstFirst
+  member_name: show first first
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Favorite
+  member_name: favorite
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ToScreen
+  member_name: to screen
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NumCopies
+  member_name: num copies
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PaperSize
+  member_name: paper size
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UseLeadOff
+  member_name: use lead off
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UseStrokeRates
+  member_name: use stroke rates
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt1
+  member_name: cus prompt 1
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt2
+  member_name: cus prompt 2
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt3
+  member_name: cus prompt 3
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegDate
+  member_name: reg date
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ShowOnlyFast
+  member_name: show only fast
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LabelType
+  member_name: label type
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ImportDir
+  member_name: import dir
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ExportDir
+  member_name: export dir
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: BackupDir
+  member_name: backup dir
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ReportDir
+  member_name: report dir
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LSCFee
+  member_name: l s c fee
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegAddr
+  member_name: reg addr
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegCity
+  member_name: reg city
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegState
+  member_name: reg state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegZIP
+  member_name: reg z i p
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegMailTo
+  member_name: reg mail to
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RegPayTo
+  member_name: reg pay to
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PalmImportDir
+  member_name: palm import dir
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LSCSeasonalFee
+  member_name: l s c seasonal fee
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: BackupCheck
+  member_name: backup check
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UpdateCheck
+  member_name: update check
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LastBackup
+  member_name: last backup
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LastSplitExtract
+  member_name: last split extract
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AgeupToCurrent
+  member_name: ageup to current
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DbVersion
+  member_name: db version
+  type: !ruby/object:Types::String
+    len: 10
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DefaultDir
+  member_name: default dir
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: RelayOrder
+  member_name: relay order
+  type: !ruby/object:Types::String
+    len: 14
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LastDir
+  member_name: last dir
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SplitPref
+  member_name: split pref
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: rptLastFirst
+  member_name: rpt last first
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: rptShowMI
+  member_name: rpt show m i
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: rptFILast
+  member_name: rpt f i last
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: rptFirstLI
+  member_name: rpt first l i
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: rptShowPref
+  member_name: rpt show pref
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OfficialLine1
+  member_name: official line 1
+  type: !ruby/object:Types::String
+    len: 216
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OfficialLine2
+  member_name: official line 2
+  type: !ruby/object:Types::String
+    len: 216
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OfficialLine3
+  member_name: official line 3
+  type: !ruby/object:Types::String
+    len: 216
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: UseProvince
+  member_name: use province
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DefCity
+  member_name: def city
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt4
+  member_name: cus prompt 4
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt5
+  member_name: cus prompt 5
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt6
+  member_name: cus prompt 6
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt7
+  member_name: cus prompt 7
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: CusPrompt8
+  member_name: cus prompt 8
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OnlineRegistrationType
+  member_name: online registration type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DefZip
+  member_name: def zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: DontShowMeetSharing
+  member_name: dont show meet sharing
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [OPTIONS]
+  (
+  [State] Text (6),
+  [Citizen] Text (6),
+  [LSC] Text (6),
+  [Standard] Text (16),
+  [Record] Text (16),
+  [Course] Text (2),
+  [TeamType] Text (6),
+  [RegType] Text (8),
+  [Line1] Text (80),
+  [Line2] Text (80),
+  [RptUCase] Boolean NOT NULL,
+  [SysAgeUp] DateTime,
+  [MtAgeUp] Integer,
+  [MtDate] DateTime,
+  [FavSex] Byte,
+  [NoAge] Byte,
+  [MinAge] Byte,
+  [FavTeam] Text (10),
+  [FavLSC] Text (6),
+  [CvtFactor] Double,
+  [CvtType] Byte,
+  [Cvt500] Double,
+  [Cvt1650] Double,
+  [FreeTurn] Double,
+  [BackTurn] Double,
+  [BreastTurn] Double,
+  [FlyTurn] Double,
+  [IMTurn] Double,
+  [Straight] Double,
+  [Y2L] Boolean NOT NULL,
+  [Language] Text (16),
+  [LabelOption] Byte,
+  [ShowMI] Boolean NOT NULL,
+  [ShowAges] Boolean NOT NULL,
+  [ShowBirth] Boolean NOT NULL,
+  [ShowClass] Boolean NOT NULL,
+  [ShowFirstFirst] Boolean NOT NULL,
+  [Favorite] Text (16),
+  [ToScreen] Boolean NOT NULL,
+  [NumCopies] Byte,
+  [PaperSize] Byte,
+  [UseLeadOff] Boolean NOT NULL,
+  [UseStrokeRates] Boolean NOT NULL,
+  [CusPrompt1] Text (40),
+  [CusPrompt2] Text (40),
+  [CusPrompt3] Text (40),
+  [RegDate] DateTime,
+  [ShowOnlyFast] Boolean NOT NULL,
+  [LabelType] Byte,
+  [ImportDir] Text (240),
+  [ExportDir] Text (240),
+  [BackupDir] Text (240),
+  [ReportDir] Text (240),
+  [LSCFee] Single,
+  [RegAddr] Text (100),
+  [RegCity] Text (40),
+  [RegState] Text (6),
+  [RegZIP] Text (20),
+  [RegMailTo] Text (80),
+  [RegPayTo] Text (80),
+  [PalmImportDir] Text (240),
+  [LSCSeasonalFee] Single,
+  [BackupCheck] Byte,
+  [UpdateCheck] Byte,
+  [LastBackup] DateTime,
+  [LastSplitExtract] DateTime,
+  [AgeupToCurrent] Boolean NOT NULL,
+  [DbVersion] Text (10),
+  [DefaultDir] Text (240),
+  [RelayOrder] Text (14),
+  [LastDir] Text (240),
+  [SplitPref] Integer,
+  [rptLastFirst] Boolean NOT NULL,
+  [rptShowMI] Boolean NOT NULL,
+  [rptFILast] Boolean NOT NULL,
+  [rptFirstLI] Boolean NOT NULL,
+  [rptShowPref] Boolean NOT NULL,
+  [OfficialLine1] Text (216),
+  [OfficialLine2] Text (216),
+  [OfficialLine3] Text (216),
+  [UseProvince] Boolean NOT NULL,
+  [DefCity] Text (60),
+  [CusPrompt4] Text (40),
+  [CusPrompt5] Text (40),
+  [CusPrompt6] Text (40),
+  [CusPrompt7] Text (40),
+  [CusPrompt8] Text (40),
+  [OnlineRegistrationType] Text (2),
+  [DefZip] Text (20),
+  [DontShowMeetSharing] Boolean NOT NULL
+  );

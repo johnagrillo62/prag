@@ -1,0 +1,180 @@
+--- !ruby/object:Cls::Clss
+table_name: Masters
+class_name: Masters
+members:
+- !ruby/object:Cls::Member
+  column_name: timer_type
+  member_name: timer type
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pool_name
+  member_name: pool name
+  type: !ruby/object:Types::String
+    len: 90
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pool_city
+  member_name: pool city
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pool_state
+  member_name: pool state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pool_lmsc
+  member_name: pool lmsc
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Meet_type
+  member_name: meet type
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ref_name
+  member_name: ref name
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sub_name
+  member_name: sub name
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sub_address
+  member_name: sub address
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sub_city
+  member_name: sub city
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sub_state
+  member_name: sub state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sub_zip
+  member_name: sub zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sub_phone
+  member_name: sub phone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sub_email
+  member_name: sub email
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_name
+  member_name: sendto name
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_address
+  member_name: sendto address
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_city
+  member_name: sendto city
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_state
+  member_name: sendto state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_zip
+  member_name: sendto zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sendto_email
+  member_name: sendto email
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: record_name
+  member_name: record name
+  type: !ruby/object:Types::String
+    len: 24
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Masters]
+  (
+  [timer_type] Integer,
+  [pool_name] Text (90),
+  [pool_city] Text (40),
+  [pool_state] Text (6),
+  [pool_lmsc] Text (6),
+  [Meet_type] Integer,
+  [ref_name] Text (80),
+  [sub_name] Text (80),
+  [sub_address] Text (80),
+  [sub_city] Text (40),
+  [sub_state] Text (6),
+  [sub_zip] Text (20),
+  [sub_phone] Text (40),
+  [sub_email] Text (100),
+  [sendto_name] Text (80),
+  [sendto_address] Text (80),
+  [sendto_city] Text (40),
+  [sendto_state] Text (6),
+  [sendto_zip] Text (20),
+  [sendto_email] Text (100),
+  [record_name] Text (24)
+  );

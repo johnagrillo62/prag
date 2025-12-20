@@ -1,0 +1,17 @@
+let getValue (index: int) (reader: OdbcDataReader) =
+        if reader.IsDBNull(index) then None
+        else Some(reader.GetValue(index))
+
+    let objs =
+        seq {
+            while reader.Read() do
+                yield Code(
+                    getValue 0 reader |> Option.map string,
+                    getValue 1 reader |> Option.map string,
+                    reader.GetInt32(2),
+                    getValue 3 reader |> Option.map byte
+                )
+        } |> Seq.toList
+
+    objs
+

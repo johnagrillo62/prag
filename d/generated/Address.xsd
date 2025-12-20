@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Complex type definition for address -->
+<xs:element name="address">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="zipcode" type="xs:string"/>
+            <xs:element name="country" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<!-- Example address instance -->
+<address>
+    <street>example_value</street>
+    <city>example_value</city>
+    <zipcode>example_value</zipcode>
+    <country>example_value</country>
+</address>
+
+</xs:schema>

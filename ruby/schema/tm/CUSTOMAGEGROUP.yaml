@@ -1,0 +1,44 @@
+--- !ruby/object:Cls::Clss
+table_name: CUSTOMAGEGROUP
+class_name: CUSTOMAGEGROUP
+members:
+- !ruby/object:Cls::Member
+  column_name: Lo_Hi
+  member_name: lo hi
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EventNum
+  member_name: event num
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Stroke
+  member_name: stroke
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Distance
+  member_name: distance
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [CUSTOMAGEGROUP]
+  (
+  [Lo_Hi] Integer,
+  [EventNum] Integer,
+  [Stroke] Integer,
+  [Distance] Integer
+  );

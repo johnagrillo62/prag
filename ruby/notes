@@ -1,0 +1,145 @@
+
+
+RUST
+
+ #[serde(default)] REACTION : Option<String>,
+    #[serde(default)] DQCODE : Option<String>,
+    #[serde(default)] DQDESCRIPT : Option<String>,
+    #[serde(default)] d_q_c_o_d_e_secondary : Option<String>,
+    #[serde(default)] d_q_d_e_s_c_r_i_p_t_secondary : Option<String>
+
+
+let queryDatabase (query: string) =
+    use connection = new OdbcConnection(connectionString)
+    connection.Open()
+    
+    //printfn "Teams"
+    //let teams = TmTeam.Get(connection)
+
+    //List.iter (fun (team: TmTeam) ->
+      //match team.TCode with
+      //| Some cshort -> printfn "Cshort: %s" cshort
+      //| None -> printfn "Cshort is not available") teams
+
+
+    // show meets
+
+    let meets = TmMeet.Get(connection)
+    List.iter (fun (meet: TmMeet) ->  
+      let mname = match meet.MName with
+                  | Some mname -> mname
+                  | None -> " x "
+                 
+      let start = match meet.Start with
+                  | Some start -> start.ToShortDateString()
+                  | None -> " x "
+                  
+      printfn "%s %s" start mname            
+     ) meets
+
+    let results = TmResult.Get(connection)
+
+    //for KeyValue(id, athlete) in TmAthlete.GetByAthlete(connection) do
+    //  printfn "ID:%d, Athlete: %A %A" id athlete.First athlete.Last
+
+    let teamsByAthletes = groupAthletesByTeam connection
+
+    // Print the grouped athletes by team
+    teamsByAthletes
+    |> Map.iter (fun team athletes ->
+        printfn "Team: %A %A" team athletes.Length
+        //athletes |> List.iter (fun athlete ->
+        //    let last =
+        //        match athlete.Last with
+        //        | Some last -> last
+        //        | None -> "No ID"
+
+        //    let age =
+        //        match athlete.Age with
+        //        | Some age -> age
+        //        | None -> (int16)0
+
+
+        //    printfn "  - ID: %A, Name: %s, Age: %d" athlete.Athlete last age
+        //)
+      )
+
+    // team event swims
+
+    let query = """
+         SELECT 
+            result.team,result.athlete,mtevent.mtev,result.result
+         FROM 
+            result 
+         INNER JOIN 
+            mtevent ON result.mtevent = mtevent.mtevent
+     """
+
+
+         ///INNER JOIN
+            ///mtevente ON result.mtevent = mtevente.mtevent
+    ///"""
+
+    use command = new OdbcCommand(query, connection)
+    use reader = command.ExecuteReader()
+    
+    ///while reader.Read() do
+    ///    // Assuming 'team' and 'athlete' are the columns you want to read
+    ///    let team = reader.GetValue 0
+    ///    let athlete = reader. GetValue 1
+    ///    let mtevent = reader.GetInt32 2
+    ///    let result = reader.GetInt32 3
+
+
+     //   printfn "Team: %A, Athlete: %A: Event: %d   : %d" team athlete mtevent result
+     ///   //printfn "Team: %A, Athlete: %A" team athlete
+
+
+    let query2 = """
+
+    SELECT 
+    r.ATHLETE, 
+    r.MTEVENT, 
+    r.COURSE,
+    CLng(ROUND(r.FASTEST_SCORE, 0)) AS FastestScore
+FROM 
+    (
+        SELECT 
+            ATHLETE, 
+            MTEVENT, 
+            MIN(IIF(I_R = 'Y', SCORE * 1.11, SCORE)) AS FASTEST_SCORE
+        FROM 
+            RESULT
+        WHERE 
+            SCORE > 0 AND 
+            (DQCODE = '' OR DQCODE = '     ')
+        GROUP BY 
+            ATHLETE, 
+            MTEVENT
+    ) AS fastest
+JOIN RESULT r ON 
+    fastest.ATHLETE = r.ATHLETE AND 
+    fastest.MTEVENT = r.MTEVENT AND 
+    IIF(r.I_R = 'Y', r.SCORE * 1.11, r.SCORE) = fastest.FASTEST_SCORE
+ORDER BY 
+    r.ATHLETE, 
+    r.MTEVENT;
+"""
+
+    use command = new OdbcCommand(query2, connection)
+    use reader = command.ExecuteReader()
+    
+    while reader.Read() do
+        
+        let team = reader.GetValue 0
+        let athlete = reader.GetValue 1
+        let mtevent = reader.GetInt32 2
+        let score = reader.GetValue 3
+        let course = reader.GetValue 4
+        let time = reader.GetValue 5
+
+
+        printfn "T: %A, E: %A: A: %A s:%A c: %A : %A" team mtevent athlete score course time
+        
+
+

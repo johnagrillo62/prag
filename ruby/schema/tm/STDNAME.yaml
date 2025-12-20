@@ -1,0 +1,228 @@
+--- !ruby/object:Cls::Clss
+table_name: STDNAME
+class_name: STDNAME
+members:
+- !ruby/object:Cls::Member
+  column_name: StdFile
+  member_name: std file
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Year
+  member_name: year
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Descript
+  member_name: descript
+  type: !ruby/object:Types::String
+    len: 50
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D1
+  member_name: d1
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D2
+  member_name: d2
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D3
+  member_name: d3
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D4
+  member_name: d4
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D5
+  member_name: d5
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D6
+  member_name: d6
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D7
+  member_name: d7
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D8
+  member_name: d8
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D9
+  member_name: d9
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D10
+  member_name: d10
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D11
+  member_name: d11
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D12
+  member_name: d12
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D1Des
+  member_name: d 1 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D2Des
+  member_name: d 2 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D3Des
+  member_name: d 3 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D4Des
+  member_name: d 4 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D5Des
+  member_name: d 5 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D6Des
+  member_name: d 6 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D7Des
+  member_name: d 7 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D8Des
+  member_name: d 8 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D9Des
+  member_name: d 9 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D10Des
+  member_name: d 1 0 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D11Des
+  member_name: d 1 1 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: D12Des
+  member_name: d 1 2 des
+  type: !ruby/object:Types::String
+    len: 30
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [STDNAME]
+  (
+  [StdFile] Text (16),
+  [Year] Text (8),
+  [Descript] Text (50),
+  [D1] Text (8),
+  [D2] Text (8),
+  [D3] Text (8),
+  [D4] Text (8),
+  [D5] Text (8),
+  [D6] Text (8),
+  [D7] Text (8),
+  [D8] Text (8),
+  [D9] Text (8),
+  [D10] Text (8),
+  [D11] Text (8),
+  [D12] Text (8),
+  [D1Des] Text (30),
+  [D2Des] Text (30),
+  [D3Des] Text (30),
+  [D4Des] Text (30),
+  [D5Des] Text (30),
+  [D6Des] Text (30),
+  [D7Des] Text (30),
+  [D8Des] Text (30),
+  [D9Des] Text (30),
+  [D10Des] Text (30),
+  [D11Des] Text (30),
+  [D12Des] Text (30)
+  );

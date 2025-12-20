@@ -1,0 +1,92 @@
+--- !ruby/object:Cls::Clss
+table_name: TimeStd
+class_name: TimeStd
+members:
+- !ruby/object:Cls::Member
+  column_name: tag_ptr
+  member_name: tag ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_gender
+  member_name: tag gender
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_indrel
+  member_name: tag indrel
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_dist
+  member_name: tag dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_stroke
+  member_name: tag stroke
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: low_age
+  member_name: low age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: high_Age
+  member_name: high age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_time
+  member_name: tag time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: tag_course
+  member_name: tag course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: div_abbr
+  member_name: div abbr
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [TimeStd]
+  (
+  [tag_ptr] Long Integer,
+  [tag_gender] Text (2),
+  [tag_indrel] Text (2),
+  [tag_dist] Long Integer,
+  [tag_stroke] Text (2),
+  [low_age] Integer,
+  [high_Age] Integer,
+  [tag_time] Single,
+  [tag_course] Text (2),
+  [div_abbr] Text (20)
+  );

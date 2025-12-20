@@ -1,0 +1,19 @@
+{
+  "type": "Module",
+  "srcLanguage": "cpp",
+  "items": [
+    {
+      "type": "Struct",
+      "name": "ContactInfo",
+      "fields": [
+        {
+          "name": "contact",
+          "type": {
+            "kind": "primitive",
+            "name": "i32"
+          }
+        }
+      ]
+    }
+  ]
+}

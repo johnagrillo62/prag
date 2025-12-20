@@ -1,0 +1,43 @@
+-- ----------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2011 Brian Bruns and others.
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-- ----------------------------------------------------------
+
+-- That file uses encoding UTF-8
+
+CREATE TABLE [HYTEKAGEGROUP]
+ (
+	[AgType]			Integer, 
+	[Lo_Hi]			Integer, 
+	[Course]			Text (2), 
+	[F125]			Boolean NOT NULL, 
+	[F150]			Boolean NOT NULL, 
+	[F1100]			Boolean NOT NULL, 
+	[F1200]			Boolean NOT NULL, 
+	[F1400]			Boolean NOT NULL, 
+	[F1500]			Boolean NOT NULL, 
+	[F1800]			Boolean NOT NULL, 
+	[F11000]			Boolean NOT NULL, 
+	[F11500]			Boolean NOT NULL, 
+	[F11650]			Boolean NOT NULL, 
+	[F225]			Boolean NOT NULL, 
+	[F250]			Boolean NOT NULL, 
+	[F2100]			Boolean NOT NULL, 
+	[F2200]			Boolean NOT NULL, 
+	[F325]			Boolean NOT NULL, 
+	[F350]			Boolean NOT NULL, 
+	[F3100]			Boolean NOT NULL, 
+	[F3200]			Boolean NOT NULL, 
+	[F425]			Boolean NOT NULL, 
+	[F450]			Boolean NOT NULL, 
+	[F4100]			Boolean NOT NULL, 
+	[F4200]			Boolean NOT NULL, 
+	[F5100]			Boolean NOT NULL, 
+	[F5200]			Boolean NOT NULL, 
+	[F5400]			Boolean NOT NULL
+);
+
+

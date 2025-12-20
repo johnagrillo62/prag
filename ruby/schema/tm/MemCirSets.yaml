@@ -1,0 +1,84 @@
+--- !ruby/object:Cls::Clss
+table_name: MemCirSets
+class_name: MemCirSets
+members:
+- !ruby/object:Cls::Member
+  column_name: cir_no
+  member_name: cir no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: circuit_line
+  member_name: circuit line
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_reps
+  member_name: set reps
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_dist
+  member_name: set dist
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_interval
+  member_name: set interval
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_desc
+  member_name: set desc
+  type: !ruby/object:Types::String
+    len: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_energyno
+  member_name: set energyno
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_type
+  member_name: set type
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: set_categoryabbr
+  member_name: set categoryabbr
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [MemCirSets]
+  (
+  [cir_no] Long Integer,
+  [circuit_line] Integer,
+  [set_reps] Long Integer,
+  [set_dist] Long Integer,
+  [set_interval] Long Integer,
+  [set_desc] Text (64),
+  [set_energyno] Integer,
+  [set_type] Text (8),
+  [set_categoryabbr] Text (6)
+  );

@@ -1,0 +1,36 @@
+--- !ruby/object:Cls::Clss
+table_name: DELETEENTRY
+class_name: DELETEENTRY
+members:
+- !ruby/object:Cls::Member
+  column_name: Meet
+  member_name: meet
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: MtEvent
+  member_name: mt event
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [DELETEENTRY]
+  (
+  [Meet] Long Integer,
+  [Athlete] Long Integer,
+  [MtEvent] Long Integer
+  );

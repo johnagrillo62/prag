@@ -1,0 +1,31 @@
+--- !ruby/object:Cls::Clss
+
+package: [hytek, tm]
+table_name: TEAM
+class_name: TEAM
+members:
+- !ruby/object:Cls::Member
+  column_name: Team
+  member_name: team
+  type: !ruby/object:Types::Integer
+    nullable: false
+    bits: 64
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: TCode
+  member_name: t code
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 10
+  unique: false
+uniques:
+- "[TEAM]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [TEAM]
+  (
+  [Team] Long Integer,
+  [TCode] Text (10),
+  );

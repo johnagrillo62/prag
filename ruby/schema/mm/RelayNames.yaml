@@ -1,0 +1,68 @@
+--- !ruby/object:Cls::Clss
+table_name: RelayNames
+class_name: RelayNames
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_no
+  member_name: team no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Team_ltr
+  member_name: team ltr
+  type: !ruby/object:Types::String
+    len: 510
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_no
+  member_name: ath no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pos_no
+  member_name: pos no
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Event_round
+  member_name: event round
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Relay_no
+  member_name: relay no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [RelayNames]
+  (
+  [Event_ptr] Long Integer,
+  [Team_no] Long Integer,
+  [Team_ltr] Text (510),
+  [Ath_no] Long Integer,
+  [Pos_no] Integer,
+  [Event_round] Text (2),
+  [Relay_no] Long Integer
+  );

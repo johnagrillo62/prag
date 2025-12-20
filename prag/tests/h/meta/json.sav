@@ -1,0 +1,109 @@
+#pragma once
+#include <tuple>
+#include <string>
+#include <sstream>
+#include <type_traits>
+#include <vector>
+#include <map>
+#include <optional>
+#include <iostream>
+#include <string_view>
+
+#include "field.h" 
+#include "meta.h" 
+
+namespace meta {
+
+// Forward declaration
+template <typename T> std::string toJson(const T& value);
+
+// Helper to print any field
+template <typename T>
+std::string print_field_value(const T& value)
+{
+    std::ostringstream ss;
+
+    if constexpr (is_optional_v<T>)
+    {
+        if (value.has_value())
+            ss << toJson(value.value());
+        else
+            ss << "null";
+    }
+    else if constexpr (is_vector_v<T>)
+    {
+        ss << "[";
+        for (size_t i = 0; i < value.size(); ++i)
+        {
+            ss << toJson(value[i]);
+            if (i + 1 < value.size()) ss << ",";
+        }
+        ss << "]";
+    }
+    else if constexpr (is_map_v<T>)
+    {
+        ss << "{";
+        bool first = true;
+        for (const auto& [key, val] : value)
+        {
+            if (!first) ss << ",";
+            ss << "\"" << key << "\":" << toJson(val);
+            first = false;
+        }
+        ss << "}";
+    }
+    else if constexpr (is_string_v<T>)
+    {
+        ss << "\"" << value << "\"";
+    }
+    else if constexpr (std::is_arithmetic_v<T>)
+    {
+        ss << value;
+    }
+    else
+    {
+        // fallback: assume nested struct with MetaTuple
+        ss << toJson(value);
+    }
+
+    return ss.str();
+}
+
+// Main toJson for reflected structs
+template <typename T>
+std::string toJson(const T& obj)
+{
+    std::ostringstream ss;
+    ss << "{";
+    bool first = true;
+
+    constexpr auto& fields = meta::MetaTuple<T>::fields;
+    std::apply([&](auto&&... field_metas) {
+        (([&]{
+            if (!first) ss << ",";
+            first = false;
+
+            using FieldType = std::decay_t<decltype(field_metas)>;
+            ss << "\"" << field_metas.fieldName << "\":";
+
+            if constexpr (FieldType::memberPtr != nullptr)
+            {
+                ss << print_field_value(obj.*(FieldType::memberPtr));
+            }
+            else if constexpr (FieldType::getterPtr != nullptr)
+            {
+                ss << print_field_value(FieldType::getterPtr(obj));
+            }
+            else
+            {
+                ss << "null";
+            }
+
+        }()), ...);
+    }, fields);
+
+    ss << "}";
+    return ss.str();
+}
+
+} // namespace meta

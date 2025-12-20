@@ -1,0 +1,60 @@
+--- !ruby/object:Cls::Clss
+table_name: Officials
+class_name: Officials
+members:
+- !ruby/object:Cls::Member
+  column_name: Official_no
+  member_name: official no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Last_name
+  member_name: last name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: First_name
+  member_name: first name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Initial
+  member_name: initial
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pref_name
+  member_name: pref name
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Home_email
+  member_name: home email
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Officials]
+  (
+  [Official_no] Long Integer,
+  [Last_name] Text (40),
+  [First_name] Text (40),
+  [Initial] Text (2),
+  [Pref_name] Text (40),
+  [Home_email] Text (100)
+  );

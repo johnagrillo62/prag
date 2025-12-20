@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Complex type definition for company -->
+<xs:element name="company">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="headquarters" type="xs:string"/>
+            <xs:element name="taxid" type="xs:string"/>
+            <xs:element name="offices" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<!-- Example company instance -->
+<company>
+    <name>example_value</name>
+    <headquarters>example_value</headquarters>
+    <taxid>example_value</taxid>
+    <offices>example_value</offices>
+</company>
+
+</xs:schema>

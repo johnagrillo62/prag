@@ -1,0 +1,916 @@
+--- !ruby/object:Cls::Clss
+table_name: Entry
+class_name: Entry
+members:
+- !ruby/object:Cls::Member
+  column_name: Event_ptr
+  member_name: event ptr
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ath_no
+  member_name: ath no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ActSeed_course
+  member_name: act seed course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ActualSeed_time
+  member_name: actual seed time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ConvSeed_course
+  member_name: conv seed course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ConvSeed_time
+  member_name: conv seed time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Scr_stat
+  member_name: scr stat
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Spec_stat
+  member_name: spec stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Dec_stat
+  member_name: dec stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Alt_stat
+  member_name: alt stat
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Bonus_event
+  member_name: bonus event
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Div_no
+  member_name: div no
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Ev_score
+  member_name: ev score
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: dq_type
+  member_name: dq type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_heat
+  member_name: pre heat
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_lane
+  member_name: pre lane
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_stat
+  member_name: pre stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_Time
+  member_name: pre time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_course
+  member_name: pre course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_heatplace
+  member_name: pre heatplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_place
+  member_name: pre place
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_jdplace
+  member_name: pre jdplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_exh
+  member_name: pre exh
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_points
+  member_name: pre points
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_back1
+  member_name: pre back 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_back2
+  member_name: pre back 2
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_back3
+  member_name: pre back 3
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_heat
+  member_name: fin heat
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_lane
+  member_name: fin lane
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_group
+  member_name: fin group
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_stat
+  member_name: fin stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_Time
+  member_name: fin time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_course
+  member_name: fin course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_heatplace
+  member_name: fin heatplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_jdheatplace
+  member_name: fin jdheatplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_place
+  member_name: fin place
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_jdplace
+  member_name: fin jdplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_ptsplace
+  member_name: fin ptsplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_exh
+  member_name: fin exh
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_points
+  member_name: fin points
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_back1
+  member_name: fin back 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_back2
+  member_name: fin back 2
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_back3
+  member_name: fin back 3
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_heat
+  member_name: sem heat
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_lane
+  member_name: sem lane
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_stat
+  member_name: sem stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_Time
+  member_name: sem time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_course
+  member_name: sem course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_heatplace
+  member_name: sem heatplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_place
+  member_name: sem place
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_jdplace
+  member_name: sem jdplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_exh
+  member_name: sem exh
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_points
+  member_name: sem points
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_back1
+  member_name: sem back 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_back2
+  member_name: sem back 2
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_back3
+  member_name: sem back 3
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_heat
+  member_name: swimoff heat
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_lane
+  member_name: swimoff lane
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_stat
+  member_name: swimoff stat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_Time
+  member_name: swimoff time
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_course
+  member_name: swimoff course
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_heatplace
+  member_name: swimoff heatplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_place
+  member_name: swimoff place
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_jdplace
+  member_name: swimoff jdplace
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_points
+  member_name: swimoff points
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_back1
+  member_name: swimoff back 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_back2
+  member_name: swimoff back 2
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimoff_back3
+  member_name: swimoff back 3
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: JDEv_score
+  member_name: j d ev score
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Seed_place
+  member_name: seed place
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: fin_heatltr
+  member_name: fin heatltr
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: event_age
+  member_name: event age
+  type: !ruby/object:Types::Integer
+    bits: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_watch1
+  member_name: pre watch 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_pad
+  member_name: pre pad
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_watch1
+  member_name: sem watch 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_pad
+  member_name: sem pad
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_watch1
+  member_name: fin watch 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_pad
+  member_name: fin pad
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_dqcode
+  member_name: fin dqcode
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_dqcode
+  member_name: pre dqcode
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_dqcode
+  member_name: sem dqcode
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_dqcodeSecond
+  member_name: fin dqcode second
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_dqcodeSecond
+  member_name: pre dqcode second
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_dqcodeSecond
+  member_name: sem dqcode second
+  type: !ruby/object:Types::String
+    len: 4
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_TimeType
+  member_name: fin time type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_TimeType
+  member_name: pre time type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_TimeType
+  member_name: sem time type
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_dolphin1
+  member_name: fin dolphin 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_dolphin2
+  member_name: fin dolphin 2
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_dolphin3
+  member_name: fin dolphin 3
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_dolphin1
+  member_name: pre dolphin 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_dolphin2
+  member_name: pre dolphin 2
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_dolphin3
+  member_name: pre dolphin 3
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_dolphin1
+  member_name: sem dolphin 1
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_dolphin2
+  member_name: sem dolphin 2
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_dolphin3
+  member_name: sem dolphin 3
+  type: !ruby/object:Types::Float
+    type: :single
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: early_seed
+  member_name: early seed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: super_prefinalist
+  member_name: super prefinalist
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: super_finfinalist
+  member_name: super finfinalist
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: fin_adjuststat
+  member_name: fin adjuststat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pre_adjuststat
+  member_name: pre adjuststat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sem_adjuststat
+  member_name: sem adjuststat
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: fin_divingdd
+  member_name: fin divingdd
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pre_divingdd
+  member_name: pre divingdd
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sem_divingdd
+  member_name: sem divingdd
+  type: !ruby/object:Types::String
+    len: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: entry_method
+  member_name: entry method
+  type: !ruby/object:Types::String
+    len: 2
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: fin_dqofficial
+  member_name: fin dqofficial
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pre_dqofficial
+  member_name: pre dqofficial
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: sem_dqofficial
+  member_name: sem dqofficial
+  type: !ruby/object:Types::Integer
+    bits: 64
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: pre_contacted
+  member_name: pre contacted
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Fin_reactiontime1
+  member_name: fin reactiontime 1
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Pre_reactiontime1
+  member_name: pre reactiontime 1
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sem_reactiontime1
+  member_name: sem reactiontime 1
+  type: !ruby/object:Types::String
+    len: 16
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: P_early_seed
+  member_name: p early seed
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques: []
+database: mm
+schema: |2-
+
+
+  CREATE TABLE [Entry]
+  (
+  [Event_ptr] Long Integer,
+  [Ath_no] Long Integer,
+  [ActSeed_course] Text (2),
+  [ActualSeed_time] Single,
+  [ConvSeed_course] Text (2),
+  [ConvSeed_time] Single,
+  [Scr_stat] Boolean NOT NULL,
+  [Spec_stat] Text (2),
+  [Dec_stat] Text (2),
+  [Alt_stat] Boolean NOT NULL,
+  [Bonus_event] Boolean NOT NULL,
+  [Div_no] Long Integer,
+  [Ev_score] Single,
+  [dq_type] Text (2),
+  [Pre_heat] Integer,
+  [Pre_lane] Integer,
+  [Pre_stat] Text (2),
+  [Pre_Time] Single,
+  [Pre_course] Text (2),
+  [Pre_heatplace] Integer,
+  [Pre_place] Integer,
+  [Pre_jdplace] Integer,
+  [Pre_exh] Text (2),
+  [Pre_points] Integer,
+  [Pre_back1] Single,
+  [Pre_back2] Single,
+  [Pre_back3] Single,
+  [Fin_heat] Integer,
+  [Fin_lane] Integer,
+  [Fin_group] Integer,
+  [Fin_stat] Text (2),
+  [Fin_Time] Single,
+  [Fin_course] Text (2),
+  [Fin_heatplace] Integer,
+  [Fin_jdheatplace] Integer,
+  [Fin_place] Integer,
+  [Fin_jdplace] Integer,
+  [Fin_ptsplace] Integer,
+  [Fin_exh] Text (2),
+  [Fin_points] Integer,
+  [Fin_back1] Single,
+  [Fin_back2] Single,
+  [Fin_back3] Single,
+  [Sem_heat] Integer,
+  [Sem_lane] Integer,
+  [Sem_stat] Text (2),
+  [Sem_Time] Single,
+  [Sem_course] Text (2),
+  [Sem_heatplace] Integer,
+  [Sem_place] Integer,
+  [Sem_jdplace] Integer,
+  [Sem_exh] Text (2),
+  [Sem_points] Integer,
+  [Sem_back1] Single,
+  [Sem_back2] Single,
+  [Sem_back3] Single,
+  [Swimoff_heat] Integer,
+  [Swimoff_lane] Integer,
+  [Swimoff_stat] Text (2),
+  [Swimoff_Time] Single,
+  [Swimoff_course] Text (2),
+  [Swimoff_heatplace] Integer,
+  [Swimoff_place] Integer,
+  [Swimoff_jdplace] Integer,
+  [Swimoff_points] Integer,
+  [Swimoff_back1] Single,
+  [Swimoff_back2] Single,
+  [Swimoff_back3] Single,
+  [JDEv_score] Single,
+  [Seed_place] Integer,
+  [fin_heatltr] Text (2),
+  [event_age] Integer,
+  [Pre_watch1] Single,
+  [Pre_pad] Single,
+  [Sem_watch1] Single,
+  [Sem_pad] Single,
+  [Fin_watch1] Single,
+  [Fin_pad] Single,
+  [Fin_dqcode] Text (4),
+  [Pre_dqcode] Text (4),
+  [Sem_dqcode] Text (8),
+  [Fin_dqcodeSecond] Text (4),
+  [Pre_dqcodeSecond] Text (4),
+  [Sem_dqcodeSecond] Text (4),
+  [Fin_TimeType] Text (2),
+  [Pre_TimeType] Text (2),
+  [Sem_TimeType] Text (2),
+  [Fin_dolphin1] Single,
+  [Fin_dolphin2] Single,
+  [Fin_dolphin3] Single,
+  [Pre_dolphin1] Single,
+  [Pre_dolphin2] Single,
+  [Pre_dolphin3] Single,
+  [Sem_dolphin1] Single,
+  [Sem_dolphin2] Single,
+  [Sem_dolphin3] Single,
+  [early_seed] Boolean NOT NULL,
+  [super_prefinalist] Boolean NOT NULL,
+  [super_finfinalist] Boolean NOT NULL,
+  [fin_adjuststat] Text (2),
+  [pre_adjuststat] Text (2),
+  [sem_adjuststat] Text (2),
+  [fin_divingdd] Text (8),
+  [pre_divingdd] Text (8),
+  [sem_divingdd] Text (8),
+  [entry_method] Text (2),
+  [fin_dqofficial] Long Integer,
+  [pre_dqofficial] Long Integer,
+  [sem_dqofficial] Long Integer,
+  [pre_contacted] Boolean NOT NULL,
+  [Fin_reactiontime1] Text (16),
+  [Pre_reactiontime1] Text (16),
+  [Sem_reactiontime1] Text (16),
+  [P_early_seed] Boolean NOT NULL
+  );

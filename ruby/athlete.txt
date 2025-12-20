@@ -1,0 +1,2 @@
+SELECT Athlete,Team1,Last,First,Initial,Sex,Birth,Age,Inactive FROM athlete
+

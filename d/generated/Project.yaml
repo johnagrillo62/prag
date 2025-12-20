@@ -1,0 +1,14 @@
+# YAML Schema for project
+# Generated from D struct: Project
+---
+
+project:
+  name: ""  # type: string
+  description: ""  # type: string
+  tags: []  # type: array
+
+# Example usage:
+# project:
+#   name: example_value
+#   description: example_value
+#   tags: example_value

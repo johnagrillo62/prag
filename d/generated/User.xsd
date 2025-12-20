@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Complex type definition for user -->
+<xs:element name="user">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="age" type="xs:int"/>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="data" type="xs:string"/>
+            <xs:element name="contact" type="xs:string"/>
+            <xs:element name="employer" type="xs:string"/>
+            <xs:element name="projects" type="xs:string"/>
+            <xs:element name="metadata" type="xs:string"/>
+            <xs:element name="investments" type="xs:string"/>
+            <xs:element name="nested" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<!-- Example user instance -->
+<user>
+    <name>example_value</name>
+    <age>example_value</age>
+    <id>example_value</id>
+    <data>example_value</data>
+    <contact>example_value</contact>
+    <employer>example_value</employer>
+    <projects>example_value</projects>
+    <metadata>example_value</metadata>
+    <investments>example_value</investments>
+    <nested>example_value</nested>
+</user>
+
+</xs:schema>

@@ -1,0 +1,92 @@
+--- !ruby/object:Cls::Clss
+package: [hytek,tm]
+table_name: Athlete
+class_name: Athlete
+members:
+- !ruby/object:Cls::Member
+  column_name: Athlete
+  member_name: athlete
+  type: !ruby/object:Types::Integer
+    nullable: false
+    bits: 64
+  unique: true
+- !ruby/object:Cls::Member
+  column_name: Team1
+  member_name: team 1
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 64
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Last
+  member_name: last
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 40
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: First
+  member_name: first
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 40
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Initial
+  member_name: initial
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Sex
+  member_name: sex
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 2
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Birth
+  member_name: birth
+  type: !ruby/object:Types::DateTime
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Age
+  member_name: age
+  type: !ruby/object:Types::Integer
+    nullable: true
+    bits: 16
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: ID_NO
+  member_name: id no
+  type: !ruby/object:Types::String
+    nullable: true
+    len: 34
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Inactive
+  member_name: inactive
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+uniques:
+- "[Athlete]"
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [Athlete]
+  (
+  [Athlete] Long Integer,
+  [Team1] Long Integer,
+  [Last] Text (40),
+  [First] Text (40),
+  [Initial] Text (2),
+  [Sex] Text (2),
+  [Birth] DateTime,
+  [Age] Integer,
+  [ID_NO] Text (34),
+  [Inactive] Boolean NOT NULL,
+  );

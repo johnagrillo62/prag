@@ -1,0 +1,55 @@
+// ============================================================================
+// AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
+// ============================================================================
+// This file was generated   from ../src/ast/reified.h by the enum code generator.
+//
+// This provides automatic enum reflection for ReifiedTypeId:
+//   - ReifiedTypeIdIdEnum::toString(value) -> string
+//   - ReifiedTypeIdIdEnum::fromString(str) -> optional<ReifiedTypeId>
+//   - ReifiedTypeIdIdEnum::forEach(fn) -> iterate all values
+//   - operator<< for streaming enums
+// ============================================================================
+
+inline constexpr std::array<std::pair<ReifiedTypeId,const char*>, 38> ReifiedTypeIdMapping {{
+    {ReifiedTypeId::Bool, "Bool"},
+    {ReifiedTypeId::Int8, "Int8"},
+    {ReifiedTypeId::UInt8, "UInt8"},
+    {ReifiedTypeId::Int16, "Int16"},
+    {ReifiedTypeId::UInt16, "UInt16"},
+    {ReifiedTypeId::Int32, "Int32"},
+    {ReifiedTypeId::UInt32, "UInt32"},
+    {ReifiedTypeId::Int64, "Int64"},
+    {ReifiedTypeId::UInt64, "UInt64"},
+    {ReifiedTypeId::Float32, "Float32"},
+    {ReifiedTypeId::Float64, "Float64"},
+    {ReifiedTypeId::String, "String"},
+    {ReifiedTypeId::Bytes, "Bytes"},
+    {ReifiedTypeId::Char, "Char"},
+    {ReifiedTypeId::DateTime, "DateTime"},
+    {ReifiedTypeId::Date, "Date"},
+    {ReifiedTypeId::Time, "Time"},
+    {ReifiedTypeId::Duration, "Duration"},
+    {ReifiedTypeId::UUID, "UUID"},
+    {ReifiedTypeId::Decimal, "Decimal"},
+    {ReifiedTypeId::URL, "URL"},
+    {ReifiedTypeId::Email, "Email"},
+    {ReifiedTypeId::List, "List"},
+    {ReifiedTypeId::Map, "Map"},
+    {ReifiedTypeId::Set, "Set"},
+    {ReifiedTypeId::Tuple, "Tuple"},
+    {ReifiedTypeId::Optional, "Optional"},
+    {ReifiedTypeId::Variant, "Variant"},
+    {ReifiedTypeId::Pair, "Pair"},
+    {ReifiedTypeId::Monostate, "Monostate"},
+    {ReifiedTypeId::Array, "Array"},
+    {ReifiedTypeId::UnorderedMap, "UnorderedMap"},
+    {ReifiedTypeId::UnorderedSet, "UnorderedSet"},
+    {ReifiedTypeId::PointerType, "PointerType"},
+    {ReifiedTypeId::UniquePtr, "UniquePtr"},
+    {ReifiedTypeId::SharedPtr, "SharedPtr"},
+    {ReifiedTypeId::StructRefType, "StructRefType"},
+    {ReifiedTypeId::Unknown, "Unknown"},
+}};
+using ReifiedTypeIdEnum = EnumTraitsAuto<ReifiedTypeId, ReifiedTypeIdMapping>;
+template <> struct EnumMapping<ReifiedTypeId> { using Type = ReifiedTypeIdEnum; };
+

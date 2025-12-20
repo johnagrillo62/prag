@@ -1,0 +1,69 @@
+metafront
+reflect
+demo/demo01
+demo/demo02
+demo/demo02
+demo/demo03
+demo/demo04
+demo/demo05
+demo/demo06
+demo/demo07
+demo/demo08
+demo/demo09
+demo/demo10
+demo/demo-all
+
+
+.vs
+
+# Emacs backup files
+*~
+*#
+.#*
+
+# Emacs auto-save files
+#*#
+
+# Emacs lock files
+.#*
+
+# Emacs desktop save files
+.emacs.desktop
+.emacs.desktop.lock
+
+# Emacs session files
+session.*
+
+# Emacs TAGS files
+TAGS
+
+# Emacs flycheck temp files
+flycheck_*.el
+
+# Emacs projectile files
+.projectile
+
+# Emacs company mode
+company-statistics-cache.el
+
+# Emacs recentf
+recentf
+
+# Emacs bookmarks
+bookmarks
+
+# Emacs places
+places
+
+# Emacs savehist
+history
+
+# Emacs ido
+ido.last
+
+# Emacs smex
+smex-items
+
+# Emacs auto-complete
+ac-comphist.dat
+

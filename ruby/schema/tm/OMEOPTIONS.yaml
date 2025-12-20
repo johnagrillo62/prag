@@ -1,0 +1,303 @@
+--- !ruby/object:Cls::Clss
+table_name: OMEOPTIONS
+class_name: OMEOPTIONS
+members:
+- !ruby/object:Cls::Member
+  column_name: OMEEntryStyle
+  member_name: o m e entry style
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OMEReviewTime
+  member_name: o m e review time
+  type: !ruby/object:Types::Integer
+    bits: 8
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMailFrom
+  member_name: e mail from
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMailSubject
+  member_name: e mail subject
+  type: !ruby/object:Types::String
+    len: 200
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMailText
+  member_name: e mail text
+  type: !ruby/object:Types::String
+    len: 508
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: LastName
+  member_name: last name
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: FirstName
+  member_name: first name
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Phone
+  member_name: phone
+  type: !ruby/object:Types::String
+    len: 40
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: EMail
+  member_name: e mail
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TeamName
+  member_name: team name
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Addr
+  member_name: addr
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SecAddr
+  member_name: sec addr
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: City
+  member_name: city
+  type: !ruby/object:Types::String
+    len: 60
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: State
+  member_name: state
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Zip
+  member_name: zip
+  type: !ruby/object:Types::String
+    len: 20
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Cntry
+  member_name: cntry
+  type: !ruby/object:Types::String
+    len: 6
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: TimeZone
+  member_name: time zone
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: PayTo
+  member_name: pay to
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Classification
+  member_name: classification
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: WebSite
+  member_name: web site
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoShowMeetList
+  member_name: no show meet list
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoShowMeetSetup
+  member_name: no show meet setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: NoShowActiveComSetup
+  member_name: no show active com setup
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: USASwimming
+  member_name: u s a swimming
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Masters
+  member_name: masters
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SwimLessons
+  member_name: swim lessons
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HighSchool
+  member_name: high school
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: SummerLeague
+  member_name: summer league
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OpenWater
+  member_name: open water
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: College
+  member_name: college
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Swimathons
+  member_name: swimathons
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: HostSwimMeets
+  member_name: host swim meets
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Other
+  member_name: other
+  type: !ruby/object:Types::Boolean
+    nullable: false
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OtherText
+  member_name: other text
+  type: !ruby/object:Types::String
+    len: 100
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: Token
+  member_name: token
+  type: !ruby/object:Types::String
+    len: 200
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: OMEWebSite
+  member_name: o m e web site
+  type: !ruby/object:Types::String
+    len: 200
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: AgencyID
+  member_name: agency i d
+  type: !ruby/object:Types::String
+    len: 80
+    nullable: true
+  unique: false
+- !ruby/object:Cls::Member
+  column_name: License
+  member_name: license
+  type: !ruby/object:Types::String
+    len: 240
+    nullable: true
+  unique: false
+uniques: []
+database: tm
+schema: |2-
+
+
+  CREATE TABLE [OMEOPTIONS]
+  (
+  [OMEEntryStyle] Byte,
+  [OMEReviewTime] Byte,
+  [EMailFrom] Text (100),
+  [EMailSubject] Text (200),
+  [EMailText] Text (508),
+  [LastName] Text (100),
+  [FirstName] Text (100),
+  [Phone] Text (40),
+  [EMail] Text (100),
+  [TeamName] Text (100),
+  [Addr] Text (100),
+  [SecAddr] Text (60),
+  [City] Text (60),
+  [State] Text (6),
+  [Zip] Text (20),
+  [Cntry] Text (6),
+  [TimeZone] Text (100),
+  [PayTo] Text (100),
+  [Classification] Text (100),
+  [WebSite] Text (100),
+  [NoShowMeetList] Boolean NOT NULL,
+  [NoShowMeetSetup] Boolean NOT NULL,
+  [NoShowActiveComSetup] Boolean NOT NULL,
+  [USASwimming] Boolean NOT NULL,
+  [Masters] Boolean NOT NULL,
+  [SwimLessons] Boolean NOT NULL,
+  [HighSchool] Boolean NOT NULL,
+  [SummerLeague] Boolean NOT NULL,
+  [OpenWater] Boolean NOT NULL,
+  [College] Boolean NOT NULL,
+  [Swimathons] Boolean NOT NULL,
+  [HostSwimMeets] Boolean NOT NULL,
+  [Other] Boolean NOT NULL,
+  [OtherText] Text (100),
+  [Token] Text (200),
+  [OMEWebSite] Text (200),
+  [AgencyID] Text (80),
+  [License] Text (240)
+  );

@@ -1,0 +1,79 @@
+// simple_examples.proto - Working protobuf examples
+syntax = "proto3";
+
+package examples;
+
+// EXAMPLE 1: Basic Scalars
+message User {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    bool is_active = 4;
+}
+
+// EXAMPLE 2: Repeated Fields
+message BlogPost {
+    int32 id = 1;
+    string title = 2;
+    repeated string tags = 3;
+    repeated int32 view_counts = 4;
+}
+
+// EXAMPLE 3: Maps
+message UserPreferences {
+    int32 user_id = 1;
+    map<string, string> settings = 2;
+    map<string, int32> scores = 3;
+}
+
+// EXAMPLE 4: Nested Messages
+message Company {
+    string name = 1;
+    
+    message Address {
+        string street = 1;
+        string city = 2;
+        string country = 3;
+    }
+    
+    Address headquarters = 2;
+    repeated Address offices = 3;
+}
+
+// EXAMPLE 5: Enums
+message Task {
+    int32 id = 1;
+    string title = 2;
+    
+    enum Priority {
+        LOW = 0;
+        MEDIUM = 1;
+        HIGH = 2;
+    }
+    
+    Priority priority = 3;
+}
+
+// EXAMPLE 6: Optional Fields
+message Profile {
+    int32 user_id = 1;
+    string username = 2;
+    optional string bio = 3;
+    optional int32 age = 4;
+}
+
+// EXAMPLE 7: Complex Composition
+message Order {
+    int32 id = 1;
+    User customer = 2;
+    
+    message LineItem {
+        int32 product_id = 1;
+        string product_name = 2;
+        int32 quantity = 3;
+        double price = 4;
+    }
+    
+    repeated LineItem items = 3;
+    map<string, string> metadata = 4;
+}

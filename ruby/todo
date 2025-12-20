@@ -1,0 +1,58 @@
+
+mark meets by week
+
+
+     #2001, 34,2011-07-19T00:00:00+00:00
+  #      should be 2011-07-09
+
+
+seperate out dqs
+
+
+
+ruby
+  attr_accessor
+  to_csv
+  map
+  list
+
+
+
+
+
+class Meet
+  attr_accessor :meet, :m_name, :start, :age_up, :course, :location, :max_ind_ent, :max_rel_ent, :max_ent
+
+  def initialize(meet, m_name, start, age_up, course, location, max_ind_ent, max_rel_ent, max_ent)
+    @meet = meet
+    @m_name = m_name
+    @start = start
+    @age_up = age_up
+    @course = course
+    @location = location
+    @max_ind_ent = max_ind_ent
+    @max_rel_ent = max_rel_ent
+    @max_ent = max_ent
+  end
+
+
+  def self.parse_csv(filename)
+    objs = []
+    CSV.foreach(filename, headers: true) do |row|
+      objs << Meet.new(
+        row['Meet'].to_i, # meet
+        row['MName'], # m_name
+        DateTime.strptime(row['Start'], "%m/%d/%y %H:%M:%S"),
+        DateTime.strptime(row['AgeUp'], "%m/%d/%y %H:%M:%S"),
+        row['Course'], # course
+        row['Location'], # location
+        row['MaxIndEnt'].to_i, # max_ind_ent
+        row['MaxRelEnt'].to_i, # max_rel_ent
+        row['MaxEnt'].to_i, # max_ent
+      )
+    end
+    objs
+  end
+end
+
+
