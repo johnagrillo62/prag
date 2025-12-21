@@ -1,8 +1,6 @@
-#include <variant>
 #include <string>
+#include <variant>
 struct ContactInfo
 {
-  std::variant<std::string, int, float> contact;
+    std::variant<std::string, int, float> contact;
 };
-
-

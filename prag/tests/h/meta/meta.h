@@ -217,13 +217,7 @@ template <typename Class,
           typename... Attrs>
 struct Field
 {
-public:
-
-
 private:
-
-
-  
     static constexpr bool has_member_ptr = (MemberPtr != nullptr);
     
     // Helper to check if we have a Getter attribute
@@ -284,12 +278,23 @@ private:
             return nullptr;
         }
     }
+    
 public:    
     static constexpr auto getterPtr = extractGetterPtr<Attrs...>();
     static constexpr auto setterPtr = extractSetterPtr<Attrs...>();
+    
 private:    
-    using DeducedFromMember = typename std::conditional_t<has_member_ptr, member_pointer_traits<decltype(MemberPtr)>, member_pointer_traits<int Class::*>>::member_type;
-    using DeducedFromGetter = std::remove_cvref_t<typename std::conditional_t<has_getter && (getterPtr != nullptr), std::invoke_result<decltype(getterPtr), const Class&>, std::type_identity<int>>::type>;
+    using DeducedFromMember = typename std::conditional_t<
+        has_member_ptr, 
+        member_pointer_traits<decltype(MemberPtr)>, 
+        member_pointer_traits<int Class::*>
+    >::member_type;
+    
+    using DeducedFromGetter = std::remove_cvref_t<typename std::conditional_t<
+        has_getter && !std::is_same_v<decltype(getterPtr), std::nullptr_t>, 
+        std::invoke_result<decltype(getterPtr), const Class&>, 
+        std::type_identity<int>
+    >::type>;
     
 public:
     using T = std::conditional_t<has_member_ptr, DeducedFromMember, DeducedFromGetter>;
@@ -307,10 +312,75 @@ public:
     const char* fieldName;
     std::tuple<Attrs...> attributes;
     
-    // Constructor - just name + variadic attributes
+    // Constructor - accepts any subset of Attrs (including none)
     template <typename... Args>
     constexpr Field(const char* name, Args&&... args)
-        : fieldName(name), attributes(std::forward<Args>(args)...) {}
+        : fieldName(name), attributes(makeAttributeTuple(std::forward<Args>(args)...)) {}
+
+private:
+    // Helper to construct the attributes tuple, filling in default values for missing attributes
+    template <typename... Args>
+    static constexpr std::tuple<Attrs...> makeAttributeTuple(Args&&... args) {
+        return constructTuple<Attrs...>(std::forward<Args>(args)...);
+    }
+    
+    // Base case: construct tuple with default-constructed types
+    template <typename... AttrTypes>
+    static constexpr std::tuple<AttrTypes...> constructTuple() {
+        return std::tuple<AttrTypes...>{};
+    }
+    
+    // Recursive case: match provided args to expected types
+    template <typename... AttrTypes, typename Arg, typename... RestArgs>
+    static constexpr auto constructTuple(Arg&& arg, RestArgs&&... rest) {
+        if constexpr (sizeof...(AttrTypes) == 0) {
+            // No more expected types - shouldn't happen but handle gracefully
+            return std::tuple<>{};
+        } else {
+            return constructTupleImpl<AttrTypes...>(std::forward<Arg>(arg), std::forward<RestArgs>(rest)...);
+        }
+    }
+    
+    template <typename First, typename... RestTypes, typename... Args>
+    static constexpr auto constructTupleImpl(Args&&... args) {
+        // Try to find a matching argument for First type
+        return findAndConstruct<First, RestTypes...>(std::forward<Args>(args)...);
+    }
+    
+    template <typename TargetType, typename... RestTypes, typename... Args>
+    static constexpr std::tuple<TargetType, RestTypes...> findAndConstruct(Args&&... args) {
+        if constexpr (sizeof...(Args) == 0) {
+            // No args left, default construct remaining types
+            return std::tuple<TargetType, RestTypes...>{};
+        } else {
+            return findMatchingArg<TargetType, RestTypes...>(std::forward<Args>(args)...);
+        }
+    }
+    
+    template <typename TargetType, typename... RestTypes, typename FirstArg, typename... RestArgs>
+    static constexpr auto findMatchingArg(FirstArg&& first, RestArgs&&... rest) {
+        using CleanFirstArg = std::remove_cvref_t<FirstArg>;
+        
+        if constexpr (std::is_same_v<CleanFirstArg, TargetType> || 
+                      std::is_convertible_v<FirstArg, TargetType>) {
+            // Found matching type - use this arg
+            auto restTuple = constructTuple<RestTypes...>(std::forward<RestArgs>(rest)...);
+            return std::tuple_cat(
+                std::make_tuple(std::forward<FirstArg>(first)),
+                restTuple
+            );
+        } else {
+            // Not a match - try next arg
+            if constexpr (sizeof...(RestArgs) > 0) {
+                return findMatchingArg<TargetType, RestTypes...>(std::forward<RestArgs>(rest)...);
+            } else {
+                // No more args, default construct
+                return std::tuple<TargetType, RestTypes...>{};
+            }
+        }
+    }
+
+public:
     
     // Get type name via __PRETTY_FUNCTION__
     static constexpr auto getTypeName() {
@@ -367,6 +437,24 @@ public:
     }
 };
 
+// ============================================================================
+// FIELD WRAPPER - enables clean syntax without macro
+// ============================================================================
+template <auto MemberPtr>
+struct FieldRef {
+    static constexpr auto ptr = MemberPtr;
+    
+    template <typename... Attrs>
+    constexpr auto operator()(const char* name, Attrs&&... attrs) const {
+        using Class = typename member_pointer_traits<decltype(MemberPtr)>::class_type;
+        using FieldType = Field<Class, MemberPtr, std::remove_cvref_t<Attrs>...>;
+        return FieldType(name, std::forward<Attrs>(attrs)...);
+    }
+};
+
+// Helper function to create FieldRef
+template <auto MemberPtr>
+constexpr FieldRef<MemberPtr> field = {};
 
   
 // ============================================================================
