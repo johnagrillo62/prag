@@ -291,14 +291,14 @@ std::string CppReflectWalker::walkNestedTypeDefinitions(const bhw::Struct& s,
                 // Build the nested struct's full name including parent
                 std::string nestedFullName = parentFullName + "::" + nestedStruct->name;
 
-                // ⭐ SET CONTEXT for nested struct
+                //  SET CONTEXT for nested struct
                 std::string savedParent = currentParentStruct_;
                 currentParentStruct_ = parentFullName;
 
                 // Generate the reflection with corrected namespace
                 str << "\n" << walkNestedStruct(*nestedStruct, nestedFullName, indent);
 
-                // ⭐ RESTORE CONTEXT
+                // RESTORE CONTEXT
                 currentParentStruct_ = savedParent;
             }
         }
@@ -338,10 +338,9 @@ std::string CppReflectWalker::walkNestedStruct(const bhw::Struct& s,
             fieldNames.emplace_back(displayName);
 
             str << sep << "    meta::Field< " << fullStructName << ", " ;
-
             if (isNested)
             {
-  	        std::string funcName = sanitizeFunctionName(name);
+	        std::string funcName = sanitizeFunctionName(name);
                 str << "&get_" << funcName << ", &set_" << funcName;
             }
             else
@@ -471,7 +470,8 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
                 // accessors
                 std::string funcName = sanitizeFunctionName(name);
                 str << "nullptr, "
-                    << "&get_" << funcName << ", &set_" << funcName;
+		    << "Getter<" << "&get_" << funcName << ">"
+		    << ", Setter<&set_" << funcName << ">";
             }
             else
             {
@@ -479,7 +479,18 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
     	      str << "&" << name ;
             }
 
-            str << ">(\"" << displayName << "\")";
+            str << ">(\"" << displayName << "\"";
+
+            if (isNested)
+            {
+                // For nested fields: use nullptr for member pointer, and function pointers for
+                // accessors
+                std::string funcName = sanitizeFunctionName(name);
+                str << ", Getter<" << "&get_" << funcName << ">{}"
+		    << ", Setter<&set_" << funcName << ">{}";
+            }
+
+	    str << ")";
             sep = ",\n";
         }
     }
