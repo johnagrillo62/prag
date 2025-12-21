@@ -470,8 +470,8 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
                 // accessors
                 std::string funcName = sanitizeFunctionName(name);
                 str << "nullptr, "
-		    << "Getter<" << "&get_" << funcName << ">"
-		    << ", Setter<&set_" << funcName << ">";
+		    << "Accessors<" << "&get_" << funcName << ", "
+		    << "&set_" << funcName << ">";
             }
             else
             {
@@ -486,8 +486,8 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
                 // For nested fields: use nullptr for member pointer, and function pointers for
                 // accessors
                 std::string funcName = sanitizeFunctionName(name);
-                str << ", Getter<" << "&get_" << funcName << ">{}"
-		    << ", Setter<&set_" << funcName << ">{}";
+                str << ", Accessors<" << "&get_" << funcName 
+		    << ", &set_" << funcName << ">{}";
             }
 
 	    str << ")";

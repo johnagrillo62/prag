@@ -164,23 +164,12 @@ struct Props {
 
 
 // ============================================================================
-// ACCESSORS ATTRIBUTE (combines getter + setter)
+// ACCESSORS ATTRIBUTE (getter + setter, setter optional)
 // ============================================================================
 template <auto GetterPtr, auto SetterPtr = nullptr>
 struct Accessors {
     static constexpr auto getter = GetterPtr;
     static constexpr auto setter = SetterPtr;
-};
-  
-
-template <auto FuncPtr>
-struct Getter {
-    static constexpr auto ptr = FuncPtr;
-};
-
-template <auto FuncPtr>
-struct Setter {
-    static constexpr auto ptr = FuncPtr;
 };
 
 // ============================================================================
@@ -220,24 +209,17 @@ struct Field
 private:
     static constexpr bool has_member_ptr = (MemberPtr != nullptr);
     
-    // Helper to check if we have a Getter attribute
+    // Helper to check if we have an Accessors attribute
     template <typename Attr>
-    struct is_getter : std::false_type {};
+    struct is_accessors : std::false_type {};
     
-    template <auto Ptr>
-    struct is_getter<Getter<Ptr>> : std::true_type {};
+    template <auto G, auto S>
+    struct is_accessors<Accessors<G, S>> : std::true_type {};
     
-    // Helper to check if we have a Setter attribute
-    template <typename Attr>
-    struct is_setter : std::false_type {};
+    // Check if any attribute is an Accessors
+    static constexpr bool has_getter = (is_accessors<Attrs>::value || ...);
     
-    template <auto Ptr>
-    struct is_setter<Setter<Ptr>> : std::true_type {};
-    
-    // Check if any attribute is a Getter
-    static constexpr bool has_getter = (is_getter<Attrs>::value || ...);
-    
-    // Extract getter pointer
+    // Extract getter pointer from Accessors
     template <typename... As>
     static constexpr auto extractGetterPtr() {
         if constexpr (sizeof...(As) == 0) {
@@ -249,8 +231,8 @@ private:
     
     template <typename First, typename... Rest>
     static constexpr auto extractGetterPtrImpl() {
-        if constexpr (is_getter<First>::value) {
-            return First::ptr;
+        if constexpr (is_accessors<First>::value) {
+            return First::getter;
         } else if constexpr (sizeof...(Rest) > 0) {
             return extractGetterPtrImpl<Rest...>();
         } else {
@@ -258,7 +240,7 @@ private:
         }
     }
     
-    // Extract setter pointer
+    // Extract setter pointer from Accessors
     template <typename... As>
     static constexpr auto extractSetterPtr() {
         if constexpr (sizeof...(As) == 0) {
@@ -270,8 +252,8 @@ private:
     
     template <typename First, typename... Rest>
     static constexpr auto extractSetterPtrImpl() {
-        if constexpr (is_setter<First>::value) {
-            return First::ptr;
+        if constexpr (is_accessors<First>::value) {
+            return First::setter;
         } else if constexpr (sizeof...(Rest) > 0) {
             return extractSetterPtrImpl<Rest...>();
         } else {
@@ -304,7 +286,7 @@ public:
     // Ensure field has a way to access data
     static_assert(
         has_member_ptr || has_getter,
-        "Field must have either a member pointer or a Getter attribute - cannot create field with nullptr member and no getter!"
+        "Field must have either a member pointer or an Accessors attribute - cannot create field with nullptr member and no accessor!"
     );
     
     static constexpr auto memberPtr = MemberPtr;
@@ -456,6 +438,30 @@ struct FieldRef {
 template <auto MemberPtr>
 constexpr FieldRef<MemberPtr> field = {};
 
+// ============================================================================
+// FIELD BUILDER - for fields with getters/setters (nullptr member pointer)
+// ============================================================================
+template <typename Class>
+struct FieldBuilder {
+    template <typename... Attrs>
+    constexpr auto operator()(const char* name, Attrs&&... attrs) const {
+        // Extract Getter and Setter from Attrs if present
+        using AttrsTuple = std::tuple<std::remove_cvref_t<Attrs>...>;
+        return makeFieldFromAttrs<Class>(name, std::forward<Attrs>(attrs)...);
+    }
+    
+private:
+    template <typename C, typename... Attrs>
+    static constexpr auto makeFieldFromAttrs(const char* name, Attrs&&... attrs) {
+        using FieldType = Field<C, nullptr, std::remove_cvref_t<Attrs>...>;
+        return FieldType(name, std::forward<Attrs>(attrs)...);
+    }
+};
+
+// Helper to create fields with getters/setters
+template <typename Class>
+constexpr FieldBuilder<Class> field_gs = {};
+
   
 // ============================================================================
 // META TUPLE
@@ -467,4 +473,3 @@ struct MetaTuple
 };
 
 } // namespace meta
-

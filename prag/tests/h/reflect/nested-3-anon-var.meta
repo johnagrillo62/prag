@@ -26,8 +26,8 @@ inline void set_b_c_z(::A& obj, const int64_t& val)
 // Field metadata
 inline const auto fields = std::make_tuple(
     meta::Field< ::A, &::A::x>("x"),
-    meta::Field< ::A, nullptr, Getter<&get_b_y>, Setter<&set_b_y>>("b.y", Getter<&get_b_y>{}, Setter<&set_b_y>{}),
-    meta::Field< ::A, nullptr, Getter<&get_b_c_z>, Setter<&set_b_c_z>>("b.c.z", Getter<&get_b_c_z>{}, Setter<&set_b_c_z>{}));
+    meta::Field< ::A, nullptr, Accessors<&get_b_y, &set_b_y>>("b.y", Accessors<&get_b_y, &set_b_y>{}),
+    meta::Field< ::A, nullptr, Accessors<&get_b_c_z, &set_b_c_z>>("b.c.z", Accessors<&get_b_c_z, &set_b_c_z>{}));
 } // namespace A
 } // namespace meta
 

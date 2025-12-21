@@ -16,7 +16,7 @@ struct A
 
     // Clean syntax without macros using field helper
     constexpr static const auto fields =
-        std::make_tuple(meta::field<&A::x>("id"), meta::field<&A::y>("Y", Attrs{}, Attrs2));
+      std::make_tuple(meta::field<&A::x>("id"), meta::field<&A::y>("Y", Attrs{}, Attrs2{}));
 };
 
 // Example with Props attributes
@@ -30,28 +30,6 @@ struct B
                         meta::field<&B::name>("name", meta::Props{meta::Prop::Serializable}));
 };
 
-// Example with getter/setter (still need explicit Field syntax for these)
-struct C
-{
-  private:
-    int m_data;
-
-  public:
-    int getData() const
-    {
-        return m_data;
-    }
-    void setData(int val)
-    {
-        m_data = val;
-    }
-
-    constexpr static const auto fields = std::make_tuple(
-        meta::Field<C, nullptr, meta::Getter<&C::getData>, meta::Setter<&C::setData>>(
-            "data",
-            meta::Getter<&C::getData>{},
-            meta::Setter<&C::setData>{}));
-};
 
 int main()
 {
