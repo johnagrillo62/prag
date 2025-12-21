@@ -172,9 +172,7 @@ struct Accessors {
     static constexpr auto setter = SetterPtr;
 };
   
-// ============================================================================
-// GETTER/SETTER ATTRIBUTES
-// ============================================================================
+
 template <auto FuncPtr>
 struct Getter {
     static constexpr auto ptr = FuncPtr;
@@ -219,7 +217,13 @@ template <typename Class,
           typename... Attrs>
 struct Field
 {
+public:
+
+
 private:
+
+
+  
     static constexpr bool has_member_ptr = (MemberPtr != nullptr);
     
     // Helper to check if we have a Getter attribute
@@ -280,10 +284,10 @@ private:
             return nullptr;
         }
     }
-    
+public:    
     static constexpr auto getterPtr = extractGetterPtr<Attrs...>();
     static constexpr auto setterPtr = extractSetterPtr<Attrs...>();
-    
+private:    
     using DeducedFromMember = typename std::conditional_t<has_member_ptr, member_pointer_traits<decltype(MemberPtr)>, member_pointer_traits<int Class::*>>::member_type;
     using DeducedFromGetter = std::remove_cvref_t<typename std::conditional_t<has_getter && (getterPtr != nullptr), std::invoke_result<decltype(getterPtr), const Class&>, std::type_identity<int>>::type>;
     
@@ -363,6 +367,8 @@ public:
     }
 };
 
+
+  
 // ============================================================================
 // META TUPLE
 // ============================================================================

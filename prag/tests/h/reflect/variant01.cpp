@@ -1,6 +1,5 @@
 #include "variant01.h"
 
-#include "../meta/field.h"
 #include "../meta/json.h"
 #include "../meta/meta.h"
 #include "../meta/txt.h"

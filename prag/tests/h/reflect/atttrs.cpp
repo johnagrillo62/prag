@@ -16,7 +16,7 @@ struct A {
 
   constexpr static const auto fields = std::make_tuple(
    meta::Field< ::A, &::A::x>("id"),
-   meta::Field< ::A, &::A::x, Attrs>("string", Attrs{}));
+   meta::Field< ::A, &::A::y>("Y", Attrs{}));
 };
 
 
