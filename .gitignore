@@ -10,4 +10,5 @@ __pycache__/
 src/python/tm/__pycache__
 d/demo
 d/liblang.a
+bin
 *.a
