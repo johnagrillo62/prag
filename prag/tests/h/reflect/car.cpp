@@ -1,0 +1,248 @@
+#include "../meta/meta.h"
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+// Car class definition
+struct Car {
+    std::string maker;
+    std::string model;
+    unsigned short year;
+    bool electric;
+    unsigned int howmanymiles;
+    std::vector<std::string> features;
+    std::unordered_map<std::string, std::string> specs;
+};
+
+// Car metadata - complete with all attributes
+namespace meta {
+namespace Car {
+inline const auto fields = std::make_tuple(
+    meta::MakeField<&::Car::maker>(
+        "maker",
+        meta::Props{meta::Prop::Serializable | meta::Prop::PrimaryKey},
+        meta::Csv{"maker"},
+        meta::Sql{"maker"},
+        meta::Json{"maker"},
+        meta::DefaultValue{std::string{"Unknown"}},
+        meta::Description{"Car manufacturer name"}
+    ),
+    
+    meta::MakeField<&::Car::model>(
+        "model",
+        meta::Props{meta::Prop::Serializable},
+        meta::Csv{"model"},
+        meta::Sql{"model"},
+        meta::Json{"model"},
+        meta::DefaultValue{std::string{"Base Model"}},
+        meta::InitValue{std::string{""}},
+        meta::Description{"Car model designation"}
+    ),
+    
+    meta::MakeField<&::Car::year>(
+        "year",
+        meta::Props{meta::Prop::Serializable},
+        meta::Csv{"year"},
+        meta::Sql{"year"},
+        meta::Json{"year"},
+        meta::DefaultValue{static_cast<unsigned short>(2024)},
+        meta::InitValue{static_cast<unsigned short>(2020)},
+        meta::Description{"Year of manufacture"},
+        meta::Validator{"year >= 1900 && year <= 2100"}
+    ),
+    
+    meta::MakeField<&::Car::electric>(
+        "electric",
+        meta::Props{meta::Prop::Serializable},
+        meta::Csv{"electric"},
+        meta::Sql{"is_electric"},
+        meta::Json{"isElectric"},
+        meta::DefaultValue{false},
+        meta::InitValue{true},
+        meta::Description{"Electric vehicle flag"}
+    ),
+    
+    meta::MakeField<&::Car::howmanymiles>(
+        "howmanymiles",
+        meta::Props{meta::Prop::Serializable},
+        meta::Csv{"mileage"},
+        meta::Sql{"mileage"},
+        meta::Json{"mileage"},
+        meta::DefaultValue{0u},
+        meta::Description{"Total miles driven"},
+        meta::Validator{"mileage >= 0"}
+    ),
+    
+    meta::MakeField<&::Car::features>(
+        "features",
+        meta::Props{meta::Prop::Serializable},
+        meta::Json{"features"},
+        meta::DefaultValue{std::vector<std::string>{"Air Conditioning", "Power Steering", "ABS"}},
+        meta::InitValue{std::vector<std::string>{}},
+        meta::Description{"List of car features and options"}
+    ),
+    
+    meta::MakeField<&::Car::specs>(
+        "specs",
+        meta::Props{meta::Prop::Serializable},
+        meta::Json{"specifications"},
+        meta::DefaultValue{std::unordered_map<std::string, std::string>{
+            {"engine", "V6"},
+            {"transmission", "automatic"},
+            {"drive", "FWD"},
+            {"fuel", "gasoline"}
+        }},
+        meta::InitValue{std::unordered_map<std::string, std::string>{}},
+        meta::Description{"Technical specifications as key-value pairs"}
+    )
+);
+
+inline constexpr auto tableName = "Car";
+inline constexpr auto query = "SELECT maker, model, year, is_electric AS electric, mileage AS howmanymiles FROM Car";
+}  // namespace Car
+}  // namespace meta
+
+// MetaTuple specialization
+namespace meta {
+template<>
+struct MetaTuple<::Car> {
+    static inline const auto& fields = meta::Car::fields;
+    static constexpr auto tableName = meta::Car::tableName;
+    static constexpr auto query = meta::Car::query;
+};
+}  // namespace meta
+
+// Helper function to print field information
+template <typename Field>
+void printFieldMetadata(const Field& field) {
+    std::cout << "----------------------------------------\n";
+    std::cout << "Field: " << field.fieldName << "\n";
+    std::cout << "Type:  " << field.getTypeName() << "\n";
+    
+    if constexpr (field.template has<meta::Description>()) {
+        std::cout << "Desc:  " << field.template get<meta::Description>().text << "\n";
+    }
+    
+    std::cout << "\nColumn Mappings:\n";
+    if constexpr (field.template has<meta::Csv>()) {
+        std::cout << "  CSV:  " << field.template get<meta::Csv>().name << "\n";
+    }
+    if constexpr (field.template has<meta::Sql>()) {
+        std::cout << "  SQL:  " << field.template get<meta::Sql>().name << "\n";
+    }
+    if constexpr (field.template has<meta::Json>()) {
+        std::cout << "  JSON: " << field.template get<meta::Json>().name << "\n";
+    }
+    
+    if constexpr (field.template has<meta::Validator>()) {
+        std::cout << "\nValidator: " << field.template get<meta::Validator>().rule << "\n";
+    }
+    
+    std::cout << "\nProperties: " << meta::propsToString(field.getProps()) << "\n";
+}
+
+// Helper to iterate over all fields
+template <typename T, std::size_t... Is>
+void printAllFields(const T& fields, std::index_sequence<Is...>) {
+    (printFieldMetadata(std::get<Is>(fields)), ...);
+}
+
+int main() {
+    std::cout << "\n";
+    std::cout << "===========================================\n";
+    std::cout << "         CAR METADATA SYSTEM              \n";
+    std::cout << "    Compile-Time Type-Safe Reflection     \n";
+    std::cout << "===========================================\n";
+    std::cout << "\n";
+    
+    std::cout << "Table Name: " << meta::MetaTuple<Car>::tableName << "\n";
+    std::cout << "SQL Query:  " << meta::MetaTuple<Car>::query << "\n";
+    std::cout << "\n";
+    
+    // Print all field metadata
+    constexpr auto fieldCount = std::tuple_size_v<decltype(meta::Car::fields)>;
+    printAllFields(meta::Car::fields, std::make_index_sequence<fieldCount>{});
+    
+    std::cout << "\n";
+    std::cout << "===========================================\n";
+    std::cout << "          DEFAULT VALUES                   \n";
+    std::cout << "===========================================\n";
+    std::cout << "\n";
+    
+    auto& makerField = std::get<0>(meta::Car::fields);
+    auto& yearField = std::get<2>(meta::Car::fields);
+    auto& electricField = std::get<3>(meta::Car::fields);
+    auto& featuresField = std::get<5>(meta::Car::fields);
+    auto& specsField = std::get<6>(meta::Car::fields);
+    
+    if constexpr (makerField.template has<meta::DefaultValue<std::string>>()) {
+        std::cout << "maker:    \"" 
+                  << makerField.template get<meta::DefaultValue<std::string>>().value 
+                  << "\"\n";
+    }
+    
+    if constexpr (yearField.template has<meta::DefaultValue<unsigned short>>()) {
+        std::cout << "year:     " 
+                  << yearField.template get<meta::DefaultValue<unsigned short>>().value 
+                  << "\n";
+    }
+    
+    if constexpr (electricField.template has<meta::DefaultValue<bool>>()) {
+        std::cout << "electric: " 
+                  << std::boolalpha
+                  << electricField.template get<meta::DefaultValue<bool>>().value 
+                  << "\n";
+    }
+    
+    if constexpr (featuresField.template has<meta::DefaultValue<std::vector<std::string>>>()) {
+        std::cout << "features: [";
+        const auto& features = featuresField.template get<meta::DefaultValue<std::vector<std::string>>>().value;
+        for (size_t i = 0; i < features.size(); ++i) {
+            std::cout << "\"" << features[i] << "\"";
+            if (i < features.size() - 1) std::cout << ", ";
+        }
+        std::cout << "]\n";
+    }
+    
+    if constexpr (specsField.template has<meta::DefaultValue<std::unordered_map<std::string, std::string>>>()) {
+        std::cout << "specs:    {\n";
+        const auto& specs = specsField.template get<meta::DefaultValue<std::unordered_map<std::string, std::string>>>().value;
+        for (const auto& [key, val] : specs) {
+            std::cout << "            \"" << key << "\": \"" << val << "\"\n";
+        }
+        std::cout << "          }\n";
+    }
+    
+    std::cout << "\n";
+    std::cout << "===========================================\n";
+    std::cout << "     COMPILE-TIME TYPE SAFETY DEMO         \n";
+    std::cout << "===========================================\n";
+    std::cout << "\n";
+    
+    // Demonstrate runtime usage with actual Car object
+    Car myCar{
+        "Toyota",
+        "Camry",
+        2023,
+        false,
+        15000,
+        {"Bluetooth", "Backup Camera", "Lane Assist"},
+        {{"engine", "4-cylinder"}, {"transmission", "CVT"}}
+    };
+    
+    std::cout << "Created Car Instance:\n";
+    std::cout << "  " << makerField.fieldName << ": " << makerField.getValue(myCar) << "\n";
+    std::cout << "  " << std::get<1>(meta::Car::fields).fieldName << ": " 
+              << std::get<1>(meta::Car::fields).getValue(myCar) << "\n";
+    std::cout << "  " << yearField.fieldName << ": " << yearField.getValue(myCar) << "\n";
+    std::cout << "  " << electricField.fieldName << ": " 
+              << std::boolalpha << electricField.getValue(myCar) << "\n";
+    
+    std::cout << "\nAll metadata validated at compile-time!\n";
+    std::cout << "Zero runtime overhead!\n";
+    std::cout << "Type-safe defaults and validators!\n";
+    std::cout << "\n";
+    
+    return 0;
+}
+

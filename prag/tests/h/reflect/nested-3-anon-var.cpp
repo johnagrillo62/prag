@@ -6,7 +6,6 @@
 #include <tuple>
 
 #include "../meta/json.h"
-#include "../meta/meta.h"
 #include "../meta/txt.h"
 #include "../meta/yaml.h"
 #include "nested-3-anon-var.meta"

@@ -158,10 +158,56 @@ inline std::string propsToString(Prop props)
 }
 
 struct Props {
-    Prop value;
-    constexpr Props(Prop p = Prop::None) : value(p) {}
+    Prop value = Prop::None;
 };
 
+// ============================================================================
+// COLUMN NAME ATTRIBUTES
+// ============================================================================
+struct Csv {
+    std::string_view name = "";
+};
+
+struct Sql {
+    std::string_view name = "";
+};
+
+struct Json {
+    std::string_view name = "";
+};
+
+struct Src {
+    std::string_view name = "";
+};
+
+// ============================================================================
+// VALUE ATTRIBUTES
+// ============================================================================
+template <typename T>
+struct DefaultValue {
+    T value;
+};
+
+// Deduction guide for DefaultValue
+template <typename T>
+DefaultValue(T) -> DefaultValue<T>;
+
+template <typename T>
+struct InitValue {
+    T value;
+};
+
+// Deduction guide for InitValue
+template <typename T>
+InitValue(T) -> InitValue<T>;
+
+struct Description {
+    std::string_view text = "";
+};
+
+struct Validator {
+    std::string_view rule = "";
+};
 
 // ============================================================================
 // ACCESSORS ATTRIBUTE (getter + setter, setter optional)
@@ -434,9 +480,9 @@ struct FieldRef {
     }
 };
 
-// Helper function to create FieldRef
+// Helper to create Field - deduces class from member pointer
 template <auto MemberPtr>
-constexpr FieldRef<MemberPtr> field = {};
+constexpr FieldRef<MemberPtr> MakeField = {};
 
 // ============================================================================
 // FIELD BUILDER - for fields with getters/setters (nullptr member pointer)
@@ -473,3 +519,4 @@ struct MetaTuple
 };
 
 } // namespace meta
+

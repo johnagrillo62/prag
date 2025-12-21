@@ -16,7 +16,7 @@ struct A
 
     // Clean syntax without macros using field helper
     constexpr static const auto fields =
-      std::make_tuple(meta::field<&A::x>("id"), meta::field<&A::y>("Y", Attrs{}, Attrs2{}));
+      std::make_tuple(meta::MakeField<&A::x>("id"), meta::MakeField<&A::y>("Y", Attrs{}, Attrs2{}));
 };
 
 // Example with Props attributes
@@ -26,8 +26,8 @@ struct B
     std::string name;
 
     constexpr static const auto fields =
-        std::make_tuple(meta::field<&B::value>("value", meta::Props{meta::Prop::PrimaryKey}),
-                        meta::field<&B::name>("name", meta::Props{meta::Prop::Serializable}));
+        std::make_tuple(meta::MakeField<&B::value>("value", meta::Props{meta::Prop::PrimaryKey}),
+                        meta::MakeField<&B::name>("name", meta::Props{meta::Prop::Serializable}));
 };
 
 
