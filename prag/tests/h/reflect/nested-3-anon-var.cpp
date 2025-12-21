@@ -3,17 +3,15 @@
 #include <sstream>
 #include <tuple>
 
-
-#include "../meta/field.h"
+#include "../meta/meta.h"
 #include "../meta/txt.h"
 #include "../meta/json.h"
 #include "../meta/yaml.h"
-#include "../meta/meta.h"
+
+
 
 #include "nested-3-anon-var.h"
 #include "nested-3-anon-var.meta"
-
-
 
 int main()
 {

@@ -4,9 +4,9 @@ namespace Complex01
 {
 // Field metadata
 inline const auto fields = std::make_tuple(
-    meta::Field< ::Complex01, int, &::Complex01::id, meta::Prop::Serializable, nullptr, nullptr>("int", "id"),
-    meta::Field< ::Complex01, std::string, &::Complex01::string, meta::Prop::Serializable, nullptr, nullptr>("std::string", "string"),
-    meta::Field< ::Complex01, std::map<std::string, std::map<std::string, std::string>>, &::Complex01::stringStringMap, meta::Prop::Serializable, nullptr, nullptr>("std::map<std::string, std::map<std::string, std::string>>", "stringStringMap"));
+    meta::Field< ::Complex01, &::Complex01::id>("id"),
+    meta::Field< ::Complex01, &::Complex01::string>("string"),
+    meta::Field< ::Complex01, &::Complex01::stringStringMap>("stringStringMap"));
 } // namespace Complex01
 } // namespace meta
 

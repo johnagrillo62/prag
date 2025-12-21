@@ -1,19 +1,13 @@
-namespace demo
-{
-struct MyClass
-{
-    int x;
-    int y;
-};
+#include "complex02.h"
+#include "myclass.h"
+#include "../meta/field.h"
+#include "../meta/json.h"
+#include "../meta/txt.h"
+#include "../meta/yaml.h"
+#include "complex01.meta"
 
-struct Complex
-{
-    int id;
-    std::string string;
-    std::vector<MyClass> vector;
-    std::map<std::string, std::map<std::string, std::string>> stringStringMap;
-};
-}
+
+
 
 int main()
 {

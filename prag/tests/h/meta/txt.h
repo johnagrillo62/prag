@@ -14,39 +14,80 @@
 #include <iostream>
 #include <typeinfo>
 #include "meta.h"
-#include "field.h"
 
 namespace meta
 {
 
+// Prettify type names from __PRETTY_FUNCTION__
+inline auto prettifyType(std::string_view typeStr) -> std::string {
+    auto result = std::string(typeStr);
+    
+    // IMPORTANT: Do replacements in order from most specific to least specific!
+    
+    // 1. Remove the extra type info that GCC adds
+    auto pos = size_t{0};
+    while ((pos = result.find("; std::string_view = std::basic_string_view<char>")) != std::string::npos) {
+        result.erase(pos, 51);
+    }
+    
+    // 2. Replace verbose std::string variations with std::string
+    const std::string_view patterns[] = {
+        "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >",
+        "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>",
+        "std::__cxx11::basic_string<char>",
+    };
+    
+    for (const auto& pattern : patterns) {
+        pos = 0;
+        while ((pos = result.find(pattern, pos)) != std::string::npos) {
+            result.replace(pos, pattern.size(), "std::string");
+            pos += 11; // Length of "std::string"
+        }
+    }
+    
+    // 3. Clean up spacing around angle brackets
+    pos = 0;
+    while ((pos = result.find(" >")) != std::string::npos) {
+        result.erase(pos, 1);
+    }
+    
+    pos = 0;
+    while ((pos = result.find("  ")) != std::string::npos) {
+        result.replace(pos, 2, " ");
+    }
+    
+    return result;
+}
+  
+// Field value serialization functions
 template <Arithmetic T>
-std::string field_value_to_string(const T& value)
+auto fieldValueToString(const T& value) -> std::string
 {
-    std::ostringstream ss;
+    auto ss = std::ostringstream{};
     ss << value;
     return ss.str();
 }
 
-std::string field_value_to_string(const std::string& value)
+inline auto fieldValueToString(const std::string& value) -> std::string
 {
     return "\"" + value + "\"";
 }
 
 template <Optional T>
-std::string field_value_to_string(const T& opt)
+auto fieldValueToString(const T& opt) -> std::string
 {
     if (opt.has_value())
-        return field_value_to_string(*opt);
+        return fieldValueToString(*opt);
     return "nullopt";
 }
 
 template <Vector T>
-std::string field_value_to_string(const T& vec)
+auto fieldValueToString(const T& vec) -> std::string
 {
-    std::string out = "[";
-    for (size_t i = 0; i < vec.size(); ++i)
+    auto out = std::string{"["};
+    for (auto i = size_t{0}; i < vec.size(); ++i)
     {
-        out += field_value_to_string(vec[i]);
+        out += fieldValueToString(vec[i]);
         if (i < vec.size() - 1)
             out += ", ";
     }
@@ -55,27 +96,27 @@ std::string field_value_to_string(const T& vec)
 }
 
 template <Tuple T>
-std::string field_value_to_string(const T& value)
+auto fieldValueToString(const T& value) -> std::string
 {
-    std::string out = "(";
+    auto out = std::string{"("};
     std::apply([&out](auto&&... elems)
     {
-        size_t n = 0;
-        ((out += field_value_to_string(elems) + (++n < sizeof...(elems) ? ", " : "")), ...);
+        auto n = size_t{0};
+        ((out += fieldValueToString(elems) + (++n < sizeof...(elems) ? ", " : "")), ...);
     }, value);
     out += ")";
     return out;
 }
 
 template <Map T>
-std::string field_value_to_string(const T& m)
+auto fieldValueToString(const T& m) -> std::string
 {
-    std::string out = "{";
-    bool first = true;
+    auto out = std::string{"{"};
+    auto first = true;
     for (const auto& [key, val] : m)
     {
         if (!first) out += ", ";
-        out += field_value_to_string(key) + ": " + field_value_to_string(val);
+        out += fieldValueToString(key) + ": " + fieldValueToString(val);
         first = false;
     }
     out += "}";
@@ -83,68 +124,69 @@ std::string field_value_to_string(const T& m)
 }
 
 template <Variant T>
-std::string field_value_to_string(const T& var)
+auto fieldValueToString(const T& var) -> std::string
 {
-    std::string result = "null";
+    auto result = std::string{"null"};
     std::visit([&](const auto& value) {
-        result = field_value_to_string(value);
+        result = fieldValueToString(value);
     }, var);
     return result;
 }
 
-
+// Extract field as string for debug/display
 template <typename Instance, typename FieldMeta>
-std::string extract_field_string(const Instance& instance, const FieldMeta& field_meta)
+auto extractFieldString(const Instance& instance, const FieldMeta& fieldMeta) -> std::string
 {
-    std::ostringstream ss;
-    ss << field_meta.fieldName << " (" << field_meta.fieldType << "): ";
+    auto ss = std::ostringstream{};
+    
+    // Get type name via __PRETTY_FUNCTION__ and prettify it
+    constexpr auto typeStr = FieldMeta::getTypeName();
+    
+    ss << fieldMeta.fieldName << " (" << prettifyType(typeStr) << "): ";
 
-    if constexpr ((FieldMeta::properties & meta::Prop::Private) != meta::Prop::None)
+    // Check if field HAS Props attribute at compile-time
+    if constexpr (FieldMeta::template has<Props>())
     {
-        ss << "<inaccessible - private member>";
+        // Check the actual value at runtime
+        if ((fieldMeta.getProps() & meta::Prop::Private) != meta::Prop::None)
+        {
+            ss << "<inaccessible - private member>";
+            return ss.str();
+        }
+    }
+    
+    // Normal field handling
+    if constexpr (FieldMeta::memberPtr != nullptr)
+    {
+        ss << fieldValueToString(instance.*(FieldMeta::memberPtr));
+    }
+    else if constexpr (FieldMeta::getterPtr != nullptr)
+    {
+        auto getter = FieldMeta::getterPtr;
+        if (getter)
+            ss << fieldValueToString(getter(instance));
+        else
+            ss << "<no getter available>";
     }
     else
     {
-        if constexpr (FieldMeta::memberPtr != nullptr)
-        {
-            ss << field_value_to_string(instance.*(FieldMeta::memberPtr));
-        }
-        else if constexpr (FieldMeta::getterPtr != nullptr)
-        {
-            auto getter = FieldMeta::getterPtr;
-            if (getter)
-                ss << field_value_to_string(getter(instance));
-            else
-                ss << "<no getter available>";
-        }
-        else
-        {
-            ss << "<no member pointer or getter>";
-        }
-    }
-
-    if (field_meta.getCsvColumn().has_value() || field_meta.getSqlColumn().has_value())
-    {
-        ss << "  Attributes: ";
-        if (field_meta.getCsvColumn().has_value())
-            ss << "csv=" << field_meta.getCsvColumn().value() << " ";
-        if (field_meta.getSqlColumn().has_value())
-            ss << "table=" << field_meta.getSqlColumn().value();
+        ss << "<no member pointer or getter>";
     }
 
     return ss.str();
 }
 
+// Convert object to string representation
 template <Object T>
-std::string toString(const T& instance)
+auto toString(const T& instance) -> std::string
 {
-    std::ostringstream ss;
+    auto ss = std::ostringstream{};
     constexpr auto& fields = meta::MetaTuple<T>::fields;
-    std::apply([&](auto&&... field_metas)
-               { ((ss << extract_field_string(instance, field_metas) << "\n"), ...); },
+    std::apply([&](auto&&... fieldMetas)
+               { ((ss << extractFieldString(instance, fieldMetas) << "\n"), ...); },
                fields);
     return ss.str();
 }
 
-}
+} // namespace meta
 

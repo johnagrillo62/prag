@@ -42,9 +42,9 @@ target_include_directories(cpp-enum PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(cpp-enum PRIVATE ast inputs outputs)
 
 # enum_gen
-add_executable(validate validate.cpp )
-target_include_directories(validate PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(validate PRIVATE ast inputs outputs)
+#add_executable(validate validate.cpp )
+#target_include_directories(validate PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+#target_link_libraries(validate PRIVATE ast inputs outputs)
 
 
 

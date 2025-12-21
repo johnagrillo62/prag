@@ -27,5 +27,10 @@ int main()
   std::cout << meta::toString(info) << "\n";
   std::cout << "yaml\n";
   std::cout << meta::toYaml(info) << "\n";  
+
+
+  info.contact = "hllo";
+  std::cout << meta::toYaml(info) << "\n";  
+  std::cout << meta::toString(info) << "\n";
   
 }

@@ -1,26 +1,21 @@
-#pragma once
-#include <cstdint>
-#include <string>
-#include <vector>
-#include <map>
-#include <variant>
-#include <optional>
-
 namespace meta
 {
 namespace ContactInfo
 {
 // Field metadata
 inline const auto fields = std::make_tuple(
-    ::meta::Field< ::ContactInfo, std::variant<std::string, int, float>, &::ContactInfo::contact, ::meta::Prop::Serializable, nullptr, nullptr>("std::variant<std::string, int, float>", "contact"));
+    meta::Field< ::ContactInfo, &::ContactInfo::contact>("contact"));
 } // namespace ContactInfo
 } // namespace meta
 
+namespace meta
+{
 // Template specialization for type-based reflection lookup
-template <>
-struct meta::MetaTuple< ::ContactInfo>
+template <>  struct MetaTuple< ::ContactInfo>
 {
   static inline const auto& fields = meta::ContactInfo::fields;
   static constexpr auto tableName = "ContactInfo";
   static constexpr auto query = "select contact from ContactInfo";
 };
+} // namespace meta
+

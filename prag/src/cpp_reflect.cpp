@@ -43,7 +43,6 @@ class CppReflectWalker : public bhw::CppWalker
     {
         std::ostringstream out;
 
-        // Map ReifiedTypeId to type string
         std::string baseType;
         switch (type.reifiedType)
         {
@@ -78,7 +77,6 @@ class CppReflectWalker : public bhw::CppWalker
             baseType = "std::shared_ptr";
             break;
         default:
-            // Fall back to base class implementation
             return bhw::CppWalker::generateGenericType(type, indent);
         }
 
@@ -92,31 +90,25 @@ class CppReflectWalker : public bhw::CppWalker
                 if (i > 0)
                     out << ", ";
 
-                // Check if this argument is a struct reference
                 if (auto* structRef = std::get_if<bhw::StructRefType>(&type.args[i]->value))
                 {
-                    // Fully qualify the struct name
                     std::string typeName = structRef->srcTypeString;
 
-                    // If already qualified (starts with ::), keep it
                     if (typeName.find("::") == 0)
                     {
                         out << typeName;
                     }
                     else if (currentParentStruct_.empty())
                     {
-                        // Top-level struct reference - just qualify with ::
                         out << "::" << typeName;
                     }
                     else
                     {
-                        // Nested struct - fully qualify with parent
                         out << currentParentStruct_ << "::" << typeName;
                     }
                 }
                 else
                 {
-                    // For other types, use the base class implementation
                     out << walkType(*type.args[i], indent);
                 }
             }
@@ -139,7 +131,6 @@ class CppReflectWalker : public bhw::CppWalker
                                  const std::string& fullStructName,
                                  size_t indent);
 
-    // ⭐ ADDED: Track current parent struct for nested type qualification
     std::string currentParentStruct_;
 };
 
@@ -188,7 +179,6 @@ int main(int argc, char* argv[])
             source = bhw::readFile(inputFile);
         }
 
-        // Determine extension: override if specified, otherwise use file extension or "cpp" for stdin
         std::string ext;
         if (!overrideExt.empty())
             ext = overrideExt;
@@ -347,20 +337,19 @@ std::string CppReflectWalker::walkNestedStruct(const bhw::Struct& s,
 
             fieldNames.emplace_back(displayName);
 
-            str << sep << "    meta::Field< " << fullStructName << ", " << typeString << ", ";
+            str << sep << "    meta::Field< " << fullStructName << ", " ;
 
             if (isNested)
             {
-                std::string funcName = sanitizeFunctionName(name);
-                str << "nullptr, meta::Prop::Serializable, "
-                    << "&get_" << funcName << ", &set_" << funcName;
+  	        std::string funcName = sanitizeFunctionName(name);
+                str << "&get_" << funcName << ", &set_" << funcName;
             }
             else
             {
-                str << "&" << name << ", meta::Prop::Serializable, nullptr, nullptr";
+                str << "&" << name << ", meta::Prop::Serializable";
             }
 
-            str << ">(\"" << typeString << "\", \"" << displayName << "\")";
+            str << ">(\"" << displayName << "\")";
             sep = ",\n";
         }
     }
@@ -474,23 +463,23 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
 
             fieldNames.emplace_back(displayName);
 
-            str << sep << "    meta::Field< " << fullStructName << ", " << typeString << ", ";
+            str << sep << "    meta::Field< " << fullStructName << ", " ;
 
             if (isNested)
             {
                 // For nested fields: use nullptr for member pointer, and function pointers for
                 // accessors
                 std::string funcName = sanitizeFunctionName(name);
-                str << "nullptr, meta::Prop::Serializable, "
+                str << "nullptr, "
                     << "&get_" << funcName << ", &set_" << funcName;
             }
             else
             {
                 // For direct fields: use member pointer
-                str << "&" << name << ", meta::Prop::Serializable, nullptr, nullptr";
+    	      str << "&" << name ;
             }
 
-            str << ">(\"" << typeString << "\", \"" << displayName << "\")";
+            str << ">(\"" << displayName << "\")";
             sep = ",\n";
         }
     }

@@ -8,8 +8,6 @@
 #include <type_traits>
 #include <variant>
 #include <vector>
-
-#include "field.h"
 #include "meta.h"
 
 namespace meta
