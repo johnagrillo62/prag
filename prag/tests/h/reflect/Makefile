@@ -1,6 +1,6 @@
 # Tools
 CXX := g++
-CXXFLAGS := -std=c++20
+CXXFLAGS := -std=c++20 -I../meta
 REFLECT := ../../../build/out/cpp-reflect
 
 # Directories
