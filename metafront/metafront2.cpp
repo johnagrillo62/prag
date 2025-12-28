@@ -1,50 +1,62 @@
 /*
 ================================================================================
-MetaFront - C++ Reflection/Serialization Tool
+cpp-reflect-ast - C++ Reflection Metadata Generator using Clang AST
 ================================================================================
 
 Author: John Grillo
-Date: 2025-09-13
-Version: 1.0
+Date: 2024-2025
+Version: 2.0 (Final)
 
 Description:
 ------------
-This header documents the MetaFront tool, a standalone CLI program that reads
-the AST of C++ source code and automatically generates type-safe, fully
-namespaced reflection metadata for any data class.
+A production-ready tool that generates type-safe reflection metadata for C++ 
+structs and classes using libclang's AST parser.
 
 Features:
 ---------
-- Extracts all fields from any C++ class, including nested STL containers,
-  tuples, maps, sets, and vectors.
-- Generates type-safe C++ metadata tuples using `FieldMeta` and `MetaTuple`.
-- Preserves original namespaces to avoid name collisions.
-- Outputs headers ready for inclusion in projects for reflection,
-  serialization, or generic code.
-- Works as a standalone CLI; no compiler integration required.
-
-
-Why It's Unique:
-----------------
-- Automatically generates reflection metadata for all classes.
-- Type-safe, fully namespaced, and immediately usable.
-- Avoids manual macros, template registration, or IR reconstruction.
-- Enables universal serialization and reflection across any C++ project.
-- Solo implementation demonstrates the feasibility of practical compile-time
-  reflection today, long before official C++ reflection features.
+✓ Full C++ parsing (handles any valid C++ code)
+✓ Nested anonymous struct support with decltype() references
+✓ Generates clean, namespaced metadata
+✓ CLI11-based command-line interface
+✓ Multiple include directory support (-I, --isystem)
+✓ Output to file or stdout (-o)
+✓ Quiet mode for build scripts (-q)
+✓ Verbose mode for debugging (-v)
+✓ Automatic help text (--help)
 
 Usage:
 ------
-1. Run the CLI tool on your C++ project.
-2. The tool generates .meta  headers containing `MetaTuple` specializations
-   for each class.
-3. Include the generated headers in your project to access reflection
-   metadata.
-4. Use the metadata for serialization, debugging, or generic programming.
+  ./cpp-reflect-ast myfile.h -o myfile.meta.h
+  ./cpp-reflect-ast myfile.h -I../include -o output.h -q
+  ./cpp-reflect-ast myfile.h -v  # verbose debug output
+  cat myfile.h | ./cpp-reflect-ast -o output.h  # from stdin
+  ./cpp-reflect-ast - < myfile.h  # explicit stdin
+  preprocessor myfile.h | ./cpp-reflect-ast  # pipe from preprocessor
+
+Generated Output:
+-----------------
+  namespace meta::MyStruct {
+    inline const auto fields = std::make_tuple(
+      meta::field<&::MyStruct::field1>("field1"),
+      meta::field<&::MyStruct::field2>("field2")
+    );
+  }
+  
+  template <> struct MetaTuple<::MyStruct> {
+    static inline const auto& fields = meta::MyStruct::fields;
+    static constexpr auto tableName = "MyStruct";
+    static constexpr auto query = "select field1, field2 from MyStruct";
+  };
+
+Dependencies:
+-------------
+- libclang (system library)
+- CLI11.hpp (single-header, included)
+- meta/meta_field.h (your reflection framework)
 
 License:
 --------
-[Apache License]
+Apache License 2.0
 
 ================================================================================
 */
@@ -59,8 +71,17 @@ License:
 #include <tuple>
 #include <utility>
 #include <vector>
+#include <fstream>
+#include <cstdlib>
+#include <unistd.h>
 
+#include "CLI11.hpp"
 #include "meta/meta_field.h"
+
+// Global verbose flag
+bool g_verbose = false;
+
+#define DEBUG(...) do { if (g_verbose) { std::cerr << __VA_ARGS__; } } while(0)
 
 // -------------------------
 // Field info struct
@@ -111,60 +132,177 @@ std::string getTableName(const std::vector<std::string>& annotations);
 // -------------------------
 int main(int argc, char** argv)
 {
-    if (argc < 2)
+    CLI::App app{"cpp-reflect-ast - C++ Reflection Metadata Generator using Clang AST"};
+    
+    std::string inputFile;
+    std::string outputFile;
+    std::vector<std::string> includeDirs;
+    std::vector<std::string> systemIncludeDirs;
+    std::optional<std::string> targetClass;
+    bool quiet = false;
+    bool verbose = false;
+    
+    // Positional arguments
+    app.add_option("input", inputFile, "Input C++ header file (use '-' or omit for stdin)")
+        ->check(CLI::ExistingFile | CLI::IsMember({"-"}));
+    
+    app.add_option("class", targetClass, "Optional: Fully qualified class name to process");
+    
+    // Options
+    app.add_option("-o,--output", outputFile, "Output file (default: stdout)");
+    
+    app.add_option("-I,--include", includeDirs, "Add include directory")
+        ->allow_extra_args(false);
+    
+    app.add_option("--isystem", systemIncludeDirs, "Add system include directory")
+        ->allow_extra_args(false);
+    
+    app.add_flag("-q,--quiet", quiet, "Suppress all diagnostic and debug output");
+    
+    app.add_flag("-v,--verbose", verbose, "Show debug output (AST walking details)");
+    
+    CLI11_PARSE(app, argc, argv);
+    
+    // Set global verbose flag for use in other functions
+    extern bool g_verbose;
+    g_verbose = verbose && !quiet;
+    
+    // Redirect output if specified
+    std::ofstream outFile;
+    std::streambuf* coutBuf = std::cout.rdbuf();
+    if (!outputFile.empty())
     {
-        std::cerr << "Usage: " << argv[0] << " <header.h> <Fully::Qualified::ClassName>\n";
-        return 1;
+        outFile.open(outputFile);
+        if (!outFile)
+        {
+            std::cerr << "Error: Cannot open output file: " << outputFile << "\n";
+            return 1;
+        }
+        std::cout.rdbuf(outFile.rdbuf());
     }
+    
+    // Redirect stderr if quiet mode
+    std::ofstream nullStream;
+    std::streambuf* cerrBuf = std::cerr.rdbuf();
+    if (quiet)
+    {
+        nullStream.open("/dev/null");
+        std::cerr.rdbuf(nullStream.rdbuf());
+    }
+    
+    const std::string headerFile = inputFile;
+    const std::optional<std::string> fullClassName = targetClass;
 
-    const std::string headerFile = argv[1];
-
-    const std::optional<std::string> fullClassName =
-        (argc >= 3) ? std::make_optional(argv[2]) : std::nullopt;
+    // Handle stdin input
+    std::string tempFileName;
+    bool usedStdin = false;
+    
+    if (inputFile.empty() || inputFile == "-")
+    {
+        // Read from stdin
+        usedStdin = true;
+        tempFileName = "/tmp/cpp-reflect-ast-stdin-XXXXXX";
+        
+        // Create unique temp file
+        char tempTemplate[] = "/tmp/cpp-reflect-ast-stdin-XXXXXX";
+        int fd = mkstemp(tempTemplate);
+        if (fd == -1)
+        {
+            std::cerr << "Error: Cannot create temporary file\n";
+            return 1;
+        }
+        tempFileName = tempTemplate;
+        
+        // Read stdin and write to temp file
+        std::string line;
+        std::ofstream tempFile(tempFileName);
+        while (std::getline(std::cin, line))
+        {
+            tempFile << line << "\n";
+        }
+        tempFile.close();
+        close(fd);
+        
+        if (!quiet && g_verbose)
+        {
+            std::cerr << "// Reading from stdin, using temp file: " << tempFileName << "\n";
+        }
+    }
+    
+    const std::string actualFile = usedStdin ? tempFileName : headerFile;
 
     CXIndex index = clang_createIndex(0, 0);
 
-    const char* args[] = {
+    // Build compiler arguments
+    std::vector<std::string> argsStorage;
+    std::vector<const char*> args = {
       "-std=c++20",
       "-x", "c++",
-      "-isystem", "/usr/lib/gcc/x86_64-linux-gnu/13/include",  // GCC builtin headers (stddef.h, etc)
+    };
+    
+    // Add user include directories first (higher priority)
+    for (const auto& dir : includeDirs)
+    {
+        args.push_back("-I");
+        argsStorage.push_back(dir);
+        args.push_back(argsStorage.back().c_str());
+    }
+    
+    // Add user system includes
+    for (const auto& dir : systemIncludeDirs)
+    {
+        args.push_back("-isystem");
+        argsStorage.push_back(dir);
+        args.push_back(argsStorage.back().c_str());
+    }
+    
+    // Add default system includes
+    args.insert(args.end(), {
+      "-isystem", "/usr/lib/gcc/x86_64-linux-gnu/13/include",
       "-isystem", "/usr/include/c++/13",
       "-isystem", "/usr/include/x86_64-linux-gnu/c++/13",
       "-isystem", "/usr/include/c++/13/backward",
       "-isystem", "/usr/local/include",
       "-isystem", "/usr/include/x86_64-linux-gnu",
       "-isystem", "/usr/include"
-    };
+    });
     
     CXTranslationUnit tu =
         clang_parseTranslationUnit(index,
-                                   headerFile.c_str(),
-                                   args,
-                                   sizeof(args) / sizeof(args[0]),
+                                   actualFile.c_str(),
+                                   args.data(),
+                                   args.size(),
                                    nullptr,
                                    0,
                                    CXTranslationUnit_DetailedPreprocessingRecord);
 
     if (!tu)
     {
-        std::cerr << "Failed to parse translation unit.\n";
+        std::cerr << "Error: Failed to parse translation unit.\n";
         return 1;
     }
 
-    // Debug: Check for diagnostics
+    // Always show diagnostics (parse errors/warnings) unless -q
     unsigned numDiags = clang_getNumDiagnostics(tu);
-    std::cerr << "// Number of diagnostics: " << numDiags << "\n";
-    for (unsigned i = 0; i < numDiags; ++i)
+    if (numDiags > 0)
     {
-        CXDiagnostic diag = clang_getDiagnostic(tu, i);
-        CXString diagStr = clang_formatDiagnostic(diag, clang_defaultDiagnosticDisplayOptions());
-        std::cerr << "// Diagnostic: " << clang_getCString(diagStr) << "\n";
-        clang_disposeString(diagStr);
-        clang_disposeDiagnostic(diag);
+        std::cerr << "// " << numDiags << " diagnostic" << (numDiags > 1 ? "s" : "") << ":\n";
+        for (unsigned i = 0; i < numDiags; ++i)
+        {
+            CXDiagnostic diag = clang_getDiagnostic(tu, i);
+            CXString diagStr = clang_formatDiagnostic(diag, clang_defaultDiagnosticDisplayOptions());
+            std::cerr << "// " << clang_getCString(diagStr) << "\n";
+            clang_disposeString(diagStr);
+            clang_disposeDiagnostic(diag);
+        }
     }
 
-    std::cerr << "//Parsing file: " << headerFile << "\n";
-    std::cerr << "//Target class: " << (fullClassName ? fullClassName.value() : "ALL") << "\n";
+    // Show basic info unless -q
+    if (g_verbose)
+    {
+        std::cerr << "// Parsing file: " << (usedStdin ? "stdin" : actualFile) << "\n";
+        std::cerr << "// Target class: " << (fullClassName ? fullClassName.value() : "ALL") << "\n";
+    }
 
     CXCursor cursor = clang_getTranslationUnitCursor(tu);
     std::vector<FieldInfo> fields;
@@ -172,6 +310,21 @@ int main(int argc, char** argv)
 
     clang_disposeTranslationUnit(tu);
     clang_disposeIndex(index);
+    
+    // Clean up temp file if we used stdin
+    if (usedStdin)
+    {
+        unlink(tempFileName.c_str());
+    }
+    
+    // Restore streams
+    std::cout.rdbuf(coutBuf);
+    std::cerr.rdbuf(cerrBuf);
+    if (outFile.is_open())
+        outFile.close();
+    if (nullStream.is_open())
+        nullStream.close();
+    
     return 0;
 }
 
@@ -264,17 +417,77 @@ std::vector<std::string> parseAnnotations(const std::string& rawComment)
     return annotations;
 }
 
+// Extract annotations from [[clang::annotate("...")]] attributes
+std::vector<std::string> getClangAnnotations(CXCursor cursor)
+{
+    std::vector<std::string> annotations;
+    
+    // Check if cursor has attributes
+    if (!clang_Cursor_hasAttrs(cursor))
+    {
+        DEBUG("//     No attributes on cursor\n");
+        return annotations;
+    }
+    
+    DEBUG("//     Cursor has attributes, visiting...\n");
+    
+    // Visit attributes to find annotate attrs
+    clang_visitChildren(
+        cursor,
+        [](CXCursor c, CXCursor parent, CXClientData client_data) -> CXChildVisitResult
+        {
+            auto* annotations = static_cast<std::vector<std::string>*>(client_data);
+            
+            CXCursorKind kind = clang_getCursorKind(c);
+            DEBUG("//       Attr kind: " << kind << " (AnnotateAttr=" << CXCursor_AnnotateAttr << ")\n");
+            
+            // Look for AnnotateAttr nodes
+            if (kind == CXCursor_AnnotateAttr)
+            {
+                CXString spelling = clang_getCursorSpelling(c);
+                const char* str = clang_getCString(spelling);
+                if (str && str[0] != '\0')
+                {
+                    DEBUG("//       Found annotation: " << str << "\n");
+                    annotations->push_back(str);
+                }
+                clang_disposeString(spelling);
+            }
+            
+            return CXChildVisit_Continue;
+        },
+        &annotations);
+    
+    DEBUG("//     Total annotations found: " << annotations.size() << "\n");
+    return annotations;
+}
+
 std::vector<std::string> getAnnotations(CXCursor cursor)
 {
     std::vector<std::string> annotations;
     
-    CXString rawComment = clang_Cursor_getRawCommentText(cursor);
-    const char* commentStr = clang_getCString(rawComment);
-    if (commentStr)
+    DEBUG("//     Getting annotations for cursor\n");
+    
+    // First, try clang::annotate attributes
+    annotations = getClangAnnotations(cursor);
+    
+    // If no clang attributes, try comment-based annotations
+    if (annotations.empty())
     {
-        annotations = parseAnnotations(commentStr);
+        DEBUG("//     No clang attributes, trying comments\n");
+        CXString rawComment = clang_Cursor_getRawCommentText(cursor);
+        const char* commentStr = clang_getCString(rawComment);
+        if (commentStr)
+        {
+            annotations = parseAnnotations(commentStr);
+            DEBUG("//     Found " << annotations.size() << " comment annotations\n");
+        }
+        clang_disposeString(rawComment);
     }
-    clang_disposeString(rawComment);
+    else
+    {
+        DEBUG("//     Using " << annotations.size() << " clang attributes\n");
+    }
     
     return annotations;
 }
@@ -325,7 +538,7 @@ std::vector<FieldInfo> dumpStruct(CXCursor structCursor)
 {
     std::vector<FieldInfo> fields;
     
-    //std::cerr << "dumpStruct called on cursor\n";
+    DEBUG("// dumpStruct called\n");
     
     clang_visitChildren(
         structCursor,
@@ -335,48 +548,48 @@ std::vector<FieldInfo> dumpStruct(CXCursor structCursor)
             
             CXCursorKind childKind = clang_getCursorKind(c);
             CXString kindStr = clang_getCursorKindSpelling(childKind);
-            //std::cerr << "  Child kind: " << clang_getCString(kindStr) << "\n";
+            DEBUG("//   Child: " << clang_getCString(kindStr) << "\n");
             clang_disposeString(kindStr);
             
             if (clang_getCursorKind(c) == CXCursor_FieldDecl)
             {
-  	      //std::cerr << "  Found FieldDecl!\n";
+                DEBUG("//   Found FieldDecl\n");
                 
                 FieldInfo field;
                 
                 CXString fieldName = clang_getCursorSpelling(c);
                 field.name = clang_getCString(fieldName);
-                //std::cerr << "    Field name: " << field.name << "\n";
+                DEBUG("//     name: " << field.name << "\n");
                 clang_disposeString(fieldName);
                 
                 CXType fieldType = clang_getCursorType(c);
                 CXString typeSpelling = clang_getTypeSpelling(fieldType);
                 field.type = cleanCppType(clang_getCString(typeSpelling));
                 std::string typeStr = clang_getCString(typeSpelling);
-                //std::cerr << "    Field type: " << typeStr << "\n";
+                DEBUG("//     type: " << typeStr << "\n");
                 clang_disposeString(typeSpelling);
                 
                 field.access = clang_getCXXAccessSpecifier(c);
-                //std::cerr << "    Access: " << field.access << " (0=private, 1=protected, 2=public)";
-                //if (field.access != CX_CXXPublic)
-		//  std::cerr << " - WILL BE SKIPPED";
-                //std::cerr << "\n";
+                DEBUG("//     access: " << field.access << " (0=private, 1=protected, 2=public)");
+                if (field.access != CX_CXXPublic)
+                    DEBUG(" - WILL BE SKIPPED");
+                DEBUG("\n");
                 field.annotations = getAnnotations(c);
                 
                 // Check if this field is an anonymous struct
                 if (isAnonymousStruct(typeStr))
                 {
-		    //std::cerr << "    This is an anonymous struct!\n";
+                    DEBUG("//     Anonymous struct detected\n");
                     field.isAnonymousStruct = true;
                     
                     // Get the type declaration cursor
                     CXCursor typeDecl = clang_getTypeDeclaration(fieldType);
                     if (clang_getCursorKind(typeDecl) == CXCursor_StructDecl)
                     {
-		      //std::cerr << "    Recursing into nested struct...\n";
+                        DEBUG("//     Recursing into nested struct...\n");
                         // Recursively dump the nested struct fields
                         field.nestedFields = dumpStruct(typeDecl);
-                        //std::cerr << "    Found " << field.nestedFields.size() << " nested fields\n";
+                        DEBUG("//     Found " << field.nestedFields.size() << " nested fields\n");
                     }
                 }
                 
@@ -387,7 +600,7 @@ std::vector<FieldInfo> dumpStruct(CXCursor structCursor)
         },
         &fields);
     
-    //std::cerr << "dumpStruct returning " << fields.size() << " fields\n";
+    DEBUG("// dumpStruct returning " << fields.size() << " fields\n");
     return fields;
 }
 
@@ -410,7 +623,7 @@ void walkAST(CXCursor cursor,
     data.mainFile = mainFile;
     
     CXString mainFileName = clang_getFileName(mainFile);
-   std::cerr << "//Main file set to: " << clang_getCString(mainFileName) << "\n";
+    DEBUG("// Main file: " << clang_getCString(mainFileName) << "\n");
     clang_disposeString(mainFileName);
 
     clang_visitChildren(
@@ -423,48 +636,48 @@ void walkAST(CXCursor cursor,
             // Process struct/class declarations
             if (kind == CXCursor_StructDecl || kind == CXCursor_ClassDecl)
             {
-	      //std::cerr << "Found struct/class cursor\n";
+                DEBUG("// Found struct/class cursor\n");
                 
                 CXSourceLocation loc = clang_getCursorLocation(c);
                 CXFile cursorFile;
                 clang_getFileLocation(loc, &cursorFile, nullptr, nullptr, nullptr);
                 
                 CXString fileName = clang_getFileName(cursorFile);
-                //std::cerr << "  In file: " << clang_getCString(fileName) << "\n";
+                DEBUG("//   In file: " << clang_getCString(fileName) << "\n");
                 clang_disposeString(fileName);
                 
                 CXString mainFileName = clang_getFileName(data->mainFile);
-                //std::cerr << "  Main file: " << clang_getCString(mainFileName) << "\n";
+                DEBUG("//   Main file: " << clang_getCString(mainFileName) << "\n");
                 clang_disposeString(mainFileName);
                 
                 // Skip if not in main file
                 if (!clang_File_isEqual(cursorFile, data->mainFile))
                 {
-		  //std::cerr << "  SKIPPING: Not in main file\n";
+                    DEBUG("//   SKIPPING: Not in main file\n");
                     return CXChildVisit_Continue;
                 }
 
                 std::string qname = getQualifiedName(c);
-                //std::cerr << "  Qualified name: " << qname << "\n";
+                DEBUG("//   Qualified name: " << qname << "\n");
 
                 // Skip anonymous structs - they'll be processed as nested fields
                 if (qname.find("(unnamed struct at") != std::string::npos ||
                     qname.find("(anonymous struct") != std::string::npos)
                 {
-		  //std::cerr << "  SKIPPING: Anonymous struct (will be processed as nested field)\n";
+                    DEBUG("//   SKIPPING: Anonymous struct\n");
                     return CXChildVisit_Continue;
                 }
 
                 // Skip meta::Mapping and other meta namespace types
                 if (qname.find("meta::") == 0)
                 {
-		  //std::cerr << "  SKIPPING: In meta namespace\n";
+                    DEBUG("//   SKIPPING: In meta namespace\n");
                     return CXChildVisit_Continue;
                 }
 
                 // fullClassName is optional - process if no target OR if target matches
-                //std::cerr << "  Target check: target=" << (data->target ? data->target.value() : "NONE") 
-		//       << " qname=" << qname << "\n";
+                DEBUG("//   Target: " << (data->target ? data->target.value() : "ALL") 
+                         << ", processing: " << qname << "\n");
                 if (!data->target || data->target.value() == qname)
                 {
                     std::string shortName = (qname.find_last_of(':') != std::string::npos)
@@ -553,7 +766,7 @@ void walkAST(CXCursor cursor,
                     }
 
                     auto classAnnotations = getAnnotations(c);
-                    //std::cerr << "  PROCESSING struct " << qname << " with " << fields.size() << " fields\n";
+                    DEBUG("//   PROCESSING: " << qname << " (" << fields.size() << " fields)\n");
                     generateTuples(fields, shortName, ns, qname, getTableName(classAnnotations));
                 }
             }
@@ -581,12 +794,11 @@ void generateNestedMetaTuples(const std::vector<FieldInfo>& fields,
 
 void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::string ns, std::string qname, std::string tablename, const std::string& parentDecltype)
 {
-  //std::cerr << "generateTuples called: shortName=" << shortName << " qname=" << qname 
-  //          << " fields=" << fields.size() << "\n";
+    DEBUG("// generateTuples: " << shortName << " (" << fields.size() << " fields)\n");
     
     if (fields.size() == 0)
     {
-        std::cerr << "  No fields, returning\n";
+        DEBUG("//   No fields\n");
         return;
     }
     
@@ -600,8 +812,8 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
     
     if (publicFieldCount == 0)
     {
-        std::cerr << "  WARNING: No public fields found! All fields are private/protected.\n";
-        std::cerr << "  HINT: Use 'struct' instead of 'class', or mark fields as 'public:'\n";
+        std::cerr << "// WARNING: No public fields in " << shortName << "!\n";
+        std::cerr << "// HINT: Use 'struct' instead of 'class', or mark fields as 'public:'\n";
         return;
     }
 
@@ -627,6 +839,14 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
 
         // Generate Field with or without annotations
         std::string typePrefix = parentDecltype.empty() ? "::" + qname : parentDecltype;
+        
+        DEBUG("//   Outputting field: " << fields[i].name 
+              << " with " << fields[i].annotations.size() << " annotations\n");
+        for (const auto& ann : fields[i].annotations)
+        {
+            DEBUG("//     Annotation: " << ann << "\n");
+        }
+        
         std::cout << "    meta::field<&" << typePrefix << "::" << fields[i].name << ">";
         std::cout << "(\"" << fields[i].name << "\"";
         
@@ -696,9 +916,9 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
     std::cout << "};\n";
     
     // Generate MetaTuple specializations for nested anonymous structs (recursively)
-    //std::cerr << "About to call generateNestedMetaTuples with " << fields.size() << " fields\n";
+    DEBUG("// Generating nested MetaTuples for " << fields.size() << " fields\n");
     generateNestedMetaTuples(fields, shortName, parentDecltype.empty() ? "::" + qname : parentDecltype);
-    //std::cerr << "Finished generateNestedMetaTuples\n";
+    DEBUG("// Finished nested MetaTuples\n");
     
     std::cout << "} // namespace meta\n";
 }
@@ -708,13 +928,11 @@ void generateNestedMetaTuples(const std::vector<FieldInfo>& fields,
                               const std::string& parentShortName,
                               const std::string& parentTypeRef)
 {
-  //std::cerr << "generateNestedMetaTuples called: parentShortName=" << parentShortName 
-  //          << " parentTypeRef=" << parentTypeRef << " fields=" << fields.size() << "\n";
+    DEBUG("// generateNestedMetaTuples: " << parentShortName << "\n");
     
     for (const auto& field : fields)
     {
-      //std::cerr << "  Checking field: " << field.name << " isAnonymous=" << field.isAnonymousStruct 
-  //          << " access=" << field.access << "\n";
+        DEBUG("//   Checking: " << field.name << " (anonymous=" << field.isAnonymousStruct << ")\n");
         
         // If this field is an anonymous struct, generate its MetaTuple
         // Don't check access here - if we're processing the parent, process all nested anonymous structs
@@ -722,7 +940,7 @@ void generateNestedMetaTuples(const std::vector<FieldInfo>& fields,
         {
             std::string fieldDecltype = "decltype(" + parentTypeRef + "::" + field.name + ")";
             
-            //std::cerr << "  Generating MetaTuple for: " << fieldDecltype << "\n";
+            DEBUG("//   Generating MetaTuple for: " << fieldDecltype << "\n");
             
             std::cout << "template <> struct MetaTuple<" << fieldDecltype << ">\n{\n"
                       << "  static inline const auto& fields = meta::" << parentShortName 
@@ -732,7 +950,7 @@ void generateNestedMetaTuples(const std::vector<FieldInfo>& fields,
             // Recursively process nested anonymous structs
             if (!field.nestedFields.empty())
             {
-	      //std::cerr << "  Recursing into " << field.nestedFields.size() << " nested fields\n";
+                DEBUG("//   Recursing into " << field.nestedFields.size() << " nested fields\n");
                 generateNestedMetaTuples(field.nestedFields, 
                                         parentShortName + "::" + field.name,
                                         fieldDecltype);
@@ -803,10 +1021,16 @@ void generateNestedTuples(const std::vector<FieldInfo>& fields,
 std::string getTableName(const std::vector<std::string>& annotations)
 {
     for (const auto& annotation : annotations) {
-      std::cerr << annotation << "\n";
+        DEBUG("// Class annotation: " << annotation << "\n");
+        
+        // Support both "table_name:Value" and "TableName:Value"
         if (annotation.find("table_name:") == 0) {
             return annotation.substr(11);
+        }
+        if (annotation.find("TableName:") == 0) {
+            return annotation.substr(10);
         }
     }
     return "";
 }
+

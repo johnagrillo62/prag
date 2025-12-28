@@ -24,7 +24,7 @@ Features:
 - Works as a standalone CLI; no compiler integration required.
 
 
-Why It’s Unique:
+Why It's Unique:
 ----------------
 - Automatically generates reflection metadata for all classes.
 - Type-safe, fully namespaced, and immediately usable.
@@ -44,7 +44,7 @@ Usage:
 
 License:
 --------
-[Apache License]
+None
 
 ================================================================================
 */
@@ -71,6 +71,8 @@ struct FieldInfo
     std::string type;
     CX_CXXAccessSpecifier access = CX_CXXPrivate;
     std::vector<std::string> annotations;
+    bool isAnonymousStruct = false;
+    std::vector<FieldInfo> nestedFields; // For anonymous structs
 };
 
 // 0 Private
@@ -98,9 +100,12 @@ void walkAST(CXCursor cursor,
              const std::optional<std::string> fullClassName,
              std::vector<FieldInfo>& fields);
 
-
-void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::string ns, std::string qname, std::string tablename);
-
+void generateTuples(std::vector<FieldInfo> fields,
+                    std::string shortName,
+                    std::string ns,
+                    std::string qname,
+                    std::string tablename,
+                    const std::string& parentDecltype = "");
 
 std::string getTableName(const std::vector<std::string>& annotations);
 
@@ -123,14 +128,24 @@ int main(int argc, char** argv)
     CXIndex index = clang_createIndex(0, 0);
 
     const char* args[] = {
-      "-std=c++20",
-      "-x", "c++",
-      "-isystem/usr/include/c++/13",        // For std::vector, std::string
-      "-isystem/usr/include/x86_64-linux-gnu/c++/13",
-      "-isystem/usr/include",
-      "-fno-delayed-template-parsing"
-    };
-    
+        "-std=c++20",
+        "-x",
+        "c++",
+        "-isystem",
+        "/usr/lib/gcc/x86_64-linux-gnu/13/include", // GCC builtin headers (stddef.h, etc)
+        "-isystem",
+        "/usr/include/c++/13",
+        "-isystem",
+        "/usr/include/x86_64-linux-gnu/c++/13",
+        "-isystem",
+        "/usr/include/c++/13/backward",
+        "-isystem",
+        "/usr/local/include",
+        "-isystem",
+        "/usr/include/x86_64-linux-gnu",
+        "-isystem",
+        "/usr/include"};
+
     CXTranslationUnit tu =
         clang_parseTranslationUnit(index,
                                    headerFile.c_str(),
@@ -145,6 +160,21 @@ int main(int argc, char** argv)
         std::cerr << "Failed to parse translation unit.\n";
         return 1;
     }
+
+    // Debug: Check for diagnostics
+    unsigned numDiags = clang_getNumDiagnostics(tu);
+    //std::cerr << "// Number of diagnostics: " << numDiags << "\n";
+    for (unsigned i = 0; i < numDiags; ++i)
+    {
+        CXDiagnostic diag = clang_getDiagnostic(tu, i);
+        CXString diagStr = clang_formatDiagnostic(diag, clang_defaultDiagnosticDisplayOptions());
+        std::cerr << "Diagnostic: " << clang_getCString(diagStr) << "\n";
+        clang_disposeString(diagStr);
+        clang_disposeDiagnostic(diag);
+    }
+
+    std::cerr << "Parsing file: " << headerFile << "\n";
+    // std::cerr << "//Target class: " << (fullClassName ? fullClassName.value() : "ALL") << "\n";
 
     CXCursor cursor = clang_getTranslationUnitCursor(tu);
     std::vector<FieldInfo> fields;
@@ -223,283 +253,232 @@ std::string cleanName(const std::string& str)
                      .base(),
                  result.end());
 
-    // Remove extra spaces around :: or < , >
-    std::string::size_type pos = 0;
-    while ((pos = result.find(":: ", pos)) != std::string::npos)
-    {
-        result.replace(pos, 3, "::");
-    }
-    while ((pos = result.find(" < ", pos)) != std::string::npos)
-    {
-        result.replace(pos, 3, "<");
-    }
-    while ((pos = result.find(" > ", pos)) != std::string::npos)
-    {
-        result.replace(pos, 3, ">");
-    }
-    while ((pos = result.find(" , ", pos)) != std::string::npos)
-    {
-        result.replace(pos, 3, ", ");
-    }
-
-    // Optional: remove double spaces
-    pos = 0;
-    while ((pos = result.find("  ", pos)) != std::string::npos)
-    {
-        result.replace(pos, 2, " ");
-    }
-
+    // Return cleaned
     return result;
 }
 
-// -------------------------
-// Clean type string
-// -------------------------
-std::string cleanTypeStr(const std::string& str)
+std::vector<std::string> parseAnnotations(const std::string& rawComment)
 {
-    std::string result = str;
-    result.erase(std::remove(result.begin(), result.end(), '\n'), result.end());
-    result.erase(std::remove(result.begin(), result.end(), '\t'), result.end());
-    return result;
+    std::vector<std::string> annotations;
+
+    // Example: /** @MyAnnotation @AnotherOne */
+    std::regex atPattern(R"(@(\w+(?::\w+)?))");
+    auto begin = std::sregex_iterator(rawComment.begin(), rawComment.end(), atPattern);
+    auto end = std::sregex_iterator();
+
+    for (auto it = begin; it != end; ++it)
+    {
+        annotations.push_back((*it)[1].str());
+    }
+
+    return annotations;
 }
 
-// -------------------------
-// Detect STL container from source text
-// -------------------------
-std::string detectContainer(const std::string& typeStr)
+std::vector<std::string> getAnnotations(CXCursor cursor)
 {
-    static const std::regex vectorRegex(R"(std::vector\s*<\s*(.+)\s*>)");
-    static const std::regex arrayRegex(R"(std::array\s*<\s*(.+)\s*,\s*(\d+)\s*>)");
-    static const std::regex mapRegex(R"(std::map\s*<\s*(.+)\s*,\s*(.+)\s*>)");
-    static const std::regex setRegex(R"(std::set\s*<\s*(.+)\s*>)");
+    std::vector<std::string> annotations;
 
-    std::smatch match;
-    if (std::regex_search(typeStr, match, vectorRegex))
+    CXString rawComment = clang_Cursor_getRawCommentText(cursor);
+    const char* commentStr = clang_getCString(rawComment);
+    if (commentStr)
     {
-        return "std::vector<" + match[1].str() + ">";
+        annotations = parseAnnotations(commentStr);
     }
-    else if (std::regex_search(typeStr, match, arrayRegex))
-    {
-        return "std::array<" + match[1].str() + ", " + match[2].str() + ">";
-    }
-    else if (std::regex_search(typeStr, match, mapRegex))
-    {
-        return "std::map<" + match[1].str() + ", " + match[2].str() + ">";
-    }
-    else if (std::regex_search(typeStr, match, setRegex))
-    {
-        return "std::set<" + match[1].str() + ">";
-    }
-    return typeStr; // not a container
+    clang_disposeString(rawComment);
+
+    return annotations;
 }
 
-// -------------------------
-// Get fully qualified name
-// -------------------------
 std::string getQualifiedName(CXCursor cursor)
 {
-    std::vector<std::string> names;
+    std::vector<std::string> parts;
     CXCursor current = cursor;
-    CXCursor tuCursor = clang_getTranslationUnitCursor(clang_Cursor_getTranslationUnit(cursor));
 
-    while (!clang_equalCursors(current, tuCursor))
+    while (true)
     {
-        CXString s = clang_getCursorSpelling(current);
-        std::string spelling = clang_getCString(s);
-        clang_disposeString(s);
+        CXCursorKind kind = clang_getCursorKind(current);
+        if (kind == CXCursor_TranslationUnit)
+            break;
 
-        if (!spelling.empty())
-            names.push_back(spelling);
+        CXString spelling = clang_getCursorSpelling(current);
+        const char* str = clang_getCString(spelling);
+        if (str && str[0] != '\0')
+        {
+            parts.push_back(str);
+        }
+        clang_disposeString(spelling);
 
         current = clang_getCursorSemanticParent(current);
     }
 
-    std::string fullname;
-    for (auto it = names.rbegin(); it != names.rend(); ++it)
+    std::reverse(parts.begin(), parts.end());
+
+    std::string result;
+    for (size_t i = 0; i < parts.size(); ++i)
     {
-        if (!fullname.empty())
-            fullname += "::";
-        fullname += *it;
+        result += parts[i];
+        if (i + 1 < parts.size())
+            result += "::";
     }
-
-    return fullname;
+    return result;
 }
 
-// ==============================================================================
-// DEBUGGING: First, let's see what's in your db1.h file
-// ==============================================================================
-
-// Your db1.h should look like this:
-/*
-namespace Database {
-    class [[clang::annotate("table_name:users")]] User {
-    public:
-        int id;
-        std::string name;
-    };
-}
-*/
-
-// First, add debug output to see what's happening:
-std::vector<std::string> getAnnotations(CXCursor cursor)
+// Check if a type is an anonymous struct
+bool isAnonymousStruct(const std::string& typeSpelling)
 {
-    std::vector<std::string> annotations;
-    
-    clang_visitChildren(
-        cursor,
-        [](CXCursor child, CXCursor parent, CXClientData client_data) -> CXChildVisitResult
-        {
-            auto* annotations = static_cast<std::vector<std::string>*>(client_data);
-            
-            CXCursorKind childKind = clang_getCursorKind(child);
-
-            if (clang_getCursorKind(child) == CXCursor_AnnotateAttr)
-            {
-                CXString annotation = clang_getCursorSpelling(child);
-                std::string annotationStr = clang_getCString(annotation);
-                annotations->push_back(annotationStr);
-                clang_disposeString(annotation);
-            }
-            return CXChildVisit_Continue;
-        },
-        &annotations);
-        
-    return annotations;
+    return typeSpelling.find("(unnamed struct at") != std::string::npos ||
+           typeSpelling.find("(anonymous struct") != std::string::npos;
 }
 
-// -------------------------
-// Dump struct/class fields (recursive)
-// -------------------------
-std::vector<FieldInfo> dumpStruct(CXCursor cursor, const std::string& prefix = "")
+// Recursively dump struct fields, including nested anonymous structs
+std::vector<FieldInfo> dumpStruct(CXCursor structCursor)
 {
-    struct LambdaData
-    {
-        std::vector<FieldInfo>* fields; // pointer to external vector
-        std::string prefix;
-    };
-
-    // outside vector
     std::vector<FieldInfo> fields;
 
-    // create LambdaData pointing to it
-    LambdaData data{&fields, prefix};
+    // std::cerr << "dumpStruct called on cursor\n";
 
     clang_visitChildren(
-        cursor,
-        [](CXCursor c, CXCursor parent, CXClientData client_data)
+        structCursor,
+        [](CXCursor c, CXCursor parent, CXClientData client_data) -> CXChildVisitResult
         {
-            auto* data = static_cast<LambdaData*>(client_data);
-            CXCursorKind kind = clang_getCursorKind(c);
+            auto* fields = static_cast<std::vector<FieldInfo>*>(client_data);
 
-            if (kind == CXCursor_FieldDecl)
+            CXCursorKind childKind = clang_getCursorKind(c);
+            CXString kindStr = clang_getCursorKindSpelling(childKind);
+            // std::cerr << "  Child kind: " << clang_getCString(kindStr) << "\n";
+            clang_disposeString(kindStr);
+
+            if (clang_getCursorKind(c) == CXCursor_FieldDecl)
             {
+                // std::cerr << "  Found FieldDecl!\n";
 
-                CX_CXXAccessSpecifier access = clang_getCXXAccessSpecifier(c);
+                FieldInfo field;
 
                 CXString fieldName = clang_getCursorSpelling(c);
-                std::string nameStr = clang_getCString(fieldName);
-
-                // Get source text of the field declaration
-                CXSourceRange range = clang_getCursorExtent(c);
-                CXTranslationUnit tu = clang_Cursor_getTranslationUnit(c);
-
-                auto annotations = getAnnotations(c);
-
-                CXToken* tokens = nullptr;
-                unsigned numTokens = 0;
-                clang_tokenize(tu, range, &tokens, &numTokens);
-
-                std::string sourceText;
-                for (unsigned i = 0; i < numTokens; ++i)
-                {
-                    CXString spelling = clang_getTokenSpelling(tu, tokens[i]);
-                    sourceText += clang_getCString(spelling);
-                    clang_disposeString(spelling);
-                    sourceText += " ";
-                }
-                clang_disposeTokens(tu, tokens, numTokens);
-
-                std::string typeStr = detectContainer(cleanTypeStr(sourceText));
-
-                data->fields->push_back({data->prefix + nameStr, typeStr, access, annotations});
-
-                // Recursively dump nested structs/classes
-                CXCursor typeDecl = clang_getTypeDeclaration(clang_getCursorType(c));
-                CXCursorKind declKind = clang_getCursorKind(typeDecl);
-                if ((declKind == CXCursor_StructDecl || declKind == CXCursor_ClassDecl) &&
-                    !clang_Cursor_isAnonymous(typeDecl))
-                {
-                    auto fields = dumpStruct(typeDecl);
-
-                }
-
+                field.name = clang_getCString(fieldName);
+                // std::cerr << "    Field name: " << field.name << "\n";
                 clang_disposeString(fieldName);
+
+                CXType fieldType = clang_getCursorType(c);
+                CXString typeSpelling = clang_getTypeSpelling(fieldType);
+                field.type = cleanCppType(clang_getCString(typeSpelling));
+                std::string typeStr = clang_getCString(typeSpelling);
+                // std::cerr << "    Field type: " << typeStr << "\n";
+                clang_disposeString(typeSpelling);
+
+                field.access = clang_getCXXAccessSpecifier(c);
+                // std::cerr << "    Access: " << field.access << " (0=private, 1=protected,
+                // 2=public)"; if (field.access != CX_CXXPublic)
+                //  std::cerr << " - WILL BE SKIPPED";
+                // std::cerr << "\n";
+                field.annotations = getAnnotations(c);
+
+                // Check if this field is an anonymous struct
+                if (isAnonymousStruct(typeStr))
+                {
+                    // std::cerr << "    This is an anonymous struct!\n";
+                    field.isAnonymousStruct = true;
+
+                    // Get the type declaration cursor
+                    CXCursor typeDecl = clang_getTypeDeclaration(fieldType);
+                    if (clang_getCursorKind(typeDecl) == CXCursor_StructDecl)
+                    {
+                        // std::cerr << "    Recursing into nested struct...\n";
+                        //  Recursively dump the nested struct fields
+                        field.nestedFields = dumpStruct(typeDecl);
+                        // std::cerr << "    Found " << field.nestedFields.size() << " nested
+                        // fields\n";
+                    }
+                }
+
+                fields->push_back(field);
             }
 
             return CXChildVisit_Continue;
         },
-        &data);
+        &fields);
 
+    // std::cerr << "dumpStruct returning " << fields.size() << " fields\n";
     return fields;
 }
 
-
-
+struct WalkData
+{
+    std::optional<std::string> target;
+    CXFile mainFile;
+};
 
 void walkAST(CXCursor cursor,
              const std::optional<std::string> fullClassName,
-             std::vector<FieldInfo>& fields)
+             std::vector<FieldInfo>& outFields)
 {
-    struct LambdaData
-    {
-        std::optional<std::string> target;
-        std::vector<FieldInfo>* fields;
-        CXFile mainFile;
-    };
-
     // Get the main file from the translation unit
     CXTranslationUnit tu = clang_Cursor_getTranslationUnit(cursor);
-    CXString tuSpelling = clang_getTranslationUnitSpelling(tu);
-    CXFile mainFile = clang_getFile(tu, clang_getCString(tuSpelling));
-    clang_disposeString(tuSpelling);
+    CXFile mainFile = clang_getFile(tu, clang_getCString(clang_getTranslationUnitSpelling(tu)));
 
-    LambdaData data{fullClassName, &fields, mainFile};
+    WalkData data;
+    data.target = fullClassName;
+    data.mainFile = mainFile;
+
+    CXString mainFileName = clang_getFileName(mainFile);
+    std::cerr << "//Main file set to: " << clang_getCString(mainFileName) << "\n";
+    clang_disposeString(mainFileName);
+
     clang_visitChildren(
         cursor,
-        [](CXCursor c, CXCursor parent, CXClientData client_data)
+        [](CXCursor c, CXCursor parent, CXClientData client_data) -> CXChildVisitResult
         {
-            auto* data = static_cast<LambdaData*>(client_data);
+            auto* data = static_cast<WalkData*>(client_data);
             CXCursorKind kind = clang_getCursorKind(c);
 
+            // Process struct/class declarations
             if (kind == CXCursor_StructDecl || kind == CXCursor_ClassDecl)
             {
-                // CHECK if this cursor is in the main file
-                CXSourceLocation cursorLoc = clang_getCursorLocation(c);
+                // std::cerr << "Found struct/class cursor\n";
+
+                CXSourceLocation loc = clang_getCursorLocation(c);
                 CXFile cursorFile;
-                clang_getFileLocation(cursorLoc, &cursorFile, nullptr, nullptr, nullptr);
-                
-                // Debug: print file info
+                clang_getFileLocation(loc, &cursorFile, nullptr, nullptr, nullptr);
+
                 CXString fileName = clang_getFileName(cursorFile);
-                CXString mainFileName = clang_getFileName(data->mainFile);
+                // std::cerr << "  In file: " << clang_getCString(fileName) << "\n";
                 clang_disposeString(fileName);
+
+                CXString mainFileName = clang_getFileName(data->mainFile);
+                // std::cerr << "  Main file: " << clang_getCString(mainFileName) << "\n";
                 clang_disposeString(mainFileName);
-                
+
                 // Skip if not in main file
                 if (!clang_File_isEqual(cursorFile, data->mainFile))
                 {
+                    // std::cerr << "  SKIPPING: Not in main file\n";
                     return CXChildVisit_Continue;
                 }
 
                 std::string qname = getQualifiedName(c);
+                // std::cerr << "  Qualified name: " << qname << "\n";
+
+                // Skip anonymous structs - they'll be processed as nested fields
+                if (qname.find("(unnamed struct at") != std::string::npos ||
+                    qname.find("(anonymous struct") != std::string::npos)
+                {
+                    // std::cerr << "  SKIPPING: Anonymous struct (will be processed as nested
+                    // field)\n";
+                    return CXChildVisit_Continue;
+                }
 
                 // Skip meta::Mapping and other meta namespace types
                 if (qname.find("meta::") == 0)
                 {
+                    // std::cerr << "  SKIPPING: In meta namespace\n";
                     return CXChildVisit_Continue;
                 }
 
-                // fullClassName is optional
-                if (!data->target || data->target.value() != qname)
+                // fullClassName is optional - process if no target OR if target matches
+                // std::cerr << "  Target check: target=" << (data->target ? data->target.value() :
+                // "NONE")
+                //       << " qname=" << qname << "\n";
+                if (!data->target || data->target.value() == qname)
                 {
                     std::string shortName = (qname.find_last_of(':') != std::string::npos)
                                                 ? qname.substr(qname.find_last_of(':') + 1)
@@ -522,8 +501,10 @@ void walkAST(CXCursor cursor,
                             auto* functions = static_cast<std::vector<FunctionInfo>*>(func_data);
                             CXCursorKind childKind = clang_getCursorKind(child);
 
-                            if (childKind == CXCursor_CXXMethod || childKind == CXCursor_FunctionDecl ||
-                                childKind == CXCursor_Constructor || childKind == CXCursor_Destructor)
+                            if (childKind == CXCursor_CXXMethod ||
+                                childKind == CXCursor_FunctionDecl ||
+                                childKind == CXCursor_Constructor ||
+                                childKind == CXCursor_Destructor)
                             {
                                 FunctionInfo funcInfo;
 
@@ -568,13 +549,14 @@ void walkAST(CXCursor cursor,
 
                     if (!functions.empty())
                     {
-                        std::cout << "\n// Functions found in " << qname << ":\n";
+                        std::cout << "\nFunctions found in " << qname << ":\n";
                         for (const auto& func : functions)
                         {
-                            std::cout << "// " << func.returnType << " " << func.name << "(";
+                            std::cout << " " << func.returnType << " " << func.name << "(";
                             for (size_t i = 0; i < func.parameters.size(); ++i)
                             {
-                                std::cout << func.parameters[i].type << " " << func.parameters[i].name;
+                                std::cout << func.parameters[i].type << " "
+                                          << func.parameters[i].name;
                                 if (i + 1 < func.parameters.size())
                                     std::cout << ", ";
                             }
@@ -587,10 +569,12 @@ void walkAST(CXCursor cursor,
                     }
 
                     auto classAnnotations = getAnnotations(c);
+                    // std::cerr << "  PROCESSING struct " << qname << " with " << fields.size() <<
+                    // " fields\n";
                     generateTuples(fields, shortName, ns, qname, getTableName(classAnnotations));
                 }
             }
-            
+
             return CXChildVisit_Recurse;
         },
         &data);
@@ -602,40 +586,83 @@ void walkAST(CXCursor cursor,
 //
 //
 
+// Forward declaration for recursion
+void generateNestedTuples(const std::vector<FieldInfo>& fields,
+                          const std::string& parentQname,
+                          const std::string& parentDecltype,
+                          int indent = 0);
 
-void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::string ns, std::string qname, std::string tablename)
+void generateNestedMetaTuples(const std::vector<FieldInfo>& fields,
+                              const std::string& parentShortName,
+                              const std::string& parentTypeRef);
+
+void generateTuples(std::vector<FieldInfo> fields,
+                    std::string shortName,
+                    std::string ns,
+                    std::string qname,
+                    std::string tablename,
+                    const std::string& parentDecltype)
 {
+    // std::cerr << "generateTuples called: shortName=" << shortName << " qname=" << qname
+    //           << " fields=" << fields.size() << "\n";
+
     if (fields.size() == 0)
+    {
+        // std::cerr << "  No fields, returning\n";
         return;
+    }
+
+    // Count public fields
+    size_t publicFieldCount = 0;
+    for (const auto& field : fields)
+    {
+        if (field.access == CX_CXXPublic)
+            publicFieldCount++;
+    }
+
+    if (publicFieldCount == 0)
+    {
+        std::cerr << "  WARNING: No public fields found! All fields are private/protected.\n";
+        std::cerr << "  HINT: Use 'struct' instead of 'class', or mark fields as 'public:'\n";
+        return;
+    }
+
+    std::string indentStr = "";
 
     // Create metadata in meta::ClassName namespace
     std::cout << "namespace meta\n{\n";
     std::cout << "namespace " << shortName << "\n{\n";
-    
+
     std::cout << "inline const auto fields = std::make_tuple(\n";
 
     // Output each Field with typed annotations
+    bool firstField = true;
     for (size_t i = 0; i < fields.size(); ++i)
     {
         // Skip private fields entirely (can't reflect them anyway)
         if (fields[i].access != CX_CXXPublic)
             continue;
 
+        if (!firstField)
+            std::cout << ",\n";
+        firstField = false;
+
         // Generate Field with or without annotations
-        std::cout << "    field<&::" << qname << "::" << fields[i].name << ">";
+        std::string typePrefix = parentDecltype.empty() ? "::" + qname : parentDecltype;
+        std::cout << "    meta::field<&" << typePrefix << "::" << fields[i].name << ">";
         std::cout << "(\"" << fields[i].name << "\"";
-        
+
         // Add typed annotations if present
         if (!fields[i].annotations.empty())
         {
             for (size_t j = 0; j < fields[i].annotations.size(); ++j)
             {
                 std::cout << ", ";
-                
+
                 // Parse annotation: "Prefix:Value" or just "Flag"
                 std::string ann = fields[i].annotations[j];
                 size_t colon_pos = ann.find(':');
-                
+
                 if (colon_pos != std::string::npos)
                 {
                     // Has value: "CsvColumn:FIELD6" → meta::CsvColumn{"FIELD6"}
@@ -650,55 +677,163 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
                 }
             }
         }
-        
-        std::cout << ")";
-        
-        if (i + 1 < fields.size())
-            std::cout << ",";
-        std::cout << "\n";
-    }
 
-    std::cout << ");\n\n";
-    
-    // Table name
-    std::string tableNameValue = tablename.empty() ? shortName : tablename;
-    std::cout << "inline constexpr auto tableName = \"" << tableNameValue << "\";\n";
-    
-    // Generate query
-    std::cout << "inline constexpr auto query = \"SELECT ";
-    for (size_t i = 0; i < fields.size(); ++i)
-    {
-        if (fields[i].access != CX_CXXPublic)
-            continue;
-        std::cout << fields[i].name;
-        if (i + 1 < fields.size())
-            std::cout << ", ";
+        std::cout << ")";
     }
-    std::cout << " FROM " << tableNameValue << "\";\n";
-    
+    std::cout << ");\n";
+
+    // Generate nested namespaces for anonymous struct fields
+    generateNestedTuples(fields, qname, parentDecltype, 0);
+
     // Close meta::ClassName namespace
     std::cout << "} // namespace " << shortName << "\n"
               << "} // namespace meta\n\n";
-      
-    // MetaTuple specialization
+
+    // MetaTuple specialization for main struct
+    std::string typeSpec = parentDecltype.empty() ? "::" + qname : parentDecltype;
     std::cout << "namespace meta\n{\n"
-              << "template <> struct MetaTuple<::" << qname << ">\n{\n"
-              << "    static inline const auto& fields = meta::" << shortName << "::fields;\n"
-              << "    static constexpr auto tableName = meta::" << shortName << "::tableName;\n"
-              << "    static constexpr auto query = meta::" << shortName << "::query;\n"
-              << "};\n"
-              << "} // namespace meta\n";
+              << "template <> struct MetaTuple<" << typeSpec << ">\n{\n"
+              << "  static inline const auto& fields = meta::" << shortName << "::fields;\n";
+
+    // Only add tableName and query for top-level structs (not nested anonymous ones)
+    if (parentDecltype.empty())
+    {
+        std::string tableNameValue = tablename.empty() ? shortName : tablename;
+        std::cout << "  static constexpr auto tableName = \"" << tableNameValue << "\";\n"
+                  << "  static constexpr auto query = \"select ";
+
+        bool firstQueryField = true;
+        for (size_t i = 0; i < fields.size(); ++i)
+        {
+            if (fields[i].access != CX_CXXPublic)
+                continue;
+            if (!firstQueryField)
+                std::cout << ", ";
+            firstQueryField = false;
+            std::cout << fields[i].name;
+        }
+        std::cout << " from " << tableNameValue << "\";\n";
+    }
+
+    std::cout << "};\n";
+
+    // Generate MetaTuple specializations for nested anonymous structs (recursively)
+    // std::cerr << "About to call generateNestedMetaTuples with " << fields.size() << " fields\n";
+    generateNestedMetaTuples(
+        fields, shortName, parentDecltype.empty() ? "::" + qname : parentDecltype);
+    // std::cerr << "Finished generateNestedMetaTuples\n";
+
+    std::cout << "} // namespace meta\n";
 }
 
+// Helper to recursively generate MetaTuple specializations for all nested anonymous structs
+void generateNestedMetaTuples(const std::vector<FieldInfo>& fields,
+                              const std::string& parentShortName,
+                              const std::string& parentTypeRef)
+{
+    // std::cerr << "generateNestedMetaTuples called: parentShortName=" << parentShortName
+    //           << " parentTypeRef=" << parentTypeRef << " fields=" << fields.size() << "\n";
+
+    for (const auto& field : fields)
+    {
+        // std::cerr << "  Checking field: " << field.name << " isAnonymous=" <<
+        // field.isAnonymousStruct
+        //          << " access=" << field.access << "\n";
+
+        // If this field is an anonymous struct, generate its MetaTuple
+        // Don't check access here - if we're processing the parent, process all nested anonymous
+        // structs
+        if (field.isAnonymousStruct)
+        {
+            std::string fieldDecltype = "decltype(" + parentTypeRef + "::" + field.name + ")";
+
+            // std::cerr << "  Generating MetaTuple for: " << fieldDecltype << "\n";
+
+            std::cout << "template <> struct MetaTuple<" << fieldDecltype << ">\n{\n"
+                      << "  static inline const auto& fields = meta::" << parentShortName
+                      << "::" << field.name << "::fields;\n"
+                      << "};\n";
+
+            // Recursively process nested anonymous structs
+            if (!field.nestedFields.empty())
+            {
+                // std::cerr << "  Recursing into " << field.nestedFields.size() << " nested
+                // fields\n";
+                generateNestedMetaTuples(
+                    field.nestedFields, parentShortName + "::" + field.name, fieldDecltype);
+            }
+        }
+    }
+}
+
+void generateNestedTuples(const std::vector<FieldInfo>& fields,
+                          const std::string& parentQname,
+                          const std::string& parentDecltype,
+                          int indent)
+{
+    for (const auto& field : fields)
+    {
+        if (field.isAnonymousStruct && field.access == CX_CXXPublic)
+        {
+            // Generate namespace for this anonymous struct field
+            std::cout << "namespace " << field.name << "\n{\n";
+
+            std::cout << "inline const auto fields = std::make_tuple(\n";
+
+            // Generate fields for the nested struct
+            bool firstNestedField = true;
+            for (const auto& nestedField : field.nestedFields)
+            {
+                if (nestedField.access != CX_CXXPublic)
+                    continue;
+
+                if (!firstNestedField)
+                    std::cout << ",\n";
+                firstNestedField = false;
+
+                // Build the proper decltype chain
+                std::string currentDecltype;
+                if (parentDecltype.empty())
+                {
+                    currentDecltype = "decltype(::" + parentQname + "::" + field.name + ")";
+                }
+                else
+                {
+                    currentDecltype = "decltype(" + parentDecltype + "::" + field.name + ")";
+                }
+
+                std::cout << "    meta::field<&" << currentDecltype << "::" << nestedField.name
+                          << ">"
+                          << "(\"" << nestedField.name << "\")";
+            }
+            std::cout << ");\n";
+
+            // Recursively process nested anonymous structs
+            std::string currentDecltype;
+            if (parentDecltype.empty())
+            {
+                currentDecltype = "decltype(::" + parentQname + "::" + field.name + ")";
+            }
+            else
+            {
+                currentDecltype = "decltype(" + parentDecltype + "::" + field.name + ")";
+            }
+            generateNestedTuples(field.nestedFields, parentQname, currentDecltype, indent + 1);
+
+            std::cout << "} // namespace " << field.name << "\n";
+        }
+    }
+}
 
 std::string getTableName(const std::vector<std::string>& annotations)
 {
-    for (const auto& annotation : annotations) {
-      std::cerr << annotation << "\n";
-        if (annotation.find("table_name:") == 0) {
+    for (const auto& annotation : annotations)
+    {
+        std::cerr << annotation << "\n";
+        if (annotation.find("table_name:") == 0)
+        {
             return annotation.substr(11);
         }
     }
     return "";
 }
-
