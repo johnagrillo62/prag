@@ -13,8 +13,7 @@ struct Car
     std::map<std::string, std::string> service;
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_yaml.h"
+#include "meta.h"
 #include "demo05.meta"
 
 int main()
@@ -34,5 +33,6 @@ int main()
                    {"Tues", "More Oil"},
                    {"Wed", "Window Washer"}};
 
-    std::cout << meta::yaml::serialize_single(car) << "\n";
+
+    std::cerr << meta::toYaml(car) << "\n";
 }

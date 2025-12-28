@@ -13,7 +13,7 @@ struct Car
     std::map<std::string, std::string> service;
 };
 
-#include "../meta/meta_txt.h"
+#include "meta.h"
 #include "demo03.meta"
 
 int main()
@@ -32,6 +32,6 @@ int main()
                    },
                    {"Tues", "More Oil"},
                    {"Wed", "Window Washer"}};
-
-    toString(car);
+    
+    std::cerr << meta::toString(car) << "\n";
 }

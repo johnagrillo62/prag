@@ -1,37 +1,48 @@
 # Makefile for metafront
-
 # Compiler
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -Wextra -O2
+CXXFLAGS = -Wall -Wextra -O2 -std=c++20
+
+# Include paths
+INCLUDES = -I/mnt/c/Users/johna/source/repos/meta
 
 # Linker flags
-LDFLAGS = -lclang
+LDFLAGS_METAFRONT = -lclang
+LDFLAGS_REFLECT = -lyaml-cpp
 
-# Target executable
-TARGET = metafront reflect
+# Targets
+METAFRONT = metafront
+REFLECT = reflect
 
-# Source file
-SRC = metafront.cpp
+# Source files
+METAFRONT_SRC = metafront.cpp
+REFLECT_SRC = reflect.cpp
 
 # Default target
-all: run_reflect 
+all: run_reflect
 
-# Build the executable
-metafont: $(SRC)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC) $(LDFLAGS)
+# Build metafront executable
+$(METAFRONT): $(METAFRONT_SRC)
+	$(CXX) $(CXXFLAGS) -o $(METAFRONT) $(METAFRONT_SRC) $(LDFLAGS_METAFRONT)
 
-reflect.meta: reflect.cpp metafront
-	./metafront reflect.cpp > reflect.meta
-	$(CXX) reflect.cpp -o reflect $(LDFLAGS)
+# Generate reflect.meta from reflect.cpp
+reflect.meta: $(REFLECT_SRC) $(METAFRONT)
+	./$(METAFRONT) $(REFLECT_SRC) > reflect.meta
 
-run_reflect: metafront reflect.meta
-	./reflect
+# Build reflect executable
+$(REFLECT): $(REFLECT_SRC) reflect.meta
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(REFLECT) $(REFLECT_SRC) $(LDFLAGS_REFLECT)
+
+# Run reflect
+run_reflect: $(REFLECT)
+	./$(REFLECT)
 
 # Clean up build artifacts
 clean:
-	rm -f metafront
+	rm -f $(METAFRONT) $(REFLECT) reflect.meta
 
 # Phony targets
-.PHONY: all clean
+.PHONY: all run_reflect clean
+

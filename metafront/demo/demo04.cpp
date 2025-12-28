@@ -14,8 +14,7 @@ struct Car
     std::map<std::string, std::vector<std::string>> service;
 };
 
-#include "../meta/meta_txt.h"
-#include "../meta/meta_yaml.h"
+#include "meta.h"
 #include "demo04.meta"
 
 int main()
@@ -30,5 +29,5 @@ int main()
         {"Tues", {"Hood"}},
     };
 
-    toString(car);
+    std::cerr << meta::toString(car) << "\n";
 }

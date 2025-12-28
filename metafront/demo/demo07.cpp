@@ -12,8 +12,7 @@ struct ComplexRow
     std::vector<std::vector<std::string>> categories;
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_json.h"
+#include "meta.h"
 #include "demo07.meta"
 
 int main()
@@ -36,5 +35,8 @@ int main()
          {{"fitnes", "weights"}, {"sowing", "cooking"}}}
 
     };
-    std::cout << meta::json::serialize(data) << "\n";
+
+
+    
+    std::cout << meta::serializeJson(data) << "\n";
 }

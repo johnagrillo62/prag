@@ -1,21 +1,23 @@
-namespace meta {
-namespace Reflect {
-inline const auto fields = std::make_tuple(
-    meta::Field<::Reflect, int, &::Reflect::x, meta::Prop::Serializable,nullptr, nullptr>("x", "int", {{CSV_COLUMN , "x"},{SQL_COLUMN , "x"},{SRC_NAME , "x"},}),
-    meta::Field<::Reflect, unsigned, &::Reflect::y, meta::Prop::Serializable,nullptr, nullptr>("y", "unsigned", {{CSV_COLUMN , "y"},{SQL_COLUMN , "y"},{SRC_NAME , "y"},}),
-    meta::Field<::Reflect, std::string, &::Reflect::string, meta::Prop::Serializable,nullptr, nullptr>("string", "std::string", {{CSV_COLUMN , "string"},{SQL_COLUMN , "string"},{SRC_NAME , "string"},}),
-    meta::Field<::Reflect, std::vector<std::string>, &::Reflect::strings, meta::Prop::Serializable,nullptr, nullptr>("strings", "std::vector<std::string>", {{CSV_COLUMN , "strings"},{SQL_COLUMN , "strings"},{SRC_NAME , "strings"},})
-);
+namespace meta
+{
+namespace Reflect
+{
+inline const auto fields = std::make_tuple(field<&::Reflect::x>("x"),
+                                           field<&::Reflect::y>("y"),
+                                           field<&::Reflect::string>("string"),
+                                           field<&::Reflect::strings>("strings"));
+
 inline constexpr auto tableName = "Reflect";
 inline constexpr auto query = "SELECT x, y, string, strings FROM Reflect";
-}  // namespace Reflect
-}  // namespace meta
-namespace meta {
-// Template specialization for type-based reflection lookup
-template<>
-struct MetaTuple<::Reflect> {
+} // namespace Reflect
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::Reflect>
+{
     static inline const auto& fields = meta::Reflect::fields;
     static constexpr auto tableName = meta::Reflect::tableName;
     static constexpr auto query = meta::Reflect::query;
 };
-}  // namespace meta
+} // namespace meta

@@ -2,38 +2,18 @@ namespace meta
 {
 namespace Car
 {
-inline const auto fields = std::make_tuple(
-    meta::Field<::Car, std::string, &::Car::make, meta::Prop::Serializable, nullptr, nullptr>(
-        "make",
-        "std::string",
-        {
-            {CSV_COLUMN, "make"},
-            {SQL_COLUMN, "make"},
-            {SRC_NAME, "make"},
-        }),
-    meta::Field<::Car, std::string, &::Car::model, meta::Prop::Serializable, nullptr, nullptr>(
-        "model",
-        "std::string",
-        {
-            {CSV_COLUMN, "model"},
-            {SQL_COLUMN, "model"},
-            {SRC_NAME, "model"},
-        }),
-    meta::Field<::Car, int16_t, &::Car::year, meta::Prop::Serializable, nullptr, nullptr>(
-        "year",
-        "int16_t",
-        {
-            {CSV_COLUMN, "year"},
-            {SQL_COLUMN, "year"},
-            {SRC_NAME, "year"},
-        }));
+inline const auto fields = std::make_tuple(field<&::Car::make>("make"),
+                                           field<&::Car::model>("model"),
+                                           field<&::Car::year>("year"),
+                                           field<&::Car::service>("service"));
+
 inline constexpr auto tableName = "Car";
-inline constexpr auto query = "SELECT make, model, year FROM Car";
+inline constexpr auto query = "SELECT make, model, year, service FROM Car";
 } // namespace Car
 } // namespace meta
+
 namespace meta
 {
-// Template specialization for type-based reflection lookup
 template <> struct MetaTuple<::Car>
 {
     static inline const auto& fields = meta::Car::fields;

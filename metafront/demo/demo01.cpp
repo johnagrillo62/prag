@@ -9,8 +9,7 @@ struct Car
     unsigned int howmanymiles;
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_txt.h"
+#include "meta.h"
 #include "demo01.meta"
 
 int main()
@@ -21,5 +20,5 @@ int main()
     car.electric = false;
     car.year = 2020;
     car.howmanymiles = 100000;
-    toString(car);
+    std::cerr << meta::toString(car) << "\n";
 }

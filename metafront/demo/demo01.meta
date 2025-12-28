@@ -2,58 +2,19 @@ namespace meta
 {
 namespace Car
 {
-inline const auto fields = std::make_tuple(
-    meta::Field<::Car, std::string, &::Car::maker, meta::Prop::Serializable, nullptr, nullptr>(
-        "maker",
-        "std::string",
-        {
-            {CSV_COLUMN, "maker"},
-            {SQL_COLUMN, "maker"},
-            {SRC_NAME, "maker"},
-        }),
-    meta::Field<::Car, std::string, &::Car::model, meta::Prop::Serializable, nullptr, nullptr>(
-        "model",
-        "std::string",
-        {
-            {CSV_COLUMN, "model"},
-            {SQL_COLUMN, "model"},
-            {SRC_NAME, "model"},
-        }),
-    meta::Field<::Car, unsigned short, &::Car::year, meta::Prop::Serializable, nullptr, nullptr>(
-        "year",
-        "unsigned short",
-        {
-            {CSV_COLUMN, "year"},
-            {SQL_COLUMN, "year"},
-            {SRC_NAME, "year"},
-        }),
-    meta::Field<::Car, bool, &::Car::electric, meta::Prop::Serializable, nullptr, nullptr>(
-        "electric",
-        "bool",
-        {
-            {CSV_COLUMN, "electric"},
-            {SQL_COLUMN, "electric"},
-            {SRC_NAME, "electric"},
-        }),
-    meta::Field<::Car,
-                unsigned int,
-                &::Car::howmanymiles,
-                meta::Prop::Serializable,
-                nullptr,
-                nullptr>("howmanymiles",
-                         "unsigned int",
-                         {
-                             {CSV_COLUMN, "howmanymiles"},
-                             {SQL_COLUMN, "howmanymiles"},
-                             {SRC_NAME, "howmanymiles"},
-                         }));
+inline const auto fields = std::make_tuple(field<&::Car::maker>("maker"),
+                                           field<&::Car::model>("model"),
+                                           field<&::Car::year>("year"),
+                                           field<&::Car::electric>("electric"),
+                                           field<&::Car::howmanymiles>("howmanymiles"));
+
 inline constexpr auto tableName = "Car";
 inline constexpr auto query = "SELECT maker, model, year, electric, howmanymiles FROM Car";
 } // namespace Car
 } // namespace meta
+
 namespace meta
 {
-// Template specialization for type-based reflection lookup
 template <> struct MetaTuple<::Car>
 {
     static inline const auto& fields = meta::Car::fields;

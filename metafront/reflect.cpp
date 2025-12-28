@@ -1,6 +1,7 @@
 #include <string>
-#include "meta/meta_field.h"
-#include "meta/meta_txt.h"
+
+#include "meta.h"
+
 
 //@tableName("reflect")
 struct Reflect
@@ -22,8 +23,7 @@ int main()
   reflect.y = 100;
   reflect.string = "reflect";
   reflect.strings = {"reflect", "reflect",  "reflect", "reflect"};
-  toString(reflect);
+  std::cout << meta::toString(reflect) << "\n";
 }
-
 
 

@@ -1,26 +1,37 @@
+# ------------------------------------------------------------
+# Compiler + flags
+# ------------------------------------------------------------
+CXX = g++ -I/mnt/c/Users/johna/source/repos/meta
+CXXFLAGS = -Wall -Wextra -std=c++20 \
+           -Wno-missing-field-initializers \
+           -Wno-attributes \
+           -Wno-unused-parameter
 
+LDFLAGS = -lyaml-cpp
 
-# Compiler
-CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++20 -Wno-missing-field-initializers -Wno-attributes -Wno-unused-parameter
-
+# ------------------------------------------------------------
 # Tools
+# ------------------------------------------------------------
 METAFRONT = ../metafront
-ASTREI = ../../../astrei/parser
+ASTREI    = ../../../astrei/parser
 
+# ------------------------------------------------------------
 # Demo numbers
-DEMOS = 01 02 03 04 05 06 07 08 09 10 all
+# ------------------------------------------------------------
+DEMOS = 01 02 03 04 05 06 07 08 09 10 11 12 13 14 all
 
-# Generate target names
+# Generated names
 META_DEMOS = $(addprefix demo, $(DEMOS))
-
-# Generated meta files
 META_FILES = $(addsuffix .meta, $(META_DEMOS))
 
-# Default: build and run both sets
-all: metafront 
+# ------------------------------------------------------------
+# Default target
+# ------------------------------------------------------------
+all: metafront
 
-# -------- METAFRONT DEMOS --------
+# ------------------------------------------------------------
+# METAFRONT DEMOS
+# ------------------------------------------------------------
 metafront: $(META_DEMOS)
 
 demo%: demo%.cpp
@@ -28,14 +39,16 @@ demo%: demo%.cpp
 	@cat demo$*.cpp
 	@$(METAFRONT) demo$*.cpp | clang-format > demo$*.meta
 	@echo "**************"
-	@$(CXX) $(CXXFLAGS) demo$*.cpp -o demo$*
-	@./demo$*
-	@rm demo$*
+	@$(CXX) $(CXXFLAGS) demo$*.cpp -o bin/demo$* $(LDFLAGS)
+	@./bin/demo$*
 	@echo ""
 
-
-# -------- CLEAN --------
+# ------------------------------------------------------------
+# CLEAN
+# ------------------------------------------------------------
 clean:
-	rm -f $(META_FILES) $(AST_FILES) $(META_DEMOS) $(AST_DEMOS)
+	rm -f $(META_FILES) $(META_DEMOS)
 
-.PHONY: all clean metafront astrei
+.PHONY: all clean metafront
+
+

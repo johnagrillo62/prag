@@ -7,11 +7,11 @@ struct Row
     int64_t field3;
     std::string field4;
     std::string field5;
-    std::string field6 [[clang::annotate("csv_column:FIELD6")]];
+    //@CsvColumn(FIELD6)
+    std::string field6 [[clang::annotate("CsvColumn:FIELD6")]];
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_csv.h"
+#include "meta.h"
 #include "demo12.meta"
 
 int main()
@@ -33,5 +33,5 @@ int main()
                              {25, 26, 27, "i"},
                              {28, 29, 30, "j"}};
 
-    std::cout << meta::csv::serialize(rows);
+    std::cout << meta::serializeJson(rows);
 }

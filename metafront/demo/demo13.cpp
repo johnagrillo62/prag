@@ -21,12 +21,11 @@ class XY
     int64_t y_;
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_txt.h"
+#include "meta.h"
 #include "demo13.meta"
 
 int main()
 {
     XY p(1, 2);
-    toString(p);
+    std::cerr << meta::toString(p) << "\n";
 }

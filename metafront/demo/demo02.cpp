@@ -9,8 +9,7 @@ struct Car
     int64_t miles;
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_txt.h"
+#include "meta.h"
 #include "demo02.meta"
 
 int main()
@@ -20,5 +19,5 @@ int main()
     car.make = "ford";
     car.model = "taurus";
     car.repairs = {"motor"};
-    toString(car);
+    std::cerr << meta::toString(car) << "\n";
 }

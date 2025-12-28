@@ -1,11 +1,16 @@
+
+// Functions found in XY:
+// void XY(int x, int y) - Access: public
+// int getX() - Access: public
+// void setX(int x) - Access: public
 namespace meta
 {
 namespace XY
 {
-inline const auto fields = std::make_tuple(field<&::XY::x_>("x_"), field<&::XY::y_>("y_"));
+inline const auto fields = std::make_tuple();
 
 inline constexpr auto tableName = "XY";
-inline constexpr auto query = "SELECT x_, y_ FROM XY";
+inline constexpr auto query = "SELECT  FROM XY";
 } // namespace XY
 } // namespace meta
 

@@ -1,4 +1,3 @@
-
 /*
 ================================================================================
 MetaFront - C++ Reflection/Serialization Tool
@@ -123,16 +122,15 @@ int main(int argc, char** argv)
 
     CXIndex index = clang_createIndex(0, 0);
 
-    const char* args[] = {"-std=c++20",
-                          "-x",
-                          "c++-header",
-                          "-fno-delayed-template-parsing",
-                          "-I.",
-                          "-Ibhw",
-                          "-isystem/usr/include",
-                          "-isystem/usr/include/x86_64-linux-gnu",
-                          "-isystem/usr/local/include"};
-
+    const char* args[] = {
+      "-std=c++20",
+      "-x", "c++",
+      "-isystem/usr/include/c++/13",        // For std::vector, std::string
+      "-isystem/usr/include/x86_64-linux-gnu/c++/13",
+      "-isystem/usr/include",
+      "-fno-delayed-template-parsing"
+    };
+    
     CXTranslationUnit tu =
         clang_parseTranslationUnit(index,
                                    headerFile.c_str(),
@@ -611,46 +609,56 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
         return;
 
     // Create metadata in meta::ClassName namespace
-    std::cout << "namespace meta {\n";
-    std::cout << "namespace " << shortName << " {\n";
+    std::cout << "namespace meta\n{\n";
+    std::cout << "namespace " << shortName << "\n{\n";
     
     std::cout << "inline const auto fields = std::make_tuple(\n";
 
-    // Output each Field COMPLETELY INLINE on one line
+    // Output each Field with typed annotations
     for (size_t i = 0; i < fields.size(); ++i)
     {
-        const std::string member = (fields[i].access == CX_CXXPublic)
-                                       ? "&::" + qname + "::" + fields[i].name
-                                       : "nullptr";
-
-        const std::string getter = "nullptr";
-        const std::string setter = "nullptr";
-
-        meta::Prop properties = meta::Prop::Serializable;
+        // Skip private fields entirely (can't reflect them anyway)
         if (fields[i].access != CX_CXXPublic)
-        {
-            properties = static_cast<meta::Prop>(properties | meta::Prop::Private);
-        }
+            continue;
 
-        // Everything on ONE line per field
-        std::cout << "    meta::Field<::" << qname << ", "
-                  << cleanCppType(fields[i].type) << ", " << member << ", " 
-                  << propsToString(properties) << ","
-                  << getter << ", " << setter << ">("
-                  << "\"" << fields[i].name << "\", "
-                  << "\"" << cleanCppType(fields[i].type) << "\", "
-                  << "{"
-		  << "{CSV_COLUMN , \"" << fields[i].name << "\"},"
-		  << "{SQL_COLUMN , \"" << fields[i].name << "\"},"
-  		  << "{SRC_NAME , \"" << fields[i].name << "\"},"
-		  << "})";
+        // Generate Field with or without annotations
+        std::cout << "    field<&::" << qname << "::" << fields[i].name << ">";
+        std::cout << "(\"" << fields[i].name << "\"";
+        
+        // Add typed annotations if present
+        if (!fields[i].annotations.empty())
+        {
+            for (size_t j = 0; j < fields[i].annotations.size(); ++j)
+            {
+                std::cout << ", ";
+                
+                // Parse annotation: "Prefix:Value" or just "Flag"
+                std::string ann = fields[i].annotations[j];
+                size_t colon_pos = ann.find(':');
+                
+                if (colon_pos != std::string::npos)
+                {
+                    // Has value: "CsvColumn:FIELD6" → meta::CsvColumn{"FIELD6"}
+                    std::string prefix = ann.substr(0, colon_pos);
+                    std::string value = ann.substr(colon_pos + 1);
+                    std::cout << "meta::" << prefix << "{\"" << value << "\"}";
+                }
+                else
+                {
+                    // Flag only: "PrimaryKey" → meta::PrimaryKey{}
+                    std::cout << "meta::" << ann << "{}";
+                }
+            }
+        }
+        
+        std::cout << ")";
         
         if (i + 1 < fields.size())
             std::cout << ",";
         std::cout << "\n";
     }
 
-    std::cout << ");\n";
+    std::cout << ");\n\n";
     
     // Table name
     std::string tableNameValue = tablename.empty() ? shortName : tablename;
@@ -660,30 +668,27 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
     std::cout << "inline constexpr auto query = \"SELECT ";
     for (size_t i = 0; i < fields.size(); ++i)
     {
+        if (fields[i].access != CX_CXXPublic)
+            continue;
         std::cout << fields[i].name;
         if (i + 1 < fields.size())
             std::cout << ", ";
     }
-    std::cout << " FROM " << tableNameValue << "\";\n"
+    std::cout << " FROM " << tableNameValue << "\";\n";
     
-      // Close meta::ClassName namespace
-    
-	      << "}  // namespace " << shortName << "\n"
-	      << "}  // namespace meta\n"
+    // Close meta::ClassName namespace
+    std::cout << "} // namespace " << shortName << "\n"
+              << "} // namespace meta\n\n";
       
-      // MetaTuple specialization
-      
-	      << "namespace meta {\n"
-	      << "// Template specialization for type-based reflection lookup\n"
-	      << "template<>\n"
-	      << "struct MetaTuple<::" << qname << "> {\n"
-	      << "    static inline const auto& fields = meta::" << shortName << "::fields;\n"
-	      << "    static constexpr auto tableName = meta::" << shortName << "::tableName;\n"
-	      << "    static constexpr auto query = meta::" << shortName << "::query;\n"
-	      << "};\n"
-	      << "}  // namespace meta\n";
+    // MetaTuple specialization
+    std::cout << "namespace meta\n{\n"
+              << "template <> struct MetaTuple<::" << qname << ">\n{\n"
+              << "    static inline const auto& fields = meta::" << shortName << "::fields;\n"
+              << "    static constexpr auto tableName = meta::" << shortName << "::tableName;\n"
+              << "    static constexpr auto query = meta::" << shortName << "::query;\n"
+              << "};\n"
+              << "} // namespace meta\n";
 }
-
 
 
 std::string getTableName(const std::vector<std::string>& annotations)

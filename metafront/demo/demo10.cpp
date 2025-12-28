@@ -8,12 +8,11 @@ struct A
 
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_txt.h"
+#include "meta.h"
 #include "demo10.meta"
 
 int main()
 {
     A a{};
-    toString(a);
+    std::cerr << meta::toString(a) << "\n";
 }

@@ -11,12 +11,11 @@ struct Priv
   std::map<std::string, std::string> service_;
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_txt.h"
+#include "meta.h"
 #include "demo08.meta"
 
 int main()
 {
     Priv p(1, 2);
-    toString(p);
+    std::cerr << meta::toString(p) << "\n";
 }

@@ -2,59 +2,20 @@ namespace meta
 {
 namespace ComplexRow
 {
-inline const auto fields = std::make_tuple(
-    meta::
-        Field<::ComplexRow, int64_t, &::ComplexRow::id, meta::Prop::Serializable, nullptr, nullptr>(
-            "id",
-            "int64_t",
-            {
-                {CSV_COLUMN, "id"},
-                {SQL_COLUMN, "id"},
-                {SRC_NAME, "id"},
-            }),
-    meta::Field<::ComplexRow,
-                std::string,
-                &::ComplexRow::name,
-                meta::Prop::Serializable,
-                nullptr,
-                nullptr>("name",
-                         "std::string",
-                         {
-                             {CSV_COLUMN, "name"},
-                             {SQL_COLUMN, "name"},
-                             {SRC_NAME, "name"},
-                         }),
-    meta::Field<::ComplexRow,
-                std::vector<int64_t>,
-                &::ComplexRow::scores,
-                meta::Prop::Serializable,
-                nullptr,
-                nullptr>("scores",
-                         "std::vector<int64_t>",
-                         {
-                             {CSV_COLUMN, "scores"},
-                             {SQL_COLUMN, "scores"},
-                             {SRC_NAME, "scores"},
-                         }),
-    meta::Field<::ComplexRow,
-                std::vector<std::string>,
-                &::ComplexRow::tags,
-                meta::Prop::Serializable,
-                nullptr,
-                nullptr>("tags",
-                         "std::vector<std::string>",
-                         {
-                             {CSV_COLUMN, "tags"},
-                             {SQL_COLUMN, "tags"},
-                             {SRC_NAME, "tags"},
-                         }));
+inline const auto fields = std::make_tuple(field<&::ComplexRow::id>("id"),
+                                           field<&::ComplexRow::name>("name"),
+                                           field<&::ComplexRow::scores>("scores"),
+                                           field<&::ComplexRow::tags>("tags"),
+                                           field<&::ComplexRow::matrix>("matrix"),
+                                           field<&::ComplexRow::categories>("categories"));
+
 inline constexpr auto tableName = "ComplexRow";
-inline constexpr auto query = "SELECT id, name, scores, tags FROM ComplexRow";
+inline constexpr auto query = "SELECT id, name, scores, tags, matrix, categories FROM ComplexRow";
 } // namespace ComplexRow
 } // namespace meta
+
 namespace meta
 {
-// Template specialization for type-based reflection lookup
 template <> struct MetaTuple<::ComplexRow>
 {
     static inline const auto& fields = meta::ComplexRow::fields;

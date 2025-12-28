@@ -10,8 +10,8 @@ struct Row
     std::string field6;
 };
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_csv.h"
+#include "meta.h"
+#include "meta_csv.h"
 #include "demo06.meta"
 
 int main()
@@ -33,5 +33,5 @@ int main()
                              {25, 26, 27, "i"},
                              {28, 29, 30, "j"}};
 
-    std::cout << meta::csv::serialize(rows);
+    std::cout << meta::toCSVWithHeader(rows);
 }

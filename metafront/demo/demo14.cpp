@@ -1,25 +1,34 @@
+#include <vector>
+#include <string>
+#include <map>
 
-#include <iostream>
+#include "meta.h"
 
-class A
+
+namespace demo
+{
+class Priv
 {
   public:
-    A();
-    int64_t intA;
-    class B
+    Priv(int x, int y) : x_(x), y_(y)
     {
-      public:
-        B();
-        int64_t x;
-    };
-};
+    }
 
-#include "../meta/meta_field.h"
-#include "../meta/meta_txt.h"
+  private:
+    int x_ __attribute__((annotate("private-is-private")));
+    int y_;
+
+  public:
+    std::vector<std::string> repairs_;
+    std::map<std::string, std::string> service_;
+};
+} // namespace demo
+
 #include "demo14.meta"
+
 
 int main()
 {
-    A a{};
-    toString(a);
+    demo::Priv p(1, 2);
+    std::cout << meta::toString(p) << "\n";
 }
