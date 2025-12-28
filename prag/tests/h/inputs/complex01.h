@@ -1,3 +1,7 @@
+#include <string>
+#include <map>
+#include <vector>
+
 namespace demo
 {
 struct MyClass

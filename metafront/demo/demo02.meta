@@ -2,13 +2,10 @@ namespace meta
 {
 namespace Car
 {
-inline const auto fields = std::make_tuple(field<&::Car::make>("make"),
-                                           field<&::Car::model>("model"),
-                                           field<&::Car::repairs>("repairs"),
-                                           field<&::Car::miles>("miles"));
-
-inline constexpr auto tableName = "Car";
-inline constexpr auto query = "SELECT make, model, repairs, miles FROM Car";
+inline const auto fields = std::make_tuple(meta::field<&::Car::make>("make"),
+                                           meta::field<&::Car::model>("model"),
+                                           meta::field<&::Car::repairs>("repairs"),
+                                           meta::field<&::Car::miles>("miles"));
 } // namespace Car
 } // namespace meta
 
@@ -17,7 +14,7 @@ namespace meta
 template <> struct MetaTuple<::Car>
 {
     static inline const auto& fields = meta::Car::fields;
-    static constexpr auto tableName = meta::Car::tableName;
-    static constexpr auto query = meta::Car::query;
+    static constexpr auto tableName = "Car";
+    static constexpr auto query = "select make, model, repairs, miles from Car";
 };
 } // namespace meta

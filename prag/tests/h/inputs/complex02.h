@@ -1,3 +1,8 @@
+#include <string>
+#include <map>
+#include <vector>
+
+
 struct Complex
 {
   std::string string;

@@ -6,7 +6,7 @@
 //@tableName("reflect")
 struct Reflect
 {
-  //@columnName("x")
+  //@ColumnName("x")
   int x;
   unsigned y;
   std::string string;
@@ -22,7 +22,7 @@ int main()
   reflect.x = 100;
   reflect.y = 100;
   reflect.string = "reflect";
-  reflect.strings = {"reflect", "reflect",  "reflect", "reflect"};
+  reflect.strings = {"reflect1", "reflect2", "reflect3", "reflect4"};
   std::cout << meta::toString(reflect) << "\n";
 }
 

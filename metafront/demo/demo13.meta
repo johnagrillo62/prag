@@ -3,23 +3,3 @@
 // void XY(int x, int y) - Access: public
 // int getX() - Access: public
 // void setX(int x) - Access: public
-namespace meta
-{
-namespace XY
-{
-inline const auto fields = std::make_tuple();
-
-inline constexpr auto tableName = "XY";
-inline constexpr auto query = "SELECT  FROM XY";
-} // namespace XY
-} // namespace meta
-
-namespace meta
-{
-template <> struct MetaTuple<::XY>
-{
-    static inline const auto& fields = meta::XY::fields;
-    static constexpr auto tableName = meta::XY::tableName;
-    static constexpr auto query = meta::XY::query;
-};
-} // namespace meta

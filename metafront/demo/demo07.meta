@@ -2,15 +2,12 @@ namespace meta
 {
 namespace ComplexRow
 {
-inline const auto fields = std::make_tuple(field<&::ComplexRow::id>("id"),
-                                           field<&::ComplexRow::name>("name"),
-                                           field<&::ComplexRow::scores>("scores"),
-                                           field<&::ComplexRow::tags>("tags"),
-                                           field<&::ComplexRow::matrix>("matrix"),
-                                           field<&::ComplexRow::categories>("categories"));
-
-inline constexpr auto tableName = "ComplexRow";
-inline constexpr auto query = "SELECT id, name, scores, tags, matrix, categories FROM ComplexRow";
+inline const auto fields = std::make_tuple(meta::field<&::ComplexRow::id>("id"),
+                                           meta::field<&::ComplexRow::name>("name"),
+                                           meta::field<&::ComplexRow::scores>("scores"),
+                                           meta::field<&::ComplexRow::tags>("tags"),
+                                           meta::field<&::ComplexRow::matrix>("matrix"),
+                                           meta::field<&::ComplexRow::categories>("categories"));
 } // namespace ComplexRow
 } // namespace meta
 
@@ -19,7 +16,8 @@ namespace meta
 template <> struct MetaTuple<::ComplexRow>
 {
     static inline const auto& fields = meta::ComplexRow::fields;
-    static constexpr auto tableName = meta::ComplexRow::tableName;
-    static constexpr auto query = meta::ComplexRow::query;
+    static constexpr auto tableName = "ComplexRow";
+    static constexpr auto query =
+        "select id, name, scores, tags, matrix, categories from ComplexRow";
 };
 } // namespace meta

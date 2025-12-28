@@ -1,6 +1,6 @@
 #include <string>
 
-class [[clang::annotate("TableName:User")]] User
+class [[clang::annotate("TableName:USER")]] User
 {
   public:
 
@@ -9,7 +9,6 @@ class [[clang::annotate("TableName:User")]] User
     std::string name2_ = "name2";
     std::string name3_ = "name3";
 };
-
 #include "meta.h"
 #include "meta_db.h"
 #include "demo11.meta"

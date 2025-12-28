@@ -2,16 +2,12 @@ namespace meta
 {
 namespace Row
 {
-inline const auto fields =
-    std::make_tuple(field<&::Row::field1>("field1"),
-                    field<&::Row::field2>("field2"),
-                    field<&::Row::field3>("field3"),
-                    field<&::Row::field4>("field4"),
-                    field<&::Row::field5>("field5"),
-                    field<&::Row::field6>("field6", meta::CsvColumn{"FIELD6"}));
-
-inline constexpr auto tableName = "Row";
-inline constexpr auto query = "SELECT field1, field2, field3, field4, field5, field6 FROM Row";
+inline const auto fields = std::make_tuple(meta::field<&::Row::field1>("field1"),
+                                           meta::field<&::Row::field2>("field2"),
+                                           meta::field<&::Row::field3>("field3"),
+                                           meta::field<&::Row::field4>("field4"),
+                                           meta::field<&::Row::field5>("field5"),
+                                           meta::field<&::Row::field6>("field6"));
 } // namespace Row
 } // namespace meta
 
@@ -20,7 +16,7 @@ namespace meta
 template <> struct MetaTuple<::Row>
 {
     static inline const auto& fields = meta::Row::fields;
-    static constexpr auto tableName = meta::Row::tableName;
-    static constexpr auto query = meta::Row::query;
+    static constexpr auto tableName = "Row";
+    static constexpr auto query = "select field1, field2, field3, field4, field5, field6 from Row";
 };
 } // namespace meta

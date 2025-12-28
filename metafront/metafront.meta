@@ -1,0 +1,84 @@
+namespace meta
+{
+namespace FieldInfo
+{
+inline const auto fields = std::make_tuple(
+    meta::field<&::FieldInfo::name>("name"),
+    meta::field<&::FieldInfo::type>("type"),
+    meta::field<&::FieldInfo::access>("access"),
+    meta::field<&::FieldInfo::annotations>("annotations"),
+    meta::field<&::FieldInfo::isAnonymousStruct>("isAnonymousStruct"),
+    meta::field<&::FieldInfo::nestedFields>("nestedFields"));
+} // namespace FieldInfo
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::FieldInfo>
+{
+  static inline const auto& fields = meta::FieldInfo::fields;
+  static constexpr auto tableName = "FieldInfo";
+  static constexpr auto query = "select name, type, access, annotations, isAnonymousStruct, nestedFields from FieldInfo";
+};
+} // namespace meta
+namespace meta
+{
+namespace ParameterInfo
+{
+inline const auto fields = std::make_tuple(
+    meta::field<&::ParameterInfo::type>("type"),
+    meta::field<&::ParameterInfo::name>("name"));
+} // namespace ParameterInfo
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::ParameterInfo>
+{
+  static inline const auto& fields = meta::ParameterInfo::fields;
+  static constexpr auto tableName = "ParameterInfo";
+  static constexpr auto query = "select type, name from ParameterInfo";
+};
+} // namespace meta
+namespace meta
+{
+namespace FunctionInfo
+{
+inline const auto fields = std::make_tuple(
+    meta::field<&::FunctionInfo::name>("name"),
+    meta::field<&::FunctionInfo::returnType>("returnType"),
+    meta::field<&::FunctionInfo::parameters>("parameters"),
+    meta::field<&::FunctionInfo::isPublic>("isPublic"),
+    meta::field<&::FunctionInfo::isPrivate>("isPrivate"),
+    meta::field<&::FunctionInfo::isProtected>("isProtected"));
+} // namespace FunctionInfo
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::FunctionInfo>
+{
+  static inline const auto& fields = meta::FunctionInfo::fields;
+  static constexpr auto tableName = "FunctionInfo";
+  static constexpr auto query = "select name, returnType, parameters, isPublic, isPrivate, isProtected from FunctionInfo";
+};
+} // namespace meta
+namespace meta
+{
+namespace WalkData
+{
+inline const auto fields = std::make_tuple(
+    meta::field<&::WalkData::target>("target"),
+    meta::field<&::WalkData::mainFile>("mainFile"));
+} // namespace WalkData
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::WalkData>
+{
+  static inline const auto& fields = meta::WalkData::fields;
+  static constexpr auto tableName = "WalkData";
+  static constexpr auto query = "select target, mainFile from WalkData";
+};
+} // namespace meta

@@ -2,13 +2,10 @@ namespace meta
 {
 namespace Priv
 {
-inline const auto fields = std::make_tuple(field<&::Priv::x_>("x_"),
-                                           field<&::Priv::y_>("y_"),
-                                           field<&::Priv::repairs_>("repairs_"),
-                                           field<&::Priv::service_>("service_"));
-
-inline constexpr auto tableName = "Priv";
-inline constexpr auto query = "SELECT x_, y_, repairs_, service_ FROM Priv";
+inline const auto fields = std::make_tuple(meta::field<&::Priv::x_>("x_"),
+                                           meta::field<&::Priv::y_>("y_"),
+                                           meta::field<&::Priv::repairs_>("repairs_"),
+                                           meta::field<&::Priv::service_>("service_"));
 } // namespace Priv
 } // namespace meta
 
@@ -17,7 +14,7 @@ namespace meta
 template <> struct MetaTuple<::Priv>
 {
     static inline const auto& fields = meta::Priv::fields;
-    static constexpr auto tableName = meta::Priv::tableName;
-    static constexpr auto query = meta::Priv::query;
+    static constexpr auto tableName = "Priv";
+    static constexpr auto query = "select x_, y_, repairs_, service_ from Priv";
 };
 } // namespace meta
