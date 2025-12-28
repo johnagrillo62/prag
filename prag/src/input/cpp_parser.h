@@ -232,6 +232,7 @@ class CppLexer
     void skipWhitespace();
     void skipLineComment();
     void skipBlockComment();
+    void skipCppAttribute();  // Skip [[...]] C++ attributes
 
     CppToken makeToken(CppTokenType type, const std::string& value);
     CppToken readNumber();
@@ -306,3 +307,5 @@ class CppParser : public AstParser, public AutoRegisterParser<CppParser>
     void collectStructNames();
 };
 } // namespace bhw
+
+

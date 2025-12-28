@@ -1,7 +1,13 @@
-#include "../meta/meta.h"
+
+
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+
+
+#include </mnt/c/Users/johna/source/repos/meta/meta.h>
+using namespace meta;
 
 // Car class definition
 struct Car {
@@ -18,84 +24,88 @@ struct Car {
 namespace meta {
 namespace Car {
 inline const auto fields = std::make_tuple(
-    meta::MakeField<&::Car::maker>(
+    meta::field<&::Car::maker>(
         "maker",
         meta::Props{meta::Prop::Serializable | meta::Prop::PrimaryKey},
         meta::Csv{"maker"},
         meta::Sql{"maker"},
         meta::Json{"maker"},
-        meta::DefaultValue{std::string{"Unknown"}},
+        //meta::DefaultValue{std::string{"Unknown"}},
         meta::Description{"Car manufacturer name"}
     ),
     
-    meta::MakeField<&::Car::model>(
+    meta::field<&::Car::model>(
         "model",
         meta::Props{meta::Prop::Serializable},
         meta::Csv{"model"},
         meta::Sql{"model"},
         meta::Json{"model"},
-        meta::DefaultValue{std::string{"Base Model"}},
-        meta::InitValue{std::string{""}},
+        //meta::DefaultValue{std::string{"Base Model"}},
+        //meta::InitValue{std::string{""}},
         meta::Description{"Car model designation"}
     ),
     
-    meta::MakeField<&::Car::year>(
+    meta::field<&::Car::year>(
         "year",
         meta::Props{meta::Prop::Serializable},
         meta::Csv{"year"},
         meta::Sql{"year"},
         meta::Json{"year"},
-        meta::DefaultValue{static_cast<unsigned short>(2024)},
-        meta::InitValue{static_cast<unsigned short>(2020)},
+        //meta::DefaultValue{static_cast<unsigned short>(2024)},
+        //meta::InitValue{static_cast<unsigned short>(2020)},
         meta::Description{"Year of manufacture"},
         meta::Validator{"year >= 1900 && year <= 2100"}
     ),
     
-    meta::MakeField<&::Car::electric>(
+    meta::field<&::Car::electric>(
         "electric",
         meta::Props{meta::Prop::Serializable},
         meta::Csv{"electric"},
         meta::Sql{"is_electric"},
         meta::Json{"isElectric"},
-        meta::DefaultValue{false},
-        meta::InitValue{true},
+        //meta::DefaultValue{false},
+        //meta::InitValue{true},
         meta::Description{"Electric vehicle flag"}
     ),
     
-    meta::MakeField<&::Car::howmanymiles>(
+    meta::field<&::Car::howmanymiles>(
         "howmanymiles",
         meta::Props{meta::Prop::Serializable},
         meta::Csv{"mileage"},
         meta::Sql{"mileage"},
         meta::Json{"mileage"},
-        meta::DefaultValue{0u},
-        meta::Description{"Total miles driven"},
+        //meta::DefaultValue{0u},
+        //meta::Description{"Total miles driven"},
         meta::Validator{"mileage >= 0"}
     ),
     
-    meta::MakeField<&::Car::features>(
+    meta::field<&::Car::features>(
         "features",
         meta::Props{meta::Prop::Serializable},
         meta::Json{"features"},
-        meta::DefaultValue{std::vector<std::string>{"Air Conditioning", "Power Steering", "ABS"}},
-        meta::InitValue{std::vector<std::string>{}},
+        //meta::DefaultValue{std::vector<std::string>{"Air Conditioning", "Power Steering", "ABS"}},
+        //meta::InitValue{std::vector<std::string>{}},
         meta::Description{"List of car features and options"}
     ),
     
-    meta::MakeField<&::Car::specs>(
+    meta::field<&::Car::specs>(
         "specs",
         meta::Props{meta::Prop::Serializable},
         meta::Json{"specifications"},
-        meta::DefaultValue{std::unordered_map<std::string, std::string>{
-            {"engine", "V6"},
-            {"transmission", "automatic"},
-            {"drive", "FWD"},
-            {"fuel", "gasoline"}
-        }},
-        meta::InitValue{std::unordered_map<std::string, std::string>{}},
-        meta::Description{"Technical specifications as key-value pairs"}
-    )
-);
+        //meta::DefaultValue{std::unordered_map<std::string, std::string>{
+        //    {"engine", "V6"},
+        //    {"transmission", "automatic"},
+        //    {"drive", "FWD"},
+        //    {"fuel", "gasoline"}
+        //}},
+        //meta::InitValue{std::unordered_map<std::string, std::string>{}},
+        meta::Description{"Technical specifications as key-value pairs"})
+			       );
+  
+}
+
+}
+
 
 inline constexpr auto tableName = "Car";
 inline constexpr auto query = "SELECT maker, model, year, is_electric AS electric, mileage AS howmanymiles FROM Car";
@@ -175,25 +185,26 @@ int main() {
     auto& featuresField = std::get<5>(meta::Car::fields);
     auto& specsField = std::get<6>(meta::Car::fields);
     
-    if constexpr (makerField.template has<meta::DefaultValue<std::string>>()) {
-        std::cout << "maker:    \"" 
-                  << makerField.template get<meta::DefaultValue<std::string>>().value 
-                  << "\"\n";
-    }
+    //    if constexpr (makerField.template has<meta::DefaultValue<std::string>>()) {
+    //    std::cout << "maker:    \"" 
+    //              << makerField.template get<meta::DefaultValue<std::string>>().value 
+    //              << "\"\n";
+    //}
     
-    if constexpr (yearField.template has<meta::DefaultValue<unsigned short>>()) {
-        std::cout << "year:     " 
-                  << yearField.template get<meta::DefaultValue<unsigned short>>().value 
-                  << "\n";
-    }
+    //if constexpr (yearField.template has<meta::DefaultValue<unsigned short>>()) {
+    //    std::cout << "year:     " 
+    //              << yearField.template get<meta::DefaultValue<unsigned short>>().value 
+    //              << "\n";
+    //}
     
-    if constexpr (electricField.template has<meta::DefaultValue<bool>>()) {
-        std::cout << "electric: " 
-                  << std::boolalpha
-                  << electricField.template get<meta::DefaultValue<bool>>().value 
-                  << "\n";
-    }
-    
+    //if constexpr (electricField.template has<meta::DefaultValue<bool>>()) {
+    //    std::cout << "electric: " 
+    //              << std::boolalpha
+    //              << electricField.template get<meta::DefaultValue<bool>>().value 
+    //              << "\n";
+    //}
+
+    /*
     if constexpr (featuresField.template has<meta::DefaultValue<std::vector<std::string>>>()) {
         std::cout << "features: [";
         const auto& features = featuresField.template get<meta::DefaultValue<std::vector<std::string>>>().value;
@@ -212,6 +223,7 @@ int main() {
         }
         std::cout << "          }\n";
     }
+    */
     
     std::cout << "\n";
     std::cout << "===========================================\n";
@@ -231,7 +243,7 @@ int main() {
     };
     
     std::cout << "Created Car Instance:\n";
-    std::cout << "  " << makerField.fieldName << ": " << makerField.getValue(myCar) << "\n";
+     std::cout << "  " << makerField.fieldName << ": " << makerField.getValue(myCar) << "\n";
     std::cout << "  " << std::get<1>(meta::Car::fields).fieldName << ": " 
               << std::get<1>(meta::Car::fields).getValue(myCar) << "\n";
     std::cout << "  " << yearField.fieldName << ": " << yearField.getValue(myCar) << "\n";

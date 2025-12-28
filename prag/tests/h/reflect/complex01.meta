@@ -2,22 +2,22 @@ namespace meta
 {
 namespace Complex01
 {
-// Field metadata
 inline const auto fields = std::make_tuple(
-    meta::Field< ::Complex01, &::Complex01::id>("id"),
-    meta::Field< ::Complex01, &::Complex01::string>("string"),
-    meta::Field< ::Complex01, &::Complex01::stringStringMap>("stringStringMap"));
+    meta::field<&::Complex01::id>("id"),
+    meta::field<&::Complex01::string>("string"),
+    meta::field<&::Complex01::stringStringMap>("stringStringMap"));
+
 } // namespace Complex01
 } // namespace meta
 
 namespace meta
 {
-// Template specialization for type-based reflection lookup
-template <>  struct MetaTuple< ::Complex01>
+template <> struct MetaTuple<::Complex01>
 {
   static inline const auto& fields = meta::Complex01::fields;
   static constexpr auto tableName = "Complex01";
   static constexpr auto query = "select id, string, stringStringMap from Complex01";
 };
 } // namespace meta
+
 

@@ -2,21 +2,21 @@ namespace meta
 {
 namespace Complex02
 {
-// Field metadata
 inline const auto fields = std::make_tuple(
-    meta::Field< ::Complex02, &::Complex02::string>("string"),
-    meta::Field< ::Complex02, &::Complex02::complex>("complex"));
+    meta::field<&::Complex02::string>("string"),
+    meta::field<&::Complex02::complex>("complex"));
+
 } // namespace Complex02
 } // namespace meta
 
 namespace meta
 {
-// Template specialization for type-based reflection lookup
-template <>  struct MetaTuple< ::Complex02>
+template <> struct MetaTuple<::Complex02>
 {
   static inline const auto& fields = meta::Complex02::fields;
   static constexpr auto tableName = "Complex02";
   static constexpr auto query = "select string, complex from Complex02";
 };
 } // namespace meta
+
 

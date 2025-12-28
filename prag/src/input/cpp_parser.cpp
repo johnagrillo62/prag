@@ -174,6 +174,35 @@ void CppLexer::skipBlockComment()
     }
 }
 
+void CppLexer::skipCppAttribute()
+{
+    // [[ already consumed by caller
+    int bracket_depth = 1; // We've seen one [[
+    
+    while (bracket_depth > 0 && current() != '\0')
+    {
+        if (current() == '[' && peek() == '[')
+        {
+            bracket_depth++;
+            advance();
+            advance();
+        }
+        else if (current() == ']' && peek() == ']')
+        {
+            bracket_depth--;
+            advance();
+            advance();
+        }
+        else
+        {
+            advance();
+        }
+    }
+    
+    if (bracket_depth > 0)
+        throw std::runtime_error("Unterminated C++ attribute [[...]]");
+}
+
 CppToken CppLexer::makeToken(CppTokenType type, const std::string& value)
 {
     return CppToken(type, value, line, column);
@@ -247,7 +276,7 @@ CppToken CppLexer::readAttribute()
     {
         skipWhitespace();
 
-        // Parse string literal
+        // Try to parse string literal first (with quotes)
         if (matchChar('"'))
         {
             while (current() != '"' && current() != '\0')
@@ -266,6 +295,15 @@ CppToken CppLexer::readAttribute()
             }
             if (!matchChar('"'))
                 throw std::runtime_error("Unterminated string in attribute");
+        }
+        else
+        {
+            // No quotes - read identifier: alphanumeric, underscore, colon, dot
+            while (std::isalnum(current()) || current() == '_' || current() == ':' || current() == '.')
+            {
+                value += current();
+                advance();
+            }
         }
 
         skipWhitespace();
@@ -336,6 +374,15 @@ CppToken CppLexer::nextToken()
 
     if (std::isalpha(current()) || current() == '_')
         return readIdentifier();
+
+    // Skip C++ attributes [[...]]
+    if (current() == '[' && peek() == '[')
+    {
+        advance(); // first [
+        advance(); // second [
+        skipCppAttribute();
+        return nextToken(); // Get next real token
+    }
 
     char ch = current();
     size_t start_line = line;
@@ -595,15 +642,45 @@ std::unique_ptr<Type> CppParser::parseType(size_t)
     return resolveType(type_name);
 }
 
+
+
+
+
 Field CppParser::parseField()
 {
     auto attrs = collectPendingAttributes();
-
     auto type = parseType();
     std::string name = current_token.value;
     expect(CppTokenType::Identifier);
+    
+    // Handle bitfield syntax
+    // uint8_t input : 1;
+    //               ^^^^ Skip this part
+    if (match(CppTokenType::Colon) && current_token.value == ":")
+    {
+        advance();  // Skip the ':'
+        
+        // Skip the bitfield width (number or constant expression)
+        if (match(CppTokenType::Number))
+        {
+            advance();
+        }
+        else if (match(CppTokenType::Identifier))
+        {
+            // Could be a constant like: width : MY_CONSTANT
+            advance();
+        }
+        else
+        {
+            throw std::runtime_error(
+                "Expected bitfield width (number or identifier) after ':' at line " +
+                std::to_string(current_token.line)
+            );
+        }
+    }
+    
     expect(CppTokenType::Semicolon);
-
+    
     return Field{name, std::move(type), std::move(attrs)};
 }
 

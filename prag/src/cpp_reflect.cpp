@@ -3,6 +3,7 @@
 #include <numeric>
 #include <string>
 #include <variant>
+#include <vector>
 
 #include "ast.h"
 #include "cpp_parser.h"
@@ -12,30 +13,47 @@
 namespace
 {
 
-struct Ret
-{
-    std::string name;
-    std::string type;
-};
-
-using RetTuple = std::vector<std::tuple<std::string, std::string, bhw::AttributeVec, bool>>;
 auto joinRanges(const std::vector<std::string>& vec, const std::string& sep) -> std::string;
+
+// Helper to build nested decltype expressions
+// buildNestedDecltype("::A", ["b", "c"]) -> "decltype(decltype(::A::b)::c)"
+std::string buildNestedDecltype(const std::string& rootType, const std::vector<std::string>& path)
+{
+    if (path.empty())
+        return rootType;
+    
+    std::string result;
+    
+    // Open N decltype( where N = path.size()
+    for (size_t i = 0; i < path.size(); ++i)
+        result += "decltype(";
+    
+    // Add root and first boundary
+    result += rootType + "::" + path[0];
+    
+    // Close one paren and add each subsequent boundary
+    for (size_t i = 1; i < path.size(); ++i)
+        result += ")::" + path[i];
+    
+    // Close the final paren
+    result += ")";
+    
+    return result;
+}
 
 class CppReflectWalker : public bhw::CppWalker
 {
   public:
     auto walkNamespace(const bhw::Namespace& ns, size_t indent) -> std::string override;
     auto walkStruct(const bhw::Struct& s, size_t indent) -> std::string override;
-    auto getFields(const bhw::StructMember& member,
-                   const std::string& parentName,
-                   const std::string& accessPath) -> RetTuple;
+    
     std::string generateOneof(const bhw::Oneof& oneof, size_t) override
     {
         return "";
     }
-      std::string generateHeader(const bhw::Ast& ast) override
+    std::string generateHeader(const bhw::Ast& ast) override
     {
-      return "";
+        return "";
     }
 
   protected:
@@ -119,23 +137,302 @@ class CppReflectWalker : public bhw::CppWalker
     }
 
   private:
-    std::string generateAccessorFunctions(const std::string& structName,
-                                          const std::string& fieldName,
-                                          const std::string& accessPath,
-                                          const std::string& type);
-    std::string sanitizeFunctionName(const std::string& path);
+    std::string walkNestedStruct(const bhw::Struct& s,
+                                 const std::string& rootTypeName,
+                                 const std::vector<std::string>& path,
+                                 const std::string& namespaceName,
+                                 const std::string& parentMetaPath);
     std::string walkNestedTypeDefinitions(const bhw::Struct& s,
                                           const std::string& parentFullName,
                                           size_t indent);
-    std::string walkNestedStruct(const bhw::Struct& s,
-                                 const std::string& fullStructName,
-                                 size_t indent);
 
     std::string currentParentStruct_;
 };
 
-} // namespace
+std::string CppReflectWalker::walkNamespace(const bhw::Namespace& ns, size_t indent)
+{
+    std::stringstream str;
+    
+    for (const auto& node : ns.nodes)
+    {
+        str << std::visit(
+            [&](const auto& m) -> std::string
+            {
+                using M = std::decay_t<decltype(m)>;
+                if constexpr (std::is_same_v<M, bhw::Struct>)
+                {
+                    return walkStruct(m, indent);
+                }
+                return "";
+            },
+            node);
+    }
+    
+    return str.str();
+}
 
+std::string CppReflectWalker::walkNestedStruct(const bhw::Struct& s,
+                                               const std::string& rootTypeName,
+                                               const std::vector<std::string>& path,
+                                               const std::string& namespaceName,
+                                               const std::string& parentMetaPath)
+{
+    std::stringstream str;
+    
+    str << "namespace " << namespaceName << "\n{\n";
+    
+    // Build the proper decltype for this level
+    std::string thisTypeDecltype = buildNestedDecltype(rootTypeName, path);
+    
+    // Collect direct fields only
+    std::vector<std::string> fieldNames;
+    std::vector<std::string> fieldDefs;
+    
+    for (const auto& member : s.members)
+    {
+        std::visit([&](const auto& m) {
+            using M = std::decay_t<decltype(m)>;
+            
+            if constexpr (std::is_same_v<M, bhw::Field>)
+            {
+                fieldNames.push_back(m.name);
+                std::stringstream fs;
+                fs << "    meta::field<&" << thisTypeDecltype << "::" << m.name << ">(\"" << m.name << "\")";
+                fieldDefs.push_back(fs.str());
+            }
+            else if constexpr (std::is_same_v<M, bhw::Struct>)
+            {
+                if (!m.variableName.empty())
+                {
+                    fieldNames.push_back(m.variableName);
+                    std::stringstream fs;
+                    fs << "    meta::field<&" << thisTypeDecltype << "::" << m.variableName << ">(\"" << m.variableName << "\")";
+                    fieldDefs.push_back(fs.str());
+                }
+            }
+        }, member);
+    }
+    
+    // Generate fields tuple
+    str << "inline const auto fields = std::make_tuple(\n";
+    for (size_t i = 0; i < fieldDefs.size(); ++i)
+    {
+        if (i > 0) str << ",\n";
+        str << fieldDefs[i];
+    }
+    str << ");\n\n";
+    
+    // Recursively handle deeper nesting
+    std::string currentMetaPath = parentMetaPath + "::" + namespaceName;
+    for (const auto& member : s.members)
+    {
+        std::visit([&](const auto& m) {
+            using M = std::decay_t<decltype(m)>;
+            
+            if constexpr (std::is_same_v<M, bhw::Struct>)
+            {
+                if (!m.variableName.empty())
+                {
+                    // Build new path by appending this variable
+                    std::vector<std::string> newPath = path;
+                    newPath.push_back(m.variableName);
+                    
+                    str << walkNestedStruct(m, rootTypeName, newPath, m.variableName, currentMetaPath);
+                }
+            }
+        }, member);
+    }
+    
+    str << "} // namespace " << namespaceName << "\n";
+    
+    return str.str();
+}
+
+std::string CppReflectWalker::walkNestedTypeDefinitions(const bhw::Struct& s,
+                                                        const std::string& parentName,
+                                                        size_t indent)
+{
+    std::stringstream str;
+    
+    for (const auto& member : s.members)
+    {
+        std::visit(
+            [&](const auto& m)
+            {
+                using M = std::decay_t<decltype(m)>;
+                if constexpr (std::is_same_v<M, bhw::Struct>)
+                {
+                    if (!m.name.empty() && !m.variableName.empty())
+                    {
+                        str << walkStruct(m, indent);
+                    }
+                }
+            },
+            member);
+    }
+    
+    return str.str();
+}
+
+std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
+{
+    std::stringstream str;
+
+    std::string package = (s.namespaces.size() > 0) ? joinRanges(s.namespaces, "::") + "::" : "";
+    std::string fullStructName = "::" + package + s.name;
+
+    currentParentStruct_ = fullStructName;
+
+    str << "namespace meta\n{\n";
+    str << "namespace " << s.name << "\n{\n";
+
+    // Collect only DIRECT members of this struct
+    std::vector<std::string> fieldNames;
+    std::vector<std::string> fieldDefs;
+    
+    for (const auto& member : s.members)
+    {
+        std::visit([&](const auto& m) {
+            using M = std::decay_t<decltype(m)>;
+            
+            if constexpr (std::is_same_v<M, bhw::Field>)
+            {
+                // Direct field
+                fieldNames.push_back(m.name);
+                std::stringstream fs;
+                fs << "    meta::field<&" << fullStructName << "::" << m.name << ">(\"" << m.name << "\")";
+                fieldDefs.push_back(fs.str());
+            }
+            else if constexpr (std::is_same_v<M, bhw::Struct>)
+            {
+                // Nested struct - add as whole member
+                if (!m.variableName.empty())
+                {
+                    fieldNames.push_back(m.variableName);
+                    std::stringstream fs;
+                    fs << "    meta::field<&" << fullStructName << "::" << m.variableName << ">(\"" << m.variableName << "\")";
+                    fieldDefs.push_back(fs.str());
+                }
+            }
+        }, member);
+    }
+
+    // Generate fields tuple for THIS level only
+    str << "inline const auto fields = std::make_tuple(\n";
+    for (size_t i = 0; i < fieldDefs.size(); ++i)
+    {
+        if (i > 0) str << ",\n";
+        str << fieldDefs[i];
+    }
+    str << ");\n\n";
+    
+    // Now recursively generate nested namespaces for nested structs
+    std::string parentMetaPath = "meta::" + s.name;
+    for (const auto& member : s.members)
+    {
+        std::visit([&](const auto& m) {
+            using M = std::decay_t<decltype(m)>;
+            
+            if constexpr (std::is_same_v<M, bhw::Struct>)
+            {
+                if (!m.variableName.empty())
+                {
+                    // Pass rootType and initial path
+                    std::vector<std::string> initialPath = {m.variableName};
+                    str << walkNestedStruct(m, fullStructName, initialPath, m.variableName, parentMetaPath);
+                }
+            }
+        }, member);
+    }
+    
+    str << "} // namespace " << s.name << "\n";
+    str << "} // namespace meta\n\n";
+
+    // Generate MetaTuple specialization for root struct
+    auto tableName = s.name;
+    std::stringstream select;
+    auto fields = joinRanges(fieldNames, ", ");
+    select << "select " << fields << " from " << s.name;
+
+    str << "namespace meta\n{\n"
+        << "template <> struct MetaTuple<" << fullStructName << ">\n{\n"
+        << "  static inline const auto& fields = meta::" << s.name << "::fields;\n"
+        << "  static constexpr auto tableName = \"" << tableName << "\";\n"
+        << "  static constexpr auto query = \"" << select.str() << "\";\n"
+        << "};\n";
+    
+    // Generate MetaTuple for all nested anonymous structs
+    for (const auto& member : s.members)
+    {
+        std::visit([&](const auto& m) {
+            using M = std::decay_t<decltype(m)>;
+            
+            if constexpr (std::is_same_v<M, bhw::Struct>)
+            {
+                if (!m.variableName.empty())
+                {
+                    std::vector<std::string> path = {m.variableName};
+                    std::string nestedTypeDecltype = buildNestedDecltype(fullStructName, path);
+                    std::string metaPath = "meta::" + s.name + "::" + m.variableName;
+                    
+                    str << "template <> struct MetaTuple<" << nestedTypeDecltype << ">\n{\n"
+                        << "  static inline const auto& fields = " << metaPath << "::fields;\n"
+                        << "};\n";
+                    
+                    // Recursively generate for deeper nesting
+                    std::function<void(const bhw::Struct&, std::vector<std::string>, const std::string&)> generateNestedMetaTuples;
+                    generateNestedMetaTuples = [&](const bhw::Struct& ns, std::vector<std::string> currentPath, const std::string& currentMetaPath) {
+                        for (const auto& nmember : ns.members)
+                        {
+                            std::visit([&](const auto& nm) {
+                                using NM = std::decay_t<decltype(nm)>;
+                                if constexpr (std::is_same_v<NM, bhw::Struct>)
+                                {
+                                    if (!nm.variableName.empty())
+                                    {
+                                        std::vector<std::string> newPath = currentPath;
+                                        newPath.push_back(nm.variableName);
+                                        
+                                        std::string deepTypeDecltype = buildNestedDecltype(fullStructName, newPath);
+                                        std::string deepMetaPath = currentMetaPath + "::" + nm.variableName;
+                                        
+                                        str << "template <> struct MetaTuple<" << deepTypeDecltype << ">\n{\n"
+                                            << "  static inline const auto& fields = " << deepMetaPath << "::fields;\n"
+                                            << "};\n";
+                                        
+                                        generateNestedMetaTuples(nm, newPath, deepMetaPath);
+                                    }
+                                }
+                            }, nmember);
+                        }
+                    };
+                    
+                    generateNestedMetaTuples(m, path, metaPath);
+                }
+            }
+        }, member);
+    }
+    
+    str << "} // namespace meta\n\n";
+
+    str << walkNestedTypeDefinitions(s, fullStructName, indent);
+
+    return str.str();
+}
+
+std::string joinRanges(const std::vector<std::string>& vec, const std::string& sep)
+{
+    if (vec.empty())
+        return {};
+
+    return std::accumulate(std::next(vec.begin()),
+                           vec.end(),
+                           vec[0],
+                           [&sep](const std::string& a, const std::string& b)
+                           { return a + sep + b; });
+}
+
+} // namespace
 
 #include <CLI11.hpp>
 
@@ -144,18 +441,15 @@ int main(int argc, char* argv[])
     CLI::App app{"CppReflect - generate reflection metadata from C++ structs"};
 
     std::string inputFile;
-    std::string overrideExt; // To override parser extension
+    std::string overrideExt;
     bool showAst = false;
     bool noOutput = false;
 
-    // Positional input file: defaults to "-" (stdin) if not provided
     app.add_option("input", inputFile, "Input C++ source file ('-' for stdin)")
         ->default_val("-");
 
-    // Optional override extension
     app.add_option("--ext", overrideExt, "Override input parser (file extension)");
 
-    // Flags
     app.add_flag("--ast", showAst, "Dump AST to stderr");
     app.add_flag("--no-output", noOutput, "Suppress generated output");
 
@@ -169,7 +463,6 @@ int main(int argc, char* argv[])
 
         if (inputFile == "-")
         {
-            // Read all stdin into a string
             std::ostringstream ss;
             ss << std::cin.rdbuf();
             source = ss.str();
@@ -187,17 +480,14 @@ int main(int argc, char* argv[])
         else
             ext = bhw::getFileExtension(inputFile).substr(1);
 
-        // Parse AST
         auto ast = bhw::CppParser{}.parseToAst(source);
 
-        // Dump AST if requested
         if (showAst)
         {
             std::cerr << "********* AST **********\n";
             std::cerr << ast.showAst() << "\n";
         }
 
-        // Generate reflection output
         if (showOutput)
         {
             std::cout << CppReflectWalker{}.walk(std::move(ast)) << "\n";
@@ -212,404 +502,3 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-
-namespace
-{
-std::string CppReflectWalker::walkNamespace(const bhw::Namespace& ns, size_t indent)
-{
-    std::ostringstream out;
-
-    // Walk all nodes in namespace
-    for (const auto& node : ns.nodes)
-    {
-        out << walkRootNode(node, indent + 1);
-    }
-    return out.str();
-}
-
-std::string CppReflectWalker::sanitizeFunctionName(const std::string& path)
-{
-    // Convert "::Car::engine::name" to "engine_name"
-    std::string result = path;
-
-    // Remove leading "::"
-    if (result.find("::") == 0)
-        result = result.substr(2);
-
-    // Find first "::" and remove everything before it (the struct name)
-    auto pos = result.find("::");
-    if (pos != std::string::npos)
-        result = result.substr(pos + 2);
-
-    // Replace remaining "::" with "_"
-    while ((pos = result.find("::")) != std::string::npos)
-    {
-        result.replace(pos, 2, "_");
-    }
-
-    return result;
-}
-
-std::string CppReflectWalker::generateAccessorFunctions(const std::string& structName,
-                                                        const std::string& fieldName,
-                                                        const std::string& accessPath,
-                                                        const std::string& type)
-{
-    std::stringstream str;
-
-    std::string funcName = sanitizeFunctionName(fieldName);
-
-    // Generate getter
-    str << "inline " << type << " get_" << funcName << "(const " << structName << "& obj)\n{\n"
-        << "    return obj" << accessPath << ";\n"
-        << "}\n\n";
-
-    // Generate setter
-    str << "inline void set_" << funcName << "(" << structName << "& obj, const " << type
-        << "& val)\n{\n"
-        << "    obj" << accessPath << " = val;\n"
-        << "}\n\n";
-
-    return str.str();
-}
-
-std::string CppReflectWalker::walkNestedTypeDefinitions(const bhw::Struct& s,
-                                                        const std::string& parentFullName,
-                                                        size_t indent)
-{
-    std::stringstream str;
-
-    // Generate reflection for nested type definitions
-    for (const auto& member : s.members)
-    {
-        if (auto* nestedStruct = std::get_if<bhw::Struct>(&member))
-        {
-            // Check if this is a type definition (no instance created)
-            if (nestedStruct->variableName.empty() && !nestedStruct->name.empty())
-            {
-                // This is a named nested struct without an instance
-                // Build the nested struct's full name including parent
-                std::string nestedFullName = parentFullName + "::" + nestedStruct->name;
-
-                //  SET CONTEXT for nested struct
-                std::string savedParent = currentParentStruct_;
-                currentParentStruct_ = parentFullName;
-
-                // Generate the reflection with corrected namespace
-                str << "\n" << walkNestedStruct(*nestedStruct, nestedFullName, indent);
-
-                // RESTORE CONTEXT
-                currentParentStruct_ = savedParent;
-            }
-        }
-    }
-
-    return str.str();
-}
-
-std::string CppReflectWalker::walkNestedStruct(const bhw::Struct& s,
-                                               const std::string& fullStructName,
-                                               size_t indent)
-{
-    std::stringstream str;
-
-    str << "namespace meta\n{\n";
-    str << "namespace " << s.name << "\n{\n";
-
-    // Generate fields (no accessors needed for type definitions without instances)
-    str << "// Field metadata\n";
-    str << "inline const auto fields = std::make_tuple(\n";
-
-    std::vector<std::string> fieldNames;
-    auto sep = "";
-
-    for (const auto& member : s.members)
-    {
-        for (const auto& [name, typeString, attrs, isNested] :
-             getFields(member, fullStructName, ""))
-        {
-            std::string displayName = name;
-            size_t pos = displayName.rfind("::");
-            if (pos != std::string::npos)
-            {
-                displayName = displayName.substr(pos + 2);
-            }
-
-            fieldNames.emplace_back(displayName);
-
-            str << sep << "    meta::Field< " << fullStructName << ", " ;
-            if (isNested)
-            {
-	        std::string funcName = sanitizeFunctionName(name);
-                str << "&get_" << funcName << ", &set_" << funcName;
-            }
-            else
-            {
-                str << "&" << name << ", meta::Prop::Serializable";
-            }
-
-            str << ">(\"" << displayName << "\")";
-            sep = ",\n";
-        }
-    }
-
-    str << ");\n";
-    str << "} // namespace " << s.name << "\n";
-    str << "} // namespace meta\n\n";
-
-    // MetaTuple specialization
-    auto tableName = s.name;
-    std::stringstream select;
-    auto fields = joinRanges(fieldNames, ", ");
-    select << "select " << fields << " from " << s.name;
-
-    str << "namespace meta\n{\n"
-        << "// Template specialization for type-based reflection lookup\n"
-        << "template <>  struct MetaTuple< " << fullStructName << ">\n{\n"
-        << "  static inline const auto& fields = meta::" << s.name << "::fields;\n"
-        << "  static constexpr auto tableName = \"" << tableName << "\";\n"
-        << "  static constexpr auto query = \"" << select.str() << "\";\n"
-        << "};\n"
-        << "} // namespace meta\n";
-
-    // Recursively handle nested type definitions within this nested struct
-    str << walkNestedTypeDefinitions(s, fullStructName, indent);
-
-    return str.str();
-}
-
-std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
-{
-    std::stringstream str;
-
-    std::string package = (s.namespaces.size() > 0) ? joinRanges(s.namespaces, "::") + "::" : "";
-    std::string fullStructName = "::" + package + s.name;
-
-    // ⭐ SET CONTEXT
-    currentParentStruct_ = fullStructName;
-
-    str << "namespace meta\n{\n";
-    str << "namespace " << s.name << "\n{\n";
-
-    // First pass: Generate accessor functions for nested anonymous struct members
-    std::stringstream accessorStr;
-    for (const auto& member : s.members)
-    {
-        for (const auto& [name, typeString, attrs, isNested] :
-             getFields(member, fullStructName, ""))
-        {
-            if (isNested)
-            {
-                // Extract access path from the full name
-                // e.g., "::Car::engine::name" -> ".engine.name"
-                std::string accessPath = name;
-                size_t pos = accessPath.find(fullStructName);
-                if (pos != std::string::npos)
-                {
-                    accessPath = accessPath.substr(pos + fullStructName.length());
-                    // Replace "::" with "."
-                    while ((pos = accessPath.find("::")) != std::string::npos)
-                    {
-                        accessPath.replace(pos, 2, ".");
-                    }
-                }
-
-                accessorStr << generateAccessorFunctions(
-                    fullStructName, name, accessPath, typeString);
-            }
-        }
-    }
-
-    // Output accessor functions if any were generated
-    if (!accessorStr.str().empty())
-    {
-        str << "// Accessor functions for nested anonymous struct members\n";
-        str << accessorStr.str();
-    }
-
-    // Second pass: Generate fields tuple
-    str << "// Field metadata\n";
-    str << "inline const auto fields = std::make_tuple(\n";
-
-    std::vector<std::string> fieldNames;
-    auto sep = "";
-
-    for (const auto& member : s.members)
-    {
-        for (const auto& [name, typeString, attrs, isNested] :
-             getFields(member, fullStructName, ""))
-        {
-            // Extract simple field name for query
-            std::string simpleName = name;
-            size_t pos = simpleName.rfind("::");
-            if (pos != std::string::npos)
-            {
-                simpleName = simpleName.substr(pos + 2);
-            }
-
-            // Build path for nested fields (e.g., "engine.name")
-            std::string displayName = name;
-            pos = displayName.find(fullStructName);
-            if (pos != std::string::npos)
-            {
-                displayName = displayName.substr(pos + fullStructName.length() + 2); // Skip "::"
-                // Replace "::" with "."
-                while ((pos = displayName.find("::")) != std::string::npos)
-                {
-                    displayName.replace(pos, 2, ".");
-                }
-            }
-
-            fieldNames.emplace_back(displayName);
-
-            str << sep << "    meta::Field< " << fullStructName << ", " ;
-
-            if (isNested)
-            {
-                // For nested fields: use nullptr for member pointer, and function pointers for
-                // accessors
-                std::string funcName = sanitizeFunctionName(name);
-                str << "nullptr, "
-		    << "Accessors<" << "&get_" << funcName << ", "
-		    << "&set_" << funcName << ">";
-            }
-            else
-            {
-                // For direct fields: use member pointer
-    	      str << "&" << name ;
-            }
-
-            str << ">(\"" << displayName << "\"";
-
-            if (isNested)
-            {
-                // For nested fields: use nullptr for member pointer, and function pointers for
-                // accessors
-                std::string funcName = sanitizeFunctionName(name);
-                str << ", Accessors<" << "&get_" << funcName 
-		    << ", &set_" << funcName << ">{}";
-            }
-
-	    str << ")";
-            sep = ",\n";
-        }
-    }
-
-    str << ");\n";
-    str << "} // namespace " << s.name << "\n";
-    str << "} // namespace meta\n\n";
-
-    // Generate MetaTuple specialization
-    auto tableName = s.name;
-    std::stringstream select;
-    auto fields = joinRanges(fieldNames, ", ");
-    select << "select " << fields << " from " << s.name;
-
-    str << "namespace meta\n{\n"
-        << "// Template specialization for type-based reflection lookup\n"
-        << "template <>  struct MetaTuple< " << fullStructName << ">\n{\n"
-        << "  static inline const auto& fields = meta::" << s.name << "::fields;\n"
-        << "  static constexpr auto tableName = \"" << tableName << "\";\n"
-        << "  static constexpr auto query = \"" << select.str() << "\";\n"
-        << "};\n"
-        << "} // namespace meta\n";
-
-    // Generate reflection for nested type definitions (if any)
-    str << walkNestedTypeDefinitions(s, fullStructName, indent);
-
-    // ⭐ CLEAR CONTEXT
-    currentParentStruct_.clear();
-
-    return str.str();
-}
-
-auto CppReflectWalker::getFields(const bhw::StructMember& member,
-                                 const std::string& parentName,
-                                 const std::string& accessPath) -> RetTuple
-{
-    return std::visit(
-        [&](const auto& m) -> RetTuple
-        {
-            using M = std::decay_t<decltype(m)>;
-
-            // ----- Field -----
-            if constexpr (std::is_same_v<M, bhw::Field>)
-            {
-                // Visit the type variant
-                return std::visit(
-                    [&](const auto& t) -> RetTuple
-                    {
-                        using T = std::decay_t<decltype(t)>;
-                        if constexpr (std::is_same_v<T, bhw::SimpleType>)
-                        {
-                            bool isNested = !accessPath.empty();
-                            return {std::make_tuple<>(parentName + "::" + m.name,
-                                                      generateSimpleType(t, 0),
-                                                      m.attributes,
-                                                      isNested)};
-                        }
-                        else if constexpr (std::is_same_v<T, bhw::GenericType>)
-                        {
-                            bool isNested = !accessPath.empty();
-                            return {std::make_tuple<>(parentName + "::" + m.name,
-                                                      generateGenericType(t, 0),
-                                                      m.attributes,
-                                                      isNested)};
-                        }
-                        return {std::make_tuple<>("", "", m.attributes, false)};
-                    },
-                    m.type->value);
-            }
-
-            // ----- Nested Struct -----
-            if constexpr (std::is_same_v<M, bhw::Struct>)
-            {
-                // ⭐ KEY FIX: Check if this struct creates a field in the parent
-                if (m.variableName.empty())
-                {
-                    // Named nested struct with NO instance
-                    // Example: struct A { struct B { int y; }; };
-                    //          ^ B is just a type definition, not a field
-                    // This will be handled separately by walkNestedTypeDefinitions
-                    return {};
-                }
-
-                // This struct DOES create a field (anonymous or named with instance)
-                // Examples:
-                //   struct { int x; } myField;  ← anonymous with instance
-                //   struct B { int x; } myB;    ← named with instance
-                RetTuple tuples;
-                std::string newAccessPath = accessPath + "::" + m.variableName;
-
-                for (const auto& node : m.members)
-                {
-                    for (const auto& [name, type, attrs, isNested] :
-                         getFields(node, parentName + "::" + m.variableName, newAccessPath))
-                    {
-                        tuples.emplace_back(
-                            std::make_tuple<>(name, type, attrs, true)); // Mark as nested
-                    }
-                }
-
-                return tuples;
-            }
-
-            return {std::make_tuple<>("", "", m.attributes, false)};
-        },
-        member);
-}
-
-std::string joinRanges(const std::vector<std::string>& vec, const std::string& sep)
-{
-    if (vec.empty())
-        return {};
-
-    // Use accumulate to fold the strings with a separator
-    return std::accumulate(std::next(vec.begin()),
-                           vec.end(),
-                           vec[0],
-                           [&sep](const std::string& a, const std::string& b)
-                           { return a + sep + b; });
-}
-
-} // namespace

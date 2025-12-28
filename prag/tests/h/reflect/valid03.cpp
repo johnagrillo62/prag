@@ -7,6 +7,7 @@
 
 using namespace meta;
 
+
 // ==================== RUNTIME FIELD NAME VALIDATION ====================
 template <typename FieldTuple, std::size_t... Is>
 void validate_field_names_impl(const FieldTuple& t, std::index_sequence<Is...>, std::vector<std::string>& errors)
@@ -14,8 +15,11 @@ void validate_field_names_impl(const FieldTuple& t, std::index_sequence<Is...>, 
     (([&]{
         const auto& f = std::get<Is>(t);
         // Compute pretty name from type deduction at compile time
-        auto pretty = f.getTypeName();          // type_name<T>() from your Field
+        auto pretty = f.getMemberName();          // type_name<T>() from your Field
         auto manual = f.fieldName;             // manual name from tuple
+   std::cout << "Checking field index " << Is
+                  << ": prettyName='" << pretty
+                  << "', manualName='" << manual << "'\n";
 
         if (pretty != manual)
         {

@@ -21,7 +21,7 @@ add_subdirectory(output)
 
 # Main executable
 add_executable(prag prag.cpp)
-target_include_directories(prag PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}./)
+target_include_directories(prag PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}../)
 target_link_libraries(prag PRIVATE ast inputs outputs)
 
 # config

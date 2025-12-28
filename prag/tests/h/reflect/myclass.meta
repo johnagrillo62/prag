@@ -2,21 +2,21 @@ namespace meta
 {
 namespace MyClass
 {
-// Field metadata
 inline const auto fields = std::make_tuple(
-    meta::Field< ::demo::MyClass, &::demo::MyClass::x>("x"),
-    meta::Field< ::demo::MyClass, &::demo::MyClass::y>("y"));
+    meta::field<&::demo::MyClass::x>("x"),
+    meta::field<&::demo::MyClass::y>("y"));
+
 } // namespace MyClass
 } // namespace meta
 
 namespace meta
 {
-// Template specialization for type-based reflection lookup
-template <>  struct MetaTuple< ::demo::MyClass>
+template <> struct MetaTuple<::demo::MyClass>
 {
   static inline const auto& fields = meta::MyClass::fields;
   static constexpr auto tableName = "MyClass";
   static constexpr auto query = "select x, y from MyClass";
 };
 } // namespace meta
+
 

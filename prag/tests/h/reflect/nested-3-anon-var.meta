@@ -2,43 +2,42 @@ namespace meta
 {
 namespace A
 {
-// Accessor functions for nested anonymous struct members
-inline int64_t get_b_y(const ::A& obj)
-{
-    return obj.b.y;
-}
-
-inline void set_b_y(::A& obj, const int64_t& val)
-{
-    obj.b.y = val;
-}
-
-inline int64_t get_b_c_z(const ::A& obj)
-{
-    return obj.b.c.z;
-}
-
-inline void set_b_c_z(::A& obj, const int64_t& val)
-{
-    obj.b.c.z = val;
-}
-
-// Field metadata
 inline const auto fields = std::make_tuple(
-    meta::Field< ::A, &::A::x>("x"),
-    meta::Field< ::A, nullptr, Accessors<&get_b_y, &set_b_y>>("b.y", Accessors<&get_b_y, &set_b_y>{}),
-    meta::Field< ::A, nullptr, Accessors<&get_b_c_z, &set_b_c_z>>("b.c.z", Accessors<&get_b_c_z, &set_b_c_z>{}));
+    meta::field<&::A::x>("x"),
+    meta::field<&::A::b>("b"));
+
+namespace b
+{
+inline const auto fields = std::make_tuple(
+    meta::field<&decltype(::A::b)::y>("y"),
+    meta::field<&decltype(::A::b)::c>("c"));
+
+namespace c
+{
+inline const auto fields = std::make_tuple(
+    meta::field<&decltype(decltype(::A::b)::c)::z>("z"));
+
+} // namespace c
+} // namespace b
 } // namespace A
 } // namespace meta
 
 namespace meta
 {
-// Template specialization for type-based reflection lookup
-template <>  struct MetaTuple< ::A>
+template <> struct MetaTuple<::A>
 {
   static inline const auto& fields = meta::A::fields;
   static constexpr auto tableName = "A";
-  static constexpr auto query = "select x, b.y, b.c.z from A";
+  static constexpr auto query = "select x, b from A";
+};
+template <> struct MetaTuple<decltype(::A::b)>
+{
+  static inline const auto& fields = meta::A::b::fields;
+};
+template <> struct MetaTuple<decltype(decltype(::A::b)::c)>
+{
+  static inline const auto& fields = meta::A::b::c::fields;
 };
 } // namespace meta
+
 
