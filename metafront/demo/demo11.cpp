@@ -4,6 +4,7 @@ class [[clang::annotate("TableName:USER")]] User
 {
   public:
 
+    //*SqlColumn(friend_id)
     int id_ [[clang::annotate("SqlColumn:friend_id")]];
     std::string name_;
     std::string name2_ = "name2";

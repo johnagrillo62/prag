@@ -11,6 +11,9 @@ namespace bhw
 class AstWalker
 {
   public:
+
+    std::string srcLang;
+  
     virtual ~AstWalker() = default;
     virtual auto getLang() -> Language = 0;
 
@@ -262,5 +265,7 @@ class AstWalker
         }
         return false;
     }
+
+
 };
 } // namespace bhw

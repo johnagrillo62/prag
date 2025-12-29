@@ -18,9 +18,12 @@ class CppWalker : public RegistryAstWalker
 
     std::string walk(bhw::Ast&& ast) override
     {
+      this->srcLang = ast.srcName;
         // C++ needs enums before structs that use them
         std::vector<AstRootNode> enums;
         std::vector<AstRootNode> structs;
+
+	
 
         for (auto& node : ast.nodes)
         {
@@ -91,10 +94,14 @@ class CppWalker : public RegistryAstWalker
 
     std::string generateSimpleType(const SimpleType& type, size_t) override
     {
+      // If source language == target language, preserve exact spelling
+    if (srcLang == "h")
+    {
         if (!type.srcTypeString.empty())
         {
-            return type.srcTypeString;
+            return type.srcTypeString; 
         }
+    }
 
         // Map to C type if srcTypeString is blank
         switch (type.reifiedType)

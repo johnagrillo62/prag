@@ -535,6 +535,7 @@ Enum GoParser::parseEnum(const std::string& enumName)
 bhw::Ast GoParser::parseToAst(const std::string& src)
 {
     bhw::Ast ast;
+    ast.srcName = "go";
 
     lexer.source = src;
     
