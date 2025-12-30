@@ -1,9 +1,7 @@
+#include </mnt/c/Users/johna/source/repos/metah/meta.h>
+
 #include "variant01.h"
 
-#include "../meta/json.h"
-#include "../meta/meta.h"
-#include "../meta/txt.h"
-#include "../meta/yaml.h"
 #include "variant01.meta"
 
 int main()

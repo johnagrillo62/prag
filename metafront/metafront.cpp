@@ -831,7 +831,7 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
     std::cout << "namespace meta\n{\n";
     std::cout << "namespace " << shortName << "\n{\n";
     
-    std::cout << "inline const auto fields = std::make_tuple(\n";
+    std::cout << "inline const auto FieldsMeta = std::make_tuple(\n";
 
     // Output each Field with typed annotations
     bool firstField = true;
@@ -899,7 +899,7 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
     std::string typeSpec = parentDecltype.empty() ? "::" + qname : parentDecltype;
     std::cout << "namespace meta\n{\n"
               << "template <> struct MetaTuple<" << typeSpec << ">\n{\n"
-              << "  static inline const auto& FieldsMeta = meta::" << shortName << "::fields;\n";
+              << "  static inline const auto& FieldsMeta = meta::" << shortName << "::FieldsMeta;\n";
     
     // Only add tableName and query for top-level structs (not nested anonymous ones)
     if (parentDecltype.empty())
@@ -981,7 +981,7 @@ void generateNestedTuples(const std::vector<FieldInfo>& fields,
             // Generate namespace for this anonymous struct field
             std::cout << "namespace " << field.name << "\n{\n";
             
-            std::cout << "inline const auto fields = std::make_tuple(\n";
+            std::cout << "inline const auto FieldsMeta = std::make_tuple(\n";
             
             // Generate fields for the nested struct
             bool firstNestedField = true;

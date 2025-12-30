@@ -2,12 +2,13 @@ namespace meta
 {
 namespace ComplexRow
 {
-inline const auto fields = std::make_tuple(meta::field<&::ComplexRow::id>("id"),
-                                           meta::field<&::ComplexRow::name>("name"),
-                                           meta::field<&::ComplexRow::scores>("scores"),
-                                           meta::field<&::ComplexRow::tags>("tags"),
-                                           meta::field<&::ComplexRow::matrix>("matrix"),
-                                           meta::field<&::ComplexRow::categories>("categories"));
+inline const auto FieldsMeta =
+    std::make_tuple(meta::field<&::ComplexRow::id>("id"),
+                    meta::field<&::ComplexRow::name>("name"),
+                    meta::field<&::ComplexRow::scores>("scores"),
+                    meta::field<&::ComplexRow::tags>("tags"),
+                    meta::field<&::ComplexRow::matrix>("matrix"),
+                    meta::field<&::ComplexRow::categories>("categories"));
 } // namespace ComplexRow
 } // namespace meta
 
@@ -15,7 +16,7 @@ namespace meta
 {
 template <> struct MetaTuple<::ComplexRow>
 {
-    static inline const auto& FieldsMeta = meta::ComplexRow::fields;
+    static inline const auto& FieldsMeta = meta::ComplexRow::FieldsMeta;
     static constexpr auto tableName = "ComplexRow";
     static constexpr auto query =
         "select id, name, scores, tags, matrix, categories from ComplexRow";

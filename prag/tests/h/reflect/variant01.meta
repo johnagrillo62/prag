@@ -2,7 +2,7 @@ namespace meta
 {
 namespace ContactInfo
 {
-inline const auto fields = std::make_tuple(
+inline const auto FieldsMeta = std::make_tuple(
     meta::field<&::ContactInfo::contact>("contact"));
 
 } // namespace ContactInfo
@@ -12,7 +12,7 @@ namespace meta
 {
 template <> struct MetaTuple<::ContactInfo>
 {
-  static inline const auto& fields = meta::ContactInfo::fields;
+  static inline const auto& FieldsMeta = meta::ContactInfo::FieldsMeta;
   static constexpr auto tableName = "ContactInfo";
   static constexpr auto query = "select contact from ContactInfo";
 };

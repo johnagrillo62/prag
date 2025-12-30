@@ -2,19 +2,19 @@ namespace meta
 {
 namespace A
 {
-inline const auto fields = std::make_tuple(
+inline const auto FieldsMeta = std::make_tuple(
     meta::field<&::A::x>("x"),
     meta::field<&::A::b>("b"));
 
 namespace b
 {
-inline const auto fields = std::make_tuple(
+inline const auto FieldsMeta = std::make_tuple(
     meta::field<&decltype(::A::b)::y>("y"),
     meta::field<&decltype(::A::b)::c>("c"));
 
 namespace c
 {
-inline const auto fields = std::make_tuple(
+inline const auto FieldsMeta = std::make_tuple(
     meta::field<&decltype(decltype(::A::b)::c)::z>("z"));
 
 } // namespace c
@@ -26,17 +26,17 @@ namespace meta
 {
 template <> struct MetaTuple<::A>
 {
-  static inline const auto& fields = meta::A::fields;
+  static inline const auto& FieldsMeta = meta::A::FieldsMeta;
   static constexpr auto tableName = "A";
   static constexpr auto query = "select x, b from A";
 };
 template <> struct MetaTuple<decltype(::A::b)>
 {
-  static inline const auto& fields = meta::A::b::fields;
+  static inline const auto& FieldsMeta = meta::A::b::FieldsMeta;
 };
 template <> struct MetaTuple<decltype(decltype(::A::b)::c)>
 {
-  static inline const auto& fields = meta::A::b::c::fields;
+  static inline const auto& FieldsMeta = meta::A::b::c::FieldsMeta;
 };
 } // namespace meta
 

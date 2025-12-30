@@ -3,7 +3,7 @@
 #include <type_traits>
 #include <iostream>
 
-#include "meta.h"
+#include </mnt/c/Users/johna/source/repos/meta/meta.h>
 using namespace meta;
 
 // ------------------------
@@ -55,12 +55,11 @@ struct Car {
 // Field Tuple
 // ------------------------
 inline const auto CarFields = std::make_tuple(
-    Field<Car, &Car::maker>("maker"),
-    Field<Car, &Car::model>("model"),
-    Field<Car, &Car::year>("year"),
-    Field<Car, &Car::electric>("electric")
+    field<&Car::maker>("maker"),
+    field<&Car::model>("model"),
+    field<&Car::year>("year"),
+    field<&Car::electric>("electric")
 );
-
 // ------------------------
 // Validate tuple vs struct
 // ------------------------

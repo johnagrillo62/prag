@@ -2,7 +2,7 @@ namespace meta
 {
 namespace Complex01
 {
-inline const auto fields = std::make_tuple(
+inline const auto FieldsMeta = std::make_tuple(
     meta::field<&::Complex01::id>("id"),
     meta::field<&::Complex01::string>("string"),
     meta::field<&::Complex01::stringStringMap>("stringStringMap"));
@@ -14,7 +14,7 @@ namespace meta
 {
 template <> struct MetaTuple<::Complex01>
 {
-  static inline const auto& fields = meta::Complex01::fields;
+  static inline const auto& FieldsMeta = meta::Complex01::FieldsMeta;
   static constexpr auto tableName = "Complex01";
   static constexpr auto query = "select id, string, stringStringMap from Complex01";
 };

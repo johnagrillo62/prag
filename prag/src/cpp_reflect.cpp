@@ -214,7 +214,7 @@ std::string CppReflectWalker::walkNestedStruct(const bhw::Struct& s,
     }
     
     // Generate fields tuple
-    str << "inline const auto fields = std::make_tuple(\n";
+    str << "inline const auto FieldsMeta = std::make_tuple(\n";
     for (size_t i = 0; i < fieldDefs.size(); ++i)
     {
         if (i > 0) str << ",\n";
@@ -318,7 +318,7 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
     }
 
     // Generate fields tuple for THIS level only
-    str << "inline const auto fields = std::make_tuple(\n";
+    str << "inline const auto FieldsMeta = std::make_tuple(\n";
     for (size_t i = 0; i < fieldDefs.size(); ++i)
     {
         if (i > 0) str << ",\n";
@@ -356,7 +356,7 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
 
     str << "namespace meta\n{\n"
         << "template <> struct MetaTuple<" << fullStructName << ">\n{\n"
-        << "  static inline const auto& fields = meta::" << s.name << "::fields;\n"
+        << "  static inline const auto& FieldsMeta = meta::" << s.name << "::FieldsMeta;\n"
         << "  static constexpr auto tableName = \"" << tableName << "\";\n"
         << "  static constexpr auto query = \"" << select.str() << "\";\n"
         << "};\n";
@@ -376,7 +376,7 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
                     std::string metaPath = "meta::" + s.name + "::" + m.variableName;
                     
                     str << "template <> struct MetaTuple<" << nestedTypeDecltype << ">\n{\n"
-                        << "  static inline const auto& fields = " << metaPath << "::fields;\n"
+                        << "  static inline const auto& FieldsMeta = " << metaPath << "::FieldsMeta;\n"
                         << "};\n";
                     
                     // Recursively generate for deeper nesting
@@ -397,7 +397,7 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
                                         std::string deepMetaPath = currentMetaPath + "::" + nm.variableName;
                                         
                                         str << "template <> struct MetaTuple<" << deepTypeDecltype << ">\n{\n"
-                                            << "  static inline const auto& fields = " << deepMetaPath << "::fields;\n"
+                                            << "  static inline const auto& FieldsMeta = " << deepMetaPath << "::FieldsMeta;\n"
                                             << "};\n";
                                         
                                         generateNestedMetaTuples(nm, newPath, deepMetaPath);

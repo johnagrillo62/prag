@@ -2,7 +2,7 @@ namespace meta
 {
 namespace Reflect
 {
-inline const auto fields = std::make_tuple(
+inline const auto FieldsMeta = std::make_tuple(
     meta::field<&::Reflect::x>("x"),
     meta::field<&::Reflect::y>("y"),
     meta::field<&::Reflect::string>("string"),
@@ -14,7 +14,7 @@ namespace meta
 {
 template <> struct MetaTuple<::Reflect>
 {
-  static inline const auto& FieldsMeta = meta::Reflect::fields;
+  static inline const auto& FieldsMeta = meta::Reflect::FieldsMeta;
   static constexpr auto tableName = "Reflect";
   static constexpr auto query = "select x, y, string, strings from Reflect";
 };

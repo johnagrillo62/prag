@@ -2,7 +2,7 @@ namespace meta
 {
 namespace Row
 {
-inline const auto fields =
+inline const auto FieldsMeta =
     std::make_tuple(meta::field<&::Row::field1>("field1"),
                     meta::field<&::Row::field2>("field2"),
                     meta::field<&::Row::field3>("field3"),
@@ -16,7 +16,7 @@ namespace meta
 {
 template <> struct MetaTuple<::Row>
 {
-    static inline const auto& FieldsMeta = meta::Row::fields;
+    static inline const auto& FieldsMeta = meta::Row::FieldsMeta;
     static constexpr auto tableName = "Row";
     static constexpr auto query = "select field1, field2, field3, field4, field5, field6 from Row";
 };
