@@ -6,7 +6,7 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -O2 -std=c++20
 
 # Include paths
-INCLUDES = -I/mnt/c/Users/johna/source/repos/meta
+INCLUDES = -I/mnt/c/Users/johna/source/repos/metah
 
 # Linker flags
 LDFLAGS_METAFRONT = -lclang

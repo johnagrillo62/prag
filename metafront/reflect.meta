@@ -14,7 +14,7 @@ namespace meta
 {
 template <> struct MetaTuple<::Reflect>
 {
-  static inline const auto& fields = meta::Reflect::fields;
+  static inline const auto& FieldsMeta = meta::Reflect::fields;
   static constexpr auto tableName = "Reflect";
   static constexpr auto query = "select x, y, string, strings from Reflect";
 };

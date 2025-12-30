@@ -13,7 +13,7 @@ namespace meta
 {
 template <> struct MetaTuple<::Priv>
 {
-    static inline const auto& fields = meta::Priv::fields;
+    static inline const auto& FieldsMeta = meta::Priv::fields;
     static constexpr auto tableName = "Priv";
     static constexpr auto query = "select x_, y_, repairs_, service_ from Priv";
 };

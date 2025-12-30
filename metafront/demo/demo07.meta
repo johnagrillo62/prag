@@ -15,7 +15,7 @@ namespace meta
 {
 template <> struct MetaTuple<::ComplexRow>
 {
-    static inline const auto& fields = meta::ComplexRow::fields;
+    static inline const auto& FieldsMeta = meta::ComplexRow::fields;
     static constexpr auto tableName = "ComplexRow";
     static constexpr auto query =
         "select id, name, scores, tags, matrix, categories from ComplexRow";

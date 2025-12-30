@@ -1,7 +1,7 @@
 # ------------------------------------------------------------
 # Compiler + flags
 # ------------------------------------------------------------
-CXX = g++ -I/mnt/c/Users/johna/source/repos/meta
+CXX = g++ -I/mnt/c/Users/johna/source/repos/metah
 CXXFLAGS = -Wall -Wextra -std=c++20 \
            -Wno-missing-field-initializers \
            -Wno-attributes \
@@ -18,7 +18,7 @@ ASTREI    = ../../../astrei/parser
 # ------------------------------------------------------------
 # Demo numbers
 # ------------------------------------------------------------
-DEMOS = 01 02 03 04 05 06 07 08 09 10 11 12 13 14 all
+DEMOS = 01 02 03 04 05 06 07 08 09 10 11 12 14 all
 
 # Generated names
 META_DEMOS = $(addprefix demo, $(DEMOS))

@@ -2,10 +2,11 @@ namespace meta
 {
 namespace User
 {
-inline const auto fields = std::make_tuple(meta::field<&::User::id_>("id_"),
-                                           meta::field<&::User::name_>("name_"),
-                                           meta::field<&::User::name2_>("name2_"),
-                                           meta::field<&::User::name3_>("name3_"));
+inline const auto fields =
+    std::make_tuple(meta::field<&::User::id_>("id_", meta::SqlColumn{"friend_id"}),
+                    meta::field<&::User::name_>("name_"),
+                    meta::field<&::User::name2_>("name2_"),
+                    meta::field<&::User::name3_>("name3_"));
 } // namespace User
 } // namespace meta
 
@@ -13,8 +14,8 @@ namespace meta
 {
 template <> struct MetaTuple<::User>
 {
-    static inline const auto& fields = meta::User::fields;
-    static constexpr auto tableName = "User";
-    static constexpr auto query = "select id_, name_, name2_, name3_ from User";
+    static inline const auto& FieldsMeta = meta::User::fields;
+    static constexpr auto tableName = "USER";
+    static constexpr auto query = "select id_, name_, name2_, name3_ from USER";
 };
 } // namespace meta

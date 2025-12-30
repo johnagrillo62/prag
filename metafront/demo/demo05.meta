@@ -16,7 +16,7 @@ namespace meta
 {
 template <> struct MetaTuple<::Car>
 {
-    static inline const auto& fields = meta::Car::fields;
+    static inline const auto& FieldsMeta = meta::Car::fields;
     static constexpr auto tableName = "Car";
     static constexpr auto query =
         "select make, model, year, electric, miles, repairs, service from Car";

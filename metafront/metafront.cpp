@@ -36,14 +36,14 @@ Usage:
 Generated Output:
 -----------------
   namespace meta::MyStruct {
-    inline const auto fields = std::make_tuple(
+    inline const auto FieldsMeta = std::make_tuple(
       meta::field<&::MyStruct::field1>("field1"),
       meta::field<&::MyStruct::field2>("field2")
     );
   }
   
   template <> struct MetaTuple<::MyStruct> {
-    static inline const auto& fields = meta::MyStruct::fields;
+    static inline const auto& FieldsMeta = meta::MyStruct::fields;
     static constexpr auto tableName = "MyStruct";
     static constexpr auto query = "select field1, field2 from MyStruct";
   };
@@ -899,7 +899,7 @@ void generateTuples(std::vector<FieldInfo> fields, std::string shortName, std::s
     std::string typeSpec = parentDecltype.empty() ? "::" + qname : parentDecltype;
     std::cout << "namespace meta\n{\n"
               << "template <> struct MetaTuple<" << typeSpec << ">\n{\n"
-              << "  static inline const auto& fields = meta::" << shortName << "::fields;\n";
+              << "  static inline const auto& FieldsMeta = meta::" << shortName << "::fields;\n";
     
     // Only add tableName and query for top-level structs (not nested anonymous ones)
     if (parentDecltype.empty())
@@ -954,7 +954,7 @@ void generateNestedMetaTuples(const std::vector<FieldInfo>& fields,
             
             std::cout << "template <> struct MetaTuple<" << fieldDecltype << ">\n{\n"
                       << "  static inline const auto& fields = meta::" << parentShortName 
-                      << "::" << field.name << "::fields;\n"
+                      << "::" << field.name << "::FieldsMeta;\n"
                       << "};\n";
             
             // Recursively process nested anonymous structs

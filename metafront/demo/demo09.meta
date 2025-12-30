@@ -11,7 +11,7 @@ namespace meta
 {
 template <> struct MetaTuple<::XY>
 {
-    static inline const auto& fields = meta::XY::fields;
+    static inline const auto& FieldsMeta = meta::XY::fields;
     static constexpr auto tableName = "XY";
     static constexpr auto query = "select x_, y_ from XY";
 };
