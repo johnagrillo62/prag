@@ -24,6 +24,8 @@ class AstWalker
         // Generate file header
         out << generateHeader(ast);
 
+        std::cout << "walk"
+                  << "\n";
         // Walk all root nodes
         for (const auto& node : ast.nodes)
         {
@@ -159,6 +161,7 @@ class AstWalker
 
     virtual std::string walkOneof(const Oneof& oneof, size_t indent)
     {
+        std::cout << "oneif" << "\n";
         return generateOneof(oneof, indent);
     }
 

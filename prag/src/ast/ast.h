@@ -155,6 +155,12 @@ struct OneofField
     std::string name;
     std::unique_ptr<Type> type;
     std::vector<Attribute> attributes;
+
+     OneofField(const OneofField&) = delete;
+    OneofField& operator=(const OneofField&) = delete;
+
+    OneofField(OneofField&&) = default;
+    OneofField& operator=(OneofField&&) = default;
 };
 
 struct Oneof
@@ -162,6 +168,14 @@ struct Oneof
     std::string name;
     std::vector<OneofField> fields;
     std::vector<Attribute> attributes;
+    std::string parentStructName;
+    Struct* parent = nullptr;
+
+    Oneof(const Oneof&) = delete;
+    Oneof& operator=(const Oneof&) = delete;
+
+    Oneof(Oneof&&) = default;
+    Oneof& operator=(Oneof&&) = default;
 };
 
 // ---------------- RPC / Service ----------------

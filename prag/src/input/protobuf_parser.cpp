@@ -539,7 +539,7 @@ Enum ProtoBufParser::parseEnum()
 // Parses a `oneof` and returns a Oneof AST node
 Oneof ProtoBufParser::parseOneof()
 {
-    Oneof oneofNode;
+    Oneof oneofNode{};
     expect(ProtoTokenType::Oneof);
 
     // Capture the oneof name
@@ -725,7 +725,9 @@ Struct ProtoBufParser::parseMessage()
         }
         else if (match(ProtoTokenType::Oneof))
         {
-            result.members.emplace_back(parseOneof());
+            auto oneof = parseOneof();
+            oneof.parent = &result;
+            result.members.emplace_back(std::move(oneof));
         }
         else if (match(ProtoTokenType::Service) || match(ProtoTokenType::Syntax) ||
                  match(ProtoTokenType::Package) || match(ProtoTokenType::Import))
