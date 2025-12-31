@@ -21,12 +21,8 @@ class AstWalker
     {
         std::ostringstream out;
 
-        // Generate file header
         out << generateHeader(ast);
 
-        std::cout << "walk"
-                  << "\n";
-        // Walk all root nodes
         for (const auto& node : ast.nodes)
         {
             out << walkRootNode(node, 0);
@@ -102,17 +98,14 @@ class AstWalker
     virtual std::string walkStruct(const Struct& s, size_t indent)
     {
         std::ostringstream out;
-
         out << generateStructOpen(s, indent);
 
-        // Walk all members
-        for (const auto& member : s.members)
+        for (auto& member : s.members)
         {
             out << walkStructMember(member, indent + 1);
         }
 
         out << generateStructClose(s, indent);
-
         return out.str();
     }
 
@@ -125,11 +118,9 @@ class AstWalker
                 if constexpr (std::is_same_v<T, Field>)
                     return walkField(m, indent);
                 else if constexpr (std::is_same_v<T, Oneof>)
-                    return walkOneof(m, indent);
+                    return walkOneof(m, indent); 
                 else if constexpr (std::is_same_v<T, Enum>)
-                {
                     return walkEnum(m, indent);
-                }
                 else if constexpr (std::is_same_v<T, Struct>)
                     return walkStruct(m, indent);
                 else
@@ -137,6 +128,7 @@ class AstWalker
             },
             member);
     }
+
 
     virtual std::string walkField(const Field& field, size_t indent)
     {
@@ -161,7 +153,6 @@ class AstWalker
 
     virtual std::string walkOneof(const Oneof& oneof, size_t indent)
     {
-        std::cout << "oneif" << "\n";
         return generateOneof(oneof, indent);
     }
 

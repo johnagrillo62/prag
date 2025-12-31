@@ -16,11 +16,13 @@ class PythonAstWalker : public RegistryAstWalker
     }
 
   protected:
+    // ---------------- HEADER ----------------
     std::string generateHeader(const Ast&) override
     {
         return "from dataclasses import dataclass\nfrom typing import Union\n\n";
     }
 
+    // ---------------- STRUCT ----------------
     std::string generateStructOpen(const Struct& s, size_t ind) override
     {
         return indent(ind) + "@dataclass\n" + indent(ind) + "class " + s.name + ":\n";
@@ -36,6 +38,34 @@ class PythonAstWalker : public RegistryAstWalker
         return indent(ind) + field.name + ": " + walkType(*field.type) + "\n";
     }
 
+    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    {
+        std::ostringstream out;
+
+        // Emit each Oneof field as a nested @dataclass
+        for (const auto& field : oneof.fields)
+        {
+            std::string clsName = capitalize(oneof.name) + capitalize(field.name);
+            out << indent(ind + 1) << "@dataclass\n";
+            out << indent(ind + 1) << "class " << clsName << ":\n";
+            out << indent(ind + 3) << "value: " << walkType(*field.type) << "\n\n";
+        }
+
+        // Emit the parent Union line
+        out << indent(ind + 1) << "# Oneof: " << oneof.name << "\n";
+        out << indent(ind + 1) << oneof.name << ": Union[";
+        for (size_t i = 0; i < oneof.fields.size(); ++i)
+        {
+            if (i > 0)
+                out << ", ";
+            out << capitalize(oneof.name) + capitalize(oneof.fields[i].name);
+        }
+        out << "]\n";
+
+        return out.str();
+    }
+
+    // ---------------- TYPE WALKING ----------------
     std::string capitalize(const std::string& s) const
     {
         if (s.empty())
@@ -45,54 +75,11 @@ class PythonAstWalker : public RegistryAstWalker
         return r;
     }
 
-    // ---------------- ONEOF ----------------
-    void walkStruct(const Struct& s, std::ostringstream& out, size_t ind)
+    
+    // ---------------- UTILS ----------------
+    std::string indent(size_t level) const
     {
-        // Emit oneof variant classes first
-        for (const auto& member : s.members)
-        {
-            if (auto oneof = std::get_if<Oneof>(&member))
-            {
-                for (const auto& field : oneof->fields)
-                {
-                    std::string clsName = capitalize(oneof->name) + capitalize(field.name);
-                    out << indent(ind) << "@dataclass\n";
-                    out << indent(ind) << "class " << clsName << ":\n";
-                    out << indent(ind + 1) << "value: " << walkType(*field.type) << "\n\n";
-                }
-            }
-        }
-
-        // Emit the parent struct
-        out << generateStructOpen(s, ind);
-
-        for (const auto& member : s.members)
-        {
-            if (auto field = std::get_if<Field>(&member))
-            {
-                out << generateField(*field, ind + 1);
-            }
-            else if (auto oneof = std::get_if<Oneof>(&member))
-            {
-                out << indent(ind + 1) << "# Oneof: " << oneof->name << "\n";
-                out << indent(ind + 1) << oneof->name << ": Union[";
-                for (size_t i = 0; i < oneof->fields.size(); ++i)
-                {
-                    if (i > 0)
-                        out << ", ";
-                    out << capitalize(oneof->name) << capitalize(oneof->fields[i].name);
-                }
-                out << "]\n";
-            }
-        }
-
-        out << generateStructClose(s, ind);
-    }
-
-    std::string generateOneof(const Oneof&, size_t) override
-    {
-        // Handled inline in walkStruct
-        return "";
+        return std::string(level * 2, ' ');
     }
 };
 } // namespace bhw

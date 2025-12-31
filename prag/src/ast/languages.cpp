@@ -15,6 +15,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Capnp,
              {.file_ext = "capnp",
               .comment_style = "#",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -47,6 +48,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Cpp26,
              {.file_ext = "h",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -102,6 +104,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Python,
              {.file_ext = "py",
               .comment_style = "#",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -148,6 +151,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Rust,
              {.file_ext = "rs",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -192,6 +196,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Typescript,
              {.file_ext = "ts",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -232,6 +237,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Go,
              {.file_ext = "go",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::NoNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -263,7 +269,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
                       {ReifiedTypeId::Variant, {"any", "nil"}},
                   },
               .naming = {.struct_name = "PascalCase",
-                         .field_name = "PascalCase", // Exported fields in Go
+                         .field_name = "PascalCase",
                          .constant = "PascalCase",
                          .namespace_style = "lowercase", // package names
                          .file_name = "snake_case"}}},
@@ -271,6 +277,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Java,
              {.file_ext = "java",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::NoNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -319,6 +326,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Zig,
              {.file_ext = "zig",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::NoNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -371,6 +379,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::CSharp,
              {.file_ext = "cs",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::NoNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -417,6 +426,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::FSharp,
              {.file_ext = "fs",
               .comment_style = "//",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -461,6 +471,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::OCaml,
              {.file_ext = "ml",
               .comment_style = "(*",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives
@@ -502,6 +513,7 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Haskell,
              {.file_ext = "hs",
               .comment_style = "--",
+              .nestedTypes = NestedTypesPolicy::HasNestedTypes,
               .type_map =
                   {
                       // Primitives

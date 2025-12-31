@@ -20,10 +20,18 @@ struct NamingConventions
     std::string file_name;       // snake_case, kebab-case, etc.
 };
 
+
+enum class NestedTypesPolicy
+{
+    HasNestedTypes, // language supports nested structs/enums/oneofs
+    NoNestedTypes   // everything must be top-level
+};
+
 struct LanguageInfo
 {
     std::string file_ext;
     std::string comment_style;
+    NestedTypesPolicy nestedTypes;
     std::map<ReifiedTypeId, TypeInfo> type_map;
     NamingConventions naming;
 };
