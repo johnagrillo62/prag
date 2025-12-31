@@ -193,9 +193,8 @@ std::string showNodes(const std::vector<bhw::AstRootNode>& nodes, size_t indent 
 
             for (auto& [name, number, x, y] : num.values)
             {
-	      ss << "        " << name << " " << number << "\n";
+                ss << "        " << name << " " << number << "\n";
             }
-
         }
         else if (std::holds_alternative<bhw::Struct>(node))
         {
@@ -243,8 +242,6 @@ auto bhw::Ast::showAst(size_t indent) const -> std::string
     ss << showNodes(nodes);
     return ss.str();
 }
-
-
 
 void bhw::Ast::flattenStructMembers(Struct& s,
                                     std::vector<Struct>& flattenedStructs,
@@ -308,42 +305,44 @@ void bhw::Ast::flattenStructMembers(Struct& s,
             flattenedEnums.push_back(std::move(*nestedEnum));
             // DO NOT add to newMembers - enums are not fields!
         }
-
-else if (auto* field = std::get_if<Field>(&member))
-{
-    // NEW: Handle Fields with anonymous StructType
-    if (field->type && field->type->isStruct())
-    {
-        auto& structType = std::get<StructType>(field->type->value);
-        if (structType.value && 
-            (structType.value->isAnonymous || structType.value->name == "<anonymous>") &&
-            !structType.value->variableName.empty())
+        else if (auto* oneof = std::get_if<Oneof>(&member))
         {
-            // Generate name: ParentStructName + FieldName
-            std::string generatedName = s.name;
-            generatedName += (char)std::toupper(field->name[0]);
-            generatedName += field->name.substr(1);
-            
-            // Update the nested struct name
-            structType.value->name = generatedName;
-            structType.value->isAnonymous = false;
-            
-            // Recursively flatten the nested struct
-            flattenStructMembers(*structType.value, flattenedStructs, flattenedEnums);
-            
-            // Hoist the struct to top level (make a copy before we change the field type)
-            flattenedStructs.push_back(std::move(*structType.value));
-            
-            // NOW change field type to a StructRefType reference
-            field->type = std::make_unique<Type>(
-                StructRefType{generatedName, ReifiedTypeId::StructRefType});
+            newMembers.push_back(std::move(*oneof));
         }
-    }
-    // Keep the field
-    newMembers.push_back(std::move(*field));
-}
-	
+
+        else if (auto* field = std::get_if<Field>(&member))
+        {
+            // NEW: Handle Fields with anonymous StructType
+            if (field->type && field->type->isStruct())
+            {
+                auto& structType = std::get<StructType>(field->type->value);
+                if (structType.value &&
+                    (structType.value->isAnonymous || structType.value->name == "<anonymous>") &&
+                    !structType.value->variableName.empty())
+                {
+                    // Generate name: ParentStructName + FieldName
+                    std::string generatedName = s.name;
+                    generatedName += (char)std::toupper(field->name[0]);
+                    generatedName += field->name.substr(1);
+
+                    // Update the nested struct name
+                    structType.value->name = generatedName;
+                    structType.value->isAnonymous = false;
+
+                    // Recursively flatten the nested struct
+                    flattenStructMembers(*structType.value, flattenedStructs, flattenedEnums);
+
+                    // Hoist the struct to top level (make a copy before we change the field type)
+                    flattenedStructs.push_back(std::move(*structType.value));
+
+                    // NOW change field type to a StructRefType reference
+                    field->type = std::make_unique<Type>(
+                        StructRefType{generatedName, ReifiedTypeId::StructRefType});
+                }
+            }
+            // Keep the field
+            newMembers.push_back(std::move(*field));
+        }
     }
     s.members = std::move(newMembers);
 }
-

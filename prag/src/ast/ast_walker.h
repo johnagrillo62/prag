@@ -11,9 +11,8 @@ namespace bhw
 class AstWalker
 {
   public:
-
     std::string srcLang;
-  
+
     virtual ~AstWalker() = default;
     virtual auto getLang() -> Language = 0;
 
@@ -55,17 +54,25 @@ class AstWalker
             {
                 using T = std::decay_t<decltype(n)>;
                 if constexpr (std::is_same_v<T, Enum>)
+                {
                     return walkEnum(n, indent);
+                }
                 else if constexpr (std::is_same_v<T, Struct>)
+                {
                     return walkStruct(n, indent);
+                }
                 else if constexpr (std::is_same_v<T, bhw::Namespace>)
+                {
                     return walkNamespace(n, indent);
+                }
                 else if constexpr (std::is_same_v<T, bhw::Service>)
+                {
                     return "";
+                }
 
                 else if constexpr (std::is_same_v<T, Oneof>)
                 {
-                    return "";
+                    return walkOneof(n, indent);
                 }
                 else
                     static_assert(always_false_v<T>, "Unhandled type in walkRootNode!");
@@ -118,7 +125,9 @@ class AstWalker
                 else if constexpr (std::is_same_v<T, Oneof>)
                     return walkOneof(m, indent);
                 else if constexpr (std::is_same_v<T, Enum>)
+                {
                     return walkEnum(m, indent);
+                }
                 else if constexpr (std::is_same_v<T, Struct>)
                     return walkStruct(m, indent);
                 else
@@ -265,7 +274,5 @@ class AstWalker
         }
         return false;
     }
-
-
 };
 } // namespace bhw

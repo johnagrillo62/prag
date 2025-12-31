@@ -1,8 +1,9 @@
 // capnp_walker.h - Cap'n Proto code generator
 #pragma once
+#include <sstream>
+
 #include "ast.h"
 #include "registry_ast_walker.h"
-#include <sstream>
 
 namespace bhw
 {
@@ -25,10 +26,9 @@ class CapnProtoAstWalker : public RegistryAstWalker
     {
         // Flatten nested types FIRST - this hoists anonymous structs to top level
         ast.flattenNestedTypes();
-        
         // Reset counter
         fieldCounter_ = 0;
-        
+
         // Now walk normally
         return RegistryAstWalker::walk(std::move(ast));
     }
@@ -53,7 +53,7 @@ class CapnProtoAstWalker : public RegistryAstWalker
     std::string generateField(const Field& field, size_t ind) override
     {
         std::ostringstream out;
-        
+
         // Find field number from attributes
         int fieldNum = fieldCounter_++;
         for (const auto& attr : field.attributes)
@@ -102,11 +102,17 @@ class CapnProtoAstWalker : public RegistryAstWalker
             {
                 using T = std::decay_t<decltype(m)>;
                 if constexpr (std::is_same_v<T, Field>)
+                {
                     return walkField(m, indent);
+                }
                 else if constexpr (std::is_same_v<T, Oneof>)
-                    return walkOneof(m, indent);
+                {
+                    return generateOneof(m, indent);
+                }
                 else if constexpr (std::is_same_v<T, Enum>)
+                {
                     return walkEnum(m, indent);
+                }
                 else if constexpr (std::is_same_v<T, Struct>)
                 {
                     // Skip nested struct definitions!
@@ -192,10 +198,28 @@ class CapnProtoAstWalker : public RegistryAstWalker
         return walkType(*type.pointee, ind);
     }
 
-    std::string generateOneof(const Oneof&, size_t) override
+    std::string generateOneof(const Oneof& oneof, size_t ind) override
     {
-        // Cap'n Proto doesn't have oneof at the type level
-        return "";
+        std::ostringstream out;
+
+        out << indent(ind) << "union " << oneof.name << "{\n";
+
+        for (const auto& field : oneof.fields)
+        {
+            out << indent(ind + 1) << field.name;
+
+            for (const auto& attr : field.attributes)
+            {
+                if (attr.name == "field_number")
+                {
+                    out << " @" << attr.value << ": " << walkType(*field.type);
+                   
+                }
+                out << ";\n";
+            }
+        }
+        out << indent(ind) << "}\n";
+        return out.str();
     }
 };
 } // namespace bhw

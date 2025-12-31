@@ -1,0 +1,372 @@
+namespace meta
+{
+namespace SimpleType
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::SimpleType::srcTypeString>("srcTypeString"),
+    meta::field<&::bhw::SimpleType::reifiedType>("reifiedType"));
+} // namespace SimpleType
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::SimpleType>
+{
+  static inline const auto& FieldsMeta = meta::SimpleType::FieldsMeta;
+  static constexpr auto tableName = "SimpleType";
+  static constexpr auto query = "select srcTypeString, reifiedType from SimpleType";
+};
+} // namespace meta
+namespace meta
+{
+namespace StructRefType
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::StructRefType::srcTypeString>("srcTypeString"),
+    meta::field<&::bhw::StructRefType::reifiedType>("reifiedType"));
+} // namespace StructRefType
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::StructRefType>
+{
+  static inline const auto& FieldsMeta = meta::StructRefType::FieldsMeta;
+  static constexpr auto tableName = "StructRefType";
+  static constexpr auto query = "select srcTypeString, reifiedType from StructRefType";
+};
+} // namespace meta
+namespace meta
+{
+namespace PointerType
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::PointerType::pointee>("pointee"),
+    meta::field<&::bhw::PointerType::reifiedType>("reifiedType"));
+} // namespace PointerType
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::PointerType>
+{
+  static inline const auto& FieldsMeta = meta::PointerType::FieldsMeta;
+  static constexpr auto tableName = "PointerType";
+  static constexpr auto query = "select pointee, reifiedType from PointerType";
+};
+} // namespace meta
+namespace meta
+{
+namespace GenericType
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::GenericType::args>("args"),
+    meta::field<&::bhw::GenericType::reifiedType>("reifiedType"));
+} // namespace GenericType
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::GenericType>
+{
+  static inline const auto& FieldsMeta = meta::GenericType::FieldsMeta;
+  static constexpr auto tableName = "GenericType";
+  static constexpr auto query = "select args, reifiedType from GenericType";
+};
+} // namespace meta
+namespace meta
+{
+namespace StructType
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::StructType::value>("value"),
+    meta::field<&::bhw::StructType::reifiedType>("reifiedType"));
+} // namespace StructType
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::StructType>
+{
+  static inline const auto& FieldsMeta = meta::StructType::FieldsMeta;
+  static constexpr auto tableName = "StructType";
+  static constexpr auto query = "select value, reifiedType from StructType";
+};
+} // namespace meta
+namespace meta
+{
+namespace Attribute
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Attribute::name>("name"),
+    meta::field<&::bhw::Attribute::value>("value"));
+} // namespace Attribute
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Attribute>
+{
+  static inline const auto& FieldsMeta = meta::Attribute::FieldsMeta;
+  static constexpr auto tableName = "Attribute";
+  static constexpr auto query = "select name, value from Attribute";
+};
+} // namespace meta
+
+// Functions found in bhw::Type:
+// bool isSimple() - Access: public
+// bool isStructRef() - Access: public
+// bool isPointer() - Access: public
+// bool isGeneric() - Access: public
+// bool isStruct() - Access: public
+namespace meta
+{
+namespace Type
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Type::value>("value"),
+    meta::field<&::bhw::Type::reifiedTypeId>("reifiedTypeId"),
+    meta::field<&::bhw::Type::srcType>("srcType"));
+} // namespace Type
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Type>
+{
+  static inline const auto& FieldsMeta = meta::Type::FieldsMeta;
+  static constexpr auto tableName = "Type";
+  static constexpr auto query = "select value, reifiedTypeId, srcType from Type";
+};
+} // namespace meta
+namespace meta
+{
+namespace EnumValue
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::EnumValue::name>("name"),
+    meta::field<&::bhw::EnumValue::number>("number"),
+    meta::field<&::bhw::EnumValue::attributes>("attributes"),
+    meta::field<&::bhw::EnumValue::type>("type"));
+} // namespace EnumValue
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::EnumValue>
+{
+  static inline const auto& FieldsMeta = meta::EnumValue::FieldsMeta;
+  static constexpr auto tableName = "EnumValue";
+  static constexpr auto query = "select name, number, attributes, type from EnumValue";
+};
+} // namespace meta
+
+// Functions found in bhw::Enum:
+// std::string getFullyQualifiedName() - Access: public
+namespace meta
+{
+namespace Enum
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Enum::name>("name"),
+    meta::field<&::bhw::Enum::namespaces>("namespaces"),
+    meta::field<&::bhw::Enum::values>("values"),
+    meta::field<&::bhw::Enum::attributes>("attributes"),
+    meta::field<&::bhw::Enum::scoped>("scoped"),
+    meta::field<&::bhw::Enum::underlying_type>("underlying_type"));
+} // namespace Enum
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Enum>
+{
+  static inline const auto& FieldsMeta = meta::Enum::FieldsMeta;
+  static constexpr auto tableName = "Enum";
+  static constexpr auto query = "select name, namespaces, values, attributes, scoped, underlying_type from Enum";
+};
+} // namespace meta
+namespace meta
+{
+namespace OneofField
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::OneofField::name>("name"),
+    meta::field<&::bhw::OneofField::type>("type"),
+    meta::field<&::bhw::OneofField::attributes>("attributes"));
+} // namespace OneofField
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::OneofField>
+{
+  static inline const auto& FieldsMeta = meta::OneofField::FieldsMeta;
+  static constexpr auto tableName = "OneofField";
+  static constexpr auto query = "select name, type, attributes from OneofField";
+};
+} // namespace meta
+namespace meta
+{
+namespace Oneof
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Oneof::name>("name"),
+    meta::field<&::bhw::Oneof::fields>("fields"),
+    meta::field<&::bhw::Oneof::attributes>("attributes"));
+} // namespace Oneof
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Oneof>
+{
+  static inline const auto& FieldsMeta = meta::Oneof::FieldsMeta;
+  static constexpr auto tableName = "Oneof";
+  static constexpr auto query = "select name, fields, attributes from Oneof";
+};
+} // namespace meta
+namespace meta
+{
+namespace RpcMethod
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::RpcMethod::name>("name"),
+    meta::field<&::bhw::RpcMethod::request_type>("request_type"),
+    meta::field<&::bhw::RpcMethod::response_type>("response_type"),
+    meta::field<&::bhw::RpcMethod::client_streaming>("client_streaming"),
+    meta::field<&::bhw::RpcMethod::server_streaming>("server_streaming"),
+    meta::field<&::bhw::RpcMethod::attributes>("attributes"));
+} // namespace RpcMethod
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::RpcMethod>
+{
+  static inline const auto& FieldsMeta = meta::RpcMethod::FieldsMeta;
+  static constexpr auto tableName = "RpcMethod";
+  static constexpr auto query = "select name, request_type, response_type, client_streaming, server_streaming, attributes from RpcMethod";
+};
+} // namespace meta
+
+// Functions found in bhw::Service:
+// std::string getFullyQualifiedName() - Access: public
+namespace meta
+{
+namespace Service
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Service::name>("name"),
+    meta::field<&::bhw::Service::namespaces>("namespaces"),
+    meta::field<&::bhw::Service::methods>("methods"),
+    meta::field<&::bhw::Service::attributes>("attributes"));
+} // namespace Service
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Service>
+{
+  static inline const auto& FieldsMeta = meta::Service::FieldsMeta;
+  static constexpr auto tableName = "Service";
+  static constexpr auto query = "select name, namespaces, methods, attributes from Service";
+};
+} // namespace meta
+namespace meta
+{
+namespace Field
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Field::name>("name"),
+    meta::field<&::bhw::Field::type>("type"),
+    meta::field<&::bhw::Field::attributes>("attributes"));
+} // namespace Field
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Field>
+{
+  static inline const auto& FieldsMeta = meta::Field::FieldsMeta;
+  static constexpr auto tableName = "Field";
+  static constexpr auto query = "select name, type, attributes from Field";
+};
+} // namespace meta
+
+// Functions found in bhw::Struct:
+// std::string getFullyQualifiedName() - Access: public
+namespace meta
+{
+namespace Struct
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Struct::name>("name"),
+    meta::field<&::bhw::Struct::namespaces>("namespaces"),
+    meta::field<&::bhw::Struct::members>("members"),
+    meta::field<&::bhw::Struct::attributes>("attributes"),
+    meta::field<&::bhw::Struct::variableName>("variableName"),
+    meta::field<&::bhw::Struct::isAnonymous>("isAnonymous"),
+    meta::field<&::bhw::Struct::isRecord>("isRecord"),
+    meta::field<&::bhw::Struct::isAbstract>("isAbstract"),
+    meta::field<&::bhw::Struct::baseType>("baseType"));
+} // namespace Struct
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Struct>
+{
+  static inline const auto& FieldsMeta = meta::Struct::FieldsMeta;
+  static constexpr auto tableName = "Struct";
+  static constexpr auto query = "select name, namespaces, members, attributes, variableName, isAnonymous, isRecord, isAbstract, baseType from Struct";
+};
+} // namespace meta
+
+// Functions found in bhw::Namespace:
+// std::string getFullyQualifiedName() - Access: public
+namespace meta
+{
+namespace Namespace
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Namespace::name>("name"),
+    meta::field<&::bhw::Namespace::nodes>("nodes"),
+    meta::field<&::bhw::Namespace::attributes>("attributes"));
+} // namespace Namespace
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Namespace>
+{
+  static inline const auto& FieldsMeta = meta::Namespace::FieldsMeta;
+  static constexpr auto tableName = "Namespace";
+  static constexpr auto query = "select name, nodes, attributes from Namespace";
+};
+} // namespace meta
+
+// Functions found in bhw::Ast:
+// std::string showAst(size_t indent) - Access: public
+// void flattenNestedTypes() - Access: public
+// void flattenStructMembers(Struct & s, std::vector<Struct> & flattenedStructs, std::vector<Enum> & flattenedEnums) - Access: public
+namespace meta
+{
+namespace Ast
+{
+inline const auto FieldsMeta = std::make_tuple(
+    meta::field<&::bhw::Ast::srcName>("srcName"),
+    meta::field<&::bhw::Ast::namespaces>("namespaces"),
+    meta::field<&::bhw::Ast::nodes>("nodes"));
+} // namespace Ast
+} // namespace meta
+
+namespace meta
+{
+template <> struct MetaTuple<::bhw::Ast>
+{
+  static inline const auto& FieldsMeta = meta::Ast::FieldsMeta;
+  static constexpr auto tableName = "Ast";
+  static constexpr auto query = "select srcName, namespaces, nodes from Ast";
+};
+} // namespace meta
