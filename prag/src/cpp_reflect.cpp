@@ -44,10 +44,10 @@ std::string buildNestedDecltype(const std::string& rootType, const std::vector<s
 class CppReflectWalker : public bhw::CppWalker
 {
   public:
-    auto walkNamespace(const bhw::Namespace& ns, size_t indent) -> std::string override;
-    auto walkStruct(const bhw::Struct& s, size_t indent) -> std::string override;
+    auto walkNamespace(const bhw::Namespace& ns, const bhw::WalkContext& ctx) -> std::string override;
+    auto walkStruct(const bhw::Struct& s, const bhw::WalkContext& ctx) -> std::string override;
     
-    std::string generateOneof(const bhw::Oneof& oneof, size_t) override
+    std::string generateOneof(const bhw::Oneof& oneof, const bhw::WalkContext& ctx) override
     {
         return "";
     }
@@ -57,7 +57,7 @@ class CppReflectWalker : public bhw::CppWalker
     }
 
   protected:
-    std::string generateGenericType(const bhw::GenericType& type, size_t indent) override
+    std::string generateGenericType(const bhw::GenericType& type, const bhw::WalkContext& ctx) override
     {
         std::ostringstream out;
 
@@ -95,7 +95,7 @@ class CppReflectWalker : public bhw::CppWalker
             baseType = "std::shared_ptr";
             break;
         default:
-            return bhw::CppWalker::generateGenericType(type, indent);
+            return bhw::CppWalker::generateGenericType(type, ctx);
         }
 
         out << baseType;
@@ -127,7 +127,7 @@ class CppReflectWalker : public bhw::CppWalker
                 }
                 else
                 {
-                    out << walkType(*type.args[i], indent);
+                    out << walkType(*type.args[i], ctx);
                 }
             }
             out << ">";
@@ -144,12 +144,12 @@ class CppReflectWalker : public bhw::CppWalker
                                  const std::string& parentMetaPath);
     std::string walkNestedTypeDefinitions(const bhw::Struct& s,
                                           const std::string& parentFullName,
-                                          size_t indent);
+                                          const bhw::WalkContext& ctx);
 
     std::string currentParentStruct_;
 };
 
-std::string CppReflectWalker::walkNamespace(const bhw::Namespace& ns, size_t indent)
+std::string CppReflectWalker::walkNamespace(const bhw::Namespace& ns, const bhw::WalkContext& ctx)
 {
     std::stringstream str;
     
@@ -161,7 +161,7 @@ std::string CppReflectWalker::walkNamespace(const bhw::Namespace& ns, size_t ind
                 using M = std::decay_t<decltype(m)>;
                 if constexpr (std::is_same_v<M, bhw::Struct>)
                 {
-                    return walkStruct(m, indent);
+                    return walkStruct(m, ctx);
                 }
                 return "";
             },
@@ -250,7 +250,7 @@ std::string CppReflectWalker::walkNestedStruct(const bhw::Struct& s,
 
 std::string CppReflectWalker::walkNestedTypeDefinitions(const bhw::Struct& s,
                                                         const std::string& parentName,
-                                                        size_t indent)
+                                                        const bhw::WalkContext& ctx)
 {
     std::stringstream str;
     
@@ -264,7 +264,7 @@ std::string CppReflectWalker::walkNestedTypeDefinitions(const bhw::Struct& s,
                 {
                     if (!m.name.empty() && !m.variableName.empty())
                     {
-                        str << walkStruct(m, indent);
+                        str << walkStruct(m, ctx);
                     }
                 }
             },
@@ -274,7 +274,7 @@ std::string CppReflectWalker::walkNestedTypeDefinitions(const bhw::Struct& s,
     return str.str();
 }
 
-std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
+std::string CppReflectWalker::walkStruct(const bhw::Struct& s, const bhw::WalkContext& ctx)
 {
     std::stringstream str;
 
@@ -415,7 +415,7 @@ std::string CppReflectWalker::walkStruct(const bhw::Struct& s, size_t indent)
     
     str << "} // namespace meta\n\n";
 
-    str << walkNestedTypeDefinitions(s, fullStructName, indent);
+    str << walkNestedTypeDefinitions(s, fullStructName, ctx);
 
     return str.str();
 }

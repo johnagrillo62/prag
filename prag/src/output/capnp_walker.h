@@ -39,18 +39,18 @@ class CapnProtoAstWalker : public RegistryAstWalker
         return "@0xdbb9ad1f14bf0b36;\n\n";
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
         fieldCounter_ = 0; // Reset for each struct
-        return indent(ind) + "struct " + s.name + " {\n";
+        return ctx.indent() + "struct " + s.name + " {\n";
     }
 
-    std::string generateStructClose(const Struct&, size_t ind) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
-        return indent(ind) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
@@ -71,47 +71,47 @@ class CapnProtoAstWalker : public RegistryAstWalker
             }
         }
 
-        out << indent(ind) << field.name << " @" << fieldNum << " :" << walkType(*field.type, ind)
+        out << ctx.indent() << field.name << " @" << fieldNum << " :" << walkType(*field.type, ctx)
             << ";\n";
         return out.str();
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t ind) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
-        return indent(ind) + "enum " + e.name + " {\n";
+        return ctx.indent() + "enum " + e.name + " {\n";
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool, size_t ind) override
+    std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << val.name << " @" << val.number << ";\n";
+        out << ctx.indent() << val.name << " @" << val.number << ";\n";
         return out.str();
     }
 
-    std::string generateEnumClose(const Enum&, size_t ind) override
+    std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
-        return indent(ind) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
 
     // CRITICAL: Override walkStructMember to skip nested structs
     // Cap'n Proto doesn't support nested struct definitions
-    std::string walkStructMember(const StructMember& member, size_t indent) override
+    std::string walkStructMember(const StructMember& member, const WalkContext& ctx) override
     {
         return std::visit(
-            [this, indent](auto&& m) -> std::string
+            [this, ctx](auto&& m) -> std::string
             {
                 using T = std::decay_t<decltype(m)>;
                 if constexpr (std::is_same_v<T, Field>)
                 {
-                    return walkField(m, indent);
+                    return walkField(m, ctx);
                 }
                 else if constexpr (std::is_same_v<T, Oneof>)
                 {
-                    return generateOneof(m, indent);
+                    return generateOneof(m, ctx);
                 }
                 else if constexpr (std::is_same_v<T, Enum>)
                 {
-                    return walkEnum(m, indent);
+                    return walkEnum(m, ctx);
                 }
                 else if constexpr (std::is_same_v<T, Struct>)
                 {
@@ -125,7 +125,7 @@ class CapnProtoAstWalker : public RegistryAstWalker
             member);
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const bhw::WalkContext& ctx) override
     {
         switch (type.reifiedType)
         {
@@ -160,15 +160,15 @@ class CapnProtoAstWalker : public RegistryAstWalker
         }
     }
 
-    std::string generateGenericType(const GenericType& type, size_t ind) override
+    std::string generateGenericType(const GenericType& type, const WalkContext& ctx) override
     {
         switch (type.reifiedType)
         {
         case ReifiedTypeId::List:
-            return "List(" + walkType(*type.args[0], ind) + ")";
+            return "List(" + walkType(*type.args[0], ctx) + ")";
         case ReifiedTypeId::Optional:
             // Cap'n Proto doesn't have explicit Optional, just use the type
-            return walkType(*type.args[0], ind);
+            return walkType(*type.args[0], ctx);
         case ReifiedTypeId::Map:
             // Cap'n Proto doesn't have native maps, use List of pairs
             return "List(Data)"; // Simplified
@@ -177,12 +177,13 @@ class CapnProtoAstWalker : public RegistryAstWalker
         }
     }
 
-    std::string generateStructRefType(const StructRefType& type, size_t) override
+    std::string generateStructRefType(const StructRefType& type,
+                                      const bhw::WalkContext& ctx) override
     {
         return type.srcTypeString;
     }
 
-    std::string generateStructType(const StructType& type, size_t) override
+    std::string generateStructType(const StructType& type, const bhw::WalkContext& ctx) override
     {
         // Return the struct name
         if (type.value && !type.value->name.empty())
@@ -192,33 +193,32 @@ class CapnProtoAstWalker : public RegistryAstWalker
         return "Data"; // Fallback
     }
 
-    std::string generatePointerType(const PointerType& type, size_t ind) override
+    std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
     {
         // Cap'n Proto doesn't have explicit pointers, just use the type
-        return walkType(*type.pointee, ind);
+        return walkType(*type.pointee, ctx);
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
-        out << indent(ind) << "union " << oneof.name << "{\n";
+        out << ctx.indent() << "union " << oneof.name << "{\n";
 
         for (const auto& field : oneof.fields)
         {
-            out << indent(ind + 1) << field.name;
+            out << ctx.indent(1) << field.name;
 
             for (const auto& attr : field.attributes)
             {
                 if (attr.name == "field_number")
                 {
                     out << " @" << attr.value << ": " << walkType(*field.type);
-                   
                 }
                 out << ";\n";
             }
         }
-        out << indent(ind) << "}\n";
+        out << ctx.indent() << "}\n";
         return out.str();
     }
 };

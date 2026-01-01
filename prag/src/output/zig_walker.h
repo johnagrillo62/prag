@@ -23,33 +23,33 @@ class ZigAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "pub const " << s.name << " = struct {\n";
+        out << ctx.indent() << "pub const " << s.name << " = struct {\n";
         return out.str();
     }
 
-    std::string generateStructClose(const Struct&, size_t ind) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
-        return indent(ind) + "};\n\n";
+        return ctx.indent() + "};\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << field.name << ": " << walkType(*field.type, ind) << ",\n";
+        out << ctx.indent() << field.name << ": " << walkType(*field.type, ctx) << ",\n";
         return out.str();
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t ind) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "pub const " << e.name << " = enum(i32) {\n";
+        out << ctx.indent() << "pub const " << e.name << " = enum(i32) {\n";
         return out.str();
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool, size_t ind) override
+    std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
         std::ostringstream out;
         std::string zigName = val.name;
@@ -58,37 +58,37 @@ class ZigAstWalker : public RegistryAstWalker
                        zigName.begin(),
                        [](char c) -> char
                        { return static_cast<char>(std::tolower(static_cast<unsigned char>(c))); });
-        out << indent(ind) << zigName << " = " << val.number << ",\n";
+        out << ctx.indent() << zigName << " = " << val.number << ",\n";
         return out.str();
     }
 
-    std::string generateEnumClose(const Enum&, size_t ind) override
+    std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
-        return indent(ind) + "};\n\n";
+        return ctx.indent() + "};\n\n";
     }
 
-    std::string generateNamespaceOpen(const bhw::Namespace& ns, size_t ind) override
+    std::string generateNamespaceOpen(const bhw::Namespace& ns, const WalkContext& ctx) override
     {
-        return indent(ind) + "pub const " + ns.name + " = struct {\n";
+        return ctx.indent() + "pub const " + ns.name + " = struct {\n";
     }
 
-    std::string generateNamespaceClose(const bhw::Namespace&, size_t ind) override
+    std::string generateNamespaceClose(const bhw::Namespace&, const WalkContext& ctx) override
     {
-        return indent(ind) + "};\n\n";
+        return ctx.indent() + "};\n\n";
     }
 
-    std::string generatePointerType(const PointerType& type, size_t ind = 0) override
+    std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
     {
-        std::string result = "*" + walkType(*type.pointee, ind);
+        std::string result = "*" + walkType(*type.pointee, ctx);
         return result;
     }
 
-    std::string generateStructType(const StructType& type, size_t) override
+    std::string generateStructType(const StructType& type, const WalkContext& ctx) override
     {
         return type.value->name;
     }
 
-    std::string generateGenericType(const GenericType& type, size_t ind = 0) override
+    std::string generateGenericType(const GenericType& type, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
@@ -96,16 +96,16 @@ class ZigAstWalker : public RegistryAstWalker
         {
         case ReifiedTypeId::List:
         case ReifiedTypeId::Set:
-            out << "std.ArrayList(" << walkType(*type.args[0], ind) << ")";
+            out << "std.ArrayList(" << walkType(*type.args[0], ctx) << ")";
             break;
 
         case ReifiedTypeId::Map:
-            out << "std.AutoHashMap(" << walkType(*type.args[0], ind) << ", "
-                << walkType(*type.args[1], ind) << ")";
+            out << "std.AutoHashMap(" << walkType(*type.args[0], ctx) << ", "
+                << walkType(*type.args[1], ctx) << ")";
             break;
 
         case ReifiedTypeId::Optional:
-            out << "?" << walkType(*type.args[0], ind);
+            out << "?" << walkType(*type.args[0], ctx);
             break;
 
         case ReifiedTypeId::Variant:
@@ -113,11 +113,11 @@ class ZigAstWalker : public RegistryAstWalker
             out << "union(enum) {\n";
             for (size_t i = 0; i < type.args.size(); ++i)
             {
-                std::string typeName = walkType(*type.args[i], ind);
+                std::string typeName = walkType(*type.args[i], ctx);
                 std::string fieldName = zigFieldName(type.args[i]->reifiedTypeId);
-                out << indent(ind + 2) << fieldName << ": " << typeName << ",\n";
+                out << ctx.indent(2) << fieldName << ": " << typeName << ",\n";
             }
-            out << indent(ind + 1) << "}";
+            out << ctx.indent(1) << "}";
             break;
         }
 
@@ -129,22 +129,22 @@ class ZigAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const WalkContext& ctx) override
     {
         return canonicalToZig(type.reifiedType);
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "pub const " << oneof.name << " = union(enum) {\n";
+        out << ctx.indent() << "pub const " << oneof.name << " = union(enum) {\n";
 
         for (const auto& field : oneof.fields)
         {
-            out << indent(ind + 1) << field.name << ": " << walkType(*field.type, ind) << ",\n";
+            out << ctx.indent(1) << field.name << ": " << walkType(*field.type, ctx) << ",\n";
         }
 
-        out << indent(ind) << "};\n\n";
+        out << ctx.indent() << "};\n\n";
         return out.str();
     }
 

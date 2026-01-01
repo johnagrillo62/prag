@@ -59,7 +59,7 @@ class OpenApiAstWalker : public AstWalker
         return output.dump(2) + "\n";
     }
 
-    std::string generateStructOpen(const Struct& s, size_t) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
         std::string name = s.name;
         if (name.empty() || name == "<anonymous>")
@@ -74,7 +74,7 @@ class OpenApiAstWalker : public AstWalker
         return "";
     }
 
-    std::string generateStructClose(const Struct&, size_t) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
         if (structStack.empty())
             return "";
@@ -92,7 +92,7 @@ class OpenApiAstWalker : public AstWalker
         return "";
     }
 
-    std::string generateField(const Field& field, size_t) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         if (structStack.empty())
             return "";
@@ -112,14 +112,14 @@ class OpenApiAstWalker : public AstWalker
         return "";
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
         schemas[e.name] = {{"type", "string"}, {"enum", json::array()}};
         schemaNames.push_back(e.name);
         return "";
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool, size_t) override
+    std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
         for (auto it = schemaNames.rbegin(); it != schemaNames.rend(); ++it)
         {
@@ -132,12 +132,12 @@ class OpenApiAstWalker : public AstWalker
         return "";
     }
 
-    std::string generateEnumClose(const Enum&, size_t) override
+    std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
         return "";
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         return "";
     }

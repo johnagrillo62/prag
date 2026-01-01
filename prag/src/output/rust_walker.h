@@ -29,28 +29,28 @@ class RustAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
-        out << indent(ind) << "#[derive(Debug, Clone)]\n";
-        out << indent(ind) << "pub struct " << s.name << " {\n";
+        out << ctx.indent() << "#[derive(Debug, Clone)]\n";
+        out << ctx.indent() << "pub struct " << s.name << " {\n";
         return out.str();
     }
 
-    std::string generateStructClose(const Struct& s, size_t ind) override
+    std::string generateStructClose(const Struct& s, const WalkContext& ctx) override
     {
-        return indent(ind) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "pub " << field.name << ": " << walkType(*field.type, ind) << ",\n";
+        out << ctx.indent() << "pub " << field.name << ": " << walkType(*field.type, ctx) << ",\n";
         return out.str();
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t ind) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
@@ -65,62 +65,62 @@ class RustAstWalker : public RegistryAstWalker
             }
         }
 
-        out << indent(ind) << "#[derive(Debug, Clone";
+        out << ctx.indent() << "#[derive(Debug, Clone";
         if (!hasAssociatedTypes)
         {
             out << ", Copy, PartialEq, Eq";
         }
         out << ")]\n";
-        out << indent(ind) << "pub enum " << e.name << " {\n";
+        out << ctx.indent() << "pub enum " << e.name << " {\n";
         return out.str();
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool, size_t ind) override
+    std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
         // If the enum value has an associated type, generate Rust-style variant with data
         if (val.type)
         {
-            out << indent(ind) << val.name << "(" << walkType(*val.type, ind) << "),\n";
+            out << ctx.indent() << val.name << "(" << walkType(*val.type, ctx) << "),\n";
         }
         else
         {
             // Otherwise, generate C-style enum value
-            out << indent(ind) << val.name << " = " << val.number << ",\n";
+            out << ctx.indent() << val.name << " = " << val.number << ",\n";
         }
 
         return out.str();
     }
 
-    std::string generateEnumClose(const Enum& e, size_t ind) override
+    std::string generateEnumClose(const Enum& e, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "}\n\n";
+        out << ctx.indent() << "}\n\n";
         return out.str();
     }
 
-    std::string generateNamespaceOpen(const Namespace& ns, size_t ind) override
+    std::string generateNamespaceOpen(const Namespace& ns, const WalkContext& ctx) override
     {
-        return indent(ind) + "pub mod " + ns.name + " {\n";
+        return ctx.indent() + "pub mod " + ns.name + " {\n";
     }
 
-    std::string generateNamespaceClose(const Namespace& ns, size_t ind) override
+    std::string generateNamespaceClose(const Namespace& ns, const WalkContext& ctx) override
     {
-        return indent(ind) + "} // mod " + ns.name + "\n\n";
+        return ctx.indent() + "} // mod " + ns.name + "\n\n";
     }
 
-    std::string generatePointerType(const PointerType& type, size_t ind = 0) override
+    std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
     {
-        return "Box<" + walkType(*type.pointee, ind) + ">";
+        return "Box<" + walkType(*type.pointee, ctx) + ">";
     }
 
-    std::string generateStructType(const StructType& type, size_t) override
+    std::string generateStructType(const StructType& type, const WalkContext& ctx) override
     {
         return type.value->name;
     }
 
-    std::string generateGenericType(const GenericType& type, size_t ind) override
+    std::string generateGenericType(const GenericType& type, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
@@ -128,16 +128,16 @@ class RustAstWalker : public RegistryAstWalker
         {
         case ReifiedTypeId::List:
         case ReifiedTypeId::Set:
-            out << "Vec<" << walkType(*type.args[0], ind) << ">";
+            out << "Vec<" << walkType(*type.args[0], ctx) << ">";
             break;
 
         case ReifiedTypeId::Map:
-            out << "std::collections::HashMap<" << walkType(*type.args[0], ind) << ", "
-                << walkType(*type.args[1], ind) << ">";
+            out << "std::collections::HashMap<" << walkType(*type.args[0], ctx) << ", "
+                << walkType(*type.args[1], ctx) << ">";
             break;
 
         case ReifiedTypeId::Optional:
-            out << "Option<" << walkType(*type.args[0], ind) << ">";
+            out << "Option<" << walkType(*type.args[0], ctx) << ">";
             break;
 
         default:
@@ -148,23 +148,23 @@ class RustAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const WalkContext& ctx) override
     {
         return canonicalToRust(type.reifiedType);
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "#[derive(Debug, Clone)]\n";
-        out << indent(ind) << "pub enum " << oneof.name << " {\n";
+        out << ctx.indent() << "#[derive(Debug, Clone)]\n";
+        out << ctx.indent() << "pub enum " << oneof.name << " {\n";
 
         for (const auto& field : oneof.fields)
         {
-            out << indent(ind + 1) << field.name << "(" << walkType(*field.type, ind) << "),\n";
+            out << ctx.indent(1) << field.name << "(" << walkType(*field.type, ctx) << "),\n";
         }
 
-        out << indent(ind) << "}\n\n";
+        out << ctx.indent() << "}\n\n";
         return out.str();
     }
 

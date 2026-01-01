@@ -53,7 +53,7 @@ class FSharpAstWalker : public RegistryAstWalker
                 if (std::holds_alternative<Field>(member))
                 {
                     const auto& field = std::get<Field>(member);
-                    out << "  " << capitalize(field.name) << ": " << walkType(*field.type, 1)
+                    out << "  " << capitalize(field.name) << ": " << walkType(*field.type)
                         << "\n";
                 }
             }
@@ -88,22 +88,22 @@ class FSharpAstWalker : public RegistryAstWalker
     }
 
     // Override walkRootNode to handle Oneof
-    std::string walkRootNode(const bhw::AstRootNode& node, size_t indent) override
+    std::string walkRootNode(const bhw::AstRootNode& node, const WalkContext& ctx) override
     {
         return std::visit(
-            [this, indent](auto&& n) -> std::string
+            [this, ctx](auto&& n) -> std::string
             {
                 using T = std::decay_t<decltype(n)>;
                 if constexpr (std::is_same_v<T, Enum>)
-                    return walkEnum(n, indent);
+                    return walkEnum(n, ctx);
                 else if constexpr (std::is_same_v<T, Struct>)
-                    return walkStruct(n, indent);
+                    return walkStruct(n, ctx);
                 else if constexpr (std::is_same_v<T, bhw::Namespace>)
-                    return walkNamespace(n, indent);
+                    return walkNamespace(n, ctx);
                 else if constexpr (std::is_same_v<T, Service>)
                     return "";
                 else if constexpr (std::is_same_v<T, Oneof>)
-                    return generateOneofAsType(n, indent); // Generate discriminated union
+                    return generateOneofAsType(n, ctx); // Generate discriminated union
                 else
                     static_assert(always_false_v<T>, "Unhandled type in walkRootNode!");
             },
@@ -152,60 +152,60 @@ class FSharpAstWalker : public RegistryAstWalker
         return "namespace Generated\n\nopen System\nopen System.Collections.Generic\n\n";
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
-        return indent(ind) + "type " + s.name + " = {\n";
+        return ctx.indent() + "type " + s.name + " = {\n";
     }
 
-    std::string generateStructClose(const Struct&, size_t ind) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
-        return indent(ind) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << capitalize(field.name) << ": " << walkType(*field.type, ind) << "\n";
+        out << ctx.indent() << capitalize(field.name) << ": " << walkType(*field.type, ctx) << "\n";
         return out.str();
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t ind) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
-        return indent(ind) + "type " + e.name + " =\n";
+        return ctx.indent() + "type " + e.name + " =\n";
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool, size_t ind) override
+    std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "| " << val.name << " = " << val.number << "\n";
+        out << ctx.indent() << "| " << val.name << " = " << val.number << "\n";
         return out.str();
     }
 
-    std::string generateEnumClose(const Enum&, size_t) override
+    std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
         return "\n";
     }
 
-    std::string generateNamespaceOpen(const bhw::Namespace& ns, size_t ind) override
+    std::string generateNamespaceOpen(const bhw::Namespace& ns, const WalkContext& ctx) override
     {
         // Top-level namespaces (ind==0) are already declared in header, so don't generate "module"
         // Only nested namespaces should generate "module" declarations
-        if (ind == 0)
+        if (ctx.level == 0)
             return "";
-        return indent(ind) + "module " + ns.name + " =\n";
+        return ctx.indent() + "module " + ns.name + " =\n";
     }
 
-    std::string generateNamespaceClose(const bhw::Namespace&, size_t) override
+    std::string generateNamespaceClose(const bhw::Namespace&, const WalkContext& ctx) override
     {
         return "\n";
     }
 
-    std::string generatePointerType(const PointerType& type, size_t ind = 0) override
+    std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
     {
-        return walkType(*type.pointee, ind);
+        return walkType(*type.pointee, ctx);
     }
 
-    std::string generateStructType(const StructType& type, size_t ind) override
+    std::string generateStructType(const StructType& type, const WalkContext& ctx) override
     {
         // Check if this is an anonymous struct
         if (type.value->isAnonymous || type.value->name.empty() ||
@@ -234,26 +234,26 @@ class FSharpAstWalker : public RegistryAstWalker
         return type.value->name;
     }
 
-    std::string generateGenericType(const GenericType& type, size_t ind = 0) override
+    std::string generateGenericType(const GenericType& type, const WalkContext& ctx) override
     {
         std::ostringstream out;
         switch (type.reifiedType)
         {
         case ReifiedTypeId::List:
-            out << walkType(*type.args[0], ind) << " list";
+            out << walkType(*type.args[0], ctx) << " list";
             break;
         case ReifiedTypeId::Array:
-            out << walkType(*type.args[0], ind) << "[]";
+            out << walkType(*type.args[0], ctx) << "[]";
             break;
         case ReifiedTypeId::Set:
-            out << "Set<" << walkType(*type.args[0], ind) << ">";
+            out << "Set<" << walkType(*type.args[0], ctx) << ">";
             break;
         case ReifiedTypeId::Map:
-            out << "Map<" << walkType(*type.args[0], ind) << ", " << walkType(*type.args[1], ind)
+            out << "Map<" << walkType(*type.args[0], ctx) << ", " << walkType(*type.args[1], ctx)
                 << ">";
             break;
         case ReifiedTypeId::Optional:
-            out << walkType(*type.args[0], ind) << " option";
+            out << walkType(*type.args[0], ctx) << " option";
             break;
         case ReifiedTypeId::Variant:
         {
@@ -262,7 +262,7 @@ class FSharpAstWalker : public RegistryAstWalker
             def.name = name;
             for (size_t i = 0; i < type.args.size(); ++i)
             {
-                std::string fsType = walkType(*type.args[i], ind);
+                std::string fsType = walkType(*type.args[i], ctx);
                 def.cases.push_back({"Case" + std::to_string(i), fsType});
             }
             variantDefs_.push_back(def);
@@ -276,7 +276,7 @@ class FSharpAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const WalkContext& ctx) override
     {
         switch (type.reifiedType)
         {
@@ -313,28 +313,28 @@ class FSharpAstWalker : public RegistryAstWalker
         }
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::string name = capitalize(oneof.name);
         OneofDef def;
         def.name = name;
         for (const auto& field : oneof.fields)
-            def.cases.push_back({field.name, walkType(*field.type, ind)});
+            def.cases.push_back({field.name, walkType(*field.type, ctx)});
         oneofDefs_.push_back(def);
         std::ostringstream out;
-        out << indent(ind) << capitalize(oneof.name) << ": " << name << "\n";
+        out << ctx.indent() << capitalize(oneof.name) << ": " << name << "\n";
         return out.str();
     }
 
     // Generate Oneof as a top-level discriminated union type
-    std::string generateOneofAsType(const Oneof& oneof, size_t ind)
+    std::string generateOneofAsType(const Oneof& oneof, const WalkContext& ctx)
     {
         std::ostringstream out;
-        out << indent(ind) << "type " << oneof.name << " =\n";
+        out << ctx.indent() << "type " << oneof.name << " =\n";
         for (const auto& field : oneof.fields)
         {
-            out << indent(ind + 1) << "| " << capitalize(field.name) << " of "
-                << walkType(*field.type, ind) << "\n";
+            out << ctx.indent( 1) << "| " << capitalize(field.name) << " of "
+                << walkType(*field.type, ctx) << "\n";
         }
         out << "\n";
         return out.str();

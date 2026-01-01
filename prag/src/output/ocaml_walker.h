@@ -108,7 +108,7 @@ class OCamlAstWalker : public RegistryAstWalker
     }
 
     // Override to handle top-level Oneof nodes
-    std::string walkRootNode(const bhw::AstRootNode& node, size_t indent) override
+    std::string walkRootNode(const bhw::AstRootNode& node, const WalkContext& ctx) override
     {
         // Handle top-level Oneof - add to collection for preamble generation
         if (std::holds_alternative<Oneof>(node))
@@ -118,13 +118,13 @@ class OCamlAstWalker : public RegistryAstWalker
             OneofDef def;
             def.name = name;
             for (const auto& field : oneof.fields)
-                def.cases.push_back({field.name, walkType(*field.type, 0)});
+                def.cases.push_back({field.name, walkType(*field.type, ctx)});
             oneofDefs_.push_back(def);
             return ""; // Will be generated in the preamble
         }
 
         // Use default behavior for everything else
-        return RegistryAstWalker::walkRootNode(node, indent);
+        return RegistryAstWalker::walkRootNode(node, ctx);
     }
 
   protected:
@@ -133,83 +133,83 @@ class OCamlAstWalker : public RegistryAstWalker
         return "(* Generated OCaml types *)\n\n";
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
-        return indent(ind) + "type " + lowercase(s.name) + " = {\n";
+        return ctx.indent() + "type " + lowercase(s.name) + " = {\n";
     }
 
-    std::string generateStructClose(const Struct&, size_t ind) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
-        return indent(ind) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << lowercase(field.name) << " : " << walkType(*field.type, ind) << ";\n";
+        out << ctx.indent() << lowercase(field.name) << " : " << walkType(*field.type, ctx) << ";\n";
         return out.str();
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t ind) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
-        return indent(ind) + "type " + lowercase(e.name) + " =\n";
+        return ctx.indent() + "type " + lowercase(e.name) + " =\n";
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool, size_t ind) override
+    std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "| " << capitalize(val.name) << "\n";
+        out << ctx.indent() << "| " << capitalize(val.name) << "\n";
         return out.str();
     }
 
-    std::string generateEnumClose(const Enum&, size_t) override
+    std::string generateEnumClose(const Enum&, const WalkContext& ctz) override
     {
         return "\n";
     }
 
-    std::string generateNamespaceOpen(const bhw::Namespace& ns, size_t ind) override
+    std::string generateNamespaceOpen(const bhw::Namespace& ns, const WalkContext& ctx) override
     {
-        return indent(ind) + "module " + capitalize(ns.name) + " = struct\n";
+        return ctx.indent() + "module " + capitalize(ns.name) + " = struct\n";
     }
 
-    std::string generateNamespaceClose(const bhw::Namespace&, size_t ind) override
+    std::string generateNamespaceClose(const bhw::Namespace&, const WalkContext& ctx) override
     {
-        return indent(ind) + "end\n\n";
+        return ctx.indent() + "end\n\n";
     }
 
-    std::string generatePointerType(const PointerType& type, size_t ind = 0) override
+    std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
     {
-        return walkType(*type.pointee, ind) + " ref";
+        return walkType(*type.pointee, ctx) + " ref";
     }
 
-    std::string generateStructType(const StructType& type, size_t) override
+    std::string generateStructType(const StructType& type, const WalkContext& ctx) override
     {
         return lowercase(type.value->name);
     }
 
-    std::string generateStructRefType(const StructRefType& type, size_t) override
+    std::string generateStructRefType(const StructRefType& type, const WalkContext& ctx) override
     {
         // Always lowercase struct references in OCaml
         return lowercase(type.srcTypeString);
     }
 
-    std::string generateGenericType(const GenericType& type, size_t ind = 0) override
+    std::string generateGenericType(const GenericType& type, const WalkContext& ctx) override
     {
         std::ostringstream out;
         switch (type.reifiedType)
         {
         case ReifiedTypeId::List:
-            out << walkType(*type.args[0], ind) << " list";
+            out << walkType(*type.args[0], ctx) << " list";
             break;
         case ReifiedTypeId::Set:
-            out << walkType(*type.args[0], ind) << " Set.t";
+            out << walkType(*type.args[0], ctx) << " Set.t";
             break;
         case ReifiedTypeId::Map:
-            out << "(" << walkType(*type.args[0], ind) << ", " << walkType(*type.args[1], ind)
+            out << "(" << walkType(*type.args[0], ctx) << ", " << walkType(*type.args[1], ctx)
                 << ") Map.t";
             break;
         case ReifiedTypeId::Optional:
-            out << walkType(*type.args[0], ind) << " option";
+            out << walkType(*type.args[0], ctx) << " option";
             break;
         case ReifiedTypeId::Variant:
         {
@@ -218,7 +218,7 @@ class OCamlAstWalker : public RegistryAstWalker
             def.name = name;
             for (size_t i = 0; i < type.args.size(); ++i)
             {
-                std::string mlType = walkType(*type.args[i], ind);
+                std::string mlType = walkType(*type.args[i], ctx);
                 def.cases.push_back({"V" + std::to_string(i), mlType});
             }
             variantDefs_.push_back(def);
@@ -232,7 +232,7 @@ class OCamlAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const WalkContext& ctx) override
     {
         switch (type.reifiedType)
         {
@@ -263,16 +263,16 @@ class OCamlAstWalker : public RegistryAstWalker
         }
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::string name = lowercase(oneof.name);
         OneofDef def;
         def.name = name;
         for (const auto& field : oneof.fields)
-            def.cases.push_back({field.name, walkType(*field.type, ind)});
+            def.cases.push_back({field.name, walkType(*field.type, ctx)});
         oneofDefs_.push_back(def);
         std::ostringstream out;
-        out << indent(ind) << lowercase(oneof.name) << " : " << name << ";\n";
+        out << ctx.indent() << lowercase(oneof.name) << " : " << name << ";\n";
         return out.str();
     }
 };

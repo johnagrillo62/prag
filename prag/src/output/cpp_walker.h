@@ -18,12 +18,10 @@ class CppWalker : public RegistryAstWalker
 
     std::string walk(bhw::Ast&& ast) override
     {
-      this->srcLang = ast.srcName;
+        this->srcLang = ast.srcName;
         // C++ needs enums before structs that use them
         std::vector<AstRootNode> enums;
         std::vector<AstRootNode> structs;
-
-	
 
         for (auto& node : ast.nodes)
         {
@@ -92,16 +90,16 @@ class CppWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const WalkContext& ctx) override
     {
-      // If source language == target language, preserve exact spelling
-    if (srcLang == "h")
-    {
-        if (!type.srcTypeString.empty())
+        // If source language == target language, preserve exact spelling
+        if (srcLang == "h")
         {
-            return type.srcTypeString; 
+            if (!type.srcTypeString.empty())
+            {
+                return type.srcTypeString;
+            }
         }
-    }
 
         // Map to C type if srcTypeString is blank
         switch (type.reifiedType)
@@ -140,33 +138,33 @@ class CppWalker : public RegistryAstWalker
         }
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx)  override
     {
         std::string name = s.isAnonymous ? "" : s.name;
 
-        return this->indent(ind) + "struct " + name + "\n" + this->indent(ind) + "{\n";
+        return ctx.indent() + "struct " + name + "\n" + ctx.indent() + "{\n";
     }
 
-    std::string generateStructClose(const Struct& s, size_t ind) override
+    std::string generateStructClose(const Struct& s, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << this->indent(ind) << "}";
+        out << ctx.indent() << "}";
         if (!s.variableName.empty())
             out << " " << s.variableName;
         out << ";\n\n";
         return out.str();
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
-        return this->indent(ind + namespaces.size()) + walkType(*field.type, ind) + " " +
-               field.name + ";\n";
+        return ctx.indent(namespaces.size()) + walkType(*field.type, ctx) + " " + field.name +
+               ";\n";
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t ind) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "enum ";
+        out << ctx.indent() << "enum ";
         if (e.scoped)
             out << "class ";
 
@@ -175,51 +173,53 @@ class CppWalker : public RegistryAstWalker
             out << " : " << e.underlying_type << " ";
 
         out << "\n";
-        out << indent(ind) << "{\n";
+        out << ctx.indent() << "{\n";
         return out.str();
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool isLast, size_t ind) override
+    std::string generateEnumValue(const EnumValue& val,
+                                  bool isLast,
+                                  const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << this->indent(ind + namespaces.size()) << val.name;
+        out << ctx.indent(namespaces.size()) << val.name;
         if (!isLast)
             out << ",";
         out << "\n";
         return out.str();
     }
 
-    std::string generateEnumClose(const Enum&, size_t ind) override
+    std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
-        return indent(ind + namespaces.size()) + "};\n\n";
+        return ctx.indent(namespaces.size()) + "};\n\n";
     }
 
-    std::string generateNamespaceOpen(const bhw::Namespace& ns, size_t ind = 0) override
+    std::string generateNamespaceOpen(const bhw::Namespace& ns, const WalkContext& ctx) override
     {
         namespaces.emplace_back(ns.name);
-        return indent(ind) + "namespace " + ns.name + "\n" + indent(ind) + "{\n";
+        return ctx.indent() + "namespace " + ns.name + "\n" + ctx.indent() + "{\n";
     }
 
-    std::string generateNamespaceClose(const bhw::Namespace& ns, size_t ind = 0) override
+    std::string generateNamespaceClose(const bhw::Namespace& ns, const WalkContext& ctx) override
     {
         namespaces.pop_back();
 
-        return indent(ind) + "} // namespace " + ns.name + "\n\n";
+        return ctx.indent() + "} // namespace " + ns.name + "\n\n";
     }
 
-    std::string generatePointerType(const PointerType& type, size_t ind = 0) override
+    std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
     {
-        return walkType(*type.pointee, ind) + "*";
+        return walkType(*type.pointee, ctx) + "*";
     }
 
-    std::string generateStructType(const StructType& type, size_t ind = 0) override
+    std::string generateStructType(const StructType& type, const WalkContext& ctx) override
     {
         const Struct& s = *type.value;
         // If it's an anonymous inline struct, generate it inline
         if (s.isAnonymous || s.name == "<anonymous>")
         {
             std::ostringstream out;
-            out << "struct\n" << this->indent(ind) << "{\n";
+            out << "struct\n" << ctx.indent() << "{\n";
 
             // Generate fields at next indent level
             for (const auto& member : s.members)
@@ -227,11 +227,11 @@ class CppWalker : public RegistryAstWalker
                 if (std::holds_alternative<Field>(member))
                 {
                     const auto& field = std::get<Field>(member);
-                    out << generateField(field, ind + 1 + namespaces.size());
+                    out << generateField(field, ctx.nest(namespaces.size()));
                 }
             }
 
-            out << this->indent(ind) << "}";
+            out << ctx.indent() << "}";
             return out.str();
         }
 
@@ -240,27 +240,25 @@ class CppWalker : public RegistryAstWalker
     }
 
   protected:
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
-        out << this->indent(ind + namespaces.size()) << "// Oneof: " << oneof.name << "\n";
+        out << ctx.indent(namespaces.size()) << "// Oneof: " << oneof.name << "\n";
 
         // Generate wrapper structs
         for (const auto& field : oneof.fields)
         {
             std::string wrapperName = capitalize(oneof.name) + "_" + capitalize(field.name);
-            std::string fieldType = walkType(*field.type, ind);
+            std::string fieldType = walkType(*field.type, ctx);
 
-            out << this->indent(ind + namespaces.size()) << "struct " << wrapperName << " {\n";
-
-            out << this->indent(ind + namespaces.size() + 1) << fieldType << " value;\n";
-
-            out << this->indent(ind + namespaces.size()) << "};\n\n";
+            out << ctx.indent(namespaces.size()) << "struct " << wrapperName << " {\n"
+                << ctx.indent(namespaces.size() + 1) << fieldType << " value;\n"
+                << ctx.indent(namespaces.size()) << "};\n\n";
         }
 
         // Generate the variant field directly (no type alias)
-        out << this->indent(ind + namespaces.size()) << "std::variant<std::monostate";
+        out << indent(namespaces.size()) << "std::variant<std::monostate";
 
         for (const auto& field : oneof.fields)
         {

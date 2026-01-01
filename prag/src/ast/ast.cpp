@@ -1,7 +1,7 @@
 #include "ast.h"
 
 #include <sstream>
-
+#include <functional>
 auto bhw::operator<<(std::ostream& os, const bhw::SimpleType& s) -> std::ostream&
 {
     os << s.reifiedType << "(" << s.srcTypeString << ")";
@@ -211,6 +211,8 @@ std::string showNodes(const std::vector<bhw::AstRootNode>& nodes, size_t indent 
     }
     return ss.str();
 }
+
+
 void bhw::Ast::flattenNestedTypes()
 {
     std::vector<Enum> flattenedEnums;

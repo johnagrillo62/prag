@@ -89,7 +89,7 @@ class HaskellAstWalker : public RegistryAstWalker
                     if (fieldIdx > 0)
                         out << "\n        , ";
                     std::string fieldName = escapeReservedKeyword(lowercase(field.name));
-                    out << fieldName << " :: " << walkType(*field.type, 0);
+                    out << fieldName << " :: " << walkType(*field.type, WalkContext{});
                     fieldIdx++;
                 }
             }
@@ -131,22 +131,22 @@ class HaskellAstWalker : public RegistryAstWalker
     }
 
     // Override walkRootNode to handle Oneof
-    std::string walkRootNode(const bhw::AstRootNode& node, size_t indent) override
+    std::string walkRootNode(const bhw::AstRootNode& node, const WalkContext& ctx) override
     {
         return std::visit(
-            [this, indent](auto&& n) -> std::string
+            [this, ctx](auto&& n) -> std::string
             {
                 using T = std::decay_t<decltype(n)>;
                 if constexpr (std::is_same_v<T, Enum>)
-                    return walkEnum(n, indent);
+                    return walkEnum(n, ctx);
                 else if constexpr (std::is_same_v<T, Struct>)
-                    return walkStruct(n, indent);
+                    return walkStruct(n, ctx);
                 else if constexpr (std::is_same_v<T, bhw::Namespace>)
-                    return walkNamespace(n, indent);
+                    return walkNamespace(n, ctx);
                 else if constexpr (std::is_same_v<T, Service>)
                     return "";
                 else if constexpr (std::is_same_v<T, Oneof>)
-                    return generateOneofAsType(n, indent);
+                    return generateOneofAsType(n, ctx);
                 else
                     static_assert(always_false_v<T>, "Unhandled type in walkRootNode!");
             },
@@ -201,11 +201,11 @@ class HaskellAstWalker : public RegistryAstWalker
                "import qualified Data.Set as Set\n\n";
     }
 
-    std::string walkStruct(const Struct& s, size_t indent) override
+    std::string walkStruct(const Struct& s, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
-        out << generateStructOpen(s, indent);
+        out << generateStructOpen(s, ctx);
 
         // Count actual fields (including oneofs)
         totalFields_ = 0;
@@ -219,19 +219,19 @@ class HaskellAstWalker : public RegistryAstWalker
         currentFieldIndex_ = 0;
         for (const auto& member : s.members)
         {
-            out << walkStructMember(member, indent + 1);
+            out << walkStructMember(member, ctx.nest());
         }
 
-        out << generateStructClose(s, indent);
+        out << generateStructClose(s, ctx);
 
         return out.str();
     }
 
-    std::string walkEnum(const Enum& e, size_t indent) override
+    std::string walkEnum(const Enum& e, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
-        out << generateEnumOpen(e, indent);
+        out << generateEnumOpen(e, ctx);
 
         for (size_t i = 0; i < e.values.size(); ++i)
         {
@@ -240,30 +240,30 @@ class HaskellAstWalker : public RegistryAstWalker
 
             if (isFirst)
             {
-                out << this->indent(indent) << "      " << capitalize(val.name) << "\n";
+                out << ctx.indent() << "      " << capitalize(val.name) << "\n";
             }
             else
             {
-                out << this->indent(indent) << "    | " << capitalize(val.name) << "\n";
+                out << ctx.indent() << "    | " << capitalize(val.name) << "\n";
             }
         }
 
-        out << generateEnumClose(e, indent);
+        out << generateEnumClose(e, ctx);
 
         return out.str();
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
-        return indent(ind) + "data " + s.name + " = " + s.name + "\n" + indent(ind) + "    { ";
+        return ctx.indent() + "data " + s.name + " = " + s.name + "\n" + ctx.indent() + "    { ";
     }
 
-    std::string generateStructClose(const Struct&, size_t ind) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
         return "} deriving (Show, Eq)\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
@@ -274,45 +274,45 @@ class HaskellAstWalker : public RegistryAstWalker
         }
 
         std::string fieldName = escapeReservedKeyword(lowercase(field.name));
-        out << fieldName << " :: " << walkType(*field.type, ind) << "\n" << indent(ind) << "      ";
+        out << fieldName << " :: " << walkType(*field.type, ctx) << "\n" << ctx.indent() << "      ";
 
         currentFieldIndex_++;
 
         return out.str();
     }
 
-    std::string generateEnumOpen(const Enum& e, size_t ind) override
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
-        return indent(ind) + "data " + e.name + " =\n";
+        return ctx.indent() + "data " + e.name + " =\n";
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool isFirst, size_t ind) override
+    std::string generateEnumValue(const EnumValue& val, bool isFirst, const WalkContext& ctx) override
     {
         // Not used anymore - handled in walkEnum
         return "";
     }
 
-    std::string generateEnumClose(const Enum&, size_t ind) override
+    std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
-        return indent(ind) + "    deriving (Show, Eq, Enum)\n\n";
+        return ctx.indent() + "    deriving (Show, Eq, Enum)\n\n";
     }
 
-    std::string generateNamespaceOpen(const bhw::Namespace&, size_t) override
-    {
-        return "";
-    }
-
-    std::string generateNamespaceClose(const bhw::Namespace&, size_t) override
+    std::string generateNamespaceOpen(const bhw::Namespace&, const WalkContext& ctx) override
     {
         return "";
     }
 
-    std::string generatePointerType(const PointerType& type, size_t ind = 0) override
+    std::string generateNamespaceClose(const bhw::Namespace&, const WalkContext& ctx) override
     {
-        return "IORef (" + walkType(*type.pointee, ind) + ")";
+        return "";
     }
 
-    std::string generateStructType(const StructType& type, size_t) override
+    std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
+    {
+        return "IORef (" + walkType(*type.pointee, ctx) + ")";
+    }
+
+    std::string generateStructType(const StructType& type, const WalkContext& ctx) override
     {
         // Check if this is an anonymous struct
         if (type.value->isAnonymous || type.value->name.empty() ||
@@ -341,23 +341,23 @@ class HaskellAstWalker : public RegistryAstWalker
         return type.value->name;
     }
 
-    std::string generateGenericType(const GenericType& type, size_t ind = 0) override
+    std::string generateGenericType(const GenericType& type, const WalkContext& ctx) override
     {
         std::ostringstream out;
         switch (type.reifiedType)
         {
         case ReifiedTypeId::List:
-            out << "[" << walkType(*type.args[0], ind) << "]";
+            out << "[" << walkType(*type.args[0], ctx) << "]";
             break;
         case ReifiedTypeId::Set:
-            out << "Set.Set " << walkType(*type.args[0], ind);
+            out << "Set.Set " << walkType(*type.args[0], ctx);
             break;
         case ReifiedTypeId::Map:
-            out << "Map.Map " << walkType(*type.args[0], ind) << " "
-                << walkType(*type.args[1], ind);
+            out << "Map.Map " << walkType(*type.args[0], ctx) << " "
+                << walkType(*type.args[1], ctx);
             break;
         case ReifiedTypeId::Optional:
-            out << "Maybe " << walkType(*type.args[0], ind);
+            out << "Maybe " << walkType(*type.args[0], ctx);
             break;
         case ReifiedTypeId::Variant:
         {
@@ -366,7 +366,7 @@ class HaskellAstWalker : public RegistryAstWalker
             def.name = name;
             for (size_t i = 0; i < type.args.size(); ++i)
             {
-                std::string hsType = walkType(*type.args[i], ind);
+                std::string hsType = walkType(*type.args[i], ctx);
                 def.cases.push_back({name + "V" + std::to_string(i), hsType});
             }
             variantDefs_.push_back(def);
@@ -380,7 +380,7 @@ class HaskellAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const WalkContext& ctx) override
     {
         switch (type.reifiedType)
         {
@@ -429,18 +429,18 @@ class HaskellAstWalker : public RegistryAstWalker
         }
     }
 
-    std::string generateStructRefType(const StructRefType& type, size_t) override
+    std::string generateStructRefType(const StructRefType& type, const WalkContext& ctx) override
     {
         return type.srcTypeString;
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::string name = capitalize(oneof.name);
         OneofDef def;
         def.name = name;
         for (const auto& field : oneof.fields)
-            def.cases.push_back({field.name, walkType(*field.type, ind)});
+            def.cases.push_back({field.name, walkType(*field.type, ctx)});
         oneofDefs_.push_back(def);
 
         std::ostringstream out;
@@ -452,7 +452,7 @@ class HaskellAstWalker : public RegistryAstWalker
         }
 
         std::string fieldName = escapeReservedKeyword(lowercase(oneof.name));
-        out << fieldName << " :: " << name << "\n" << indent(ind) << "      ";
+        out << fieldName << " :: " << name << "\n" << ctx.indent() << "      ";
 
         currentFieldIndex_++;
 
@@ -460,19 +460,19 @@ class HaskellAstWalker : public RegistryAstWalker
     }
 
     // Generate Oneof as a top-level data type
-    std::string generateOneofAsType(const Oneof& oneof, size_t ind)
+    std::string generateOneofAsType(const Oneof& oneof, const WalkContext& ctx)
     {
         std::ostringstream out;
         std::string name = capitalize(oneof.name);
 
-        out << indent(ind) << "data " << name << " =\n";
+        out << ctx.indent() << "data " << name << " =\n";
         for (size_t i = 0; i < oneof.fields.size(); ++i)
         {
             const auto& field = oneof.fields[i];
-            out << indent(ind) << "    " << (i == 0 ? "  " : "| ") << capitalize(field.name) << " "
-                << walkType(*field.type, ind) << "\n";
+            out << ctx.indent() << "    " << (i == 0 ? "  " : "| ") << capitalize(field.name) << " "
+                << walkType(*field.type, ctx) << "\n";
         }
-        out << indent(ind) << "    deriving (Show, Eq)\n\n";
+        out << ctx.indent() << "    deriving (Show, Eq)\n\n";
         return out.str();
     }
 };

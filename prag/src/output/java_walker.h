@@ -48,27 +48,27 @@ class JavaAstWalker : public RegistryAstWalker
         return "import java.util.*;\nimport java.time.*;\nimport java.math.*;\n\n";
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "public class " << s.name << " {\n";
+        out << ctx.indent() << "public class " << s.name << " {\n";
         return out.str();
     }
 
-    std::string generateStructClose(const Struct&, size_t ind) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
-        return indent(ind) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << walkType(*field.type, ind) << " " << capitalize(field.name) << ";\n";
+        out << ctx.indent() << walkType(*field.type, ctx) << " " << capitalize(field.name) << ";\n";
         return out.str();
     }
 
     // Main override for oneof
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         // Interface name = ParentStructName + OneofName
         
@@ -76,12 +76,12 @@ class JavaAstWalker : public RegistryAstWalker
 
         // Generate property in the parent struct
         std::ostringstream out;
-        out << indent(ind) << interfaceName << " " << capitalize(oneof.name) << ";\n";
+        out << ctx.indent() << interfaceName << " " << capitalize(oneof.name) << ";\n";
 
 
 
         // Sealed interface
-        out << indent(ind) << "public sealed interface " << interfaceName << " permits ";
+        out << ctx.indent() << "public sealed interface " << interfaceName << " permits ";
         auto sep = "";
         for (const auto& field : oneof.fields)
         {
@@ -93,8 +93,8 @@ class JavaAstWalker : public RegistryAstWalker
         // Record variants
         for (const auto& field : oneof.fields)
         {
-            out << indent(ind) << "public record " << interfaceName << capitalize(field.name) << "("
-                << walkType(*field.type, ind) << " value) implements " << interfaceName << " {}\n";
+            out << ctx.indent() << "public record " << interfaceName << capitalize(field.name) << "("
+                << walkType(*field.type, ctx) << " value) implements " << interfaceName << " {}\n";
         }
 
         out << "\n";

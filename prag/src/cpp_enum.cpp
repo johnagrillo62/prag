@@ -16,12 +16,12 @@ class CppEnumWalker : public bhw::RegistryAstWalker
     CppEnumWalker() : bhw::RegistryAstWalker(bhw::Language::Cpp26)
     {
     }
-    std::string generateOneof(const bhw::Oneof& oneof, size_t) override
+    std::string generateOneof(const bhw::Oneof& oneof, const bhw::WalkContext& ctx) override
     {
         return "";
     }
   protected:
-  virtual std::string walkEnum(const bhw::Enum& e, size_t indent)
+  virtual std::string walkEnum(const bhw::Enum& e, const bhw::WalkContext& ctx)
   {
       std::stringstream str;
       std::string result;

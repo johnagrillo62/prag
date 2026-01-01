@@ -347,7 +347,7 @@ template <> struct MetaTuple<::bhw::Namespace>
 } // namespace meta
 
 // Functions found in bhw::Ast:
-// std::string showAst(size_t indent) - Access: public
+// std::string showAst(const WalkContext& ctx) - Access: public
 // void flattenNestedTypes() - Access: public
 // void flattenStructMembers(Struct & s, std::vector<Struct> & flattenedStructs, std::vector<Enum> & flattenedEnums) - Access: public
 namespace meta

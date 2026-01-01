@@ -24,6 +24,7 @@ class RegistryAstWalker : public AstWalker
     {
         return target_language_;
     }
+    
 
   protected:
     bhw::Language target_language_;
@@ -93,12 +94,12 @@ class RegistryAstWalker : public AstWalker
         return result;
     }
 
-    std::string generateSimpleType(const SimpleType& type, size_t) override
+    std::string generateSimpleType(const SimpleType& type, const WalkContext& ctx) override
     {
         return getTypeString(type.reifiedType);
     }
 
-    std::string generateGenericType(const GenericType& type, size_t) override
+    std::string generateGenericType(const GenericType& type, const WalkContext& ctx) override
     {
         // Get the container template from registry
         std::string template_str = getTypeString(type.reifiedType);

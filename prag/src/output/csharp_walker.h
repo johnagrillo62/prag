@@ -66,7 +66,7 @@ class CSharpAstWalker : public RegistryAstWalker
                 if (std::holds_alternative<Field>(member))
                 {
                     const auto& field = std::get<Field>(member);
-                    out << "  public " << walkType(*field.type, 1) << " " << capitalize(field.name)
+                    out << "  public " << walkType(*field.type) << " " << capitalize(field.name)
                         << " { get; set; }\n";
                 }
             }
@@ -103,44 +103,44 @@ class CSharpAstWalker : public RegistryAstWalker
         return "using System;\nusing System.Collections.Generic;\n\n";
     }
 
-    std::string walkStruct(const Struct& s, size_t indent) override
+    std::string walkStruct(const Struct& s, const WalkContext& ctx) override
     {
         currentStruct_ = &s;
         std::ostringstream out;
-        out << generateStructOpen(s, indent);
+        out << generateStructOpen(s, ctx);
 
         for (const auto& member : s.members)
-            out << walkStructMember(member, indent + 1);
+            out << walkStructMember(member, ctx.nest());
 
-        out << generateStructClose(s, indent);
+        out << generateStructClose(s, ctx);
         return out.str();
     }
 
-    std::string walkStructMember(const StructMember& member, size_t indent) override
+    std::string walkStructMember(const StructMember& member, const WalkContext& ctx) override
     {
         return std::visit(
-            [this, indent](auto&& m) -> std::string
+            [this, ctx](auto&& m) -> std::string
             {
                 using T = std::decay_t<decltype(m)>;
                 if constexpr (std::is_same_v<T, Field>)
-                    return generateField(m, indent);
+                    return generateField(m, ctx);
                 else if constexpr (std::is_same_v<T, Oneof>)
-                    return walkOneof(m, indent);
+                    return walkOneof(m, ctx);
                 else if constexpr (std::is_same_v<T, Enum>)
-                    return walkEnum(m, indent);
+                    return walkEnum(m, ctx);
                 else if constexpr (std::is_same_v<T, Struct>)
-                    return walkStruct(m, indent);
+                    return walkStruct(m, ctx);
                 else
                     static_assert(always_false_v<T>, "Unhandled type in walkStructMember!");
             },
             member);
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind)
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx)
     {
         return "";
     }
-    std::string walkOneof(const Oneof& oneof, size_t ind)
+    std::string walkOneof(const Oneof& oneof, const WalkContext& ctx)
     {
         std::string baseName;
         if (currentStruct_ && !currentStruct_->name.empty())
@@ -153,35 +153,35 @@ class CSharpAstWalker : public RegistryAstWalker
         def.baseName = baseName;
         for (const auto& field : oneof.fields)
         {
-            std::string csType = walkType(*field.type, ind);
+            std::string csType = walkType(*field.type, ctx);
             def.fields.push_back({field.name, csType});
         }
         oneofDefs_.push_back(def);
 
         // Emit property in the parent class
         std::ostringstream out;
-        out << indent(ind) << "public " << baseName << " " << capitalize(oneof.name)
+        out << ctx.indent() << "public " << baseName << " " << capitalize(oneof.name)
             << " { get; set; }\n";
         return out.str();
     }
 
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
         currentStruct_ = &s;
         std::ostringstream out;
-        out << indent(ind) << "public class " << s.name << "\n" << indent(ind) << "{\n";
+        out << ctx.indent() << "public class " << s.name << "\n" << ctx.indent() << "{\n";
         return out.str();
     }
 
-    std::string generateStructClose(const Struct&, size_t ind) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
-        return indent(ind) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
-        out << indent(ind) << "public " << walkType(*field.type, ind) << " "
+        out << ctx.indent() << "public " << walkType(*field.type, ctx) << " "
             << capitalize(field.name) << " { get; set; }\n";
         return out.str();
     }

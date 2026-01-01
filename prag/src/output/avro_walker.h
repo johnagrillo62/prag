@@ -51,7 +51,7 @@ class AvroAstWalker : public AstWalker
             return reordered[0].dump(2) + "\n";
         return reordered.dump(2) + "\n";
     }
-    std::string generateStructOpen(const Struct& s, size_t) override
+    std::string generateStructOpen(const Struct& s, const bhw::WalkContext& ctx) override
     {
         json record;
         record["type"] = "record";
@@ -62,12 +62,12 @@ class AvroAstWalker : public AstWalker
         return "";
     }
 
-    std::string generateStructClose(const Struct&, size_t) override
+    std::string generateStructClose(const Struct&, const bhw::WalkContext& ctx) override
     {
         return "";
     }
 
-    std::string generateField(const Field& field, size_t) override
+    std::string generateField(const Field& field, const bhw::WalkContext& ctx) override
     {
         json f;
         f["name"] = field.name;
@@ -75,7 +75,7 @@ class AvroAstWalker : public AstWalker
         schemas[currentStructIndex]["fields"].push_back(f); // use tracked index
         return "";
     }
-    std::string generateEnumOpen(const Enum& e, size_t) override
+    std::string generateEnumOpen(const Enum& e, const bhw::WalkContext& ctx) override
     {
         json en;
         en["type"] = "enum";
@@ -86,18 +86,18 @@ class AvroAstWalker : public AstWalker
         return "";
     }
 
-    std::string generateEnumValue(const EnumValue& val, bool, size_t) override
+    std::string generateEnumValue(const EnumValue& val, bool, const bhw::WalkContext& ctx) override
     {
         schemas.back()["symbols"].push_back(val.name);
         return "";
     }
 
-    std::string generateEnumClose(const Enum&, size_t) override
+    std::string generateEnumClose(const Enum&, const bhw::WalkContext& ctx) override
     {
         return "";
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t) override
+    std::string generateOneof(const Oneof& oneof, const bhw::WalkContext& ctx) override
     {
         // In Avro, oneofs are represented as union types
         json field;

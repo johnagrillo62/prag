@@ -23,22 +23,22 @@ class PythonAstWalker : public RegistryAstWalker
     }
 
     // ---------------- STRUCT ----------------
-    std::string generateStructOpen(const Struct& s, size_t ind) override
+    std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
-        return indent(ind) + "@dataclass\n" + indent(ind) + "class " + s.name + ":\n";
+        return ctx.indent() + "@dataclass\n" + ctx.indent() + "class " + s.name + ":\n";
     }
 
-    std::string generateStructClose(const Struct&, size_t) override
+    std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
         return "\n";
     }
 
-    std::string generateField(const Field& field, size_t ind) override
+    std::string generateField(const Field& field, const WalkContext& ctx) override
     {
-        return indent(ind) + field.name + ": " + walkType(*field.type) + "\n";
+        return ctx.indent() + field.name + ": " + walkType(*field.type) + "\n";
     }
 
-    std::string generateOneof(const Oneof& oneof, size_t ind) override
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
         std::ostringstream out;
 
@@ -46,14 +46,14 @@ class PythonAstWalker : public RegistryAstWalker
         for (const auto& field : oneof.fields)
         {
             std::string clsName = capitalize(oneof.name) + capitalize(field.name);
-            out << indent(ind + 1) << "@dataclass\n";
-            out << indent(ind + 1) << "class " << clsName << ":\n";
-            out << indent(ind + 3) << "value: " << walkType(*field.type) << "\n\n";
+            out << ctx.indent(1) << "@dataclass\n";
+            out << ctx.indent(1) << "class " << clsName << ":\n";
+            out << ctx.indent(3) << "value: " << walkType(*field.type) << "\n\n";
         }
 
         // Emit the parent Union line
-        out << indent(ind + 1) << "# Oneof: " << oneof.name << "\n";
-        out << indent(ind + 1) << oneof.name << ": Union[";
+        out << ctx.indent( 1) << "# Oneof: " << oneof.name << "\n";
+        out << ctx.indent( 1) << oneof.name << ": Union[";
         for (size_t i = 0; i < oneof.fields.size(); ++i)
         {
             if (i > 0)
