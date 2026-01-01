@@ -39,13 +39,13 @@ protected:
     // ---------------- Struct/Field ----------------
     std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::First) return ""; // first pass only emits nested types
+        if (ctx.pass == WalkContext::Pass::Flatten) return ""; // first pass only emits nested types
         return ctx.indent() + "type " + s.name + " struct {\n";
     }
 
     std::string generateStructClose(const Struct& s, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::First) return "";
+        if (ctx.pass == WalkContext::Pass::Flatten) return "";
         return ctx.indent() + "}\n\n";
     }
 
@@ -57,13 +57,13 @@ protected:
     // ---------------- Enum ----------------
     std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::First) return ""; // flatten in first pass
+        if (ctx.pass == WalkContext::Pass::Flatten) return ""; // flatten in first pass
         return ctx.indent() + "type " + e.name + " int\nconst (\n";
     }
 
     std::string generateEnumValue(const EnumValue& v, bool last, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::First) return "";
+        if (ctx.pass == WalkContext::Pass::Flatten) return "";
         std::ostringstream out;
         out << ctx.indent(1) << v.name;
         if (!last) out << ",";
@@ -73,14 +73,14 @@ protected:
 
     std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::First) return "";
+        if (ctx.pass == WalkContext::Pass::Flatten) return "";
         return ctx.indent() + ")\n\n";
     }
 
     // ---------------- Oneof ----------------
     std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::First)
+        if (ctx.pass == WalkContext::Pass::Flatten)
         {
             // emit types/interfaces
             std::ostringstream out;

@@ -10,20 +10,6 @@ namespace bhw
 class CSharpAstWalker : public RegistryAstWalker
 {
   private:
-    struct OneofDef
-    {
-        std::string baseName;
-        std::vector<std::pair<std::string, std::string>> fields; // field name + type
-    };
-    std::vector<OneofDef> oneofDefs_;
-
-    struct AnonymousStructDef
-    {
-        std::string name;
-        const Struct* structPtr;
-    };
-    std::vector<AnonymousStructDef> anonymousStructs_;
-
     const Struct* currentStruct_ = nullptr;
 
     std::string capitalize(const std::string& s) const
@@ -40,42 +26,6 @@ class CSharpAstWalker : public RegistryAstWalker
         return std::string(n * 2, ' ');
     }
 
-    // Emit registered oneof abstract + concrete types
-    std::string generateVariantDefinitions()
-    {
-        std::ostringstream out;
-
-        // Oneofs
-        for (const auto& def : oneofDefs_)
-        {
-            out << "public abstract record " << def.baseName << ";\n";
-            for (const auto& [fieldName, csType] : def.fields)
-            {
-                out << "public record " << def.baseName << capitalize(fieldName) << "(" << csType
-                    << " Value) : " << def.baseName << ";\n";
-            }
-            out << "\n";
-        }
-
-        // Anonymous structs
-        for (const auto& def : anonymousStructs_)
-        {
-            out << "public class " << def.name << "\n{\n";
-            for (const auto& member : def.structPtr->members)
-            {
-                if (std::holds_alternative<Field>(member))
-                {
-                    const auto& field = std::get<Field>(member);
-                    out << "  public " << walkType(*field.type) << " " << capitalize(field.name)
-                        << " { get; set; }\n";
-                }
-            }
-            out << "}\n\n";
-        }
-
-        return out.str();
-    }
-
   public:
     CSharpAstWalker() : RegistryAstWalker(bhw::Language::CSharp)
     {
@@ -84,17 +34,6 @@ class CSharpAstWalker : public RegistryAstWalker
     Language getLang() override
     {
         return bhw::Language::CSharp;
-    }
-
-    std::string walk(bhw::Ast&& ast)
-    {
-        ast.flattenNestedTypes();
-        oneofDefs_.clear();
-        anonymousStructs_.clear();
-
-        std::string result = RegistryAstWalker::walk(std::move(ast));
-        result += generateVariantDefinitions(); // append oneof / anonymous structs
-        return result;
     }
 
   protected:
@@ -123,43 +62,26 @@ class CSharpAstWalker : public RegistryAstWalker
             {
                 using T = std::decay_t<decltype(m)>;
                 if constexpr (std::is_same_v<T, Field>)
-                    return generateField(m, ctx);
+                    return generateField(m, ctx); // properties with getters/setters
                 else if constexpr (std::is_same_v<T, Oneof>)
                     return walkOneof(m, ctx);
                 else if constexpr (std::is_same_v<T, Enum>)
                     return walkEnum(m, ctx);
                 else if constexpr (std::is_same_v<T, Struct>)
-                    return walkStruct(m, ctx);
+                    return walkStruct(m, ctx); // nested structs are fully named now
                 else
                     static_assert(always_false_v<T>, "Unhandled type in walkStructMember!");
             },
             member);
     }
 
-    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx)
+    std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
-        return "";
-    }
-    std::string walkOneof(const Oneof& oneof, const WalkContext& ctx)
-    {
-        std::string baseName;
-        if (currentStruct_ && !currentStruct_->name.empty())
-            baseName = currentStruct_->name + capitalize(oneof.name);
-        else
-            baseName = capitalize(oneof.name);
-
-        // Register the oneof for top-level generation
-        OneofDef def;
-        def.baseName = baseName;
-        for (const auto& field : oneof.fields)
-        {
-            std::string csType = walkType(*field.type, ctx);
-            def.fields.push_back({field.name, csType});
-        }
-        oneofDefs_.push_back(def);
-
-        // Emit property in the parent class
         std::ostringstream out;
+        std::string baseName =
+            currentStruct_ ? currentStruct_->name + capitalize(oneof.name) : capitalize(oneof.name);
+
+        // property in the parent class, with getter/setter
         out << ctx.indent() << "public " << baseName << " " << capitalize(oneof.name)
             << " { get; set; }\n";
         return out.str();
@@ -181,6 +103,7 @@ class CSharpAstWalker : public RegistryAstWalker
     std::string generateField(const Field& field, const WalkContext& ctx) override
     {
         std::ostringstream out;
+        // preserve getter/setter style
         out << ctx.indent() << "public " << walkType(*field.type, ctx) << " "
             << capitalize(field.name) << " { get; set; }\n";
         return out.str();

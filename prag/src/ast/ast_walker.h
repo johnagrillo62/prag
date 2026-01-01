@@ -13,7 +13,7 @@ struct WalkContext
 {
     enum class Pass
     {
-        First,
+        Flatten,
         Normal
     };
     std::string indent() const
@@ -55,24 +55,39 @@ class AstWalker
 
     virtual std::string walk(bhw::Ast&& ast)
     {
-        NestedTypesPolicy policy = NestedTypesPolicy::NoNestedTypes;
-        
+   
         std::ostringstream out;
 
         out << generateHeader(ast);
 
-        if (policy == NestedTypesPolicy::NoNestedTypes)
+        // does anything need flattening
+
+        auto registry = getRegistry();
+        if (registry.contains(getLang()))
         {
-            for (const auto& node : ast.nodes)
+            const auto& policy = registry.at(getLang()).flattening;
+
+            if (policy.anonymous == AnonymousPolicy::Rename)
             {
-                out << walkRootNode(node,
-                                    WalkContext{.pass = WalkContext::Pass::First, .level = 0});
-            };
+                renameAnonymousStructs(ast);
+            }
+            if (policy.needsFlattening())
+            {
+                WalkContext flatten{.pass = WalkContext::Pass::Flatten, .level = 0};
+                for (const auto& node : ast.nodes)
+                {
+                    out << walkRootNode(node, flatten);
+                }
+            }
         }
 
+
+        // there is always a normal pass
+        WalkContext normal{.pass = WalkContext::Pass::Normal, .level = 0};
+    
         for (const auto& node : ast.nodes)
         {
-            out << walkRootNode(node, WalkContext{.pass = WalkContext::Pass::Normal, .level = 0});
+            out << walkRootNode(node, normal);
         }
 
         // Generate file footer
@@ -314,6 +329,54 @@ class AstWalker
                 return true;
         }
         return false;
+    }
+
+    inline std::string makeAnonymousName(const std::string& parentName, size_t counter)
+    {
+        return parentName + "_Anon" + std::to_string(counter);
+    }
+
+    inline void renameAnonymousStructs(Struct& s, const std::string& parentName, size_t& counter)
+    {
+        for (auto& member : s.members)
+        {
+            std::visit(
+                [&](auto& m)
+                {
+                    using T = std::decay_t<decltype(m)>;
+                    if constexpr (std::is_same_v<T, Struct>)
+                    {
+                        if (m.name.empty())
+                        { // anonymous struct
+                            m.name = makeAnonymousName(parentName, counter++);
+                        }
+                        // recurse into nested structs
+                        renameAnonymousStructs(m, m.name, counter);
+                    }
+                },
+                member);
+        }
+    }
+    inline void renameAnonymousStructs(Ast& ast)
+    {
+        size_t counter = 0;
+        for (auto& node : ast.nodes)
+        {
+            std::visit(
+                [&](auto& n)
+                {
+                    using T = std::decay_t<decltype(n)>;
+                    if constexpr (std::is_same_v<T, Struct>)
+                    {
+                        if (n.name.empty())
+                        { // top-level anonymous struct
+                            n.name = "TopLevelAnon" + std::to_string(counter++);
+                        }
+                        renameAnonymousStructs(n, n.name, counter);
+                    }
+                },
+                node);
+        }
     }
 };
 } // namespace bhw
