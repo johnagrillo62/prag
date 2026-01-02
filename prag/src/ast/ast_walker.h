@@ -55,7 +55,7 @@ class AstWalker
 
     virtual std::string walk(bhw::Ast&& ast)
     {
-   
+
         std::ostringstream out;
 
         out << generateHeader(ast);
@@ -73,6 +73,9 @@ class AstWalker
             }
             if (policy.needsFlattening())
             {
+
+                ast.flattenNestedTypes();
+
                 WalkContext flatten{.pass = WalkContext::Pass::Flatten, .level = 0};
                 for (const auto& node : ast.nodes)
                 {
@@ -81,10 +84,9 @@ class AstWalker
             }
         }
 
-
         // there is always a normal pass
         WalkContext normal{.pass = WalkContext::Pass::Normal, .level = 0};
-    
+
         for (const auto& node : ast.nodes)
         {
             out << walkRootNode(node, normal);

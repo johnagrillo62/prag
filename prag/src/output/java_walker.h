@@ -36,10 +36,6 @@ class JavaAstWalker : public RegistryAstWalker
         return Language::Java;
     }
 
-    std::string walk(bhw::Ast&& ast) override
-    {
-        return RegistryAstWalker::walk(std::move(ast));
-    }
 
   protected:
     // Header imports

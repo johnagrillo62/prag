@@ -1,7 +1,7 @@
 #include "ast.h"
 
-#include <sstream>
 #include <functional>
+#include <sstream>
 auto bhw::operator<<(std::ostream& os, const bhw::SimpleType& s) -> std::ostream&
 {
     os << s.reifiedType << "(" << s.srcTypeString << ")";
@@ -212,7 +212,6 @@ std::string showNodes(const std::vector<bhw::AstRootNode>& nodes, size_t indent 
     return ss.str();
 }
 
-
 void bhw::Ast::flattenNestedTypes()
 {
     std::vector<Enum> flattenedEnums;
@@ -244,7 +243,6 @@ auto bhw::Ast::showAst(size_t indent) const -> std::string
     ss << showNodes(nodes);
     return ss.str();
 }
-
 void bhw::Ast::flattenStructMembers(Struct& s,
                                     std::vector<Struct>& flattenedStructs,
                                     std::vector<Enum>& flattenedEnums)
@@ -254,92 +252,61 @@ void bhw::Ast::flattenStructMembers(Struct& s,
     {
         if (auto* nested = std::get_if<Struct>(&member))
         {
-            bool isAnonymous = nested->isAnonymous || nested->name.empty() ||
-                               nested->name.find("anonymous") != std::string::npos;
-            if (isAnonymous && !nested->variableName.empty())
+            // Recursively flatten nested struct
+            flattenStructMembers(*nested, flattenedStructs, flattenedEnums);
+
+            // If struct has a variable name, create a field reference
+            if (!nested->variableName.empty())
             {
-                // Generate a name for the anonymous struct based on variable name
-                std::string generatedName = "Anonymous";
-                generatedName += (char)std::toupper(nested->variableName[0]);
-                generatedName += nested->variableName.substr(1);
-                nested->name = generatedName;
-                nested->isAnonymous = false;
-                // Recursively flatten
-                flattenStructMembers(*nested, flattenedStructs, flattenedEnums);
-                // Replace with field reference
                 Field field;
                 field.name = nested->variableName;
                 field.type = std::make_unique<Type>(
-                    StructRefType{generatedName, ReifiedTypeId::StructRefType});
+                    StructRefType{nested->name, ReifiedTypeId::StructRefType});
                 field.attributes = nested->attributes;
                 newMembers.push_back(std::move(field));
-                // Hoist to top level
-                flattenedStructs.push_back(std::move(*nested));
-            }
-            else if (!isAnonymous)
-            {
-                // Named struct - flatten recursively and hoist
-                flattenStructMembers(*nested, flattenedStructs, flattenedEnums);
-                if (!nested->variableName.empty())
-                {
-                    Field field;
-                    field.name = nested->variableName;
-                    field.type = std::make_unique<Type>(
-                        StructRefType{nested->name, ReifiedTypeId::StructRefType});
-                    field.attributes = nested->attributes;
-                    newMembers.push_back(std::move(field));
-                }
-                flattenedStructs.push_back(std::move(*nested));
             }
             else
             {
                 // Anonymous struct with no variable name - inline fields (rare case)
-                flattenStructMembers(*nested, flattenedStructs, flattenedEnums);
                 for (auto& nestedMember : nested->members)
                 {
                     newMembers.push_back(std::move(nestedMember));
                 }
+            }
+
+            // Hoist struct to top level (if it has a name)
+            if (!nested->name.empty())
+            {
+                flattenedStructs.push_back(std::move(*nested));
             }
         }
         else if (auto* nestedEnum = std::get_if<Enum>(&member))
         {
             // Hoist enums to top level
             flattenedEnums.push_back(std::move(*nestedEnum));
-            // DO NOT add to newMembers - enums are not fields!
         }
         else if (auto* oneof = std::get_if<Oneof>(&member))
         {
+            // Keep oneofs - let generators handle them in two passes
             newMembers.push_back(std::move(*oneof));
         }
-
         else if (auto* field = std::get_if<Field>(&member))
         {
-            // NEW: Handle Fields with anonymous StructType
+            // Handle Fields with anonymous StructType
             if (field->type && field->type->isStruct())
             {
                 auto& structType = std::get<StructType>(field->type->value);
-                if (structType.value &&
-                    (structType.value->isAnonymous || structType.value->name == "<anonymous>") &&
-                    !structType.value->variableName.empty())
+                if (structType.value && !structType.value->name.empty())
                 {
-                    // Generate name: ParentStructName + FieldName
-                    std::string generatedName = s.name;
-                    generatedName += (char)std::toupper(field->name[0]);
-                    generatedName += field->name.substr(1);
-
-                    // Update the nested struct name
-                    structType.value->name = generatedName;
-                    structType.value->isAnonymous = false;
-
                     // Recursively flatten the nested struct
                     flattenStructMembers(*structType.value, flattenedStructs, flattenedEnums);
 
-                    // Hoist the struct to top level (make a copy before we change the field type)
+                    // Hoist the struct to top level
                     flattenedStructs.push_back(std::move(*structType.value));
 
-                    // NOW change field type to a StructRefType reference
+                    // Change field type to a StructRefType reference
                     field->type = std::make_unique<Type>(
-                        StructRefType{generatedName, ReifiedTypeId::StructRefType});
+                        StructRefType{structType.value->name, ReifiedTypeId::StructRefType});
                 }
             }
             // Keep the field

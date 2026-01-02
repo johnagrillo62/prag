@@ -12,10 +12,20 @@ const std::map<Language, LanguageInfo>& getRegistry()
 {
     static const std::map<Language, LanguageInfo> registry = {
         {
+
+            {Language::Avro,
+             {.file_ext = "avsc",
+              .comment_style = "//",
+              .flattening = {.structs = FlatteningPolicy::Flatten,
+                             .anonymous = AnonymousPolicy::Rename,
+                             .enums = FlatteningPolicy::Preserve,
+                             .oneofs = FlatteningPolicy::Flatten,
+                             .variants = FlatteningPolicy::Preserve}}},
+
             {Language::Capnp,
              {.file_ext = "capnp",
               .comment_style = "#",
-              .flattening = {.structs = FlatteningPolicy::Preserve,
+              .flattening = {.structs = FlatteningPolicy::Flatten,
                              .anonymous = AnonymousPolicy::Rename,
                              .enums = FlatteningPolicy::Preserve,
                              .oneofs = FlatteningPolicy::Preserve,
@@ -108,15 +118,75 @@ const std::map<Language, LanguageInfo>& getRegistry()
                          .constant = "UPPER_SNAKE_CASE",
                          .namespace_style = "snake_case",
                          .file_name = "snake_case"}}},
+            {Language::Go,
+             {.file_ext = "go",
+              .comment_style = "//",
+              .flattening = {.structs = FlatteningPolicy::Flatten,
+                             .anonymous = AnonymousPolicy::Rename,
+                             .enums = FlatteningPolicy::Preserve,
+                             .oneofs = FlatteningPolicy::Flatten,
+                             .variants = FlatteningPolicy::Preserve},
+              .type_map =
+                  {
+                      // Primitives
+                      {ReifiedTypeId::Bool, {"bool", "false"}},
+                      {ReifiedTypeId::Int8, {"int8", "0"}},
+                      {ReifiedTypeId::UInt8, {"uint8", "0"}},
+                      {ReifiedTypeId::Int16, {"int16", "0"}},
+                      {ReifiedTypeId::UInt16, {"uint16", "0"}},
+                      {ReifiedTypeId::Int32, {"int32", "0"}},
+                      {ReifiedTypeId::UInt32, {"uint32", "0"}},
+                      {ReifiedTypeId::Int64, {"int64", "0"}},
+                      {ReifiedTypeId::UInt64, {"uint64", "0"}},
+                      {ReifiedTypeId::Float32, {"float32", "0.0"}},
+                      {ReifiedTypeId::Float64, {"float64", "0.0"}},
+                      {ReifiedTypeId::String, {"string", "\"\""}},
+                      {ReifiedTypeId::Bytes, {"[]byte", "nil"}},
 
-            {Language::Python,
-             {.file_ext = "py",
+                      // Standard types
+                      {ReifiedTypeId::DateTime, {"time.Time", "time.Now()"}},
+                      {ReifiedTypeId::Duration, {"time.Duration", "0"}},
+                      {ReifiedTypeId::UUID, {"uuid.UUID", "uuid.Nil"}},
+
+                      // Containers
+                      {ReifiedTypeId::List, {"[]{0}", "nil"}},
+                      {ReifiedTypeId::Map, {"map[{0}]{1}", "make(map[{0}]{1})"}},
+                      {ReifiedTypeId::Set, {"map[{0}]struct{}", "make(map[{0}]struct{})"}},
+                      {ReifiedTypeId::Optional, {"*{0}", "nil"}},
+
+                      {ReifiedTypeId::Variant, {"any", "nil"}},
+                  },
+              .naming = {.struct_name = "PascalCase",
+                         .field_name = "PascalCase",
+                         .constant = "PascalCase",
+                         .namespace_style = "lowercase", // package names
+                         .file_name = "snake_case"}}},
+
+            {Language::Prag,
+             {.file_ext = "prag",
               .comment_style = "#",
               .flattening = {.structs = FlatteningPolicy::Preserve,
                              .anonymous = AnonymousPolicy::Preserve,
                              .enums = FlatteningPolicy::Preserve,
+                             .oneofs = FlatteningPolicy::Preserve,
+                             .variants = FlatteningPolicy::Preserve}}},
+
+            {Language::ProtoBuf,
+             {.file_ext = "proto",
+              .comment_style = "//",
+              .flattening = {.structs = FlatteningPolicy::Flatten,
+                             .anonymous = AnonymousPolicy::Rename,
+                             .enums = FlatteningPolicy::Preserve,
+                             .oneofs = FlatteningPolicy::Preserve,
+                             .variants = FlatteningPolicy::Preserve}}},
+            {Language::Python,
+             {.file_ext = "py",
+              .comment_style = "#",
+              .flattening = {.structs = FlatteningPolicy::Flatten,
+                             .anonymous = AnonymousPolicy::Rename,
+                             .enums = FlatteningPolicy::Flatten,
                              .oneofs = FlatteningPolicy::Flatten,
-                             .variants = FlatteningPolicy::Preserve},
+                             .variants = FlatteningPolicy::Flatten},
               .type_map =
                   {
                       // Primitives
@@ -253,50 +323,6 @@ const std::map<Language, LanguageInfo>& getRegistry()
                          .constant = "SCREAMING_SNAKE_CASE",
                          .namespace_style = "PascalCase",
                          .file_name = "kebab-case"}}},
-
-            {Language::Go,
-             {.file_ext = "go",
-              .comment_style = "//",
-              .flattening = {.structs = FlatteningPolicy::Flatten,
-                             .anonymous = AnonymousPolicy::Rename,
-                             .enums = FlatteningPolicy::Preserve,
-                             .oneofs = FlatteningPolicy::Flatten,
-                             .variants = FlatteningPolicy::Preserve},
-              .type_map =
-                  {
-                      // Primitives
-                      {ReifiedTypeId::Bool, {"bool", "false"}},
-                      {ReifiedTypeId::Int8, {"int8", "0"}},
-                      {ReifiedTypeId::UInt8, {"uint8", "0"}},
-                      {ReifiedTypeId::Int16, {"int16", "0"}},
-                      {ReifiedTypeId::UInt16, {"uint16", "0"}},
-                      {ReifiedTypeId::Int32, {"int32", "0"}},
-                      {ReifiedTypeId::UInt32, {"uint32", "0"}},
-                      {ReifiedTypeId::Int64, {"int64", "0"}},
-                      {ReifiedTypeId::UInt64, {"uint64", "0"}},
-                      {ReifiedTypeId::Float32, {"float32", "0.0"}},
-                      {ReifiedTypeId::Float64, {"float64", "0.0"}},
-                      {ReifiedTypeId::String, {"string", "\"\""}},
-                      {ReifiedTypeId::Bytes, {"[]byte", "nil"}},
-
-                      // Standard types
-                      {ReifiedTypeId::DateTime, {"time.Time", "time.Now()"}},
-                      {ReifiedTypeId::Duration, {"time.Duration", "0"}},
-                      {ReifiedTypeId::UUID, {"uuid.UUID", "uuid.Nil"}},
-
-                      // Containers
-                      {ReifiedTypeId::List, {"[]{0}", "nil"}},
-                      {ReifiedTypeId::Map, {"map[{0}]{1}", "make(map[{0}]{1})"}},
-                      {ReifiedTypeId::Set, {"map[{0}]struct{}", "make(map[{0}]struct{})"}},
-                      {ReifiedTypeId::Optional, {"*{0}", "nil"}},
-
-                      {ReifiedTypeId::Variant, {"any", "nil"}},
-                  },
-              .naming = {.struct_name = "PascalCase",
-                         .field_name = "PascalCase",
-                         .constant = "PascalCase",
-                         .namespace_style = "lowercase", // package names
-                         .file_name = "snake_case"}}},
 
             {Language::Java,
              {.file_ext = "java",
@@ -511,10 +537,10 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::OCaml,
              {.file_ext = "ml",
               .comment_style = "(*",
-              .flattening = {.structs = FlatteningPolicy::Preserve,
+              .flattening = {.structs = FlatteningPolicy::Flatten,
                              .anonymous = AnonymousPolicy::Rename,
-                             .enums = FlatteningPolicy::Preserve,
-                             .oneofs = FlatteningPolicy::Flatten,
+                             .enums = FlatteningPolicy::Flatten,
+                             .oneofs = FlatteningPolicy::Preserve,
                              .variants = FlatteningPolicy::Preserve},
               .type_map =
                   {
@@ -557,9 +583,9 @@ const std::map<Language, LanguageInfo>& getRegistry()
             {Language::Haskell,
              {.file_ext = "hs",
               .comment_style = "--",
-              .flattening = {.structs = FlatteningPolicy::Preserve,
+              .flattening = {.structs = FlatteningPolicy::Flatten,
                              .anonymous = AnonymousPolicy::Rename,
-                             .enums = FlatteningPolicy::Preserve,
+                             .enums = FlatteningPolicy::Flatten,
                              .oneofs = FlatteningPolicy::Flatten,
                              .variants = FlatteningPolicy::Preserve},
               .type_map =

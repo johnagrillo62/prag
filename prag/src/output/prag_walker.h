@@ -15,7 +15,7 @@ using json = nlohmann::ordered_json;
 class PragAstWalker : public RegistryAstWalker
 {
 public:
-    PragAstWalker() : RegistryAstWalker(Language::Rust)
+    PragAstWalker() : RegistryAstWalker(Language::Prag)
     {
     }
 

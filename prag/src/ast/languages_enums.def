@@ -10,7 +10,7 @@
 //   - operator<< for streaming enums
 // ============================================================================
 
-inline constexpr std::array<std::pair<Language,const char*>, 20> LanguageMapping {{
+inline constexpr std::array<std::pair<Language,const char*>, 21> LanguageMapping {{
     {Language::Avro, "Avro"},
     {Language::CSharp, "CSharp"},
     {Language::Capnp, "Capnp"},
@@ -26,6 +26,7 @@ inline constexpr std::array<std::pair<Language,const char*>, 20> LanguageMapping
     {Language::OCaml, "OCaml"},
     {Language::OpenApi, "OpenApi"},
     {Language::ProtoBuf, "ProtoBuf"},
+    {Language::Prag, "Prag"},
     {Language::Python, "Python"},
     {Language::Rust, "Rust"},
     {Language::Thrift, "Thrift"},

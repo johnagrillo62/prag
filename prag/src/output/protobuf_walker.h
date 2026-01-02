@@ -2,12 +2,17 @@
 #pragma once
 #include <stack>
 
-#include "ast_walker.h"
+#include "registry_ast_walker.h"
+
 namespace bhw
 {
-class ProtoBufAstWalker : public AstWalker
+class ProtoBufAstWalker : public RegistryAstWalker
 {
   public:
+    ProtoBufAstWalker() : RegistryAstWalker(bhw::Language::ProtoBuf)
+    {
+    }
+
     Language getLang() override
     {
         return bhw::Language::ProtoBuf;
@@ -37,39 +42,43 @@ class ProtoBufAstWalker : public AstWalker
         return out.str();
     }
 
-    std::string generateNamespaceOpen(const bhw::Namespace&, const WalkContext& ctx) override
-    {
-        return "";
-    }
-
-    std::string generateNamespaceClose(const bhw::Namespace&, const WalkContext& ctx) override
-    {
-        return "";
-    }
-
     std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
-        std::ostringstream out;
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
 
+        std::ostringstream out;
         field_number_stack_.push(field_number_);
         field_number_ = 1;
 
-        out << indent(ctx.level) << "message " << s.name << " {\n";
+        out << ctx.indent() << "message " << s.name << " {\n";
         return out.str();
     }
 
     std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
-        // RESTORE parent's counter when leaving nested scope
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
         if (!field_number_stack_.empty())
         {
             field_number_ = field_number_stack_.top();
             field_number_stack_.pop();
         }
-        return indent(ctx.level) + "}\n\n";
+        return ctx.indent() + "}\n\n";
     }
+
     std::string generateField(const Field& field, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
         std::ostringstream out;
 
         // Check if this field is a Variant type -> generate oneof
@@ -78,75 +87,42 @@ class ProtoBufAstWalker : public AstWalker
             const auto& gt = std::get<GenericType>(field.type->value);
             if (gt.reifiedType == ReifiedTypeId::Variant)
             {
-                out << indent(ctx.level) << "oneof " << field.name << " {\n";
+                out << ctx.indent() << "oneof " << field.name << " {\n";
 
                 int oneof_field_num = field_number_;
                 for (const auto& arg : gt.args)
                 {
-                    std::string typeName = walkType(*arg);
+                    std::string typeName = walkType(*arg, ctx);
                     std::string fieldName = field.name + "_" + typeName;
-                    out << indent(ctx.level + 1) << typeName << " " << fieldName << " = "
+                    out << ctx.indent(1) << typeName << " " << fieldName << " = "
                         << oneof_field_num++ << ";\n";
                 }
 
-                out << indent(ctx.level) << "}\n";
+                out << ctx.indent() << "}\n";
                 field_number_ = oneof_field_num;
                 return out.str();
             }
         }
 
-        // Check if this field has an anonymous struct type
-        if (std::holds_alternative<StructType>(field.type->value))
-        {
-            const auto& structType = std::get<StructType>(field.type->value);
-            const Struct& s = *structType.value;
-
-            if (s.isAnonymous || s.name == "<anonymous>")
-            {
-                std::string messageName = field.name;
-                if (!messageName.empty() && std::islower(messageName[0]))
-                {
-                    messageName[0] = static_cast<char>(std::toupper(messageName[0]));
-                }
-
-                int savedFieldNumber = field_number_;
-                field_number_ = 1;
-
-                out << indent(ctx.level) << "message " << messageName << " {\n";
-                for (const auto& member : s.members)
-                {
-                    if (std::holds_alternative<Field>(member))
-                    {
-                        const auto& nestedField = std::get<Field>(member);
-                        out << generateField(nestedField, ctx.nest());
-                    }
-                }
-
-                out << indent(ctx.level) << "}\n";
-
-                field_number_ = savedFieldNumber;
-
-                out << indent(ctx.level) << messageName << " " << field.name << " = " << field_number_++
-                    << ";\n";
-
-                return out.str();
-            }
-        }
-
         // Normal field
-        out << indent(ctx.level) << walkType(*field.type) << " " << field.name << " = "
+        out << ctx.indent() << walkType(*field.type, ctx) << " " << field.name << " = "
             << field_number_++ << ";\n";
         return out.str();
     }
-    
+
     std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
         std::ostringstream out;
-        out << indent(ctx.level) << "enum " << e.name << " {\n";
+        out << ctx.indent() << "enum " << e.name << " {\n";
 
         if (e.values.empty() || e.values[0].number != 0)
         {
-            out << indent(ctx.level + 1) << e.name << "_UNSPECIFIED = 0;\n";
+            out << ctx.indent(1) << e.name << "_UNSPECIFIED = 0;\n";
         }
 
         return out.str();
@@ -154,29 +130,43 @@ class ProtoBufAstWalker : public AstWalker
 
     std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
         std::ostringstream out;
-        out << indent(ctx.level) << val.name << " = " << val.number << ";\n";
+        out << ctx.indent() << val.name << " = " << val.number << ";\n";
         return out.str();
     }
 
     std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
-        return indent(ctx.level) + "}\n\n";
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+        return ctx.indent() + "}\n\n";
     }
 
     std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
         std::ostringstream out;
-        out << indent(ctx.level) << "oneof " << oneof.name << " {\n";
+        out << ctx.indent() << "oneof " << oneof.name << " {\n";
 
         int oneof_field_num = 1;
         for (const auto& field : oneof.fields)
         {
-            out << indent(ctx.level + 1) << walkType(*field.type) << " " << field.name << " = "
+            out << ctx.indent(1) << walkType(*field.type, ctx) << " " << field.name << " = "
                 << oneof_field_num++ << ";\n";
         }
 
-        out << indent(ctx.level) << "}\n";
+        out << ctx.indent() << "}\n";
         return out.str();
     }
 
@@ -198,19 +188,19 @@ class ProtoBufAstWalker : public AstWalker
         {
         case ReifiedTypeId::List:
         case ReifiedTypeId::Set:
-            out << "repeated " << walkType(*type.args[0], ctx.nest());
+            out << "repeated " << walkType(*type.args[0], ctx);
             break;
 
         case ReifiedTypeId::Map:
-            out << "map<" << walkType(*type.args[0]) << ", " << walkType(*type.args[1], ctx)
+            out << "map<" << walkType(*type.args[0], ctx) << ", " << walkType(*type.args[1], ctx)
                 << ">";
             break;
 
         case ReifiedTypeId::Optional:
-            out << walkType(*type.args[0]);
+            out << walkType(*type.args[0], ctx);
             break;
 
-         default:
+        default:
             out << "bytes";
             break;
         }
@@ -218,9 +208,18 @@ class ProtoBufAstWalker : public AstWalker
         return out.str();
     }
 
+    std::string generateStructRefType(const StructRefType& type, const WalkContext& ctx) override
+    {
+        return type.srcTypeString;
+    }
+
     std::string generateStructType(const StructType& type, const WalkContext& ctx) override
     {
-        return type.value->name;
+        if (type.value && !type.value->name.empty())
+        {
+            return type.value->name;
+        }
+        return "bytes";
     }
 
   private:

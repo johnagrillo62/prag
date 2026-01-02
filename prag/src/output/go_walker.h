@@ -1,7 +1,7 @@
 ﻿#pragma once
+#include <cctype>
 #include <sstream>
 #include <string>
-#include <cctype>
 
 #include "ast_walker.h"
 
@@ -10,7 +10,7 @@ namespace bhw
 
 class GoAstWalker : public AstWalker
 {
-public:
+  public:
     GoAstWalker() = default;
 
     Language getLang() override
@@ -18,9 +18,7 @@ public:
         return Language::Go;
     }
 
-
-
-protected:
+  protected:
     // ---------------- Header/Footer ----------------
     std::string generateHeader(const Ast& ast) override
     {
@@ -39,41 +37,51 @@ protected:
     // ---------------- Struct/Field ----------------
     std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::Flatten) return ""; // first pass only emits nested types
+        if (ctx.pass == WalkContext::Pass::Flatten)
+            return ""; // first pass only emits nested types
         return ctx.indent() + "type " + s.name + " struct {\n";
     }
 
     std::string generateStructClose(const Struct& s, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::Flatten) return "";
+        if (ctx.pass == WalkContext::Pass::Flatten)
+            return "";
         return ctx.indent() + "}\n\n";
     }
 
     std::string generateField(const Field& field, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return ""; // Skip fields during flatten pass
+        }
         return ctx.indent() + field.name + " " + walkType(*field.type, ctx) + "\n";
     }
-
+  
     // ---------------- Enum ----------------
     std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::Flatten) return ""; // flatten in first pass
+        if (ctx.pass == WalkContext::Pass::Flatten)
+            return ""; // flatten in first pass
         return ctx.indent() + "type " + e.name + " int\nconst (\n";
     }
 
     std::string generateEnumValue(const EnumValue& v, bool last, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::Flatten) return "";
+        if (ctx.pass == WalkContext::Pass::Flatten)
+            return "";
         std::ostringstream out;
         out << ctx.indent(1) << v.name;
-        if (!last) out << ",";
+        if (!last)
+            out << ",";
         out << "\n";
         return out.str();
     }
 
     std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
-        if (ctx.pass == WalkContext::Pass::Flatten) return "";
+        if (ctx.pass == WalkContext::Pass::Flatten)
+            return "";
         return ctx.indent() + ")\n\n";
     }
 
@@ -162,12 +170,13 @@ protected:
         return type.value->name;
     }
 
-private:
+  private:
     std::string srcLang;
 
     std::string capitalize(const std::string& s)
     {
-        if (s.empty()) return s;
+        if (s.empty())
+            return s;
         std::string r = s;
         r[0] = static_cast<char>(std::toupper(static_cast<unsigned char>(r[0])));
         return r;
@@ -175,5 +184,3 @@ private:
 };
 
 } // namespace bhw
-
-

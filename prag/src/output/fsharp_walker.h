@@ -7,13 +7,13 @@
 
 namespace bhw
 {
-
 class FSharpAstWalker : public RegistryAstWalker
 {
   public:
     FSharpAstWalker() : RegistryAstWalker(bhw::Language::FSharp)
     {
     }
+
     Language getLang() override
     {
         return bhw::Language::FSharp;
@@ -30,33 +30,67 @@ class FSharpAstWalker : public RegistryAstWalker
     std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
         if (ctx.pass == WalkContext::Pass::Flatten)
-            return "type " + s.name + " = {\n"; // first pass emits full type
-        else
-            return s.name; // second pass: just the type name
+        {
+            return ""; // Skip during flatten pass
+        }
+        return "type " + s.name + " = {\n";
     }
 
     std::string generateField(const Field& field, const WalkContext& ctx) override
     {
-        std::ostringstream out;
         if (ctx.pass == WalkContext::Pass::Flatten)
-            out << "  " << capitalize(field.name) << ": " << walkType(*field.type, ctx) << "\n";
-        else
-            out << capitalize(field.name) << ": " << walkType(*field.type, ctx)
-                << "\n"; // type reference
+        {
+            return ""; // Skip fields during flatten pass
+        }
+
+        std::ostringstream out;
+        out << ctx.indent() << capitalize(field.name) << ": " << walkType(*field.type, ctx) << "\n";
         return out.str();
     }
 
     std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
         if (ctx.pass == WalkContext::Pass::Flatten)
-            return "}\n\n"; // close struct in first pass
-        else
-            return ""; // nothing in second pass
+        {
+            return "";
+        }
+        return "}\n\n";
+    }
+
+    std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
+    {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+        return "type " + e.name + " =\n";
+    }
+
+    std::string generateEnumValue(const EnumValue& val, bool last, const WalkContext& ctx) override
+    {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
+        std::ostringstream out;
+        out << "  | " << val.name << " = " << val.number;
+        if (!last)
+            out << "\n";
+        return out.str();
+    }
+
+    std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
+    {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+        return "\n\n";
     }
 
     std::string generateStructType(const StructType& type, const WalkContext&) override
     {
-        // always just the type name; first pass already emitted full definition
         return type.value->name;
     }
 
@@ -119,14 +153,9 @@ class FSharpAstWalker : public RegistryAstWalker
             out << walkType(*type.args[0], ctx) << " option";
             break;
         case ReifiedTypeId::Variant:
-        {
-            static int counter = 0;
-            if (ctx.pass == WalkContext::Pass::Flatten)
-                out << "Variant" << counter++; // define variant in first pass
-            else
-                out << "Variant" << counter - 1; // reference in second pass
+            // F# doesn't have built-in variant types, use discriminated union
+            out << "obj"; // Fallback
             break;
-        }
         default:
             out << "byte[]";
             break;
@@ -134,16 +163,30 @@ class FSharpAstWalker : public RegistryAstWalker
         return out.str();
     }
 
-    // Oneof handling, phase-aware
+    // Oneof handling - F# uses discriminated unions
     std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
-        std::ostringstream out;
         if (ctx.pass == WalkContext::Pass::Flatten)
-            out << "type " << capitalize(oneof.name) << " =\n"
-                << "  | ...\n"; // placeholder
+        {
+            // Generate discriminated union during flatten pass
+            std::ostringstream out;
+            out << "type " << capitalize(oneof.name) << " =\n";
+
+            for (const auto& field : oneof.fields)
+            {
+                out << "  | " << capitalize(field.name) << " of " << walkType(*field.type, ctx)
+                    << "\n";
+            }
+            out << "\n";
+            return out.str();
+        }
         else
-            out << capitalize(oneof.name) << ": " << capitalize(oneof.name) << "\n"; // reference
-        return out.str();
+        {
+            // Generate field in record during normal pass
+            std::ostringstream out;
+            out << ctx.indent() << capitalize(oneof.name) << ": " << capitalize(oneof.name) << "\n";
+            return out.str();
+        }
     }
 
     inline std::string capitalize(const std::string& s)
@@ -155,5 +198,4 @@ class FSharpAstWalker : public RegistryAstWalker
         return r;
     }
 };
-
 } // namespace bhw

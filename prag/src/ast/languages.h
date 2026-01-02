@@ -27,6 +27,7 @@ enum class Language : uint8_t
     MDB,
     OCaml, 
     OpenApi,
+    Prag,
     ProtoBuf,
     Python,
     Rust,

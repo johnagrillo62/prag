@@ -1,4 +1,3 @@
-
 // avro_walker.h
 #pragma once
 #include <nlohmann/json.hpp>
@@ -51,14 +50,20 @@ class AvroAstWalker : public AstWalker
             return reordered[0].dump(2) + "\n";
         return reordered.dump(2) + "\n";
     }
+
     std::string generateStructOpen(const Struct& s, const bhw::WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return ""; // Skip during flatten pass
+        }
+
         json record;
         record["type"] = "record";
         record["name"] = s.name;
         record["fields"] = json::array();
         schemas.push_back(record);
-        currentStructIndex = schemas.size() - 1; // track this struct
+        currentStructIndex = schemas.size() - 1;
         return "";
     }
 
@@ -69,25 +74,40 @@ class AvroAstWalker : public AstWalker
 
     std::string generateField(const Field& field, const bhw::WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return ""; // Skip fields during flatten pass
+        }
+
         json f;
         f["name"] = field.name;
         f["type"] = typeToJson(*field.type);
-        schemas[currentStructIndex]["fields"].push_back(f); // use tracked index
+        schemas[currentStructIndex]["fields"].push_back(f);
         return "";
     }
+
     std::string generateEnumOpen(const Enum& e, const bhw::WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return ""; // Skip during flatten pass
+        }
+
         json en;
         en["type"] = "enum";
         en["name"] = e.name;
         en["symbols"] = json::array();
         schemas.push_back(en);
-        // Don't update currentStructIndex - fields still go to parent struct
         return "";
     }
 
     std::string generateEnumValue(const EnumValue& val, bool, const bhw::WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
         schemas.back()["symbols"].push_back(val.name);
         return "";
     }
@@ -99,37 +119,44 @@ class AvroAstWalker : public AstWalker
 
     std::string generateOneof(const Oneof& oneof, const bhw::WalkContext& ctx) override
     {
-        // In Avro, oneofs are represented as union types
-        json field;
-        field["name"] = oneof.name;
-
-        // Create union type - array of possible types
-        json unionTypes = json::array();
-
-        // Avro unions typically include null as first option
-        unionTypes.push_back("null");
-
-        // Add each oneof field as a record type in the union
-        for (const auto& oneofField : oneof.fields)
+        if (ctx.pass == WalkContext::Pass::Flatten)
         {
-            json recordType;
-            recordType["type"] = "record";
-            recordType["name"] = capitalize(oneof.name) + "_" + capitalize(oneofField.name);
-            recordType["fields"] = json::array();
+            // Generate oneof record types during flatten pass
+            for (const auto& oneofField : oneof.fields)
+            {
+                json recordType;
+                recordType["type"] = "record";
+                recordType["name"] = capitalize(oneof.name) + "_" + capitalize(oneofField.name);
+                recordType["fields"] = json::array();
 
-            // Add the value field
-            json valueField;
-            valueField["name"] = "value";
-            valueField["type"] = typeToJson(*oneofField.type);
-            recordType["fields"].push_back(valueField);
+                json valueField;
+                valueField["name"] = "value";
+                valueField["type"] = typeToJson(*oneofField.type);
+                recordType["fields"].push_back(valueField);
 
-            unionTypes.push_back(recordType);
+                schemas.push_back(recordType);
+            }
+            return "";
         }
+        else
+        {
+            // Generate union field during normal pass
+            json field;
+            field["name"] = oneof.name;
 
-        field["type"] = unionTypes;
-        schemas[currentStructIndex]["fields"].push_back(field);
+            json unionTypes = json::array();
+            unionTypes.push_back("null");
 
-        return "";
+            for (const auto& oneofField : oneof.fields)
+            {
+                std::string typeName = capitalize(oneof.name) + "_" + capitalize(oneofField.name);
+                unionTypes.push_back(typeName);
+            }
+
+            field["type"] = unionTypes;
+            schemas[currentStructIndex]["fields"].push_back(field);
+            return "";
+        }
     }
 
   private:
@@ -141,6 +168,7 @@ class AvroAstWalker : public AstWalker
         result[0] = std::toupper(static_cast<unsigned char>(result[0]));
         return result;
     }
+
     json typeToJson(const Type& type)
     {
         if (std::holds_alternative<SimpleType>(type.value))

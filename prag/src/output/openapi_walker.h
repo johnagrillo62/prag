@@ -139,10 +139,27 @@ class OpenApiAstWalker : public AstWalker
 
     std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
+        if (structStack.empty())
+            return "";
+
+        std::string structName = structStack.top();
+
+        // Build oneOf array with variant objects
+        json oneOfArray = json::array();
+
+        for (const auto& field : oneof.fields)
+        {
+            json variant = {{"type", "object"},
+                            {"properties", {{field.name, typeToJson(*field.type)}}},
+                            {"required", json::array({field.name})}};
+            oneOfArray.push_back(variant);
+        }
+
+        // Add oneOf field to parent struct's properties
+        schemas[structName]["properties"][oneof.name] = {{"oneOf", oneOfArray}};
+
         return "";
     }
-
-
 
     json typeToJson(const Type& type)
     {
@@ -182,7 +199,7 @@ class OpenApiAstWalker : public AstWalker
         }
         return {{"type", "string"}};
     }
-    
+
     json primitiveToJson(ReifiedTypeId type)
     {
         switch (type)

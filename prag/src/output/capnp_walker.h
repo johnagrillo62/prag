@@ -22,17 +22,6 @@ class CapnProtoAstWalker : public RegistryAstWalker
         return bhw::Language::Capnp;
     }
 
-    std::string walk(bhw::Ast&& ast) override
-    {
-        // Flatten nested types FIRST - this hoists anonymous structs to top level
-        ast.flattenNestedTypes();
-        // Reset counter
-        fieldCounter_ = 0;
-
-        // Now walk normally
-        return RegistryAstWalker::walk(std::move(ast));
-    }
-
   protected:
     std::string generateHeader(const bhw::Ast&) override
     {
@@ -41,17 +30,31 @@ class CapnProtoAstWalker : public RegistryAstWalker
 
     std::string generateStructOpen(const Struct& s, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return ""; // Skip during flatten pass
+        }
+
         fieldCounter_ = 0; // Reset for each struct
         return ctx.indent() + "struct " + s.name + " {\n";
     }
 
     std::string generateStructClose(const Struct&, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
         return ctx.indent() + "}\n\n";
     }
 
     std::string generateField(const Field& field, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return ""; // Skip fields during flatten pass
+        }
+
         std::ostringstream out;
 
         // Find field number from attributes
@@ -78,11 +81,20 @@ class CapnProtoAstWalker : public RegistryAstWalker
 
     std::string generateEnumOpen(const Enum& e, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
         return ctx.indent() + "enum " + e.name + " {\n";
     }
 
     std::string generateEnumValue(const EnumValue& val, bool, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
+
         std::ostringstream out;
         out << ctx.indent() << val.name << " @" << val.number << ";\n";
         return out.str();
@@ -90,39 +102,11 @@ class CapnProtoAstWalker : public RegistryAstWalker
 
     std::string generateEnumClose(const Enum&, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return "";
+        }
         return ctx.indent() + "}\n\n";
-    }
-
-    // CRITICAL: Override walkStructMember to skip nested structs
-    // Cap'n Proto doesn't support nested struct definitions
-    std::string walkStructMember(const StructMember& member, const WalkContext& ctx) override
-    {
-        return std::visit(
-            [this, ctx](auto&& m) -> std::string
-            {
-                using T = std::decay_t<decltype(m)>;
-                if constexpr (std::is_same_v<T, Field>)
-                {
-                    return walkField(m, ctx);
-                }
-                else if constexpr (std::is_same_v<T, Oneof>)
-                {
-                    return generateOneof(m, ctx);
-                }
-                else if constexpr (std::is_same_v<T, Enum>)
-                {
-                    return walkEnum(m, ctx);
-                }
-                else if constexpr (std::is_same_v<T, Struct>)
-                {
-                    // Skip nested struct definitions!
-                    // They should have been flattened to top level already
-                    return "";
-                }
-                else
-                    static_assert(always_false_v<T>, "Unhandled type in walkStructMember!");
-            },
-            member);
     }
 
     std::string generateSimpleType(const SimpleType& type, const bhw::WalkContext& ctx) override
@@ -156,7 +140,7 @@ class CapnProtoAstWalker : public RegistryAstWalker
         case ReifiedTypeId::Bytes:
             return "Data";
         default:
-            return "Data"; // Unknown types map to Data
+            return "Data";
         }
     }
 
@@ -167,11 +151,9 @@ class CapnProtoAstWalker : public RegistryAstWalker
         case ReifiedTypeId::List:
             return "List(" + walkType(*type.args[0], ctx) + ")";
         case ReifiedTypeId::Optional:
-            // Cap'n Proto doesn't have explicit Optional, just use the type
             return walkType(*type.args[0], ctx);
         case ReifiedTypeId::Map:
-            // Cap'n Proto doesn't have native maps, use List of pairs
-            return "List(Data)"; // Simplified
+            return "List(Data)";
         default:
             return "Data";
         }
@@ -185,39 +167,35 @@ class CapnProtoAstWalker : public RegistryAstWalker
 
     std::string generateStructType(const StructType& type, const bhw::WalkContext& ctx) override
     {
-        // Return the struct name
         if (type.value && !type.value->name.empty())
         {
             return type.value->name;
         }
-        return "Data"; // Fallback
+        return "Data";
     }
 
     std::string generatePointerType(const PointerType& type, const WalkContext& ctx) override
     {
-        // Cap'n Proto doesn't have explicit pointers, just use the type
         return walkType(*type.pointee, ctx);
     }
 
     std::string generateOneof(const Oneof& oneof, const WalkContext& ctx) override
     {
+        if (ctx.pass == WalkContext::Pass::Flatten)
+        {
+            return ""; // Cap'n Proto doesn't need flatten pass for oneofs
+        }
+
         std::ostringstream out;
+        out << ctx.indent() << "union " << oneof.name << " {\n";
 
-        out << ctx.indent() << "union " << oneof.name << "{\n";
-
+        int unionFieldNum = 0;
         for (const auto& field : oneof.fields)
         {
-            out << ctx.indent(1) << field.name;
-
-            for (const auto& attr : field.attributes)
-            {
-                if (attr.name == "field_number")
-                {
-                    out << " @" << attr.value << ": " << walkType(*field.type);
-                }
-                out << ";\n";
-            }
+            out << ctx.indent(1) << field.name << " @" << unionFieldNum++ << " :"
+                << walkType(*field.type, ctx) << ";\n";
         }
+
         out << ctx.indent() << "}\n";
         return out.str();
     }
